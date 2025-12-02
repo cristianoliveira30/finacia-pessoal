@@ -12,7 +12,7 @@
                             d="M5 7h14M5 12h14M5 17h10" />
                     </svg>
                 </button>
-                <a href="https://flowbite.com" class="flex ms-2 md:me-24">
+                <a href="#" class="flex ms-2 md:me-24">
                     <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 me-3" alt="FlowBite Logo" />
                     <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
                 </a>
@@ -47,17 +47,12 @@
                             <li>
                                 <a href="#"
                                     class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                                    role="menuitem">Settings</a>
+                                    role="menuitem">Configurações</a>
                             </li>
                             <li>
                                 <a href="#"
                                     class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                                    role="menuitem">Earnings</a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                                    role="menuitem">Sign out</a>
+                                    role="menuitem">Log out</a>
                             </li>
                         </ul>
                     </div>
