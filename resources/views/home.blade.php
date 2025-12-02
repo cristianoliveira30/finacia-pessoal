@@ -1,6 +1,6 @@
 <x-layouts.app :title="__('Dashboard')">
     <div class="p-4 sm:ml-64 mt-14">
-        <div class="p-4 border-1 border-default border-dashed rounded-base">
+        <div class="p-4 border border-default border-dashed rounded-base">
             <div class="grid grid-cols-4 gap-4 mb-4">
                 <div class="flex items-center justify-center h-24 rounded-base bg-neutral-secondary-soft">
                     <p class="text-fg-disabled">
