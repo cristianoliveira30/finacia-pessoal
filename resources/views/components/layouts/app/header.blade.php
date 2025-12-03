@@ -12,6 +12,17 @@
                             d="M5 7h14M5 12h14M5 17h10" />
                     </svg>
                 </button>
+                <!-- toggle da sidebar -->
+                <button id="sidebar-collapse-btn" type="button" aria-expanded="true"
+                    class="sm:inline-flex text-heading dark:text-fg-brand bg-transparent border border-transparent dark:hover:bg-neutral-secondary-medium hover:bg-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none">
+                    <span class="sr-only">Toggle sidebar</span>
+                    <svg class="w-6 h-6 hidden sm:block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                            d="M5 7h14M5 12h14M5 17h10" />
+                    </svg>
+                </button>
+                
                 <a href="#" class="flex ms-2 md:me-24">
                     <img src="{{ asset('assets/img/para.png') }}" class="h-6 me-3" alt="pará Logo" />
                     <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Core</span>
@@ -61,3 +72,49 @@
         </div>
     </div>
 </nav>
+
+<style>
+    /* keep transition and force width when collapsed (overrides Tailwind width classes) */
+    #top-bar-sidebar{ transition: width .18s ease; overflow-x:hidden; }
+    body.sidebar-collapsed #top-bar-sidebar{ width:4rem !important; overflow-x:hidden; }
+    body.sidebar-collapsed #top-bar-sidebar .sidebar-label{ display:none; }
+
+    /* prevent horizontal overflow and reduce paddings when collapsed */
+    body.sidebar-collapsed #top-bar-sidebar .overflow-y-auto{
+        padding-left:.375rem;
+        padding-right:.375rem;
+        overflow-x:hidden;
+    }
+
+    /* center icons and reduce anchor padding to avoid overflow */
+    body.sidebar-collapsed #top-bar-sidebar .overflow-y-auto a.flex.items-center{
+        padding-left:.375rem !important;
+        padding-right:.375rem !important;
+        justify-content:center;
+    }
+
+    /* ensure list and anchors don't force extra width */
+    body.sidebar-collapsed #top-bar-sidebar ul{ width:100%; box-sizing:border-box; }
+    body.sidebar-collapsed #top-bar-sidebar a{ white-space:nowrap; min-width:0; }
+</style>
+
+<script>
+    (function(){
+        const btn = document.getElementById('sidebar-collapse-btn');
+        const sidebar = document.getElementById('top-bar-sidebar');
+        if(!btn || !sidebar) return;
+
+        // Apply persisted state
+        const persisted = localStorage.getItem('sidebarCollapsed');
+        if(persisted === 'true'){
+            document.body.classList.add('sidebar-collapsed');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+
+        btn.addEventListener('click', function(){
+            const collapsed = document.body.classList.toggle('sidebar-collapsed');
+            localStorage.setItem('sidebarCollapsed', collapsed);
+            btn.setAttribute('aria-expanded', String(!collapsed));
+        });
+    })();
+</script>
