@@ -1,4 +1,4 @@
-<nav class="relative top-0 z-50 w-full bg-neutral-primary-soft dark:bg-neutral-900 border-b border-default">
+<nav class="relative top-0 z-50 w-full bg-neutral-900 dark:bg-neutral-900 border-b border-default">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -14,7 +14,7 @@
                 </button>                
                 <a href="#" class="flex ms-2 md:me-24">
                     <img src="{{ asset('assets/img/para.png') }}" class="h-6 me-3" alt="pará Logo" />
-                    <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Core</span>
+                    <span class="self-center text-lg font-semibold whitespace-nowrap text-white dark:text-white">Core</span>
                 </a>
             </div>
             <div class="flex items-center">
