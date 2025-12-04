@@ -2,7 +2,7 @@
     class="fixed lg:sticky top-0 left-0 z-50 w-64 h-screen transition-transform duration-300 -translate-x-full lg:translate-x-0 bg-neutral-primary-soft dark:bg-slate-900 border-e border-default"
     aria-label="Sidebar">
     
-    <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft dark:bg-slate-900">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-sky-50 dark:bg-slate-900">
         <button id="sidebar-collapse-btn" type="button" aria-expanded="true"
             class="inline-flex text-heading dark:text-fg-brand bg-transparent border border-transparent dark:hover:bg-neutral-secondary-medium hover:bg-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none">
             <span class="sr-only">Toggle sidebar</span>
