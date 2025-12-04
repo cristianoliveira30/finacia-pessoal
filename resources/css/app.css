@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
-/* Variáveis de tema do Flowbite (opcional mas recomendado) */
+/* 1. OBRIGATÓRIO PARA TAILWIND v4: Força o modo escuro a funcionar via classe (.dark) */
+@variant dark (&:where(.dark, .dark *));
+
+/* Variáveis de tema do Flowbite */
 @import "flowbite/src/themes/default";
 
-/* Plugin do Flowbite e fontes de conteúdo */
+/* Plugin do Flowbite e fontes */
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 
-/* O resto do que você já tinha: */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

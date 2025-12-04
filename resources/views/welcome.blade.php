@@ -10,9 +10,20 @@
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>
         tailwind.config = {
-            darkMode: 'media', // Usa a preferência do sistema operacional
+            // Alterado de 'media' para 'class' para aceitar o controle manual
+            darkMode: 'class', 
+        }
+    </script>
+    <script>
+        // Lógica de inicialização: Padrão DARK
+        // Se não houver nada salvo ou se não for estritamente 'light', aplica dark.
+        if (localStorage.getItem('color-theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
         }
     </script>
 </head>

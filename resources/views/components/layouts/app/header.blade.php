@@ -40,6 +40,21 @@
                         </div>
                         <ul class="p-2 text-sm text-body font-medium" role="none">
                             <li>
+                            {{-- Container flex para alinhar o botão e o texto --}}
+                            <div class="flex items-center px-4 py-2 hover:bg-neutral-tertiary-medium rounded cursor-pointer">
+                                
+                                {{-- Estrutura do Botão Personalizado --}}
+                                <label class="ui-switch mr-3">
+                                    <input type="checkbox" class="theme-toggle-input">
+                                    <div class="slider">
+                                        <div class="circle"></div>
+                                    </div>
+                                </label>
+
+                                <span class="text-sm font-medium text-heading select-none">Trocar tema</span>
+                            </div>
+                            </li>
+                            <li>
                                 <a href="#"
                                     class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                                     role="menuitem">Dashboard</a>
