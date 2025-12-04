@@ -124,42 +124,6 @@
                     applyTheme(e.target.checked);
                 });
             });
-        </script>        
-        // Seleciona todos os inputs do toggle (Mobile e Desktop)
-            const themeToggles = document.querySelectorAll('.theme-toggle-input');
-
-            function applyTheme(isDark) {
-                if (isDark) {
-                    // Ativar MODO ESCURO
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                    // Checkbox Marcado (Lua/Azul)
-                    themeToggles.forEach(el => el.checked = true);
-                } else {
-                    // Ativar MODO CLARO (Branco)
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                    // Checkbox Desmarcado (Sol/Cinza)
-                    themeToggles.forEach(el => el.checked = false);
-                }
-            }
-
-            // 1. Inicialização: 
-            // Se o usuário já escolheu 'light' antes, respeita.
-            // Caso contrário (primeira visita ou 'dark'), força o tema ESCURO.
-            if (localStorage.getItem('color-theme') === 'light') {
-                applyTheme(false);
-            } else {
-                applyTheme(true); // Padrão Dark
-            }
-
-            // 2. Evento de Clique
-            themeToggles.forEach(toggle => {
-                toggle.addEventListener('change', (e) => {
-                    // Se marcou -> Dark. Se desmarcou -> Light.
-                    applyTheme(e.target.checked);
-                });
-            });
         </script>
 </body>
 </html>
