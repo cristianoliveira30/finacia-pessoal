@@ -14,9 +14,9 @@
         /* CSS do Toggle Switch (Uiverse.io) */
         .ui-switch {
             --switch-bg: rgb(135, 150, 165);
-            --switch-width: 48px;
-            --switch-height: 20px;
-            --circle-diameter: 32px;
+            --switch-width: 32px;
+            --switch-height: 14px;
+            --circle-diameter: 22px;
             --circle-bg: rgb(0, 56, 146);
             --circle-inset: calc((var(--circle-diameter) - var(--switch-height)) / 2);
             position: relative;
@@ -124,7 +124,8 @@
                     applyTheme(e.target.checked);
                 });
             });
-        </script>        // Seleciona todos os inputs do toggle (Mobile e Desktop)
+        </script>        
+        // Seleciona todos os inputs do toggle (Mobile e Desktop)
             const themeToggles = document.querySelectorAll('.theme-toggle-input');
 
             function applyTheme(isDark) {
