@@ -24,7 +24,7 @@
 @endphp
 
 {{-- Wrapper Grid para os dois cards --}}
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
 
     {{-- CARD 1: VENDAS SEMANAIS (Tema Indigo) --}}
     <div class="relative w-full min-w-[260px] overflow-hidden 

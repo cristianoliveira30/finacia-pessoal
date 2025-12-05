@@ -5,41 +5,13 @@
     {{-- 3. padding-top mantido para não ficar atrás do header. --}}
 
     <!-- card exemplo -->
-    <div class="grid grid-cols-5 md:grid-cols-4 gap-3 justify-items-center">
-        <div class="col p-2">
-            <div
-                class="dark:bg-indigo-500 dark:border-gray-900 bg-sky-200 block max-w-xs p-6 border border-default rounded-base shadow-xs">
-                <h5 class="mb-2 text-l font-bold tracking-tight text-heading dark:text-slate-100">Welcome to the
-                    Dashboard</h5>
-                <p class="font-normal text-body dark:text-slate-300">This is your main dashboard where you can find an
-                    overview of your activities and statistics.</p>
+    <div class="w-full p-2">
+        <div class="w-full grid grid-cols-4 gap-2">
+            <div class="col-span-2">
+                <x-cards.box.default :config="[]"/>
             </div>
-        </div>
-        <div class="col p-2">
-            <div
-                class="dark:bg-indigo-500 dark:border-gray-900 bg-sky-200 block max-w-xs p-6 border border-default rounded-base shadow-xs">
-                <h5 class="mb-2 text-l font-bold tracking-tight text-heading dark:text-slate-100">Welcome to the
-                    Dashboard</h5>
-                <p class="font-normal text-body dark:text-slate-300">This is your main dashboard where you can find an
-                    overview of your activities and statistics.</p>
-            </div>
-        </div>
-        <div class="col p-2">
-            <div
-                class="dark:bg-indigo-500 dark:border-gray-900 bg-sky-200 block max-w-xs p-6 border border-default rounded-base shadow-xs">
-                <h5 class="mb-2 text-l font-bold tracking-tight text-heading dark:text-slate-100">Welcome to the
-                    Dashboard</h5>
-                <p class="font-normal text-body dark:text-slate-300">This is your main dashboard where you can find an
-                    overview of your activities and statistics.</p>
-            </div>
-        </div>
-        <div class="col p-2">
-            <div
-                class="dark:bg-indigo-500 dark:border-gray-900 bg-sky-200 block max-w-xs p-6 border border-default rounded-base shadow-xs">
-                <h5 class="mb-2 text-l font-bold tracking-tight text-heading dark:text-slate-100">Welcome to the
-                    Dashboard</h5>
-                <p class="font-normal text-body dark:text-slate-300">This is your main dashboard where you can find an
-                    overview of your activities and statistics.</p>
+            <div class="col-span-2">
+                <x-cards.box.default :config="[]"/>
             </div>
         </div>
     </div>
