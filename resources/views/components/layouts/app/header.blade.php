@@ -11,11 +11,71 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                             d="M5 7h14M5 12h14M5 17h10" />
                     </svg>
-                </button>                
-                <a href="#" class="flex ms-2 md:me-24">
+                </button>
+                <a href="#" class="flex ms-2 md:me-6 me-2">
                     <img src="{{ asset('assets/img/para.png') }}" class="h-6 me-3" alt="pará Logo" />
-                    <span class="self-center text-lg font-semibold whitespace-nowrap text-white dark:text-white">Core</span>
+                    <span
+                        class="self-center text-lg font-semibold whitespace-nowrap text-white dark:text-white">Core</span>
                 </a>
+
+                {{-- Dropdown de range --}}
+                <div class="relative">
+                    <button id="btn-tipotempo" data-dropdown-toggle="dropdown-tipotempo" type="button"
+                        class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium
+                               rounded-md border bg-slate-50 text-slate-600 border-slate-200
+                               hover:bg-slate-100 hover:text-slate-900
+                               focus:outline-none focus:ring-2 focus:ring-slate-300
+                               dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600
+                               dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40">
+                        <span class="whitespace-nowrap">Hoje</span>
+                        <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+
+                    <div id="dropdown-tipotempo"
+                        class="z-20 hidden mt-2 bg-white divide-y divide-slate-100 rounded-lg shadow-lg w-44
+                        border border-slate-100 dark:bg-slate-800 dark:divide-slate-700 dark:border-slate-700">
+                        <ul class="py-2 text-sm text-slate-700 dark:text-slate-200" aria-labelledby="btn-tipotempo">
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    Hoje
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    Ontem
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    Semana Atual
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    Semana Passada
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    Mês Atual
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    Mês Passado
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    Período Personalizado
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="flex items-center">
                 <div class="flex items-center ms-3">
@@ -40,19 +100,20 @@
                         </div>
                         <ul class="p-2 text-sm text-body font-medium" role="none">
                             <li>
-                            {{-- Container flex para alinhar o botão e o texto --}}
-                            <div class="flex items-center px-4 py-2 hover:bg-neutral-tertiary-medium rounded cursor-pointer">
-                                
-                                {{-- Estrutura do Botão Personalizado --}}
-                                <label class="ui-switch mr-3">
-                                    <input type="checkbox" class="theme-toggle-input">
-                                    <div class="slider">
-                                        <div class="circle"></div>
-                                    </div>
-                                </label>
+                                {{-- Container flex para alinhar o botão e o texto --}}
+                                <div
+                                    class="flex items-center px-4 py-2 hover:bg-neutral-tertiary-medium rounded cursor-pointer">
 
-                                <span class="text-sm font-medium text-heading select-none">Trocar tema</span>
-                            </div>
+                                    {{-- Estrutura do Botão Personalizado --}}
+                                    <label class="ui-switch mr-3">
+                                        <input type="checkbox" class="theme-toggle-input">
+                                        <div class="slider">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </label>
+
+                                    <span class="text-sm font-medium text-heading select-none">Trocar tema</span>
+                                </div>
                             </li>
                             <li>
                                 <a href="#"
@@ -79,25 +140,42 @@
 
 <style>
     /* keep transition and force width when collapsed (overrides Tailwind width classes) */
-    #top-bar-sidebar{ transition: width .18s ease; overflow-x:hidden; }
-    body.sidebar-collapsed #top-bar-sidebar{ width:4rem !important; overflow-x:hidden; }
-    body.sidebar-collapsed #top-bar-sidebar .sidebar-label{ display:none; }
+    #top-bar-sidebar {
+        transition: width .18s ease;
+        overflow-x: hidden;
+    }
+
+    body.sidebar-collapsed #top-bar-sidebar {
+        width: 4rem !important;
+        overflow-x: hidden;
+    }
+
+    body.sidebar-collapsed #top-bar-sidebar .sidebar-label {
+        display: none;
+    }
 
     /* prevent horizontal overflow and reduce paddings when collapsed */
-    body.sidebar-collapsed #top-bar-sidebar .overflow-y-auto{
-        padding-left:.375rem;
-        padding-right:.375rem;
-        overflow-x:hidden;
+    body.sidebar-collapsed #top-bar-sidebar .overflow-y-auto {
+        padding-left: .375rem;
+        padding-right: .375rem;
+        overflow-x: hidden;
     }
 
     /* center icons and reduce anchor padding to avoid overflow */
-    body.sidebar-collapsed #top-bar-sidebar .overflow-y-auto a.flex.items-center{
-        padding-left:.375rem !important;
-        padding-right:.375rem !important;
-        justify-content:center;
+    body.sidebar-collapsed #top-bar-sidebar .overflow-y-auto a.flex.items-center {
+        padding-left: .375rem !important;
+        padding-right: .375rem !important;
+        justify-content: center;
     }
 
     /* ensure list and anchors don't force extra width */
-    body.sidebar-collapsed #top-bar-sidebar ul{ width:100%; box-sizing:border-box; }
-    body.sidebar-collapsed #top-bar-sidebar a{ white-space:nowrap; min-width:0; }
+    body.sidebar-collapsed #top-bar-sidebar ul {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    body.sidebar-collapsed #top-bar-sidebar a {
+        white-space: nowrap;
+        min-width: 0;
+    }
 </style>

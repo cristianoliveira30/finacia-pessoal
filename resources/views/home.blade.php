@@ -8,33 +8,29 @@
     <div class="w-full p-2">
         <div class="w-full grid grid-cols-4 gap-2">
             <div class="col-span-2">
-                <x-cards.box.default :config="[]"/>
+                <x-cards.box.default :config="[]" />
             </div>
             <div class="col-span-2">
-                <x-cards.box.default :config="[]"/>
+                <x-cards.box.default :config="[]" />
             </div>
         </div>
     </div>
 
     {{-- teste --}}
     @php
-        $chart = [
+        $chartData = [
             'categories' => ['01 Fev', '02 Fev', '03 Fev', '04 Fev', '05 Fev', '06 Fev', '07 Fev'],
             'series' => [
-                [
-                    'name' => 'Loja Online',
-                    'data' => [150, 141, 145, 152, 135, 125, 160],
-                ],
-                [
-                    'name' => 'Loja Física',
-                    'data' => [43, 13, 65, 12, 42, 73, 80],
-                ],
+                ['name' => 'Loja Online', 'data' => [150, 141, 145, 152, 135, 125, 160]],
+                ['name' => 'Loja Física', 'data' => [43, 13, 65, 12, 42, 73, 80]],
             ],
         ];
     @endphp
-    <div class="grid grid-cols-2 gap-3">
-        <div class="col p-2">
-            <x-cards.default id="teste-card" title="Relatório de Testes" :chart="$chart"  />
-        </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+        <x-cards.card id="relatorio-vendas" title="Vendas da Semana" :chart="$chartData" />
+
+        {{-- Exemplo sem totais, só gráfico --}}
+        <x-cards.card id="relatorio-visitas" title="Tráfego do Site" :chart="$chartData" />
     </div>
 </x-layouts.app>

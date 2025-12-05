@@ -23,12 +23,12 @@
             display: inline-block;
             /* Garante que o tamanho do container seja respeitado */
             width: var(--switch-width);
-            height: var(--circle-diameter); 
+            height: var(--circle-diameter);
         }
 
         /* Oculta o checkbox nativo */
-        .ui-switch input { 
-            display: none; 
+        .ui-switch input {
+            display: none;
         }
 
         .slider {
@@ -74,7 +74,7 @@
     </style>
 </head>
 <body class="min-h-screen antialiased">
-    <div class="min-h-dvh lg:flex dark:bg-gray-800 dark:text-gray-50">
+    <div class="min-h-dvh lg:flex bg-gray-200 dark:bg-gray-900 dark:text-gray-50">
         @include('components.layouts.app.sidebar')
 
         <div class="flex-1 min-w-0 flex flex-col">
@@ -108,7 +108,7 @@
                 }
             }
 
-            // 1. Inicialização: 
+            // 1. Inicialização:
             // Se o usuário já escolheu 'light' antes, respeita.
             // Caso contrário (primeira visita ou 'dark'), força o tema ESCURO.
             if (localStorage.getItem('color-theme') === 'light') {
