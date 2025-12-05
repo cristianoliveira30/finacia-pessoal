@@ -124,6 +124,6 @@
                     applyTheme(e.target.checked);
                 });
             });
-    </script>
+        </script>
 </body>
 </html>
