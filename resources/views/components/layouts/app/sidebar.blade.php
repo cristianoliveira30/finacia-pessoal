@@ -1,5 +1,5 @@
 <aside id="top-bar-sidebar"
-    class="static lg:sticky top-0 left-0 z-40 w-64 h-screen transition-all duration-300 -translate-x-full lg:translate-x-0 bg-neutral-primary-soft dark:bg-gray-900 border-e border-default"
+    class="fixed lg:sticky top-0 left-0 z-40 w-64 h-screen transition-all duration-300 -translate-x-full lg:translate-x-0 bg-neutral-primary-soft dark:bg-gray-900 border-e border-default"
     aria-label="Sidebar">
     
     <div class="h-full px-3 py-4 overflow-y-auto bg-sky-50 dark:bg-slate-900">

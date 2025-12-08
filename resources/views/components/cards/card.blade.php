@@ -67,7 +67,7 @@
         </div>
 
         {{-- Área do Gráfico / Tabela --}}
-        <div class="">
+        <div class="relative w-full max-w-full overflow-hidden">
             <div data-card-section="chart">
                 <x-cards.graph.area-chart :data="$chart" />
             </div>

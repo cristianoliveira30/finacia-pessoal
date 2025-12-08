@@ -6,11 +6,11 @@
 
     <!-- card exemplo -->
     <div class="w-full p-2">
-        <div class="w-full grid grid-cols-4 gap-2">
-            <div class="col-span-2">
+        <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-2">
+            <div class="md:col-span-2 ">
                 <x-cards.box.default :config="[]" />
             </div>
-            <div class="col-span-2">
+            <div class="md:col-span-2">
                 <x-cards.box.default :config="[]" />
             </div>
         </div>
