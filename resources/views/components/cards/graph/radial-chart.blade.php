@@ -76,7 +76,7 @@
                     labels: labels,
                     colors: colors,
                     chart: {
-                        height: 260,
+                        height: 225,
                         width: "100%",
                         type: "radialBar",
                         sparkline: {

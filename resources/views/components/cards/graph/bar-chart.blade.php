@@ -50,7 +50,7 @@
                         },
                         type: "bar",
                         width: "100%",
-                        height: 260,
+                        height: 225,
                         toolbar: {
                             show: false,
                         }
