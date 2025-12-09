@@ -4,6 +4,8 @@
     'chart' => [],
     'total' => null,
     'variation' => null,
+    'chartType' => 'area', // 👈 novo: tipo de gráfico (area, pie, ...)
+    'chartId' => null, // 👈 opcional: permite sobrescrever o id do gráfico
 ])
 
 @php
@@ -12,6 +14,8 @@
     $downloadButtonId = $id . '-download-button';
     $downloadDropId = $id . '-download-dropdown';
     $tableId = $id . '-datatable';
+
+    $resolvedChartId = $chartId ?: $id . '-chart';
 @endphp
 
 <div id="{{ $id }}-card"
@@ -67,15 +71,23 @@
         </div>
 
         {{-- Área do Gráfico / Tabela --}}
-        <div class="relative w-full max-w-full overflow-hidden">
+        <div>
             <div data-card-section="chart">
-                <x-cards.graph.area-chart :data="$chart" />
+                @if ($chartType === 'pie')
+                    {{-- Gráfico de Pizza --}}
+                    <x-cards.graph.pie-chart :chart-id="$resolvedChartId" :data="$chart" />
+                @else
+                    {{-- Padrão: Área --}}
+                    <x-cards.graph.area-chart :chart-id="$resolvedChartId" :data="$chart" />
+                @endif
             </div>
 
             <div data-card-section="table" class="hidden">
                 <x-cards.graph.table :table-id="$tableId" :chart="$chart" />
             </div>
         </div>
+
+
 
         {{-- Footer: Ações de Download --}}
         <div

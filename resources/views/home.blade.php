@@ -31,12 +31,16 @@
                 ['name' => 'Loja Física', 'data' => [43, 13, 65, 12, 42, 73, 80]],
             ],
         ];
+        $pieChartData = [
+            'labels' => ['Desktop', 'Mobile', 'Tablet'],
+            'series' => [60, 30, 10],
+        ];
     @endphp
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
         <x-cards.card id="relatorio-vendas" title="Vendas da Semana" :chart="$chartData" />
 
-        {{-- Exemplo sem totais, só gráfico --}}
-        <x-cards.card id="relatorio-visitas" title="Tráfego do Site" :chart="$chartData" />
+        {{-- Pizza --}}
+        <x-cards.card id="relatorio-canais" title="Distribuição por canal" :chart="$pieChartData" chart-type="pie" />
     </div>
 </x-layouts.app>
