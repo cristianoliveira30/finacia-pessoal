@@ -5,13 +5,19 @@
     {{-- 3. padding-top mantido para não ficar atrás do header. --}}
 
     <!-- card exemplo -->
-    <div class="w-full p-2">
-        <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-2">
-            <div class="md:col-span-2 ">
-                <x-cards.box.default :config="[]" />
+    <div class="w-full p-2 justify-center">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+            <div class="md:col-span-1 ">
+                <x-cards.box.month-card :config="[]" />
             </div>
-            <div class="md:col-span-2">
-                <x-cards.box.default :config="[]" />
+            <div class="md:col-span-1">
+                <x-cards.box.week-card :config="[]" />
+            </div>
+            <div class="md:col-span-1">
+                <x-cards.box.week-card :config="[]" />
+            </div>
+            <div class="md:col-span-1">
+                <x-cards.box.week-card :config="[]" />
             </div>
         </div>
     </div>

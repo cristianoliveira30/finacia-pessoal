@@ -74,7 +74,7 @@
     </style>
 </head>
 <body class="min-h-screen antialiased">
-    <div class="min-h-dvh lg:flex bg-gray-200 dark:bg-gray-900 dark:text-gray-50">
+    <div class="min-h-dvh lg:flex bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
         @include('components.layouts.app.sidebar')
 
         <div class="flex-1 min-w-0 flex flex-col">
