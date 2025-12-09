@@ -18,9 +18,9 @@
     $resolvedChartId = $chartId ?: $id . '-chart';
 @endphp
 
-<div id="{{ $id }}-card"
-    class="relative w-full overflow-hidden h-fit
-           rounded-2xl border border-slate-200 bg-white shadow-sm
+<div id="{{ $id }}"
+    class="relative w-full overflow-hidden h-fit transition-all duration-100 ease-in-out
+           rounded-2xl border border-slate-200 bg-blue-50 shadow-sm
            dark:border-slate-700
            dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-sky-900">
 
@@ -39,7 +39,7 @@
             <div class="space-y-2 gap-2 flex justify-center items-center">
                 <div
                     class="inline-flex rounded-xl m-0 border border-slate-200 bg-slate-50 overflow-hidden dark:border-slate-700 dark:bg-slate-900/60">
-                    <button type="button" data-card-view-toggle="{{ $id }}-card" data-view="chart"
+                    <button type="button" data-card-view-toggle="{{ $id }}" data-view="chart"
                         class="text-xs px-3 py-2 font-medium
                        bg-white text-slate-600
                        hover:bg-slate-50 hover:text-slate-900
@@ -48,7 +48,7 @@
                        dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
                         <x-bi-graph-up />
                     </button>
-                    <button type="button" data-card-view-toggle="{{ $id }}-card" data-view="table"
+                    <button type="button" data-card-view-toggle="{{ $id }}" data-view="table"
                         class="text-xs px-3 py-2 font-medium
                        bg-white text-slate-600
                        hover:bg-slate-50 hover:text-slate-900
@@ -58,7 +58,8 @@
                         <x-bi-table />
                     </button>
                 </div>
-                <button type="button" data-tooltip-target="tooltip-recarregar"
+                <button type="button" id="{{ $id }}-btn-expand" onclick="toggleExpand('{{ $id }}')"
+                    data-tooltip-target="tooltip-recarregar"
                     class="text-xs px-3 py-2 font-medium
                     bg-white text-slate-600 border border-slate-200 rounded-lg
                     hover:bg-slate-50 hover:text-slate-900
@@ -238,7 +239,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if (window.initReportCard) {
-                window.initReportCard(@json($id . '-card'));
+                window.initReportCard(@json($id));
             }
         });
     </script>
