@@ -53,12 +53,15 @@
                 ],
             ];
 
-            $radialChartData = [
-                ['name' => 'To do',       'data' => [90]],
-                ['name' => 'In progress', 'data' => [85]],
-                ['name' => 'Done',        'data' => [70]],
-            ];
-        @endphp
+        $radialChartData = [
+            'categories' => ['To do', 'In progress', 'Done'],
+            'series' => [
+                [
+                    'name' => 'Progresso',
+                    'data' => [90, 85, 70],
+                ],
+            ],
+        ];
 
         {{-- grid dos gráficos --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -1,17 +1,28 @@
 @props([
     'chartId' => 'radial-chart-' . uniqid(),
-    'data' => [], // ex: [['name' => 'To do', 'data' => [90]], ...]
+    // Espera o MESMO formato dos outros gráficos:
+    // [
+    //   'categories' => ['To do', 'In progress', 'Done'],
+    //   'series' => [
+    //      ['name' => 'Progresso', 'data' => [90, 85, 70]],
+    //   ],
+    // ]
+    'data' => [],
 ])
 
 @php
-    // Normaliza: extrai labels e valores numéricos
+    // Lê categorias e primeira série de dados
+    $labelsRaw = $data['categories'] ?? [];
+    $seriesRaw = $data['series'][0]['data'] ?? [];
+
+    // Normaliza para garantir números
     $labels = [];
     $series = [];
 
-    foreach ($data ?? [] as $item) {
-        $labels[] = $item['name'] ?? 'Item';
+    foreach ($labelsRaw as $index => $label) {
+        $labels[] = $label;
 
-        $rawValue = $item['value'] ?? ($item['data'][0] ?? 0);
+        $rawValue = $seriesRaw[$index] ?? 0;
 
         if (is_string($rawValue)) {
             $rawValue = (float) str_replace(',', '.', $rawValue);
@@ -57,14 +68,13 @@
             const successColor = getSuccessColor();
             const trackColor = getNeutralSecondaryMediumColor();
 
-            // Se tiver mais de 3 séries, rotaciona as cores base
-            const baseColors = [brandColor, warningColor, successColor];
+            // Paleta quente (pode usar mais ou menos cores que o número de séries)
             const colors = [
-                "#005c81",
-                "#d40f60",
-                "#f84339",
-                "#e79a32",
-                "#368986",
+                "#005c81", // azul petróleo
+                "#d40f60", // magenta forte
+                "#f84339", // vermelho/laranja
+                "#e79a32", // laranja queimado
+                "#368986", // teal
             ];
 
             function initChart() {
