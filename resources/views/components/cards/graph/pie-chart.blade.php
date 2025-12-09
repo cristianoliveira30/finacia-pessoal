@@ -4,17 +4,11 @@
 ])
 
 @php
-    // Esperado para pizza:
-    // $data = [
-    //   'labels' => ['Direct', 'Organic', 'Referral'],
-    //   'series' => [52.8, 26.8, 20.4],
-    // ];
-
-    $labels = data_get($data, 'labels', ['Direct', 'Organic search', 'Referrals']);
-    $series = data_get($data, 'series', [52.8, 26.8, 20.4]);
+    $labels = $data['categories'] ?? [];
+    $rawSeries = $data['series'][0]['data'] ?? []; // primeira série
 @endphp
 
-<div class="w-full bg-neutral-primary-soft dark:bg-slate-900">
+<div class="w-full bg-neutral-primary-soft dark:bg-slate-900 rounded-xl">
     <div id="{{ $chartId }}"></div>
 </div>
 
@@ -23,17 +17,16 @@
         (function() {
             const chartId = @json($chartId);
             const labels = @json($labels);
-            const rawSeries = @json($series);
+            const rawData = @json($rawSeries);
 
-            // Só mantendo o neutro pra borda
-            function getNeutralPrimaryColor() {
-                const computedStyle = getComputedStyle(document.documentElement);
-                return computedStyle.getPropertyValue('--color-neutral-primary').trim() || "#020617"; // slate-950
-            }
+            const series = (rawData || []).map(function(v) {
+                if (typeof v === 'string') {
+                    const parsed = parseFloat(v.replace(',', '.'));
+                    return isNaN(parsed) ? 0 : parsed;
+                }
+                return v;
+            });
 
-            const neutralPrimaryColor = getNeutralPrimaryColor();
-
-            // Paleta quente (rosa, laranja, vermelho, roxo)
             const warmColors = [
                 "#005c81",
                 "#d40f60",
@@ -41,14 +34,6 @@
                 "#e79a32",
                 "#368986",
             ];
-
-            const series = (rawSeries || []).map(function(v) {
-                if (typeof v === 'string') {
-                    const parsed = parseFloat(v.replace(',', '.'));
-                    return isNaN(parsed) ? 0 : parsed;
-                }
-                return v;
-            });
 
             function initChart() {
                 const el = document.getElementById(chartId);
@@ -65,7 +50,7 @@
                         fontFamily: "Inter, sans-serif",
                     },
                     stroke: {
-                        colors: [neutralPrimaryColor],
+                        colors: ["#fff"], // neutral (slate-950)
                         lineCap: "",
                     },
                     plotOptions: {
@@ -83,16 +68,12 @@
                             fontSize: '12px',
                         },
                         formatter: function(val) {
-                            // mostra valor em % com 1 casa
                             return val.toFixed(1) + "%";
                         }
                     },
                     legend: {
                         position: "bottom",
                         fontFamily: "Inter, sans-serif",
-                        labels: {
-                            colors: undefined,
-                        },
                     },
                     tooltip: {
                         y: {

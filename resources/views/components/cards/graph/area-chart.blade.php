@@ -3,8 +3,12 @@
     'data' => [],
 ])
 
+@php
+    $categories = $data['categories'] ?? [];
+    $series = $data['series'] ?? [];
+@endphp
+
 <div class="w-full bg-neutral-primary-soft dark:bg-slate-900">
-    {{-- Container do gráfico --}}
     <div id="{{ $chartId }}"></div>
 </div>
 
@@ -12,14 +16,13 @@
     <script>
         (function() {
             const chartId = @json($chartId);
-            const categories = @json($data['categories']);
-            const series = @json($data['series']);
+            const categories = @json($categories);
+            const series = @json($series);
 
             function initChart() {
                 const el = document.getElementById(chartId);
                 if (!el || !window.ApexCharts) return;
 
-                // Cores do tema
                 const getBrandColor = () => {
                     const computedStyle = getComputedStyle(document.documentElement);
                     return computedStyle.getPropertyValue('--color-fg-brand').trim() || "#1447E6";
@@ -69,7 +72,7 @@
                         sparkline: {
                             enabled: false
                         },
-                        height: 210, // 👈 altura fixa pra não sumir
+                        height: 210,
                         width: "100%",
                         type: "area",
                         fontFamily: "Inter, sans-serif",
@@ -118,7 +121,6 @@
                 if (window.ApexCharts) {
                     initChart();
                 } else {
-                    // 👇 tenta de novo até o ApexCharts ser carregado
                     setTimeout(waitForApex, 50);
                 }
             }

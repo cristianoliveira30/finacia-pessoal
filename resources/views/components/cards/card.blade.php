@@ -2,8 +2,6 @@
     'id' => 'card-' . uniqid(),
     'title' => 'Relatório',
     'chart' => [],
-    'total' => null,
-    'variation' => null,
     'chartType' => 'area', // 👈 novo: tipo de gráfico (area, pie, ...)
     'chartId' => null, // 👈 opcional: permite sobrescrever o id do gráfico
 ])
@@ -74,13 +72,25 @@
         {{-- Área do Gráfico / Tabela --}}
         <div>
             <div data-card-section="chart">
-                @if ($chartType === 'pie')
-                    {{-- Gráfico de Pizza --}}
-                    <x-cards.graph.pie-chart :chart-id="$resolvedChartId" :data="$chart" />
-                @else
-                    {{-- Padrão: Área --}}
-                    <x-cards.graph.area-chart :chart-id="$resolvedChartId" :data="$chart" />
-                @endif
+                @switch($chartType)
+                    @case('area')
+                        <x-cards.graph.area-chart :data="$chart" />
+                        @break
+                    @case('pie')
+                    <x-cards.graph.pie-chart :data="$chart" />
+                        @break
+                    @case('column')
+                        <x-cards.graph.column-chart :data="$chart" />
+                        @break
+                    @case('bar')
+                        <x-cards.graph.bar-chart :data="$chart" />
+                        @break
+                    @case('radial')
+                        <x-cards.graph.radial-chart :data="$chart" />
+                        @break
+                    @default
+
+                @endswitch
             </div>
 
             <div data-card-section="table" class="hidden">
@@ -95,7 +105,7 @@
             class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-3 border-t border-slate-100 dark:border-slate-700/80">
             <div class="text-xs md:text-sm text-slate-500 dark:text-slate-400">
                 <span class="font-medium text-slate-600 dark:text-slate-200">
-                    Relatório gerado em:
+                    Gerado em:
                 </span>
                 {{ date('d/m/Y') }}
             </div>
@@ -146,13 +156,12 @@
                 <div class="relative">
                     <button id="{{ $downloadButtonId }}" data-dropdown-toggle="{{ $downloadDropId }}" type="button"
                         class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium
-                               rounded-lg border w-33 justify-center
-                               bg-slate-50 text-slate-600 border-slate-200
-                               hover:bg-slate-100 hover:text-slate-900
-                               focus:outline-none focus:ring-2 focus:ring-slate-300
-                               dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600
-                               dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40">
-                        <span>Download</span>
+                            rounded-lg border justify-center
+                            bg-slate-50 text-slate-600 border-slate-200
+                            hover:bg-slate-100 hover:text-slate-900
+                            focus:outline-none focus:ring-2 focus:ring-slate-300
+                            dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600
+                            dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40">
                         <x-bi-download class="w-4 h-4" />
                     </button>
 
@@ -167,7 +176,6 @@
                                     class="flex items-center gap-2 px-4 py-2
                                           hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
                                     <x-bi-filetype-pdf class="w-4 h-4 shrink-0" />
-                                    <span>Baixar PDF</span>
                                 </a>
                             </li>
                             <li>
@@ -175,7 +183,6 @@
                                     class="flex items-center gap-2 px-4 py-2
                                           hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
                                     <x-bi-filetype-csv class="w-4 h-4 shrink-0" />
-                                    <span>Baixar CSV</span>
                                 </a>
                             </li>
                         </ul>
