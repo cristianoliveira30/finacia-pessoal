@@ -179,9 +179,9 @@
                 <ul class="space-y-1">
                     {{-- DASHBOARD --}}
                     <li>
-                        <a href="#"
-                           class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5"
-                           data-tooltip="Dashboard">
+                        <a href="{{ route('home') }}"
+                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
+                            data-tooltip="Dashboard">
                             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor" stroke-width="2" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -217,8 +217,8 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="usuario"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
@@ -376,15 +376,15 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{ route('usuario') }}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                   d="M12 6v12m6-6H6"/>
                                         </svg>
-                                        <span class="inline-flex h-4 w-1 rounded-full bg-amber-400"></span>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-sky-400"></span>
                                         <span>Adicionar</span>
                                     </a>
                                     <a href="#"
