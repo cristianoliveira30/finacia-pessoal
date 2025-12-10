@@ -217,7 +217,7 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="usuario"
+                                    <a href="{{ route('usuario.cadastro') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
@@ -228,8 +228,8 @@
                                         <span class="inline-flex h-4 w-1 rounded-full bg-sky-400"></span>
                                         <span>Adicionar</span>
                                     </a>
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{ route('usuario.buscar') }}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
@@ -237,7 +237,7 @@
                                                   d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                         <span class="inline-flex h-4 w-1 rounded-full bg-sky-400"></span>
-                                        <span>Buscar / Editar</span>
+                                        <span>Buscar</span>
                                     </a>
                                 </div>
                             </div>
@@ -376,7 +376,7 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="{{ route('usuario') }}"
+                                    <a href="#"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"

@@ -7,4 +7,6 @@ Route::get('/', function () {
 });
 
 Route::get('/home', fn() => view('home'))->name('home');
-Route::get('/usuario', fn() => view('usuario'))->name('usuario');
+// rotas de usuario
+Route::get('/usuario/cadastro', fn() => view('usuario.cadastro'))->name('usuario.cadastro');
+Route::get('/usuario-buscar', fn() => view('usuario.buscar'))->name('usuario.buscar');
