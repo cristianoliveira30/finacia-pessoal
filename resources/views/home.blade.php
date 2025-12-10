@@ -71,16 +71,19 @@
                 :chart="$pieChartData" chart-type="pie" />
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+
+        <x-cards.card id="relatorio-vendas" title="Vendas da Semana" link='eleitorDia' :chart="$chartData" />
+
+        <x-cards.card id="relatorio-dias" title="Distribuição por Dia" :chart="$columnChartData" chart-type="column" />
+
+
         <x-cards.card id="progresso-time" title="Progresso do Time" :chart="$radialChartData" chart-type="radial" />
 
             <x-cards.card id="relatorio-mes" title="Distribuição por Mês"
                 :chart="$barChartData" chart-type="bar" />
 
-        <x-cards.card id="relatorio-vendas" title="Vendas da Semana" :chart="$chartData" />
-
-        <x-cards.card id="relatorio-dias" title="Distribuição por Dia" :chart="$columnChartData" chart-type="column" />
-
         <x-cards.card id="relatorio-mes" title="Distribuição por Mês" :chart="$barChartData" chart-type="bar" />
+
     </div>
 
 </x-layouts.app>

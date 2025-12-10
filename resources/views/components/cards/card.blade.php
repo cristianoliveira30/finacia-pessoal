@@ -2,8 +2,8 @@
     'id' => 'card-' . uniqid(),
     'title' => 'Relatório',
     'chart' => [],
-    'chartType' => 'area', // 👈 novo: tipo de gráfico (area, pie, ...)
-    'chartId' => null, // 👈 opcional: permite sobrescrever o id do gráfico
+    'chartType' => 'area',
+    'chartId' => null,
 ])
 
 @php
@@ -13,28 +13,38 @@
     $downloadDropId = $id . '-download-dropdown';
     $tableId = $id . '-datatable';
 
+    // ID para o corpo do accordion (conteúdo principal que será ocultado)
+    $accordionBodyId = $id . '-accordion-body';
+
+    // ID exclusivo para a seção de filtros
+    $filterSectionId = $id . '-filter-section';
+
+    // NOVO: ID exclusivo para a seção de IA
+    $aiSectionId = $id . '-ai-section';
+
     $resolvedChartId = $chartId ?: $id . '-chart';
 @endphp
 
-<div id="{{ $id }}"
+{{-- Adicionado data-accordion="collapse" para inicializar o comportamento do Flowbite neste container --}}
+<div id="{{ $id }}" data-accordion="collapse"
     class="relative w-full overflow-hidden h-fit transition-all duration-100 ease-in-out
            rounded-2xl border border-slate-200 bg-blue-50 shadow-sm
            dark:border-slate-700
            dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-sky-900">
 
-    {{-- glows omitidos pra encurtar --}}
-
     <div class="relative z-10">
 
         {{-- Topo --}}
-        <div class="flex justify-between items-start gap-4 p-3">
+        <div class="flex justify-between items-center gap-4 p-3">
             <div class="space-y-2">
                 <h5 class="text-lg md:text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-50">
                     {{ $title }}
                 </h5>
             </div>
 
-            <div class="space-y-2 gap-2 flex justify-center items-center">
+            <div class="flex items-center gap-2">
+
+                {{-- Toggle Gráfico/Tabela --}}
                 <div
                     class="inline-flex rounded-xl m-0 border border-slate-200 bg-slate-50 overflow-hidden dark:border-slate-700 dark:bg-slate-900/60">
                     <button type="button" data-card-view-toggle="{{ $id }}" data-view="chart"
@@ -46,6 +56,7 @@
                        dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
                         <x-bi-graph-up />
                     </button>
+
                     <button type="button" data-card-view-toggle="{{ $id }}" data-view="table"
                         class="text-xs px-3 py-2 font-medium
                        bg-white text-slate-600
@@ -56,142 +67,282 @@
                         <x-bi-table />
                     </button>
                 </div>
+
+                {{-- Botão Expandir Tela Cheia --}}
                 <button type="button" id="{{ $id }}-btn-expand" onclick="toggleExpand('{{ $id }}')"
                     data-tooltip-target="tooltip-recarregar"
+                    class="text-xs px-3 py-2 font-medium
+                   bg-white text-slate-600 border border-slate-200 rounded-lg
+                   hover:bg-slate-50 hover:text-slate-900
+                   focus:outline-none focus:ring-2 focus:ring-slate-300
+                   dark:bg-slate-800/80 dark:text-slate-200 dark:border-slate-600
+                   dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
+                    <x-bi-arrows-fullscreen />
+                </button>
+
+                {{-- Botão Collapse Card (Principal) --}}
+                <button type="button" data-accordion-target="#{{ $accordionBodyId }}" aria-expanded="false"
+                    aria-controls="{{ $accordionBodyId }}"
                     class="text-xs px-3 py-2 font-medium
                     bg-white text-slate-600 border border-slate-200 rounded-lg
                     hover:bg-slate-50 hover:text-slate-900
                     focus:outline-none focus:ring-2 focus:ring-slate-300
                     dark:bg-slate-800/80 dark:text-slate-200 dark:border-slate-600
                     dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
-                    <x-bi-arrows-fullscreen />
+                    <x-bi-caret-down-fill class="w-3 h-3 shrink-0 transition-transform duration-200"
+                        data-accordion-icon />
                 </button>
             </div>
         </div>
 
-        {{-- Área do Gráfico / Tabela --}}
-        <div>
-            <div data-card-section="chart">
-                @switch($chartType)
-                    @case('area')
-                        <x-cards.graph.area-chart :data="$chart" />
+        {{-- WRAPPER DO ACCORDION: Envolve gráfico, filtros, IA e footer --}}
+        <div id="{{ $accordionBodyId }}" class="hidden" aria-labelledby="{{ $id }}-collapse-heading">
+
+            {{-- Área do Gráfico / Tabela --}}
+            <div>
+                <div data-card-section="chart">
+                    @switch($chartType)
+                        @case('area')
+                            <x-cards.graph.area-chart :data="$chart" />
                         @break
-                    @case('pie')
-                    <x-cards.graph.pie-chart :data="$chart" />
+
+                        @case('pie')
+                            <x-cards.graph.pie-chart :data="$chart" />
                         @break
-                    @case('column')
-                        <x-cards.graph.column-chart :data="$chart" />
+
+                        @case('column')
+                            <x-cards.graph.column-chart :data="$chart" />
                         @break
-                    @case('bar')
-                        <x-cards.graph.bar-chart :data="$chart" />
+
+                        @case('bar')
+                            <x-cards.graph.bar-chart :data="$chart" />
                         @break
-                    @case('radial')
-                        <x-cards.graph.radial-chart :data="$chart" />
+
+                        @case('radial')
+                            <x-cards.graph.radial-chart :data="$chart" />
                         @break
-                    @default
 
-                @endswitch
-            </div>
-
-            <div data-card-section="table" class="hidden">
-                <x-cards.graph.table :table-id="$tableId" :chart="$chart" />
-            </div>
-        </div>
-
-
-
-        {{-- Footer: Ações de Download --}}
-        <div
-            class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-3 border-t border-slate-100 dark:border-slate-700/80">
-            <div class="text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                <span class="font-medium text-slate-600 dark:text-slate-200">
-                    Gerado em:
-                </span>
-                {{ date('d/m/Y') }}
-            </div>
-
-            <div class="flex items-center gap-2">
-                @php
-                    $tooltipId = $id . '-tooltip-recarregar';
-                @endphp
-                <button type="button" data-tooltip-target="{{ $tooltipId }}" data-tooltip-placement="top"
-                    class="text-xs px-3 py-2 font-medium
-                    bg-sky-500 text-white border border-slate-200 rounded-lg
-                    hover:bg-sky-600 hover:text-white
-                    focus:outline-none focus:ring-2 focus:ring-sky-300
-                    dark:bg-sky-800/80 dark:border-slate-600
-                    dark:hover:bg-sky-700 dark:hover:text-white dark:focus:ring-sky-500/40">
-                    <x-bi-arrow-clockwise />
-                </button>
-
-                <div id="{{ $tooltipId }}" role="tooltip"
-                    class="absolute z-20 invisible inline-block px-3 py-2 text-xs font-medium
-                    text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm
-                    opacity-0 tooltip dark:bg-gray-700">
-                    Recarregar gráfico
-                    <div class="tooltip-arrow" data-popper-arrow></div>
+                        @default
+                    @endswitch
                 </div>
 
-                <button type="button"
-                    class="text-xs px-3 py-2 font-medium
+                <div data-card-section="table" class="hidden">
+                    <x-cards.graph.table :table-id="$tableId" :chart="$chart" />
+                </div>
+            </div>
+
+            {{-- Seção de Filtros (Collapsible) --}}
+            <div id="{{ $filterSectionId }}" class="hidden border-t border-slate-100 dark:border-slate-700/80 p-4">
+                <div class="space-y-4">
+                    <h6 class="text-sm font-medium text-slate-900 dark:text-slate-200">
+                        Período de Cadastro
+                    </h6>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label for="{{ $id }}-start-date"
+                                class="block text-xs font-medium text-slate-500 dark:text-slate-400">
+                                De
+                            </label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-slate-500 dark:text-slate-400">
+                                    <x-bi-calendar class="w-3.5 h-3.5" />
+                                </div>
+                                <input type="text" id="{{ $id }}-start-date" placeholder="dd / mm / aaaa"
+                                    class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg 
+                                           focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5 
+                                           dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 
+                                           dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label for="{{ $id }}-end-date"
+                                class="block text-xs font-medium text-slate-500 dark:text-slate-400">
+                                Até
+                            </label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-slate-500 dark:text-slate-400">
+                                    <x-bi-calendar class="w-3.5 h-3.5" />
+                                </div>
+                                <input type="text" id="{{ $id }}-end-date" placeholder="dd / mm / aaaa"
+                                    class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg 
+                                           focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5 
+                                           dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 
+                                           dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="button"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
+                                   font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 
+                                   dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Aplicar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- NOVO: Seção de IA (Collapsible) --}}
+            <div id="{{ $aiSectionId }}" class="hidden border-t border-slate-100 dark:border-slate-700/80 p-4">
+                <div class="space-y-4">
+                    <h6 class="text-sm font-medium text-slate-900 dark:text-slate-200">
+                        Assistente Virtual
+                    </h6>
+
+                    {{-- Input Prompt (Tamanho Fixo) --}}
+                    <div class="space-y-2">
+                        <label for="{{ $id }}-ai-prompt"
+                            class="block text-xs font-medium text-slate-500 dark:text-slate-400">
+                            O que você deseja saber sobre este gráfico?
+                        </label>
+                        <textarea id="{{ $id }}-ai-prompt" rows="2"
+                            class="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 rounded-lg border border-slate-300 
+                                   focus:ring-sky-500 focus:border-sky-500 resize-none
+                                   dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 
+                                   dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500"
+                            placeholder="Digite sua pergunta aqui..."></textarea>
+                    </div>
+
+                    {{-- Output Resposta (Bloqueada/Readonly) --}}
+                    <div class="space-y-2">
+                        <label for="{{ $id }}-ai-response"
+                            class="block text-xs font-medium text-slate-500 dark:text-slate-400">
+                            Resposta da IA
+                        </label>
+                        <textarea id="{{ $id }}-ai-response" rows="4" readonly
+                            class="block p-2.5 w-full text-sm text-slate-600 bg-slate-100 rounded-lg border border-slate-200 
+                                   cursor-not-allowed resize-none
+                                   dark:bg-slate-900/50 dark:border-slate-700 dark:placeholder-slate-500 
+                                   dark:text-slate-400 focus:ring-0 focus:border-slate-300"
+                            placeholder="A resposta aparecerá aqui..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="button"
+                            class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 
+                                   font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center gap-2
+                                   dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                            <x-bi-stars class="w-3.5 h-3.5" />
+                            Perguntar à IA
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Footer: Ações de Download --}}
+            <div
+                class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-3 border-t border-slate-100 dark:border-slate-700/80">
+                <div class="text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                    <span class="font-medium text-slate-600 dark:text-slate-200">
+                        Gerado em:
+                    </span>
+                    {{ date('d/m/Y') }}
+                </div>
+
+                <div class="flex items-center gap-2">
+                    @php
+                        $tooltipId = $id . '-tooltip-recarregar';
+                    @endphp
+                    {{-- 
+                        MODIFICADO: Botão Refresh
+                        - Adicionado ID para o JavaScript encontrar
+                        - Adicionado onclick chamando a função Refresh do card.js
+                    --}}
+                    <button type="button" id="{{ $id }}-btn-refresh"
+                        onclick="Refresh('{{ $id }}')" data-tooltip-target="{{ $tooltipId }}"
+                        data-tooltip-placement="top"
+                        class="text-xs px-3 py-2 font-medium
+                       bg-sky-500 text-white border border-slate-200 rounded-lg
+                       hover:bg-sky-600 hover:text-white
+                       focus:outline-none focus:ring-2 focus:ring-sky-300
+                       dark:bg-sky-800/80 dark:border-slate-600
+                       dark:hover:bg-sky-700 dark:hover:text-white dark:focus:ring-sky-500/40">
+                        <x-bi-arrow-clockwise />
+                    </button>
+
+                    <div id="{{ $tooltipId }}" role="tooltip"
+                        class="absolute z-20 invisible inline-block px-3 py-2 text-xs font-medium
+                       text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm
+                       opacity-0 tooltip dark:bg-gray-700">
+                        Recarregar gráfico
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+
+                    {{-- Botão IA --}}
+                    <button type="button" data-collapse-toggle="{{ $aiSectionId }}"
+                        aria-controls="{{ $aiSectionId }}" aria-expanded="false"
+                        class="text-xs px-3 py-2 font-medium
                            bg-white text-slate-600 border border-slate-200 rounded-lg
                            hover:bg-slate-50 hover:text-slate-900
                            focus:outline-none focus:ring-2 focus:ring-slate-300
                            dark:bg-slate-800/80 dark:text-slate-200 dark:border-slate-600
                            dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
-                    <x-bi-openai />
-                </button>
-
-                <button type="button"
-                    class="text-xs px-3 py-2 font-medium
-                    bg-white text-slate-600 border border-slate-200 rounded-lg
-                    hover:bg-slate-50 hover:text-slate-900
-                    focus:outline-none focus:ring-2 focus:ring-slate-300
-                    dark:bg-slate-800/80 dark:text-slate-200 dark:border-slate-600
-                    dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
-                    <x-bi-funnel-fill />
-                </button>
-
-                {{-- Dropdown de Download --}}
-                <div class="relative">
-                    <button id="{{ $downloadButtonId }}" data-dropdown-toggle="{{ $downloadDropId }}" type="button"
-                        class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium
-                            rounded-lg border justify-center
-                            bg-slate-50 text-slate-600 border-slate-200
-                            hover:bg-slate-100 hover:text-slate-900
-                            focus:outline-none focus:ring-2 focus:ring-slate-300
-                            dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600
-                            dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40">
-                        <x-bi-download class="w-4 h-4" />
+                        <x-bi-openai />
                     </button>
 
-                    <div id="{{ $downloadDropId }}"
-                        class="z-20 hidden mt-2 bg-white divide-y divide-slate-100 rounded-lg shadow-lg
-                               border border-slate-100
-                               dark:bg-slate-800 dark:divide-slate-700 dark:border-slate-700">
-                        <ul class="py-2 text-sm text-slate-700 dark:text-slate-200"
-                            aria-labelledby="{{ $downloadButtonId }}">
-                            <li>
-                                <a href="#"
-                                    class="flex items-center gap-2 px-4 py-2
-                                          hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
-                                    <x-bi-filetype-pdf class="w-4 h-4 shrink-0" />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="flex items-center gap-2 px-4 py-2
-                                          hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
-                                    <x-bi-filetype-csv class="w-4 h-4 shrink-0" />
-                                </a>
-                            </li>
-                        </ul>
+                    {{-- Botão Funil (Filtros) --}}
+                    <button type="button" data-collapse-toggle="{{ $filterSectionId }}"
+                        aria-controls="{{ $filterSectionId }}" aria-expanded="false"
+                        class="text-xs px-3 py-2 font-medium
+                       bg-white text-slate-600 border border-slate-200 rounded-lg
+                       hover:bg-slate-50 hover:text-slate-900
+                       focus:outline-none focus:ring-2 focus:ring-slate-300
+                       dark:bg-slate-800/80 dark:text-slate-200 dark:border-slate-600
+                       dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
+                        <x-bi-funnel-fill />
+                    </button>
+
+                    {{-- Dropdown de Download --}}
+                    <div class="relative">
+                        <button id="{{ $downloadButtonId }}" data-dropdown-toggle="{{ $downloadDropId }}"
+                            type="button"
+                            class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium
+                               rounded-lg border justify-center
+                               bg-slate-50 text-slate-600 border-slate-200
+                               hover:bg-slate-100 hover:text-slate-900
+                               focus:outline-none focus:ring-2 focus:ring-slate-300
+                               dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600
+                               dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40">
+                            <x-bi-download class="w-4 h-4" />
+                        </button>
+
+                        <div id="{{ $downloadDropId }}"
+                            class="z-20 hidden mt-2 bg-white divide-y divide-slate-100 rounded-lg shadow-lg
+                                   border border-slate-100
+                                   dark:bg-slate-800 dark:divide-slate-700 dark:border-slate-700">
+                            <ul class="py-2 text-sm text-slate-700 dark:text-slate-200"
+                                aria-labelledby="{{ $downloadButtonId }}">
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center gap-2 px-4 py-2
+                                           hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                        <x-bi-filetype-pdf class="w-4 h-4 shrink-0" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center gap-2 px-4 py-2
+                                           hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                        <x-bi-filetype-csv class="w-4 h-4 shrink-0" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        {{-- FIM DO WRAPPER DO ACCORDION --}}
+
     </div>
 </div>
+
+{{-- Scripts e Listeners --}}
 @once
     @push('scripts')
         <script>
