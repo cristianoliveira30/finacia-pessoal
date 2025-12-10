@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title ?? config('app.name') }}</title>
-    <link rel="icon" href="{{asset('assets/img/para.png')}}">
+    <link rel="icon" href="{{ asset('assets/img/para.png') }}">
     @vite(['resources/js/app.js', 'resources/css/app.css'])
     @stack('head')
     @stack('styles')
@@ -61,69 +62,79 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+            box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
             z-index: 10;
         }
 
         /* Estado Checked (DARK MODE) */
-        .ui-switch input:checked + .slider .circle {
+        .ui-switch input:checked+.slider .circle {
             left: calc(100% - var(--circle-diameter));
             /* Ícone LUA */
             background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHdpZHRoPSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxwYXRoIGZpbGw9IiNmZmYiCiAgICAgICAgZD0iTTQuMiAyLjVsLS43IDEuOC0xLjguNyAxLjguNy43IDEuOC42LTEuOEw2LjcgNWwtMS45LS43LS42LTEuOHptMTUgOC4zYTYuNyA2LjcgMCAxMS02LjYtNi42IDUuOCA1LjggMCAwMDYuNiA2LjZ6IiAvPgo8L3N2Zz4=");
         }
     </style>
 </head>
+
 <body class="min-h-screen antialiased">
-    <div class="min-h-dvh lg:flex bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
-        @include('components.layouts.app.sidebar')
+    <div class="min-h-dvh flex flex-col bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+        {{-- HEADER SEMPRE NO TOPO --}}
+        @include('components.layouts.app.header')
 
-        <div class="flex-1 min-w-0 flex flex-col">
-            @include('components.layouts.app.header')
+        {{-- “Shell” da aplicação: onde o sidebar vai ficar absoluto --}}
+        <div id="app-shell" class="relative flex-1 overflow-y-auto">
+            {{-- SIDEBAR (overlay, absoluto dentro do shell) --}}
+            @include('components.layouts.app.sidebar')
 
-            <main class="flex-1 min-w-0">
+            {{-- CONTEÚDO PRINCIPAL --}}
+            <main class="min-h-full px-2 sm:px-4 lg:px-6 lg:pl-[1.5rem] transition-[padding-left] duration-300">
                 {{ $slot ?? '' }}
                 @yield('content')
             </main>
+
             @include('components.layouts.app.footer')
         </div>
     </div>
+
+
+
     @stack('scripts')
     <script>
-            // Seleciona todos os inputs do toggle (Mobile e Desktop)
-            const themeToggles = document.querySelectorAll('.theme-toggle-input');
+        // Seleciona todos os inputs do toggle (Mobile e Desktop)
+        const themeToggles = document.querySelectorAll('.theme-toggle-input');
 
-            function applyTheme(isDark) {
-                if (isDark) {
-                    // Ativar MODO ESCURO
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                    // Checkbox Marcado (Lua/Azul)
-                    themeToggles.forEach(el => el.checked = true);
-                } else {
-                    // Ativar MODO CLARO (Branco)
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                    // Checkbox Desmarcado (Sol/Cinza)
-                    themeToggles.forEach(el => el.checked = false);
-                }
-            }
-
-            // 1. Inicialização:
-            // Se o usuário já escolheu 'light' antes, respeita.
-            // Caso contrário (primeira visita ou 'dark'), força o tema ESCURO.
-            if (localStorage.getItem('color-theme') === 'light') {
-                applyTheme(false);
+        function applyTheme(isDark) {
+            if (isDark) {
+                // Ativar MODO ESCURO
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                // Checkbox Marcado (Lua/Azul)
+                themeToggles.forEach(el => el.checked = true);
             } else {
-                applyTheme(true); // Padrão Dark
+                // Ativar MODO CLARO (Branco)
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                // Checkbox Desmarcado (Sol/Cinza)
+                themeToggles.forEach(el => el.checked = false);
             }
+        }
 
-            // 2. Evento de Clique
-            themeToggles.forEach(toggle => {
-                toggle.addEventListener('change', (e) => {
-                    // Se marcou -> Dark. Se desmarcou -> Light.
-                    applyTheme(e.target.checked);
-                });
+        // 1. Inicialização:
+        // Se o usuário já escolheu 'light' antes, respeita.
+        // Caso contrário (primeira visita ou 'dark'), força o tema ESCURO.
+        if (localStorage.getItem('color-theme') === 'light') {
+            applyTheme(false);
+        } else {
+            applyTheme(true); // Padrão Dark
+        }
+
+        // 2. Evento de Clique
+        themeToggles.forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                // Se marcou -> Dark. Se desmarcou -> Light.
+                applyTheme(e.target.checked);
             });
-        </script>
+        });
+    </script>
 </body>
+
 </html>

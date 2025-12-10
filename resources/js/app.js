@@ -11,3 +11,4 @@ window.toggleExpand = toggleExpand;
 document.addEventListener('DOMContentLoaded', () => {
     initFlowbite();
 });
+

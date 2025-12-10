@@ -1,17 +1,21 @@
-<nav class="relative top-0 z-50 w-full bg-neutral-900 dark:bg-neutral-900 border-b border-default">
+<nav class="relative top-0 z-40 w-full bg-neutral-900 dark:bg-neutral-900 border-b border-default">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
-                <button data-drawer-target="top-bar-sidebar" data-drawer-toggle="top-bar-sidebar"
-                    aria-controls="top-bar-sidebar" type="button"
-                    class="sm:hidden text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none">
-                    <span class="sr-only">Open sidebar</span>
+
+                {{-- BOTÃO ÚNICO PARA ABRIR/COLAPSAR O SIDEBAR (MOBILE + DESKTOP) --}}
+                <button id="header-sidebar-toggle" type="button" aria-expanded="false"
+                    class="text-heading bg-transparent box-border border border-transparent
+           hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary
+           font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
+                    <span class="sr-only">Alternar sidebar</span>
                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                         height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                             d="M5 7h14M5 12h14M5 17h10" />
                     </svg>
                 </button>
+
                 <a href="#" class="flex ms-2 md:me-6 me-2">
                     <img src="{{ asset('assets/img/para.png') }}" class="h-6 me-3" alt="pará Logo" />
                     <span
@@ -38,45 +42,32 @@
                         class="z-20 hidden mt-2 bg-white divide-y divide-slate-100 rounded-lg shadow-lg w-44
                         border border-slate-100 dark:bg-slate-800 dark:divide-slate-700 dark:border-slate-700">
                         <ul class="py-2 text-sm text-slate-700 dark:text-slate-200" aria-labelledby="btn-tipotempo">
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
-                                    Hoje
-                                </a>
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Hoje</a>
                             </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
-                                    Ontem
-                                </a>
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Ontem</a>
                             </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
-                                    Semana Atual
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
-                                    Semana Passada
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
-                                    Mês Atual
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
-                                    Mês Passado
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
-                                    Período Personalizado
-                                </a>
-                            </li>
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana
+                                    Atual</a></li>
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana
+                                    Passada</a></li>
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês
+                                    Atual</a></li>
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês
+                                    Passado</a></li>
+                            <li><a href="#"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Período
+                                    Personalizado</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
+
             <div class="flex items-center">
                 <div class="flex items-center ms-3">
                     <div>
@@ -100,18 +91,14 @@
                         </div>
                         <ul class="p-2 text-sm text-body font-medium" role="none">
                             <li>
-                                {{-- Container flex para alinhar o botão e o texto --}}
                                 <div
                                     class="flex items-center px-4 py-2 hover:bg-neutral-tertiary-medium rounded cursor-pointer">
-
-                                    {{-- Estrutura do Botão Personalizado --}}
                                     <label class="ui-switch mr-3">
                                         <input type="checkbox" class="theme-toggle-input">
                                         <div class="slider">
                                             <div class="circle"></div>
                                         </div>
                                     </label>
-
                                     <span class="text-sm font-medium text-heading select-none">Trocar tema</span>
                                 </div>
                             </li>
@@ -134,48 +121,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </nav>
-
-<style>
-    /* keep transition and force width when collapsed (overrides Tailwind width classes) */
-    #top-bar-sidebar {
-        transition: width .18s ease;
-        overflow-x: hidden;
-    }
-
-    body.sidebar-collapsed #top-bar-sidebar {
-        width: 4rem !important;
-        overflow-x: hidden;
-    }
-
-    body.sidebar-collapsed #top-bar-sidebar .sidebar-label {
-        display: none;
-    }
-
-    /* prevent horizontal overflow and reduce paddings when collapsed */
-    body.sidebar-collapsed #top-bar-sidebar .overflow-y-auto {
-        padding-left: .375rem;
-        padding-right: .375rem;
-        overflow-x: hidden;
-    }
-
-    /* center icons and reduce anchor padding to avoid overflow */
-    body.sidebar-collapsed #top-bar-sidebar .overflow-y-auto a.flex.items-center {
-        padding-left: .375rem !important;
-        padding-right: .375rem !important;
-        justify-content: center;
-    }
-
-    /* ensure list and anchors don't force extra width */
-    body.sidebar-collapsed #top-bar-sidebar ul {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    body.sidebar-collapsed #top-bar-sidebar a {
-        white-space: nowrap;
-        min-width: 0;
-    }
-</style>

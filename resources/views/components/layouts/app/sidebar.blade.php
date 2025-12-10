@@ -1,79 +1,582 @@
-<aside id="top-bar-sidebar"
-    class="fixed lg:sticky top-0 left-0 z-40 w-64 h-screen transition-all duration-300 -translate-x-full lg:translate-x-0 bg-neutral-primary-soft dark:bg-gray-900 border-e border-default"
-    aria-label="Sidebar">
-    
-    <div class="h-full px-3 py-4 overflow-y-auto bg-sky-50 dark:bg-slate-900">
-        <button id="sidebar-collapse-btn" type="button" aria-expanded="true"
-            class="inline-flex text-heading dark:text-fg-brand bg-transparent border border-transparent dark:hover:bg-neutral-secondary-medium hover:bg-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none">
-            <span class="sr-only">Toggle sidebar</span>
-            <svg class="w-6 h-6 block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                    d="M5 7h14M5 12h14M5 17h10" />
-            </svg>
-        </button>
-
-        <ul class="space-y-2 font-medium mt-4">
-            <li>
-                <a href="#"
-                    class="flex items-center px-4 py-2.5 text-body rounded-base hover:bg-neutral-tertiary dark:hover:bg-slate-800 hover:text-fg-brand dark:hover:text-slate-100 group peer-checked:justify-center peer-checked:px-0">
-                    <svg class="w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z" />
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z" />
-                    </svg>
-                    <span class="ms-3 sidebar-label whitespace-nowrap">Dashboard</span>
-                </a>
-            </li>
-            {{-- Adicione outros itens aqui --}}
-        </ul>
-    </div>
-</aside>
-
-<script>
-    (function(){
-        const btn = document.getElementById('sidebar-collapse-btn');
-        const sidebar = document.getElementById('top-bar-sidebar');
-        
-        if(!btn || !sidebar) return;
-
-        // Recupera estado persistido apenas para Desktop
-        const persisted = localStorage.getItem('sidebarCollapsed');
-        if(window.innerWidth >= 1024 && persisted === 'true'){
-            document.body.classList.add('sidebar-collapsed');
-            btn.setAttribute('aria-expanded', 'false');
+{{-- CSS específico do sidebar --}}
+<style>
+    /* ===== LAYOUT QUANDO COLAPSADO (DESKTOP) ===== */
+    @media (min-width: 1024px) {
+        body.sidebar-collapsed #top-bar-sidebar {
+            width: 4.5rem;
         }
 
-        btn.addEventListener('click', function(e){
-            e.stopPropagation(); // Previne fechamento imediato se houver listener no body
-            
-            // Lógica Mobile (< 1024px)
-            if (window.innerWidth < 1024) {
-                // Alterna a classe que esconde a sidebar. 
-                // Se tiver -translate-x-full, ela está escondida. Se remover, ela aparece.
-                const isHidden = sidebar.classList.toggle('-translate-x-full');
-                btn.setAttribute('aria-expanded', String(!isHidden));
-            } 
-            // Lógica Desktop (>= 1024px)
-            else {
-                const collapsed = document.body.classList.toggle('sidebar-collapsed');
-                localStorage.setItem('sidebarCollapsed', collapsed);
-                btn.setAttribute('aria-expanded', String(!collapsed));
+        body.sidebar-collapsed #top-bar-sidebar .sidebar-label {
+            display: none;
+        }
+
+        body.sidebar-collapsed #top-bar-sidebar .sidebar-link {
+            justify-content: center;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+    }
+
+    #top-bar-sidebar {
+        overflow: visible;
+    }
+
+    #top-bar-sidebar nav {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+
+    /* ===== BASE DOS GRUPOS COM SUBMENU ===== */
+
+    .menu-group {
+        position: relative;
+    }
+
+    /* Faixa de cor atrás do item (sidebar aberta) */
+    .menu-group .menu-highlight {
+        position: absolute;
+        inset: 0.15rem 0.25rem;
+        border-radius: 0.75rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 150ms ease;
+    }
+
+    /* Mostra faixa colorida SÓ no hover, quando sidebar está aberta */
+    body:not(.sidebar-collapsed) .menu-group:hover .menu-highlight {
+        opacity: 1;
+    }
+
+    /* Esconde faixa quando sidebar está colapsada */
+    body.sidebar-collapsed .menu-group .menu-highlight {
+        display: none;
+    }
+
+    /* Chevron gira apenas quando aberto (sidebar aberta) */
+    .menu-group .chevron-icon {
+        transition: transform 150ms ease;
+    }
+
+    body:not(.sidebar-collapsed) .menu-group[data-open="true"] .chevron-icon {
+        transform: rotate(90deg);
+    }
+
+    /* ===== SUBMENUS ===== */
+
+    /* Regra geral: escondidos */
+    .submenu {
+        display: none !important;
+    }
+
+    /* Sidebar ABERTA: submenu embaixo do item quando aberto */
+    body:not(.sidebar-collapsed) .menu-group[data-open="true"]>.submenu {
+        display: block !important;
+        position: static;
+        padding-left: 2.25rem;
+        /* pl-9 */
+        padding-right: 0.75rem;
+        /* pr-3 */
+        margin-top: 0.25rem;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    body.sidebar-collapsed .menu-group>.submenu {
+        position: absolute;
+        top: 0;
+        left: calc(100% + 0.75rem);
+        min-width: 230px;
+        padding: 0.75rem 0.75rem;
+        margin-top: 0;
+        border-radius: 0.75rem;
+        background-color: #374151;
+        /* slate-700 */
+        box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.7);
+        z-index: 9999;
+        display: none !important;
+        /* sempre escondido por padrão */
+    }
+
+    /* Sidebar COLAPSADA: abre o card só no HOVER */
+    body.sidebar-collapsed .menu-group:hover>.submenu {
+        display: block !important;
+    }
+
+    body.sidebar-collapsed .sidebar-link[data-tooltip] {
+        position: relative;
+    }
+
+    body.sidebar-collapsed .sidebar-link[data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        left: calc(100% + 0.75rem);
+        top: 50%;
+        transform: translateY(-50%);
+        white-space: nowrap;
+        background-color: #4b5563;
+        /* slate-600 */
+        color: #f9fafb;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 150ms ease;
+        z-index: 9999;
+    }
+
+    body.sidebar-collapsed .sidebar-link[data-tooltip]:hover::after {
+        opacity: 1;
+    }
+
+    /* Popovers só aparecem quando o body tem a classe sidebar-collapsed */
+    .collapsed-popover-wrapper {
+        display: none;
+    }
+
+    body.sidebar-collapsed .collapsed-popover-wrapper {
+        display: block;
+    }
+</style>
+<aside id="top-bar-sidebar"
+    class="
+        absolute inset-y-0 left-0 z-40 w-64
+        -translate-x-full lg:translate-x-0
+        border-e border-slate-800 bg-slate-900 text-slate-100
+        transition-transform duration-300
+    "
+    aria-label="Sidebar">
+
+    <div class="h-full flex flex-col">
+        <div class="h-full flex flex-col">
+            {{-- Navegação --}}
+            <nav class="flex-1 px-2  pb-4 text-sm font-medium">
+                <ul class="space-y-1">
+
+                    {{-- DASHBOARD (sem submenu, só tooltip quando colapsado) --}}
+                    <li>
+                        <a href="#"
+                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
+                            data-tooltip="Dashboard">
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 12l9-9 9 9M4.5 10.5V21h15V10.5" />
+                            </svg>
+                            <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
+                        </a>
+                    </li>
+                    {{-- ========== USUÁRIOS ========== --}}
+                    <li class="menu-group" data-open="false">
+                        <div class="menu-highlight bg-sky-900/40 -z-10"></div>
+
+                        <button type="button"
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-slate-200"
+                            data-submenu-toggle="submenu-usuarios">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17 20v-2a4 4 0 00-3-3.87M9 4a3 3 0 110 6 3 3 0 010-6zm6 3a3 3 0 11-6 0m-3 9a4 4 0 013-3.87" />
+                                </svg>
+                                <span class="inline-flex h-6 w-1 rounded-full bg-sky-400"></span>
+                                <span class="sidebar-label whitespace-nowrap">Usuários</span>
+                            </div>
+                            <svg class="chevron-icon w-3 h-3 text-sky-300" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+
+                        <div id="submenu-usuarios" class="submenu mt-1 pl-9 pr-3 p-1 text-xs text-slate-200">
+                            <div class="flex gap-3">
+                                <span class="w-px bg-slate-700 ml-2"></span>
+                                <div class="space-y-1">
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-sky-400"></span>
+                                        <span>Adicionar</span>
+                                    </a>
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-sky-400"></span>
+                                        <span>Buscar / Editar</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {{-- ========== AGENDA ========== --}}
+                    <li class="menu-group" data-open="false">
+                        <div class="menu-highlight bg-violet-900/40 -z-10"></div>
+                        <button type="button"
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-slate-200"
+                            data-submenu-toggle="submenu-agenda">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z" />
+                                </svg>
+                                <span class="inline-flex h-6 w-1 rounded-full bg-violet-500"></span>
+                                <span class="sidebar-label whitespace-nowrap">Agenda</span>
+                            </div>
+                            <svg class="chevron-icon w-3 h-3 text-violet-300" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+
+                        <div id="submenu-agenda" class="submenu mt-1 p-1 pl-9 pr-3 text-xs text-slate-200">
+                            <div class="flex gap-3">
+                                <span class="w-px bg-slate-700 ml-2"></span>
+                                <div class="space-y-1">
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-violet-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-violet-400"></span>
+                                        <span>Agenda</span>
+                                    </a>
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-violet-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-violet-400"></span>
+                                        <span>Agenda pessoal</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    {{-- ========== ELEITORES ========== --}}
+                    <li class="menu-group" data-open="false">
+                        <div class="menu-highlight bg-emerald-900/40 -z-10"></div>
+
+                        <button type="button"
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-slate-200"
+                            data-submenu-toggle="submenu-eleitores">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 20a8 8 0 1116 0" />
+                                </svg>
+                                <span class="inline-flex h-6 w-1 rounded-full bg-emerald-400"></span>
+                                <span class="sidebar-label whitespace-nowrap">Eleitores</span>
+                            </div>
+                            <svg class="chevron-icon w-3 h-3 text-emerald-300" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+
+                        <div id="submenu-eleitores" class="submenu mt-1 pl-9 p-1 pr-3 text-xs text-slate-200">
+                            <div class="flex gap-3">
+                                <span class="w-px bg-slate-700 ml-2"></span>
+                                <div class="space-y-1">
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-emerald-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-emerald-400"></span>
+                                        <span>Adicionar</span>
+                                    </a>
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-emerald-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-emerald-400"></span>
+                                        <span>Buscar / Editar</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    {{-- ========== ATENDIMENTOS ========== --}}
+                    <li class="menu-group" data-open="false">
+                        <div class="menu-highlight bg-amber-900/40 -z-10"></div>
+
+                        <button type="button"
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-slate-200"
+                            data-submenu-toggle="submenu-atendimentos">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-3.5-.6L3 20l1.35-3.38A7.5 7.5 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                                <span class="inline-flex h-6 w-1 rounded-full bg-amber-400"></span>
+                                <span class="sidebar-label whitespace-nowrap">Atendimentos</span>
+                            </div>
+                            <svg class="chevron-icon w-3 h-3 text-amber-300" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+
+                        <div id="submenu-atendimentos" class="submenu mt-1 pl-9 p-1 pr-3 text-xs text-slate-200">
+                            <div class="flex gap-3">
+                                <span class="w-px bg-slate-700 ml-2"></span>
+                                <div class="space-y-1">
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-amber-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-amber-400"></span>
+                                        <span>Adicionar</span>
+                                    </a>
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-amber-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-amber-400"></span>
+                                        <span>Buscar</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    {{-- ========== AÇÕES ========== --}}
+                    <li class="menu-group" data-open="false">
+                        <div class="menu-highlight bg-rose-900/40 -z-10"></div>
+
+                        <button type="button"
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-slate-200"
+                            data-submenu-toggle="submenu-acoes">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                                </svg>
+                                <span class="inline-flex h-6 w-1 rounded-full bg-rose-500"></span>
+                                <span class="sidebar-label whitespace-nowrap">Ações</span>
+                            </div>
+                            <svg class="chevron-icon w-3 h-3 text-rose-300" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+
+                        <div id="submenu-acoes" class="submenu mt-1 pl-9 pr-3 p-1 text-xs text-slate-200">
+                            <div class="flex gap-3">
+                                <span class="w-px bg-slate-700 ml-2"></span>
+                                <div class="space-y-1">
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-rose-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-rose-500"></span>
+                                        <span>Adicionar</span>
+                                    </a>
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-rose-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-rose-500"></span>
+                                        <span>Buscar / Editar</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    {{-- ========== MENSAGENS ========== --}}
+                    <li class="menu-group" data-open="false">
+                        <div class="menu-highlight bg-cyan-900/40 -z-10"></div>
+
+                        <button type="button"
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-slate-200"
+                            data-submenu-toggle="submenu-mensagens">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M4 6h16v10H5.17L4 17.17V6z" />
+                                </svg>
+                                <span class="inline-flex h-6 w-1 rounded-full bg-cyan-400"></span>
+                                <span class="sidebar-label whitespace-nowrap">Mensagens</span>
+                            </div>
+                            <svg class="chevron-icon w-3 h-3 text-cyan-300" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+
+                        <div id="submenu-mensagens" class="submenu mt-1 pl-9 p-1 pr-3 text-xs text-slate-200">
+                            <div class="flex gap-3">
+                                <span class="w-px bg-slate-700 ml-2"></span>
+                                <div class="space-y-1">
+                                    <a href="#"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-cyan-300">
+                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                                        </svg>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-cyan-400"></span>
+                                        <span>Enviar</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+</aside>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('top-bar-sidebar');
+        const toggleBtn = document.getElementById('header-sidebar-toggle');
+        const STORAGE_KEY = 'sidebarCollapsed';
+
+        if (!sidebar || !toggleBtn) return;
+
+        function isDesktop() {
+            return window.innerWidth >= 1024;
+        }
+
+        // ===== ESTADO INICIAL =====
+        function applyInitialState() {
+            if (isDesktop()) {
+                const collapsed = localStorage.getItem(STORAGE_KEY) === 'true';
+
+                // desktop: sidebar sempre visível, só muda largura
+                sidebar.classList.remove('-translate-x-full');
+                document.body.classList.toggle('sidebar-collapsed', collapsed);
+                toggleBtn.setAttribute('aria-expanded', String(!collapsed));
+            } else {
+                // mobile: começa escondido como drawer
+                sidebar.classList.add('-translate-x-full');
+                document.body.classList.remove('sidebar-collapsed');
+                toggleBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        applyInitialState();
+
+        // ===== AÇÕES =====
+        function toggleMobileSidebar() {
+            const isHidden = sidebar.classList.contains('-translate-x-full');
+
+            if (isHidden) {
+                sidebar.classList.remove('-translate-x-full');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+            }
+
+            toggleBtn.setAttribute('aria-expanded', String(isHidden));
+        }
+
+        function toggleDesktopSidebar() {
+            const collapsed = document.body.classList.toggle('sidebar-collapsed');
+            localStorage.setItem(STORAGE_KEY, collapsed);
+            toggleBtn.setAttribute('aria-expanded', String(!collapsed));
+        }
+
+        // Clique no botão ÚNICO do header
+        toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (isDesktop()) {
+                toggleDesktopSidebar();
+            } else {
+                toggleMobileSidebar();
             }
         });
 
-        // Opcional: Fechar sidebar ao clicar fora (apenas Mobile)
-        document.addEventListener('click', function(e){
-            if(window.innerWidth < 1024 && 
-               !sidebar.classList.contains('-translate-x-full') && 
-               !sidebar.contains(e.target) && 
-               !btn.contains(e.target)) {
-                sidebar.classList.add('-translate-x-full');
-                btn.setAttribute('aria-expanded', 'false');
-            }
+        // Mobile: fecha drawer ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (isDesktop()) return;
+
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            if (!isOpen) return;
+
+            const clickInsideSidebar = sidebar.contains(e.target);
+            const clickOnBtn = toggleBtn.contains(e.target);
+            if (clickInsideSidebar || clickOnBtn) return;
+
+            sidebar.classList.add('-translate-x-full');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+        });
+
+        // Ajusta ao mudar o tamanho da tela
+        window.addEventListener('resize', function() {
+            applyInitialState();
+        });
+    });
+
+    // SUBMENUS (mantém igual)
+    (function() {
+        const toggles = document.querySelectorAll('[data-submenu-toggle]');
+
+        toggles.forEach((btn) => {
+            const submenuId = btn.getAttribute('data-submenu-toggle');
+            const submenu = document.getElementById(submenuId);
+            const group = btn.closest('.menu-group');
+
+            if (!submenu || !group) return;
+
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const isOpen = group.dataset.open === 'true';
+                group.dataset.open = isOpen ? 'false' : 'true';
+            });
         });
     })();
 </script>
