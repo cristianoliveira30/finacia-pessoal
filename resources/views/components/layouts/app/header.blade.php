@@ -8,11 +8,7 @@
            hover:bg-neutral-secondary-medium dark:focus:outline-2 dark:focus:outline-offset-2 dark:focus:ring-neutral-tertiary
            font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
                     <span class="sr-only">Alternar sidebar</span>
-                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" viewBox="0 0 24 24" fill="none">
-                        <path stroke="currentColor" {{-- usa a cor do texto do botão --}} stroke-linecap="round" stroke-width="2"
-                            d="M5 7h14M5 12h14M5 17h10" />
-                    </svg>
+                  <x-bi-justify-left class="w-6 h-6"/>
                 </button>
 
                 <a href="{{ route('home')}}" class="flex ms-2 md:me-6 me-2">

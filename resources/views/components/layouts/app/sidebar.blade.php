@@ -13,13 +13,19 @@
     }
 
     html.dark {
-        --sidebar-bg: #020617;          /* bg-slate-950 */
-        --sidebar-border: #1e293b;      /* border-slate-800 */
-        --sidebar-text: #e5e7eb;        /* text-slate-200 */
-        --sidebar-hover-bg: #111827;    /* bg-slate-900 */
-        --sidebar-submenu-bg: #374151;  /* bg-slate-700 */
+        --sidebar-bg: #020617;
+        /* bg-slate-950 */
+        --sidebar-border: #1e293b;
+        /* border-slate-800 */
+        --sidebar-text: #e5e7eb;
+        /* text-slate-200 */
+        --sidebar-hover-bg: #111827;
+        /* bg-slate-900 */
+        --sidebar-submenu-bg: #374151;
+        /* bg-slate-700 */
         --sidebar-submenu-border: #4b5563;
-        --sidebar-tooltip-bg: #4b5563;  /* bg-slate-600 */
+        --sidebar-tooltip-bg: #4b5563;
+        /* bg-slate-600 */
     }
 
     html:not(.dark) {
@@ -182,11 +188,7 @@
                         <a href="{{ route('home') }}"
                             class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
                             data-tooltip="Dashboard">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M3 12l9-9 9 9M4.5 10.5V21h15V10.5"/>
-                            </svg>
+                            <x-bi-tv class="w-5 h-5" />
                             <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
                         </a>
                     </li>
@@ -195,21 +197,17 @@
                     <li class="menu-group" data-open="false">
                         <div class="menu-highlight bg-sky-900/40 -z-10"></div>
                         <button type="button"
-                                class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
-                                data-submenu-toggle="submenu-usuarios">
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
+                            data-submenu-toggle="submenu-usuarios">
                             <div class="flex items-center gap-3">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M17 20v-2a4 4 0 00-3-3.87M9 4a3 3 0 110 6 3 3 0 010-6zm6 3a3 3 0 11-6 0m-3 9a4 4 0 013-3.87"/>
-                                </svg>
+                                <x-bi-person-lines-fill class="w-5 h-5" />
                                 <span class="inline-flex h-6 w-1 rounded-full bg-sky-400"></span>
                                 <span class="sidebar-label whitespace-nowrap">Usuários</span>
                             </div>
                             <svg class="chevron-icon w-3 h-3 text-sky-300" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                 aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
 
@@ -219,23 +217,13 @@
                                 <div class="space-y-1">
                                     <a href="{{ route('usuario/cadastro') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M12 6v12m6-6H6"/>
-                                        </svg>
+                                        <x-bi-plus-lg class="h-4 w-4" />
                                         <span class="inline-flex h-4 w-1 rounded-full bg-sky-400"></span>
                                         <span>Adicionar</span>
                                     </a>
                                     <a href="{{ route('usuario/buscar') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
+                                        <x-bi-pencil-square class="h-4 w-4" />
                                         <span class="inline-flex h-4 w-1 rounded-full bg-sky-400"></span>
                                         <span>Buscar</span>
                                     </a>
@@ -244,25 +232,21 @@
                         </div>
                     </li>
 
-                    {{-- AGENDA --}}
+                    {{-- calendario --}}
                     <li class="menu-group" data-open="false">
                         <div class="menu-highlight bg-violet-900/40 -z-10"></div>
                         <button type="button"
                             class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-slate-200"
                             data-submenu-toggle="submenu-calendario">
                             <div class="flex items-center gap-3">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z"/>
-                                </svg>
+                                <x-bi-calendar4-week class="h-5 w-5" />
                                 <span class="inline-flex h-6 w-1 rounded-full bg-violet-500"></span>
                                 <span class="sidebar-label whitespace-nowrap">Calendario</span>
                             </div>
                             <svg class="chevron-icon w-3 h-3 text-violet-300" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                 aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
 
@@ -270,25 +254,15 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="{{route('calendario/calendario')}}"
+                                    <a href="{{ route('calendario/calendario') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-violet-300">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z"/>
-                                        </svg>
+                                        <x-bi-calendar3 class="h-4 w-4" />
                                         <span class="inline-flex h-4 w-1 rounded-full bg-violet-400"></span>
                                         <span>Calendario</span>
                                     </a>
-                                    <a href="{{route('calendario/calendario-pessoal')}}"
+                                    <a href="{{ route('calendario/calendario-pessoal') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-violet-300">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z"/>
-                                        </svg>
+                                        <x-bi-calendar2-range-fill class="h-4 w-4" />
                                         <span class="inline-flex h-4 w-1 rounded-full bg-violet-400"></span>
                                         <span>Calendario pessoal</span>
                                     </a>
@@ -298,7 +272,7 @@
                     </li>
 
                     {{-- ELEITORES --}}
-                    <li class="menu-group" data-open="false">
+                    {{-- <li class="menu-group" data-open="false">
                         <div class="menu-highlight bg-emerald-900/40 -z-10"></div>
                         <button type="button"
                                 class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
@@ -354,21 +328,17 @@
                     <li class="menu-group" data-open="false">
                         <div class="menu-highlight bg-amber-900/40 -z-10"></div>
                         <button type="button"
-                                class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
-                                data-submenu-toggle="submenu-atendimentos">
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
+                            data-submenu-toggle="submenu-atendimentos">
                             <div class="flex items-center gap-3">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-3.5-.6L3 20l1.35-3.38A7.5 7.5 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                                </svg>
+                                <x-bi-chat-dots class="h-5 w-5" />
                                 <span class="inline-flex h-6 w-1 rounded-full bg-amber-400"></span>
                                 <span class="sidebar-label whitespace-nowrap">Atendimentos</span>
                             </div>
                             <svg class="chevron-icon w-3 h-3 text-amber-300" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                 aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
 
@@ -376,25 +346,15 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="{{ route('atendimento/cadastro' )}}"
+                                    <a href="{{ route('atendimento/cadastro') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-amber-300">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M12 6v12m6-6H6"/>
-                                        </svg>
+                                        <x-bi-plus-lg class="h-4 w-4" />
                                         <span class="inline-flex h-4 w-1 rounded-full bg-amber-400"></span>
                                         <span>Adicionar</span>
                                     </a>
-                                    <a href="{{ route('atendimento/buscar' )}}"
+                                    <a href="{{ route('atendimento/buscar') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-amber-300">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
+                                        <x-bi-pencil-square class="h-4 w-4" />
                                         <span class="inline-flex h-4 w-1 rounded-full bg-amber-400"></span>
                                         <span>Buscar</span>
                                     </a>
@@ -407,20 +367,17 @@
                     <li class="menu-group" data-open="false">
                         <div class="menu-highlight bg-rose-900/40 -z-10"></div>
                         <button type="button"
-                                class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
-                                data-submenu-toggle="submenu-acoes">
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
+                            data-submenu-toggle="submenu-acoes">
                             <div class="flex items-center gap-3">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/>
-                                </svg>
+                                <x-bi-stack class="w-5 h-5" />
                                 <span class="inline-flex h-6 w-1 rounded-full bg-rose-500"></span>
                                 <span class="sidebar-label whitespace-nowrap">Ações</span>
                             </div>
                             <svg class="chevron-icon w-3 h-3 text-rose-300" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                 aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
 
@@ -428,25 +385,15 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="{{ route('acoes/cadastro' )}}"
+                                    <a href="{{ route('acoes/cadastro') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-rose-300">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M12 6v12m6-6H6"/>
-                                        </svg>
+                                        <x-bi-plus-lg class="h-4 w-4" />
                                         <span class="inline-flex h-4 w-1 rounded-full bg-rose-500"></span>
                                         <span>Adicionar</span>
                                     </a>
-                                    <a href="{{ route('acoes/buscar' )}}"
+                                    <a href="{{ route('acoes/buscar') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-rose-300">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
+                                        <x-bi-pencil-square class="h-4 w-4" />
                                         <span class="inline-flex h-4 w-1 rounded-full bg-rose-500"></span>
                                         <span>Buscar</span>
                                     </a>
@@ -454,26 +401,21 @@
                             </div>
                         </div>
                     </li>
-
-                    {{-- MENSAGENS --}}
+                    {{--mensagens--}}
                     <li class="menu-group" data-open="false">
-                        <div class="menu-highlight bg-cyan-900/40 -z-10"></div>
+                        <div class="menu-highlight bg-emerald-900/40 -z-10"></div>
                         <button type="button"
-                                class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
-                                data-submenu-toggle="submenu-mensagens">
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
+                            data-submenu-toggle="submenu-mensagens">
                             <div class="flex items-center gap-3">
-                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M4 6h16v10H5.17L4 17.17V6z"/>
-                                </svg>
-                                <span class="inline-flex h-6 w-1 rounded-full bg-cyan-400"></span>
+                                <x-bi-whatsapp class="h-5 w-5" />
+                                <span class="inline-flex h-6 w-1 rounded-full bg-emerald-400"></span>
                                 <span class="sidebar-label whitespace-nowrap">Mensagens</span>
                             </div>
-                            <svg class="chevron-icon w-3 h-3 text-cyan-300" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                 aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                            <svg class="chevron-icon w-3 h-3 text-emerald-300" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
 
@@ -481,22 +423,16 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="{{ route('message/envio' )}}"
-                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-cyan-300">
-                                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M12 6v12m6-6H6"/>
-                                        </svg>
-                                        <span class="inline-flex h-4 w-1 rounded-full bg-cyan-400"></span>
+                                    <a href="{{ route('message/envio') }}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-emerald-800 hover:text-emerald-300">
+                                        <x-bi-plus-lg class="h-4 w-4" />
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-emerald-400"></span>
                                         <span>Enviar</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </li>
-
                 </ul>
             </nav>
         </div>
@@ -504,7 +440,7 @@
 </aside>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.getElementById('top-bar-sidebar');
         const toggleBtn = document.getElementById('header-sidebar-toggle');
         const STORAGE_KEY = 'sidebarCollapsed';
@@ -546,7 +482,7 @@
             toggleBtn.setAttribute('aria-expanded', String(!collapsed));
         }
 
-        toggleBtn.addEventListener('click', function (e) {
+        toggleBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -557,7 +493,7 @@
             }
         });
 
-        document.addEventListener('click', function (e) {
+        document.addEventListener('click', function(e) {
             if (isDesktop()) return;
 
             const isOpen = !sidebar.classList.contains('-translate-x-full');
@@ -571,12 +507,12 @@
             toggleBtn.setAttribute('aria-expanded', 'false');
         });
 
-        window.addEventListener('resize', function () {
+        window.addEventListener('resize', function() {
             applyInitialState();
         });
     });
 
-    (function () {
+    (function() {
         const toggles = document.querySelectorAll('[data-submenu-toggle]');
 
         toggles.forEach((btn) => {
@@ -586,7 +522,7 @@
 
             if (!submenu || !group) return;
 
-            btn.addEventListener('click', function (e) {
+            btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
 
