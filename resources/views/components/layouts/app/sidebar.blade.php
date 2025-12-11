@@ -217,7 +217,7 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="{{ route('usuario.cadastro') }}"
+                                    <a href="{{ route('usuario/cadastro') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
@@ -228,7 +228,7 @@
                                         <span class="inline-flex h-4 w-1 rounded-full bg-sky-400"></span>
                                         <span>Adicionar</span>
                                     </a>
-                                    <a href="{{ route('usuario.buscar') }}"
+                                    <a href="{{ route('usuario/buscar') }}"
                                         class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
@@ -248,8 +248,8 @@
                     <li class="menu-group" data-open="false">
                         <div class="menu-highlight bg-violet-900/40 -z-10"></div>
                         <button type="button"
-                                class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
-                                data-submenu-toggle="submenu-agenda">
+                            class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-slate-200"
+                            data-submenu-toggle="submenu-calendario">
                             <div class="flex items-center gap-3">
                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -257,7 +257,7 @@
                                           d="M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z"/>
                                 </svg>
                                 <span class="inline-flex h-6 w-1 rounded-full bg-violet-500"></span>
-                                <span class="sidebar-label whitespace-nowrap">Agenda</span>
+                                <span class="sidebar-label whitespace-nowrap">Calendario</span>
                             </div>
                             <svg class="chevron-icon w-3 h-3 text-violet-300" xmlns="http://www.w3.org/2000/svg"
                                  fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
@@ -266,12 +266,12 @@
                             </svg>
                         </button>
 
-                        <div id="submenu-agenda" class="submenu mt-1 p-1 pl-9 pr-3 text-xs">
+                        <div id="submenu-calendario" class="submenu mt-1 p-1 pl-9 pr-3 text-xs text-slate-200">
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{route('calendario/calendario')}}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-violet-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
@@ -279,10 +279,10 @@
                                                   d="M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z"/>
                                         </svg>
                                         <span class="inline-flex h-4 w-1 rounded-full bg-violet-400"></span>
-                                        <span>Agenda</span>
+                                        <span>Calendario</span>
                                     </a>
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{route('calendario/calendario-pessoal')}}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-violet-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
@@ -290,7 +290,7 @@
                                                   d="M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z"/>
                                         </svg>
                                         <span class="inline-flex h-4 w-1 rounded-full bg-violet-400"></span>
-                                        <span>Agenda pessoal</span>
+                                        <span>Calendario pessoal</span>
                                     </a>
                                 </div>
                             </div>
@@ -323,8 +323,8 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{route('eleitor/cadastro')}}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-emerald-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
@@ -334,8 +334,8 @@
                                         <span class="inline-flex h-4 w-1 rounded-full bg-emerald-400"></span>
                                         <span>Adicionar</span>
                                     </a>
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{route('eleitor/buscar')}}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-emerald-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
@@ -343,7 +343,7 @@
                                                   d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                         <span class="inline-flex h-4 w-1 rounded-full bg-emerald-400"></span>
-                                        <span>Buscar / Editar</span>
+                                        <span>Buscar</span>
                                     </a>
                                 </div>
                             </div>
@@ -376,19 +376,19 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="#"
-                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-sky-300">
+                                    <a href="{{ route('atendimento/cadastro' )}}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-amber-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                   d="M12 6v12m6-6H6"/>
                                         </svg>
-                                        <span class="inline-flex h-4 w-1 rounded-full bg-sky-400"></span>
+                                        <span class="inline-flex h-4 w-1 rounded-full bg-amber-400"></span>
                                         <span>Adicionar</span>
                                     </a>
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{ route('atendimento/buscar' )}}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-amber-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
@@ -428,8 +428,8 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{ route('acoes/cadastro' )}}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-rose-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
@@ -439,8 +439,8 @@
                                         <span class="inline-flex h-4 w-1 rounded-full bg-rose-500"></span>
                                         <span>Adicionar</span>
                                     </a>
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{ route('acoes/buscar' )}}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-rose-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
@@ -448,7 +448,7 @@
                                                   d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                         <span class="inline-flex h-4 w-1 rounded-full bg-rose-500"></span>
-                                        <span>Buscar / Editar</span>
+                                        <span>Buscar</span>
                                     </a>
                                 </div>
                             </div>
@@ -481,8 +481,8 @@
                             <div class="flex gap-3">
                                 <span class="w-px bg-slate-700 ml-2"></span>
                                 <div class="space-y-1">
-                                    <a href="#"
-                                       class="flex items-center gap-2 rounded-md px-1 py-1 hover:underline">
+                                    <a href="{{ route('message/envio' )}}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-cyan-300">
                                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                              aria-hidden="true">
