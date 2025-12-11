@@ -4,7 +4,9 @@
             <div class="flex items-center justify-start rtl:justify-end">
                 {{-- BOTÃO ÚNICO PARA ABRIR/COLAPSAR O SIDEBAR (MOBILE + DESKTOP) --}}
                 <button id="header-sidebar-toggle" type="button" aria-expanded="false"
-                    class="bg-transparent box-border border border-transparent focus:ring-4 focus:ring-neutral-tertiary  font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2 text-slate-900 text-white">
+                    class="text-heading bg-transparent box-border border border-transparent
+           hover:bg-neutral-secondary-medium dark:focus:outline-2 dark:focus:outline-offset-2 dark:focus:ring-neutral-tertiary
+           font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
                     <span class="sr-only">Alternar sidebar</span>
                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                         height="24" viewBox="0 0 24 24" fill="none">
