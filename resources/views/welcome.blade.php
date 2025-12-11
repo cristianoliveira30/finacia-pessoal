@@ -34,7 +34,7 @@
 
     <div class="w-full max-w-sm">
         <div class="text-center mb-4">
-            <img src="assets/img/para.png" alt="logo" class="mx-auto h-10 w-auto rounded-base" />
+            <img src="assets/img/belem.png" alt="logo" class="mx-auto h-20 w-auto rounded-base" />
             <h1 class="mt-3 text-xl font-semibold">Bem vindo</h1>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Entre com sua conta</p>
         </div>

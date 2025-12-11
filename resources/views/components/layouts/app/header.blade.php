@@ -2,26 +2,21 @@
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
-
                 {{-- BOTÃO ÚNICO PARA ABRIR/COLAPSAR O SIDEBAR (MOBILE + DESKTOP) --}}
                 <button id="header-sidebar-toggle" type="button" aria-expanded="false"
-                    class="text-heading bg-transparent box-border border border-transparent
-           hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary
-           font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
+                    class="bg-transparent box-border border border-transparent focus:ring-4 focus:ring-neutral-tertiary  font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2 text-slate-900 text-white">
                     <span class="sr-only">Alternar sidebar</span>
                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                        height="24" viewBox="0 0 24 24" fill="none">
+                        <path stroke="currentColor" {{-- usa a cor do texto do botão --}} stroke-linecap="round" stroke-width="2"
                             d="M5 7h14M5 12h14M5 17h10" />
                     </svg>
                 </button>
-
                 <a href="#" class="flex ms-2 md:me-6 me-2">
-                    <img src="{{ asset('assets/img/para.png') }}" class="h-6 me-3" alt="pará Logo" />
+                    <img src="{{ asset('assets/img/belem.png') }}" class="h-10 me-3" alt="pará Logo" />
                     <span
                         class="self-center text-lg font-semibold whitespace-nowrap text-white dark:text-white">Core</span>
                 </a>
-
                 {{-- Dropdown de range --}}
                 <div class="relative">
                     <button id="btn-tipotempo" data-dropdown-toggle="dropdown-tipotempo" type="button"
