@@ -153,9 +153,7 @@
                         <a href="{{ route('home') }}"
                             class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
                             data-tooltip="Dashboard">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M4.5 10.5V21h15V10.5"/>
-                            </svg>
+                            <x-bi-tv class="w-5 h-5" />
                             <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
                         </a>
                     </li>
