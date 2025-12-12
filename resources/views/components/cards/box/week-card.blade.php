@@ -3,10 +3,10 @@
     'cardId' => 'card-' . uniqid(),
 ])
 @php
-    $valuePrefix = data_get($config, 'value_prefix', '$');
+    $valuePrefix = data_get($config, 'value_prefix', '');
     $valueSuffix = data_get($config, 'value_suffix', '');
     $variationSuffix = data_get($config, 'variation_suffix', '%');
-    $weekLabel = data_get($config, 'week_label', 'vendas');
+    $weekLabel = data_get($config, 'week_label', 'Atendimento');
     $weekValue = data_get($config, 'week_value', '5678');
     $weekRanges = data_get($config, 'data_range_label', 'essa semana');
     $redirectUrl = data_get($config, 'redirect_url', '#'); 

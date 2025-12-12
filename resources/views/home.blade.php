@@ -19,71 +19,62 @@
         </div>
 
         @php
+            // Linha (semana): protocolos/solicitações
             $chartData = [
                 'x_label' => 'Data',
                 'categories' => ['01 Fev', '02 Fev', '03 Fev', '04 Fev', '05 Fev', '06 Fev', '07 Fev'],
                 'series' => [
-                    ['name' => 'Loja Online', 'data' => [150, 141, 145, 152, 135, 125, 160]],
-                    ['name' => 'Loja Física', 'data' => [43, 13, 65, 12, 42, 73, 80]],
+                    ['name' => 'Protocolos Abertos', 'data' => [84, 91, 76, 98, 102, 87, 110]],
+                    ['name' => 'Protocolos Resolvidos', 'data' => [62, 70, 58, 79, 88, 74, 95]],
                 ],
             ];
 
+            // Pizza: origem/canal de entrada do atendimento
             $pieChartData = [
-                'x_label'   => 'Canal',
-                'categories'=> ['Desktop', 'Mobile', 'Outros'],
-                'series'    => [
-                    ['name' => 'Percentual', 'data' => [60, 30, 10]],
-                ],
+                'x_label' => 'Canal',
+                'categories' => ['Presencial', 'Telefone', 'Portal/App'],
+                'series' => [['name' => 'Percentual', 'data' => [35, 25, 40]]],
             ];
 
+            // Colunas: demandas por área/secretaria
             $columnChartData = [
-                'x_label'   => 'Dia',
-                'categories'=> ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                'series'    => [
-                    ['name' => 'Orgânico', 'data' => [231, 122, 63, 421, 122, 323, 111]],
-                    ['name' => 'Social media', 'data' => [232, 113, 341, 224, 522, 411, 243]],
+                'x_label' => 'Área',
+                'categories' => ['Saúde', 'Educação', 'Obras', 'Iluminação', 'Limpeza', 'Trânsito', 'Assistência'],
+                'series' => [
+                    ['name' => 'Solicitações', 'data' => [120, 95, 140, 110, 130, 80, 70]],
+                    ['name' => 'Concluídas', 'data' => [88, 72, 101, 79, 96, 55, 51]],
                 ],
             ];
 
+            // Barras: execução (receita x despesa) por mês
             $barChartData = [
-                'categories'=> ['Jul', 'Aug', 'Sep', 'Out', 'Nov', 'Dez'],
-                'series'    => [
-                    ['name' => 'Income',  'data' => [1420, 1620, 1820, 1420, 1650, 2120]],
-                    ['name' => 'Expense', 'data' => [788, 810, 866, 788, 1100, 1200]],
+                'categories' => ['Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                'series' => [
+                    ['name' => 'Receita (R$ mil)', 'data' => [1820, 1910, 2050, 1980, 2140, 2290]],
+                    ['name' => 'Despesa (R$ mil)', 'data' => [1650, 1720, 1880, 1810, 1950, 2060]],
                 ],
             ];
 
-        $radialChartData = [
-            'categories' => ['To do', 'In progress', 'Done'],
-            'series' => [
-                [
-                    'name' => 'Progresso',
-                    'data' => [90, 85, 70],
-                ],
-            ],
-        ];
+            // Radial: status de programas/obras/ações
+            $radialChartData = [
+                ['name' => 'Planejado', 'data' => [92]],
+                ['name' => 'Em execução', 'data' => [78]],
+                ['name' => 'Concluído', 'data' => [64]],
+            ];
+        @endphp
 
         {{-- grid dos gráficos --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <x-cards.card id="relatorio-vendas" title="Vendas da Semana" :chart="$chartData" />
+            <x-cards.card id="relatorio-vendas" title="Protocolos da Semana" :chart="$chartData" />
 
-            <x-cards.card id="relatorio-canais" title="Distribuição por Canal"
-                :chart="$pieChartData" chart-type="pie" />
+            <x-cards.card id="relatorio-canais" title="Entrada por Canal" :chart="$pieChartData" chart-type="pie" />
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+            <x-cards.card id="relatorio-dias" title="Demandas por Área" :chart="$columnChartData" chart-type="column" />
 
-        <x-cards.card id="relatorio-vendas" title="Vendas da Semana" link='eleitorDia' :chart="$chartData" />
+            <x-cards.card id="relatorio-mes" title="Execução Orçamentária" :chart="$barChartData" chart-type="bar" />
 
-        <x-cards.card id="relatorio-dias" title="Distribuição por Dia" :chart="$columnChartData" chart-type="column" />
-
-
-        <x-cards.card id="progresso-time" title="Progresso do Time" :chart="$radialChartData" chart-type="radial" />
-
-            <x-cards.card id="relatorio-mes" title="Distribuição por Mês"
-                :chart="$barChartData" chart-type="bar" />
-
-        <x-cards.card id="relatorio-mes" title="Distribuição por Mês" :chart="$barChartData" chart-type="bar" />
-
+            <x-cards.card id="progresso-time" title="Andamento de Programas" :chart="$radialChartData" chart-type="radial" />
+        </div>
     </div>
 
 </x-layouts.app>

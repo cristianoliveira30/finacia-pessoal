@@ -1,6 +1,6 @@
 @props([
     'id' => 'card-' . uniqid(),
-    'title' => 'Relatório',
+    'title' => 'Indicador',
     'chart' => [],
     'chartType' => 'area',
     'chartId' => null,
@@ -135,7 +135,7 @@
             <div id="{{ $filterSectionId }}" class="hidden border-t border-slate-100 dark:border-slate-700/80 p-4">
                 <div class="space-y-4">
                     <h6 class="text-sm font-medium text-slate-900 dark:text-slate-200">
-                        Período de Cadastro
+                        Período da Solicitação
                     </h6>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -239,7 +239,7 @@
                 class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-3 border-t border-slate-100 dark:border-slate-700/80">
                 <div class="text-xs md:text-sm text-slate-500 dark:text-slate-400">
                     <span class="font-medium text-slate-600 dark:text-slate-200">
-                        Gerado em:
+                        Atualizado em:
                     </span>
                     {{ date('d/m/Y') }}
                 </div>
@@ -248,11 +248,7 @@
                     @php
                         $tooltipId = $id . '-tooltip-recarregar';
                     @endphp
-                    {{-- 
-                        MODIFICADO: Botão Refresh
-                        - Adicionado ID para o JavaScript encontrar
-                        - Adicionado onclick chamando a função Refresh do card.js
-                    --}}
+
                     <button type="button" id="{{ $id }}-btn-refresh"
                         onclick="Refresh('{{ $id }}')" data-tooltip-target="{{ $tooltipId }}"
                         data-tooltip-placement="top"
@@ -269,7 +265,7 @@
                         class="absolute z-20 invisible inline-block px-3 py-2 text-xs font-medium
                        text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm
                        opacity-0 tooltip dark:bg-gray-700">
-                        Recarregar gráfico
+                        Atualizar indicador
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
 
