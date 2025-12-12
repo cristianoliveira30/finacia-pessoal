@@ -94,9 +94,6 @@
             @include('components.layouts.app.footer')
         </div>
     </div>
-
-
-
     @stack('scripts')
     <script>
         // Seleciona todos os inputs do toggle (Mobile e Desktop)

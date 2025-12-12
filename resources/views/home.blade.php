@@ -5,16 +5,16 @@
         <!-- cards de cima -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
             <div class="md:col-span-1">
-                <x-cards.box.month-card :config="[]" />
+                <x-cards.box.box-01 :config="['link' => '/report']" />
             </div>
             <div class="md:col-span-1">
-                <x-cards.box.week-card :config="[]" />
+                <x-cards.box.box-02 :config="['link' => '/report']" />
             </div>
             <div class="md:col-span-1">
-                <x-cards.box.week-card :config="[]" />
+                <x-cards.box.box-01 :config="['link' => '/report']" />
             </div>
             <div class="md:col-span-1">
-                <x-cards.box.week-card :config="[]" />
+                <x-cards.box.box-02 :config="['link' => '/report']" />
             </div>
         </div>
 

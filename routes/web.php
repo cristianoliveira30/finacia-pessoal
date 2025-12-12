@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', fn() => view('home'))->name('home');
-// rotas Usuario
+// rotas de usuario
 Route::get('/usuario/cadastro', fn() => view('usuario/cadastro'))->name('usuario/cadastro');
 Route::get('/usuario/buscar', fn() => view('usuario/buscar'))->name('usuario/buscar');
 // rotas Calendario
@@ -25,3 +25,4 @@ Route::get('/acoes/buscar', fn() => view('acoes/buscar'))->name('acoes/buscar');
 // rotas Message
 Route::get('/message/envio', fn() => view('message/envio'))->name('message/envio');
 // Route::post();
+

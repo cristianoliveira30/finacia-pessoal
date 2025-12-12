@@ -3,13 +3,13 @@
     'cardId' => 'card-' . uniqid(),
 ])
 @php
-    $valuePrefix = data_get($config, 'value_prefix', '');
-    $valueSuffix = data_get($config, 'value_suffix', '');
+    $valuePrefix = data_get($config, 'prefix', '$');
+    $valueSuffix = data_get($config, 'suffix', '');
     $variationSuffix = data_get($config, 'variation_suffix', '%');
-    $weekLabel = data_get($config, 'week_label', 'Atendimentos');
-    $weekValue = data_get($config, 'week_value', '56');
-    $weekRanges = data_get($config, 'data_range_label', 'essa semana');
-    $redirectUrl = data_get($config, 'redirect_url', '#'); 
+    $weekLabel = data_get($config, 'label', 'vendas');
+    $weekValue = data_get($config, 'value', '5678');
+    $weekRanges = data_get($config, 'range_label', 'essa semana');
+    $redirectUrl = data_get($config, 'link', '#');
 @endphp
 
 <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
@@ -19,18 +19,18 @@
                 border border-slate-200 dark:border-slate-700
                 shadow-sm hover:shadow-md dark:shadow-xl
                 transition-all duration-300 group">
-        
+
         {{-- Glow Effect --}}
         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full blur-2xl transition-all pointer-events-none
                     bg-indigo-500/5 dark:bg-indigo-500/20
                     group-hover:bg-indigo-500/10 dark:group-hover:bg-indigo-500/30"></div>
-        
-        {{-- 
-            ESTRUTURA PRINCIPAL: Flex Row 
+
+        {{--
+            ESTRUTURA PRINCIPAL: Flex Row
             Divide o card em Esquerda (Texto) e Direita (Ícones)
         --}}
         <div class="relative z-10 flex justify-between h-full">
-            
+
             {{-- COLUNA ESQUERDA: Conteúdo (Texto e Badge) --}}
             <div class="flex flex-col justify-between">
                 {{-- Bloco Superior: Label e Valor --}}
@@ -59,11 +59,8 @@
                 </div>
             </div>
 
-            {{-- COLUNA DIREITA: Ícones (Topo e Fundo) --}}
-            {{-- 'justify-between' garante o afastamento máximo entre os ícones --}}
-            {{-- 'items-end' garante que fiquem alinhados à direita --}}
             <div class="flex flex-col justify-between items-end pl-4">
-                
+
                 {{-- 1. Ícone do Cartão (TOPO) --}}
                 <div class="p-2.5 rounded-xl border shadow-sm transition-colors
                             bg-indigo-50 border-indigo-100 text-indigo-600
@@ -73,10 +70,10 @@
                     </svg>
                 </div>
 
-                {{-- 2. Ícone de Seta (FUNDO) --}}  
-                <a href="{{ $redirectUrl }}" 
+                {{-- 2. Ícone de Seta (FUNDO) --}}
+                <a href="{{ $redirectUrl }}"
                    class="p-1.5 rounded-lg transition-colors cursor-pointer
-                          text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 
+                          text-slate-400 hover:text-indigo-600 hover:bg-indigo-50
                           dark:text-slate-600 dark:hover:text-indigo-400 dark:hover:bg-slate-800">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>

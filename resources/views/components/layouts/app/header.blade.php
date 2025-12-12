@@ -12,7 +12,7 @@
                 </button>
 
                 <a href="{{ route('home')}}" class="flex ms-2 md:me-6 me-2">
-                    <img src="{{ asset('assets/img/para.png') }}" class="h-6 me-3" alt="pará Logo" />
+                    <img src="{{ asset('assets/img/belem.png') }}" class="h-6 me-3" alt="pará Logo" />
                     <span
                         class="self-center text-lg font-semibold whitespace-nowrap text-white dark:text-white">Core</span>
                 </a>
