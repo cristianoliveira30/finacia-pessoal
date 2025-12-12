@@ -7,10 +7,10 @@
             'popover_title' => 'Usuários',
             'color' => 'sky',
             'shade' => '400',
-            'icon_main' => 'person-lines-fill', // Ícone solicitado
+            'icon_main' => 'M17 20v-2a4 4 0 00-3-3.87M9 4a3 3 0 110 6 3 3 0 010-6zm6 3a3 3 0 11-6 0m-3 9a4 4 0 013-3.87',
             'items' => [
-                ['label' => 'Adicionar', 'route' => 'usuario/cadastro', 'icon' => 'plus-lg'],
-                ['label' => 'Buscar', 'route' => 'usuario/buscar', 'icon' => 'pencil-square']
+                ['label' => 'Adicionar', 'route' => 'usuario/cadastro', 'icon' => 'M12 4v16m8-8H4'],
+                ['label' => 'Buscar', 'route' => 'usuario/buscar', 'icon' => 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z']
             ]
         ],
         [
@@ -19,10 +19,10 @@
             'popover_title' => 'Agenda',
             'color' => 'violet',
             'shade' => '500',
-            'icon_main' => 'calendar4-week', // Ícone solicitado
+            'icon_main' => 'M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z',
             'items' => [
-                ['label' => 'Agenda', 'route' => 'calendario/calendario', 'icon' => 'calendar3'],
-                ['label' => 'Agenda pessoal', 'route' => 'calendario/calendario-pessoal', 'icon' => 'calendar2-range-fill']
+                ['label' => 'Agenda', 'route' => 'calendario/calendario', 'icon' => 'M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z'],
+                ['label' => 'Agenda pessoal', 'route' => 'calendario/calendario-pessoal', 'icon' => 'M8 7V5m8 2V5M5 9h14M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z']
             ]
         ],
         [
@@ -31,10 +31,10 @@
             'popover_title' => 'Eleitores',
             'color' => 'emerald',
             'shade' => '400',
-            'icon_main' => 'people', // Ajustado para 'people' (grupo) conforme a imagem da sidebar
+            'icon_main' => 'M12 12a4 4 0 100-8 4 4 0 000 8zM4 20a8 8 0 1116 0',
             'items' => [
-                ['label' => 'Adicionar', 'route' => 'eleitor/cadastro', 'icon' => 'plus-lg'],
-                ['label' => 'Buscar', 'route' => 'eleitor/buscar', 'icon' => 'pencil-square']
+                ['label' => 'Adicionar', 'route' => 'eleitor/cadastro', 'icon' => 'M12 4v16m8-8H4'],
+                ['label' => 'Buscar', 'route' => 'eleitor/buscar', 'icon' => 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z']
             ]
         ],
         [
@@ -43,10 +43,10 @@
             'popover_title' => 'Atendimentos',
             'color' => 'amber',
             'shade' => '400',
-            'icon_main' => 'chat-dots', // Ícone solicitado
+            'icon_main' => 'M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-3.5-.6L3 20l1.35-3.38A7.5 7.5 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z',
             'items' => [
-                ['label' => 'Adicionar', 'route' => 'atendimento/cadastro', 'icon' => 'plus-lg'],
-                ['label' => 'Buscar', 'route' => 'atendimento/buscar', 'icon' => 'pencil-square']
+                ['label' => 'Adicionar', 'route' => 'atendimento/cadastro', 'icon' => 'M12 4v16m8-8H4'],
+                ['label' => 'Buscar', 'route' => 'atendimento/buscar', 'icon' => 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z']
             ]
         ],
         [
@@ -55,10 +55,10 @@
             'popover_title' => 'Ações',
             'color' => 'rose',
             'shade' => '500',
-            'icon_main' => 'plus-circle', // Ícone de Mais (Ações)
+            'icon_main' => 'M12 6v12m6-6H6',
             'items' => [
-                ['label' => 'Adicionar', 'route' => 'acoes/cadastro', 'icon' => 'plus-lg'],
-                ['label' => 'Buscar', 'route' => 'acoes/buscar', 'icon' => 'pencil-square']
+                ['label' => 'Adicionar', 'route' => 'acoes/cadastro', 'icon' => 'M12 4v16m8-8H4'],
+                ['label' => 'Buscar', 'route' => 'acoes/buscar', 'icon' => 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z']
             ]
         ],
         [
@@ -67,9 +67,9 @@
             'popover_title' => 'Mensagens',
             'color' => 'cyan',
             'shade' => '400',
-            'icon_main' => 'chat-left-text', // Balão de mensagem
+            'icon_main' => 'M4 6h16v10H5.17L4 17.17V6z',
             'items' => [
-                ['label' => 'Enviar', 'route' => 'message/envio', 'icon' => 'send']
+                ['label' => 'Enviar', 'route' => 'message/envio', 'icon' => 'M12 6v12m6-6H6']
             ]
         ]
     ];
@@ -148,13 +148,14 @@
             <nav class="flex-1 px-2 pb-4 text-sm font-medium">
                 <ul class="space-y-1">
                     
-                    {{-- DASHBOARD --}}
+                    {{-- DASHBOARD (ÚNICO ITEM SEM DROPDOWN) --}}
                     <li>
                         <a href="{{ route('home') }}"
                             class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
                             data-tooltip="Dashboard">
-                            {{-- ÍCONE DE TV (DASHBOARD) --}}
-                            <x-bi-tv class="w-5 h-5" />
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M4.5 10.5V21h15V10.5"/>
+                            </svg>
                             <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
                         </a>
                     </li>
@@ -170,18 +171,15 @@
                                     data-popover-target="popover-{{ $menu['id'] }}" 
                                     data-popover-placement="right">
                                 <div class="flex items-center gap-3">
-                                    {{-- ÍCONE PRINCIPAL DINÂMICO --}}
-                                    <x-dynamic-component 
-                                        component="bi-{{ $menu['icon_main'] }}" 
-                                        class="w-5 h-5" 
-                                    />
-                                    
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="{{ $menu['icon_main'] }}"/>
+                                    </svg>
                                     <span class="inline-flex h-6 w-1 rounded-full bg-{{ $menu['color'] }}-{{ $menu['shade'] }}"></span>
                                     <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
                                 </div>
-                                
-                                {{-- CHEVRON (SETA) --}}
-                                <x-bi-chevron-right class="chevron-icon w-3 h-3 text-{{ $menu['color'] }}-300" />
+                                <svg class="chevron-icon w-3 h-3 text-{{ $menu['color'] }}-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                </svg>
                             </button>
 
                             <div id="submenu-{{ $menu['id'] }}" class="submenu mt-1 pl-9 pr-3 p-1 text-xs {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}">
@@ -217,11 +215,10 @@
                     @foreach($menu['items'] as $item)
                         <li>
                             <a href="{{ route($item['route']) }}" class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors">
-                                {{-- ÍCONE INTERNO DO POPOVER DINÂMICO E COM A COR DO ITEM PAI --}}
-                                <x-dynamic-component 
-                                    component="bi-{{ $item['icon'] }}" 
-                                    class="w-4 h-4 text-{{ $menu['color'] }}-{{ $menu['shade'] }} dark:text-{{ $menu['color'] }}-400" 
-                                />
+                                {{-- CORREÇÃO AQUI: Usa 'shade' dinâmico para garantir a cor exata do sidebar --}}
+                                <svg class="w-4 h-4 text-{{ $menu['color'] }}-{{ $menu['shade'] }} dark:text-{{ $menu['color'] }}-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="{{ $item['icon'] }}"/>
+                                </svg>
                                 <span>{{ $item['label'] }}</span>
                             </a>
                         </li>
