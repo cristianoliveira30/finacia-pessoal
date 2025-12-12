@@ -74,7 +74,7 @@
                 </div>
 
                 <button type="submit"
-                    class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg dark:focus:ring-primary-900 hover:bg-primary-800">
+                    class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-gray-800 bg-primary-700 rounded-lg dark:focus:outline-2 dark:focus:outline-offset-2 dark:focus:ring-primary-900 dark:hover:bg-gray-500/50 dark:text-gray-400 dark:hover:text-white">
                     Salvar Ação
                 </button>
             </form>

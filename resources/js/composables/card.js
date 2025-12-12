@@ -8,6 +8,11 @@ export const baixarPDF = (data) => {
 
 }
 
+//export xlsx
+export const baixarXlsx = (data) => {
+    
+}
+
 // Funcao de Refresh do Card
 export const Refresh = (cardId) => {
     const btn = document.getElementById(`${cardId}-btn-refresh`);
