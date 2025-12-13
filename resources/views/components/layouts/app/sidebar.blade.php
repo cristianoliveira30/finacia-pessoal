@@ -110,7 +110,7 @@
         body.sidebar-collapsed #top-bar-sidebar { width: 4.5rem; }
         body.sidebar-collapsed #top-bar-sidebar .sidebar-label { display: none; }
         body.sidebar-collapsed #top-bar-sidebar .sidebar-link { justify-content: center; padding-left: 0.75rem; padding-right: 0.75rem; }
-        
+
         body:not(.sidebar-collapsed) .popover-flowbite {
             display: none !important;
             visibility: hidden !important;
@@ -154,7 +154,7 @@
         <div class="h-full flex flex-col">
             <nav class="flex-1 px-2 pb-4 text-sm font-medium">
                 <ul class="space-y-1">
-                    
+
                     {{-- DASHBOARD --}}
                     <li>
                         <a href="{{ route('home') }}"
@@ -166,7 +166,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="/tv"
                             class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
                             data-tooltip="Modo Tv">
                             <x-bi-tv class="w-5 h-5" />
@@ -179,24 +179,24 @@
                         <li class="menu-group" data-open="false">
                             {{-- CORREÇÃO: Usando style inline para o background do hover --}}
                             <div class="menu-highlight -z-10" style="background-color: {{ $menu['hex_hover_bg'] }}"></div>
-                            
+
                             <button type="button"
                                     class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}"
                                     data-submenu-toggle="submenu-{{ $menu['id'] }}"
-                                    data-popover-target="popover-{{ $menu['id'] }}" 
+                                    data-popover-target="popover-{{ $menu['id'] }}"
                                     data-popover-placement="right">
                                 <div class="flex items-center gap-3">
                                     {{-- ÍCONE PRINCIPAL DINÂMICO --}}
-                                    <x-dynamic-component 
-                                        component="bi-{{ $menu['icon_main'] }}" 
-                                        class="w-5 h-5" 
+                                    <x-dynamic-component
+                                        component="bi-{{ $menu['icon_main'] }}"
+                                        class="w-5 h-5"
                                     />
-                                    
+
                                     {{-- CORREÇÃO: Barra lateral colorida usando style inline --}}
                                     <span class="inline-flex h-6 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
                                     <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
                                 </div>
-                                
+
                                 {{-- CHEVRON (SETA) - CORREÇÃO DE COR --}}
                                 <x-bi-chevron-right class="chevron-icon w-3 h-3" style="color: {{ $menu['hex_light'] }}" />
                             </button>
@@ -206,7 +206,7 @@
                                     <span class="w-px bg-slate-700 ml-2"></span>
                                     <div class="space-y-1">
                                         @foreach($menu['items'] as $item)
-                                            <a href="{{ route($item['route']) }}" 
+                                            <a href="{{ route($item['route']) }}"
                                                class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
                                                {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
                                                onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
@@ -242,8 +242,8 @@
                         <li>
                             <a href="{{ route($item['route']) }}" class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors">
                                 {{-- ÍCONE INTERNO DO POPOVER --}}
-                                <x-dynamic-component 
-                                    component="bi-{{ $item['icon'] }}" 
+                                <x-dynamic-component
+                                    component="bi-{{ $item['icon'] }}"
                                     class="w-4 h-4"
                                     style="color: {{ $menu['hex_main'] }}"
                                 />

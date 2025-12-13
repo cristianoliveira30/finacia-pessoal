@@ -24,5 +24,7 @@ Route::get('/acoes/cadastro', fn() => view('acoes/cadastro'))->name('acoes/cadas
 Route::get('/acoes/buscar', fn() => view('acoes/buscar'))->name('acoes/buscar');
 // rotas Message
 Route::get('/message/envio', fn() => view('message/envio'))->name('message/envio');
-// Rota de relatorio
+// rota de relatorio
 Route::get('/report', fn() => view('reports/default'))->name('report.default');
+// rota modo TV
+Route::get('/tv', fn() => view('home-tv'))->name('tv');

@@ -90,5 +90,5 @@
         ];
     @endphp
 
-    <x-layouts.export-table :config="$tableConfig" />
+    <x-export-table :config="$tableConfig" />
 </x-layouts.report>
