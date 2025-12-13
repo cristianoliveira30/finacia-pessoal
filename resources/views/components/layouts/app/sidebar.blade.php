@@ -5,9 +5,11 @@
             'id' => 'usuarios',
             'label' => 'Usuários',
             'popover_title' => 'Usuários',
-            'color' => 'sky',
-            'shade' => '400',
-            'icon_main' => 'person-lines-fill', // Ícone solicitado
+            // Adicionado Hexadecimais manuais para contornar o purge do Tailwind
+            'hex_main' => '#38bdf8', // sky-400
+            'hex_hover_bg' => 'rgba(12, 74, 110, 0.4)', // sky-900/40
+            'hex_light' => '#7dd3fc', // sky-300 (para icones/texto claro)
+            'icon_main' => 'person-lines-fill',
             'items' => [
                 ['label' => 'Adicionar', 'route' => 'usuario/cadastro', 'icon' => 'plus-lg'],
                 ['label' => 'Buscar', 'route' => 'usuario/buscar', 'icon' => 'pencil-square']
@@ -17,9 +19,10 @@
             'id' => 'calendario',
             'label' => 'Calendário',
             'popover_title' => 'Agenda',
-            'color' => 'violet',
-            'shade' => '500',
-            'icon_main' => 'calendar4-week', // Ícone solicitado
+            'hex_main' => '#8b5cf6', // violet-500
+            'hex_hover_bg' => 'rgba(76, 29, 149, 0.4)', // violet-900/40
+            'hex_light' => '#c4b5fd', // violet-300
+            'icon_main' => 'calendar4-week',
             'items' => [
                 ['label' => 'Agenda', 'route' => 'calendario/calendario', 'icon' => 'calendar3'],
                 ['label' => 'Agenda pessoal', 'route' => 'calendario/calendario-pessoal', 'icon' => 'calendar2-range-fill']
@@ -29,9 +32,10 @@
             'id' => 'eleitores',
             'label' => 'Eleitores',
             'popover_title' => 'Eleitores',
-            'color' => 'emerald',
-            'shade' => '400',
-            'icon_main' => 'people', // Ajustado para 'people' (grupo) conforme a imagem da sidebar
+            'hex_main' => '#34d399', // emerald-400
+            'hex_hover_bg' => 'rgba(6, 78, 59, 0.4)', // emerald-900/40
+            'hex_light' => '#6ee7b7', // emerald-300
+            'icon_main' => 'people',
             'items' => [
                 ['label' => 'Adicionar', 'route' => 'eleitor/cadastro', 'icon' => 'plus-lg'],
                 ['label' => 'Buscar', 'route' => 'eleitor/buscar', 'icon' => 'pencil-square']
@@ -41,9 +45,10 @@
             'id' => 'atendimentos',
             'label' => 'Atendimentos',
             'popover_title' => 'Atendimentos',
-            'color' => 'amber',
-            'shade' => '400',
-            'icon_main' => 'chat-dots', // Ícone solicitado
+            'hex_main' => '#fbbf24', // amber-400
+            'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)', // amber-900/40
+            'hex_light' => '#fcd34d', // amber-300
+            'icon_main' => 'chat-dots',
             'items' => [
                 ['label' => 'Adicionar', 'route' => 'atendimento/cadastro', 'icon' => 'plus-lg'],
                 ['label' => 'Buscar', 'route' => 'atendimento/buscar', 'icon' => 'pencil-square']
@@ -53,9 +58,10 @@
             'id' => 'acoes',
             'label' => 'Ações',
             'popover_title' => 'Ações',
-            'color' => 'rose',
-            'shade' => '500',
-            'icon_main' => 'plus-circle', // Ícone de Mais (Ações)
+            'hex_main' => '#f43f5e', // rose-500
+            'hex_hover_bg' => 'rgba(136, 19, 55, 0.4)', // rose-900/40
+            'hex_light' => '#fda4af', // rose-300
+            'icon_main' => 'plus-circle',
             'items' => [
                 ['label' => 'Adicionar', 'route' => 'acoes/cadastro', 'icon' => 'plus-lg'],
                 ['label' => 'Buscar', 'route' => 'acoes/buscar', 'icon' => 'pencil-square']
@@ -65,9 +71,10 @@
             'id' => 'mensagens',
             'label' => 'Mensagens',
             'popover_title' => 'Mensagens',
-            'color' => 'cyan',
-            'shade' => '400',
-            'icon_main' => 'chat-left-text', // Balão de mensagem
+            'hex_main' => '#22d3ee', // cyan-400
+            'hex_hover_bg' => 'rgba(22, 78, 99, 0.4)', // cyan-900/40
+            'hex_light' => '#67e8f9', // cyan-300
+            'icon_main' => 'chat-left-text',
             'items' => [
                 ['label' => 'Enviar', 'route' => 'message/envio', 'icon' => 'send']
             ]
@@ -162,7 +169,8 @@
                     {{-- LOOP PARA GERAR TODOS OS MENUS COM DROPDOWN --}}
                     @foreach($menus as $menu)
                         <li class="menu-group" data-open="false">
-                            <div class="menu-highlight bg-{{ $menu['color'] }}-900/40 -z-10"></div>
+                            {{-- CORREÇÃO: Usando style inline para o background do hover --}}
+                            <div class="menu-highlight -z-10" style="background-color: {{ $menu['hex_hover_bg'] }}"></div>
                             
                             <button type="button"
                                     class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}"
@@ -176,12 +184,13 @@
                                         class="w-5 h-5" 
                                     />
                                     
-                                    <span class="inline-flex h-6 w-1 rounded-full bg-{{ $menu['color'] }}-{{ $menu['shade'] }}"></span>
+                                    {{-- CORREÇÃO: Barra lateral colorida usando style inline --}}
+                                    <span class="inline-flex h-6 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
                                     <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
                                 </div>
                                 
-                                {{-- CHEVRON (SETA) --}}
-                                <x-bi-chevron-right class="chevron-icon w-3 h-3 text-{{ $menu['color'] }}-300" />
+                                {{-- CHEVRON (SETA) - CORREÇÃO DE COR --}}
+                                <x-bi-chevron-right class="chevron-icon w-3 h-3" style="color: {{ $menu['hex_light'] }}" />
                             </button>
 
                             <div id="submenu-{{ $menu['id'] }}" class="submenu mt-1 pl-9 pr-3 p-1 text-xs {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}">
@@ -189,8 +198,13 @@
                                     <span class="w-px bg-slate-700 ml-2"></span>
                                     <div class="space-y-1">
                                         @foreach($menu['items'] as $item)
-                                            <a href="{{ route($item['route']) }}" class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 hover:text-{{ $menu['color'] }}-300">
-                                                <span class="inline-flex h-4 w-1 rounded-full bg-{{ $menu['color'] }}-{{ $menu['shade'] }}"></span>
+                                            <a href="{{ route($item['route']) }}" 
+                                               class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
+                                               {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
+                                               onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
+                                               onmouseout="this.style.color=''">
+                                                {{-- CORREÇÃO: Bolinha do submenu --}}
+                                                <span class="inline-flex h-4 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
                                                 <span>{{ $item['label'] }}</span>
                                             </a>
                                         @endforeach
@@ -210,17 +224,20 @@
         <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip" class="popover-flowbite absolute z-50 invisible inline-block w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0">
             <div class="p-3">
                 <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
-                    <span class="h-4 w-1 rounded-full bg-{{ $menu['color'] }}-{{ $menu['shade'] }}"></span>
-                    <span class="font-semibold text-{{ $menu['color'] }}-500 dark:text-{{ $menu['color'] }}-400">{{ $menu['popover_title'] }}</span>
+                    {{-- CORREÇÃO: Barra colorida do popover --}}
+                    <span class="h-4 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
+                    {{-- CORREÇÃO: Título colorido do popover --}}
+                    <span class="font-semibold" style="color: {{ $menu['hex_main'] }}">{{ $menu['popover_title'] }}</span>
                 </div>
                 <ul class="space-y-1">
                     @foreach($menu['items'] as $item)
                         <li>
                             <a href="{{ route($item['route']) }}" class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors">
-                                {{-- ÍCONE INTERNO DO POPOVER DINÂMICO E COM A COR DO ITEM PAI --}}
+                                {{-- ÍCONE INTERNO DO POPOVER --}}
                                 <x-dynamic-component 
                                     component="bi-{{ $item['icon'] }}" 
-                                    class="w-4 h-4 text-{{ $menu['color'] }}-{{ $menu['shade'] }} dark:text-{{ $menu['color'] }}-400" 
+                                    class="w-4 h-4"
+                                    style="color: {{ $menu['hex_main'] }}"
                                 />
                                 <span>{{ $item['label'] }}</span>
                             </a>
