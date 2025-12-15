@@ -9,7 +9,9 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 // 2. Lógica do Card
-import { toggleExpand, Refresh, baixarCSV, baixarPDF, baixarXLSX } from './composables/card.js';
+import { toggleExpand, Refresh} from './composables/card.js';
+import { toggleFilter } from './composables/useFilter';
+import {baixarCSV, baixarPDF, baixarXLSX} from './composables/useDownload.js';
 
 // 3. Exposição Global
 window.jsPDF = jsPDF;
@@ -25,5 +27,6 @@ window.Refresh = Refresh;
 window.baixarCSV = baixarCSV;
 window.baixarPDF = baixarPDF;
 window.baixarXLSX = baixarXLSX;
+window.toggleFilter = toggleFilter;
 
 document.addEventListener('DOMContentLoaded', () => initFlowbite());
