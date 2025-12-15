@@ -1,106 +1,116 @@
-//export CSV
-export const baixarCSV = (data) => {
+/**
+ * Padroniza dados de gráficos (Apex/Livewire) para formato tabular
+ */
+const padronizarDados = (rawData) => {
+    if (!rawData) return [];
 
-}
-
-//export PDF 
-export const baixarPDF = (data) => {
-
-}
-
-//export xlsx
-export const baixarXlsx = (data) => {
-    
-}
-
-// Funcao de Refresh do Card
-export const Refresh = (cardId) => {
-    const btn = document.getElementById(`${cardId}-btn-refresh`);
-    const icon = btn ? btn.querySelector('svg') : null;
-
-    // Adiciona animação de rotação para feedback visual
-    if (icon) {
-        icon.classList.add('animate-spin');
+    // Cenário 1: Pizza/Donut (Simples: label + serie)
+    if (rawData.labels && Array.isArray(rawData.series) && typeof rawData.series[0] !== 'object') {
+        return rawData.labels.map((l, i) => ({ 'Categoria': l, 'Valor': rawData.series[i] || 0 }));
     }
 
-    // Dispara um evento customizado informando que este card precisa ser atualizado.
-    // O componente do gráfico (ApexCharts ou Livewire) deve ouvir este evento.
-    window.dispatchEvent(new CustomEvent('chart:refresh', { detail: { cardId } }));
+    // Cenário 2: Barras/Linhas (Complexo: categories + series[{name, data}])
+    let cats = rawData.categories || (rawData.xaxis?.categories) || rawData.labels;
+    let series = rawData.series;
 
-    // Simula tempo de resposta/network (Remove a animação após 1s)
-    // Em uma implementação real, você removeria a classe no callback de sucesso da requisição
-    setTimeout(() => {
-        if (icon) {
-            icon.classList.remove('animate-spin');
-        }
-    }, 1000);
-}
-
-// Funcao que expande o card em tela cheia
-export function toggleExpand(cardId) {
-    const card = document.getElementById(cardId);
-    const btn = document.getElementById(`${cardId}-btn-expand`);
-    // Busca o SVG dentro do botão para manipular as classes do ícone
-    const iconSvg = btn ? btn.querySelector('svg') : null;
-
-    // Verifica se já está expandido olhando se possui a classe de grid total
-    const isExpanded = card.classList.contains('col-span-full');
-
-    if (isExpanded) {
-        // === MINIMIZAR (Voltar ao tamanho original) ===
-
-        // Remove a classe que força a largura total
-        card.classList.remove('col-span-full', 'z-10');
-
-        // Restaura o ícone de expansão (se estiver usando Bootstrap Icons classes)
-        if (iconSvg) {
-            // Remove o ícone de "contratar" e volta para "expandir"
-            // Nota: Ajuste os nomes das classes conforme a biblioteca de ícones que o x-bi usa,
-            // aqui estou seguindo a lógica do seu código original.
-            iconSvg.classList.remove('bi-arrows-angle-contract');
-            iconSvg.classList.add('bi-arrows-fullscreen');
-        }
-
-    } else {
-        // === EXPANDIR (Ocupar toda a linha) ===
-
-        // Adiciona classe para ocupar todas as colunas do grid pai
-        // z-10 garante que ele fique levemente acima de elementos vizinhos durante a transição
-        card.classList.add('col-span-full', 'z-10');
-
-        // Troca o ícone para "contratar/reduzir"
-        if (iconSvg) {
-            iconSvg.classList.remove('bi-arrows-fullscreen');
-            iconSvg.classList.add('bi-arrows-angle-contract');
-        }
-
-        // UX: Rola a página suavemente para garantir que o card expandido esteja visível
-        setTimeout(() => {
-            card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }, 300);
+    if (cats && Array.isArray(cats) && Array.isArray(series)) {
+        return cats.map((cat, i) => {
+            let row = { 'Período/Categoria': cat };
+            series.forEach(s => {
+                if (typeof s === 'object' && s.data) row[s.name] = s.data[i] ?? '';
+                else if (Array.isArray(s)) row[`Série ${i + 1}`] = s[i];
+            });
+            return row;
+        });
     }
 
-    // CRÍTICO: Força o ApexCharts a redesenhar para preencher a nova largura
-    setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-    }, 300); // Delay igual à duração da transição CSS (se houver)
-}
+    // Cenário 3: Array de Objetos já pronto
+    if (Array.isArray(rawData) && rawData.length > 0 && typeof rawData[0] === 'object') return rawData;
 
-export const getCardGeneric = async (object) => {
-    const { name, data } = object;
+    return [];
+};
+
+// Exportar CSV
+export const baixarCSV = (rawData) => {
+    const data = padronizarDados(rawData);
+    if (!data.length) return alert("Sem dados para exportar.");
+
+    const headers = Object.keys(data[0]);
+    const csvRows = [headers.join(',')];
+
+    data.forEach(row => {
+        const values = headers.map(h => `"${('' + (row[h] ?? '')).replace(/"/g, '""')}"`);
+        csvRows.push(values.join(','));
+    });
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(new Blob(['\uFEFF' + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' }));
+    link.download = `relatorio_${Date.now()}.csv`;
+    link.click();
+};
+
+// Exportar PDF
+export const baixarPDF = (rawData) => {
+    const data = padronizarDados(rawData);
+    if (!data.length) return alert("Sem dados para exportar.");
 
     try {
-        const response = await fetch(name, data);
+        const doc = new window.jsPDF(); // Usa lib global
 
-        if (!response.ok) {
-            throw new Error(`Erro HTTP: ${response.status}`);
-        }
+        doc.setFontSize(14);
+        doc.text("Relatório Exportado", 14, 15);
+        doc.setFontSize(10);
+        doc.text(`Gerado em: ${new Date().toLocaleDateString('pt-BR')}`, 14, 22);
 
-        const result = await response.json();
-        return result;
+        window.autoTable(doc, { // Usa plugin global
+            head: [Object.keys(data[0])],
+            body: data.map(Object.values),
+            startY: 25,
+            theme: 'grid',
+            styles: { fontSize: 8 }
+        });
 
-    } catch (error) {
-        console.error("Erro no getCardGeneric:", error);
-        return null;
+        doc.save(`relatorio_${Date.now()}.pdf`);
+    } catch (e) {
+        console.error("PDF Error:", e);
+        alert("Erro ao gerar PDF.");
+    }
+};
+
+// ... função padronizarDados e baixarCSV continuam iguais ...
+
+// Adicione esta função nova:
+export const baixarXLSX = (rawData) => {
+    const data = padronizarDados(rawData);
+    if (!data.length) return alert("Sem dados para exportar.");
+
+    try {
+        // 1. Cria a planilha (Worksheet) baseada no JSON
+        const ws = window.XLSX.utils.json_to_sheet(data);
+
+        // 2. Cria o arquivo (Workbook) e adiciona a planilha
+        const wb = window.XLSX.utils.book_new();
+        window.XLSX.utils.book_append_sheet(wb, ws, "Relatório");
+
+        // 3. Gera o download
+        window.XLSX.writeFile(wb, `relatorio_${Date.now()}.xlsx`);
+    } catch (e) {
+        console.error("XLSX Error:", e);
+        alert("Erro ao gerar Excel.");
+    }
+};
+
+
+// Funções UI (Refresh/Expand)
+export const Refresh = (id) => {
+    window.dispatchEvent(new CustomEvent('chart:refresh', { detail: { cardId: id } }));
+};
+
+export const toggleExpand = (id) => {
+    const card = document.getElementById(id);
+    if (card) {
+        card.classList.toggle('col-span-full');
+        card.classList.toggle('z-10');
+        setTimeout(() => window.dispatchEvent(new Event('resize')), 300);
     }
 };
