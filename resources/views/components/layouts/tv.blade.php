@@ -80,7 +80,7 @@
         <div class="flex-1 min-w-0 flex flex-col overflow-hidden">
             @include('components.layouts.tv.header')
 
-            <main class="flex-1 min-w-0 p-10 overflow-hidden">
+            <main class="flex-1 min-w-0 p-6 overflow-hidden">
                 {{ $slot ?? '' }}
                 @yield('content')
             </main>
