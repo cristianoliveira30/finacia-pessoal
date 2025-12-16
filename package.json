@@ -20,6 +20,7 @@
         "jspdf": "^3.0.4",
         "jspdf-autotable": "^5.0.2",
         "simple-datatables": "^10.2.0",
+        "sweetalert2": "^11.26.10",
         "xlsx": "^0.18.5"
     }
 }

@@ -1,17 +1,19 @@
 import './bootstrap';
-import { initFlowbite, Dropdown } from 'flowbite';
-import * as simpleDatatables from 'simple-datatables';
-import ApexCharts from 'apexcharts';
 import * as XLSX from 'xlsx';
+import * as api from './composables/useApi.js';
+import * as simpleDatatables from 'simple-datatables';
+import {baixarCSV, baixarPDF, baixarXLSX} from './composables/useDownload.js';
+import { toggleExpand, Refresh} from './composables/card.js';
+import { toggleFilter } from './composables/useFilter';
+import { useAlerts } from './composables/useAlerts.js';
+import { initFlowbite, Dropdown } from 'flowbite';
+import ApexCharts from 'apexcharts';
 
 // 1. Libs de PDF
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 // 2. Lógica do Card
-import { toggleExpand, Refresh} from './composables/card.js';
-import { toggleFilter } from './composables/useFilter';
-import {baixarCSV, baixarPDF, baixarXLSX} from './composables/useDownload.js';
 
 // 3. Exposição Global
 window.jsPDF = jsPDF;
