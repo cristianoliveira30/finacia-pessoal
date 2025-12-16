@@ -136,7 +136,12 @@
                     console.log("Render", id, chartData);
                 }
 
-                async function fetchData() {
+                window.fetchData = async function() {
+                    const btn = document.querySelector("[data-action='refresh-dashboard']");
+                    btn?.toggleAttribute("disabled", true);
+                    btn?.setAttribute("aria-busy", "true");
+
+                    // se clicar várias vezes, cancela a anterior
                     if (controller) controller.abort();
                     controller = new AbortController();
 
@@ -180,7 +185,7 @@
                         },
                     ];
 
-                    await Promise.allSettled(jobs.map(async (job) => {
+                    const promises = jobs.map(async (job) => {
                         setLoading(job.targetId, true);
                         try {
                             const data = await window.Api.getRelatoriosGraph(job, {
@@ -188,21 +193,28 @@
                             });
                             renderChart(job.targetId, data);
                         } catch (err) {
-                            if (err?.name !== "AbortError") alerts?.showError?.({
-                                title: "Erro ao carregar",
-                                msg: "Ocorreu um erro desconhecido"
-                            });
+                            // não alerta se foi abort
+                            if (err?.name !== "AbortError") {
+                                alerts?.showError?.({
+                                    title: "Erro ao carregar",
+                                    msg: "Erro ao chamar os dados"
+                                });
+                            }
                         } finally {
                             setLoading(job.targetId, false);
+                            btn?.toggleAttribute("disabled", false);
+                            btn?.setAttribute("aria-busy", "false");
                         }
-                    }));
-                }
+                    });
+
+                    await Promise.allSettled(promises);
+                };
 
                 // ✅ clique em qualquer lugar, pega o botão certo
                 document.addEventListener("click", (e) => {
                     const btn = e.target.closest("[data-action='refresh-dashboard']");
                     if (!btn) return;
-                    fetchData();
+                    window.fetchData();
                 });
 
                 window.fetchData();
