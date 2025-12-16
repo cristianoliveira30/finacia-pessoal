@@ -19,61 +19,82 @@
         </div>
 
         @php
-            // Linha (semana): protocolos/solicitações
+            // 1. Gráfico de Linha: Atendimentos do Gabinete (Saúde vs Infraestrutura)
+            // Mostra a evolução das demandas que chegam ao escritório político
             $chartData = [
-                'x_label' => 'Data',
-                'categories' => ['01 Fev', '02 Fev', '03 Fev', '04 Fev', '05 Fev', '06 Fev', '07 Fev'],
+                'x_label' => 'Dia da Semana',
+                'categories' => ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'],
                 'series' => [
-                    ['name' => 'Protocolos Abertos', 'data' => [84, 91, 76, 98, 102, 87, 110]],
-                    ['name' => 'Protocolos Resolvidos', 'data' => [62, 70, 58, 79, 88, 74, 95]],
+                    // Série 1: Custos operacionais (Gasolina, Lanches, Material Gráfico)
+                    // (Antigo "Atendimento Presencial")
+                    ['name' => 'Gasto Operacional/Gabinete', 'data' => [150.00, 220.50, 180.00, 300.00, 120.00]],
+                    
+                    // Série 2: Investimento em Mídia (Facebook Ads, Disparos, Google)
+                    // (Antigo "WhatsApp/Digital")
+                    ['name' => 'Impulsionamento Digital', 'data' => [450.00, 380.00, 550.00, 420.00, 600.00]],
                 ],
             ];
 
-            // Pizza: origem/canal de entrada do atendimento
+            // 2. Gráfico de Pizza: Problemas de Trânsito mais relatados pelos bairros
+            // Ajuda a criar "Indicações" para a prefeitura
+// 2. Gráfico de Pizza: Origem das Demandas (Canais de Atendimento)
+            // Mostra qual canal é mais efetivo para captar solicitações
             $pieChartData = [
-                'x_label' => 'Canal',
-                'categories' => ['Presencial', 'Telefone', 'Portal/App'],
-                'series' => [['name' => 'Percentual', 'data' => [35, 25, 40]]],
+                'x_label' => 'Canal de Origem',
+                'categories' => ['WhatsApp Oficial', 'Indicação de Lideranças', 'Redes Sociais (Insta/FB)', 'Gabinete Presencial', 'Ações de Rua'],
+                'series' => [['name' => 'Solicitações', 'data' => [45, 25, 15, 10, 5]]],
             ];
 
-            // Colunas: demandas por área/secretaria
+            // 3. Gráfico de Colunas: Perfil de Escolaridade dos Cidadãos Atendidos
+            // Importante para entender o público-alvo do mandato
             $columnChartData = [
-                'x_label' => 'Área',
-                'categories' => ['Saúde', 'Educação', 'Obras', 'Iluminação', 'Limpeza', 'Trânsito', 'Assistência'],
-                'series' => [
-                    ['name' => 'Solicitações', 'data' => [120, 95, 140, 110, 130, 80, 70]],
-                    ['name' => 'Concluídas', 'data' => [88, 72, 101, 79, 96, 55, 51]],
-                ],
-            ];
+        'x_label' => 'Região / Bairro',
+        'categories' => ['Centro Histórico', 'Zona Norte', 'Jd. Primavera', 'Distrito Industrial', 'Zona Rural'],
+        'series' => [
+            // Série 1: Pedidos físicos (Buraco, Luz, Lixo)
+            ['name' => 'Infraestrutura Urbana', 'data' => [45, 120, 85, 60, 150]],
+            // Série 2: Pedidos assistenciais (Remédio, Cesta Básica, Vaga Creche)
+            ['name' => 'Social e Saúde', 'data' => [90, 80, 50, 30, 40]],
+        ],
+    ];
 
-            // Barras: execução (receita x despesa) por mês
+    // 4. Gráfico de Barras: Execução Orçamentária (Emendas Impositivas)
+            // MOSTRA: O dinheiro que o político destinou vs. o que a prefeitura realmente pagou.
+            // Isso é vital para cobrar o Executivo.
             $barChartData = [
-                'categories' => ['Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                'categories' => ['Reforma UBS Centro', 'Pavimentação Rua 12', 'Aquisição Ambulância', 'Iluminação da Praça'],
                 'series' => [
-                    ['name' => 'Receita (R$ mil)', 'data' => [1820, 1910, 2050, 1980, 2140, 2290]],
-                    ['name' => 'Despesa (R$ mil)', 'data' => [1650, 1720, 1880, 1810, 1950, 2060]],
+                    // Quanto você mandou de verba
+                    ['name' => 'Verba Destinada (R$)', 'data' => [150000, 300000, 250000, 80000]],
+                    // Quanto a prefeitura já liberou (Execução)
+                    ['name' => 'Valor Pago (R$)', 'data' => [120000, 50000, 250000, 10000]], 
                 ],
             ];
 
-            // Radial: status de programas/obras/ações
+            // 5. Gráfico Radial: Andamento de Programas (Legislativo)
+            // MOSTRA: O funil de aprovação dos seus projetos de lei na Câmara.
             $radialChartData = [
-                ['name' => 'Planejado', 'data' => [92]],
-                ['name' => 'Em execução', 'data' => [78]],
-                ['name' => 'Concluído', 'data' => [64]],
+                'categories' => ['Protocolados', 'Aprovados na Comissão', 'Sancionados (Lei)'], 
+                'series' => [
+                    [
+                        'name' => 'Taxa de Conversão', 
+                        'data' => [100, 65, 30] // Ex: De 100% das ideias, 30% viraram lei de fato.
+                    ]
+                ],
             ];
         @endphp
 
         {{-- grid dos gráficos --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <x-cards.card id="relatorio-vendas" title="Protocolos da Semana" :chart="$chartData" />
+            <x-cards.card id="relatorio-vendas" title="Investimento Diário" :chart="$chartData" />
 
-            <x-cards.card id="relatorio-canais" title="Entrada por Canal" :chart="$pieChartData" chart-type="pie" />
+            <x-cards.card id="relatorio-canais" title="Origem das Demandas" :chart="$pieChartData" chart-type="pie" />
 
-            <x-cards.card id="relatorio-dias" title="Demandas por Área" :chart="$columnChartData" chart-type="column" />
+            <x-cards.card id="relatorio-dias" title="Diagnóstico Regional" :chart="$columnChartData" chart-type="column" />
 
-            <x-cards.card id="relatorio-mes" title="Execução Orçamentária" :chart="$barChartData" chart-type="bar" />
+            <x-cards.card id="relatorio-mes" title="Monitoramento de Emendas" :chart="$barChartData" chart-type="bar" />
 
-            <x-cards.card id="progresso-time" title="Andamento de Programas" :chart="$radialChartData" chart-type="radial" />
+            <x-cards.card id="progresso-time" title="Produtividade Legislativa" :chart="$radialChartData" chart-type="radial" />
         </div>
     </div>
     @push('scripts')

@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Gerenciar Ações')">
-    <div class="flex flex-col items-center justify-start w-full min-h-screen p-6 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div class="pt-4 px-8 sm:px-4 lg:pl-16 space-y-4 flex flex-col items-center justify-start w-full min-h-screen p-6 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
 
         <div class="w-full max-w-7xl">
             

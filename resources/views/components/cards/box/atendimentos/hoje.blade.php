@@ -1,14 +1,16 @@
 @props([
     'config' => [],
-    'cardId' => 'card-' . uniqid(),
+    'cardId' => 'card-eleitores-' . uniqid(),
 ])
 @php
     $valuePrefix = data_get($config, 'value_prefix', '');
     $valueSuffix = data_get($config, 'value_suffix', '');
     $variationSuffix = data_get($config, 'variation_suffix', '%');
-    $weekLabel = data_get($config, 'week_label', 'Atendimentos');
-    $weekValue = data_get($config, 'week_value', '56');
-    $weekRanges = data_get($config, 'data_range_label', 'essa semana');
+    
+    // PADRÕES POLÍTICOS
+    $label = data_get($config, 'label', 'Novos Eleitores'); // Ex: Cadastros Hoje
+    $value = data_get($config, 'value', '124');
+    $rangeLabel = data_get($config, 'range_label', 'hoje');
     $redirectUrl = data_get($config, 'redirect_url', '#'); 
 @endphp
 
@@ -20,64 +22,64 @@
                 shadow-sm hover:shadow-md dark:shadow-xl
                 transition-all duration-300 group">
         
-        {{-- Glow Effect --}}
+        {{-- Glow Effect (Azul "Democrático" para institucional) --}}
         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full blur-2xl transition-all pointer-events-none
-                    bg-indigo-500/5 dark:bg-indigo-500/20
-                    group-hover:bg-indigo-500/10 dark:group-hover:bg-indigo-500/30"></div>
+                    bg-blue-500/5 dark:bg-blue-500/20
+                    group-hover:bg-blue-500/10 dark:group-hover:bg-blue-500/30"></div>
         
-        {{-- 
-            ESTRUTURA PRINCIPAL: Flex Row 
-            Divide o card em Esquerda (Texto) e Direita (Ícones)
-        --}}
         <div class="relative z-10 flex justify-between h-full">
             
-            {{-- COLUNA ESQUERDA: Conteúdo (Texto e Badge) --}}
+            {{-- COLUNA ESQUERDA --}}
             <div class="flex flex-col justify-between">
-                {{-- Bloco Superior: Label e Valor --}}
                 <div class="mb-4">
                     <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1 capitalize">
-                        {{ $weekLabel }}
+                        {{ $label }}
                     </p>
                     <h3 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
-                        {{ $valuePrefix }}{{ $weekValue }}{{ $valueSuffix}}
+                        {{ $valuePrefix }}{{ $value }}{{ $valueSuffix}}
                     </h3>
                 </div>
 
-                {{-- Bloco Inferior: Badge de Porcentagem --}}
                 <div class="flex items-center text-sm">
+                    {{-- Badge de Variação --}}
                     <span class="font-medium flex items-center px-2 py-0.5 rounded border
                                  bg-emerald-50 text-emerald-700 border-emerald-100
                                  dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
-                            <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <line x1="20" y1="8" x2="20" y2="14"></line>
+                            <line x1="23" y1="11" x2="17" y2="11"></line>
                         </svg>
-                        <span>+12{{ $variationSuffix }}</span>
+                        <span>+15{{ $variationSuffix }}</span>
                     </span>
                     <span class="text-slate-500 dark:text-slate-500 ml-3 font-medium truncate">
-                        {{ $weekRanges }}
+                        {{ $rangeLabel }}
                     </span>
                 </div>
             </div>
 
-            {{-- COLUNA DIREITA: Ícones (Topo e Fundo) --}}
-            {{-- 'justify-between' garante o afastamento máximo entre os ícones --}}
-            {{-- 'items-end' garante que fiquem alinhados à direita --}}
+            {{-- COLUNA DIREITA: Ícones --}}
             <div class="flex flex-col justify-between items-end pl-4">
                 
-                {{-- 1. Ícone do Cartão (TOPO) --}}
+                {{-- 1. Ícone Político (Grupo de Pessoas/Eleitorado) --}}
                 <div class="p-2.5 rounded-xl border shadow-sm transition-colors
-                            bg-indigo-50 border-indigo-100 text-indigo-600
-                            dark:bg-slate-700/50 dark:border-slate-600 dark:text-indigo-400">
+                            bg-blue-50 border-blue-100 text-blue-600
+                            dark:bg-slate-700/50 dark:border-slate-600 dark:text-blue-400">
+                    {{-- Ícone: Users Group --}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
                 </div>
 
-                {{-- 2. Ícone de Seta (FUNDO) --}}  
+                {{-- 2. Link --}}  
                 <a href="{{ $redirectUrl }}" 
                    class="p-1.5 rounded-lg transition-colors cursor-pointer
-                          text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 
-                          dark:text-slate-600 dark:hover:text-indigo-400 dark:hover:bg-slate-800">
+                          text-slate-400 hover:text-blue-600 hover:bg-blue-50 
+                          dark:text-slate-600 dark:hover:text-blue-400 dark:hover:bg-slate-800">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                     </svg>
