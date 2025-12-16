@@ -17,6 +17,7 @@
     "dependencies": {
         "apexcharts": "^5.3.6",
         "flowbite": "^4.0.1",
-        "simple-datatables": "^10.2.0"
+        "simple-datatables": "^10.2.0",
+        "sweetalert2": "^11.26.10"
     }
 }

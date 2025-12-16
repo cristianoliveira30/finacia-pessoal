@@ -18,3 +18,22 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+
+/* SweetAlert2 + Tailwind dark mode */
+.swal2-popup {
+  border-radius: 1rem;
+}
+
+html.dark .swal2-popup {
+  background: #0f172a; /* slate-900 */
+  color: #e2e8f0;      /* slate-200 */
+}
+
+html.dark .swal2-title,
+html.dark .swal2-html-container {
+  color: #e2e8f0;
+}
+
+html.dark .swal2-timer-progress-bar {
+  background: #38bdf8; /* sky-400 */
+}

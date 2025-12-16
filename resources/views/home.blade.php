@@ -76,5 +76,86 @@
             <x-cards.card id="progresso-time" title="Andamento de Programas" :chart="$radialChartData" chart-type="radial" />
         </div>
     </div>
+    @push('scripts')
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                if (!document.getElementById("relatorio-vendas")) return;
+
+                const alerts = window.Alerts;
+                function setLoading(id, on) {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    el.classList.toggle("opacity-60", on);
+                    el.classList.toggle("pointer-events-none", on);
+                }
+
+                function renderChart(id, chartData) {
+                    console.log("Render", id, chartData);
+                }
+
+                const controller = new AbortController();
+
+                const jobs = [{
+                        targetId: "relatorio-vendas",
+                        link: "/api/graph/semana",
+                        method: "POST",
+                        filtros: {
+                            range: "7d"
+                        }
+                    },
+                    {
+                        targetId: "relatorio-canais",
+                        link: "/api/graph/canais",
+                        method: "POST",
+                        filtros: {
+                            range: "7d"
+                        }
+                    },
+                    {
+                        targetId: "relatorio-dias",
+                        link: "/api/graph/areas",
+                        method: "POST",
+                        filtros: {
+                            range: "30d"
+                        }
+                    },
+                    {
+                        targetId: "relatorio-mes",
+                        link: "/api/graph/mes",
+                        method: "POST",
+                        filtros: {
+                            year: 2025
+                        }
+                    },
+                    {
+                        targetId: "progresso-time",
+                        link: "/api/graph/status",
+                        method: "POST",
+                        filtros: {}
+                    },
+                ];
+
+                const promises = jobs.map(async (job) => {
+                    setLoading(job.targetId, true);
+                    try {
+                        const data = await window.Api.getRelatoriosGraph(job, {
+                            signal: controller.signal
+                        });
+                        renderChart(job.targetId, data);
+                    } catch (err) {
+                        alerts.showError({title: 'Erro ao carregar', msg: 'Erro ao carregar relatório...'})
+                    } finally {
+                        setLoading(job.targetId, false);
+                    }
+                });
+
+                Promise.allSettled(promises);
+
+                window.addEventListener("beforeunload", () => controller.abort(), {
+                    once: true
+                });
+            });
+        </script>
+    @endpush
 
 </x-layouts.app>
