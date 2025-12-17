@@ -7,11 +7,9 @@ import { toggleExpand, Refresh} from './composables/card.js';
 import { toggleFilter } from './composables/useFilter';
 import { useAlerts } from './composables/useAlerts.js';
 import { initFlowbite, Dropdown } from 'flowbite';
-import ApexCharts from 'apexcharts';
-
-// 1. Libs de PDF
-import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import ApexCharts from 'apexcharts';
+import jsPDF from 'jspdf';
 
 // 2. Lógica do Card
 

@@ -5,16 +5,16 @@
         <!-- cards de cima -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
             <div class="md:col-span-1">
-                <x-cards.box.atendimentos.hoje :config="['link' => '/report']" />
+                <x-cards.box.box-01 :config="['link' => '/report', 'label' => 'Eleitores Cadastrados']" />
             </div>
             <div class="md:col-span-1">
-                <x-cards.box.atendimentos.mes :config="['link' => '/report']" />
+                <x-cards.box.box-02 :config="['link' => '/report', 'label' => 'Investimento por setor']" />
             </div>
             <div class="md:col-span-1">
-                <x-cards.box.cadastrados.hoje :config="['link' => '/report']" />
+                <x-cards.box.box-01 :config="['link' => '/report', 'label' => 'Retorno Líquido']" />
             </div>
             <div class="md:col-span-1">
-                <x-cards.box.cadastrados.mes :config="['link' => '/report']" />
+                <x-cards.box.box-02 :config="['link' => '/report', 'label' => 'Total de retabilidade']" />
             </div>
         </div>
 
