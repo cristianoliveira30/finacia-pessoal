@@ -168,7 +168,7 @@
 </style>
 
 <aside id="top-bar-sidebar"
-    class="absolute inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 border-e transition-transform duration-300"
+    class="absolute inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 border-e transition-transform duration-300 bg-gray-100"
     aria-label="Sidebar">
 
     <div class="h-full flex flex-col">

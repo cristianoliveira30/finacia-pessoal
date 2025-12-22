@@ -15,37 +15,40 @@
 @endphp
 
 <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+    {{-- LIGHT: Borda Slate-300 para contraste --}}
     <div class="relative w-full min-w-[260px] overflow-hidden
                 bg-white dark:bg-gradient-to-br dark:from-slate-800 dark:to-slate-900
                 p-5 rounded-2xl
-                border border-slate-200 dark:border-slate-700
-                shadow-sm hover:shadow-md dark:shadow-xl
+                border border-slate-300 dark:border-slate-700
+                shadow-sm hover:shadow dark:shadow-xl
                 transition-all duration-300 group">
         
-        {{-- Glow Effect (Azul "Democrático" para institucional) --}}
+        {{-- Glow Effect: Light = Sombra cinza sutil / Dark = Azul original --}}
         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full blur-2xl transition-all pointer-events-none
-                    bg-blue-500/5 dark:bg-blue-500/20
-                    group-hover:bg-blue-500/10 dark:group-hover:bg-blue-500/30"></div>
+                    bg-slate-900/5 dark:bg-blue-500/20
+                    group-hover:bg-slate-900/10 dark:group-hover:bg-blue-500/30"></div>
         
         <div class="relative z-10 flex justify-between h-full">
             
             {{-- COLUNA ESQUERDA --}}
             <div class="flex flex-col justify-between">
                 <div class="mb-4">
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1 capitalize">
+                    {{-- Label: Slate-600 Semibold --}}
+                    <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1 capitalize">
                         {{ $label }}
                     </p>
-                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
+                    {{-- Value: Slate-950 (Preto profundo) --}}
+                    <h3 class="text-3xl font-bold text-slate-950 dark:text-white tracking-tight">
                         {{ $valuePrefix }}{{ $value }}{{ $valueSuffix}}
                     </h3>
                 </div>
 
                 <div class="flex items-center text-sm">
                     {{-- Badge de Variação --}}
-                    <span class="font-medium flex items-center px-2 py-0.5 rounded border
-                                 bg-emerald-50 text-emerald-700 border-emerald-100
+                    <span class="font-bold flex items-center px-2 py-0.5 rounded border
+                                 bg-emerald-50 text-emerald-800 border-emerald-200
                                  dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="8.5" cy="7" r="4"></circle>
                             <line x1="20" y1="8" x2="20" y2="14"></line>
@@ -53,7 +56,7 @@
                         </svg>
                         <span>+15{{ $variationSuffix }}</span>
                     </span>
-                    <span class="text-slate-500 dark:text-slate-500 ml-3 font-medium truncate">
+                    <span class="text-slate-600 dark:text-slate-500 ml-3 font-semibold truncate">
                         {{ $rangeLabel }}
                     </span>
                 </div>
@@ -62,9 +65,10 @@
             {{-- COLUNA DIREITA: Ícones --}}
             <div class="flex flex-col justify-between items-end pl-4">
                 
-                {{-- 1. Ícone Político (Grupo de Pessoas/Eleitorado) --}}
+                {{-- 1. Ícone Político --}}
+                {{-- LIGHT: Cinza Sólido (Slate-100/700) --}}
                 <div class="p-2.5 rounded-xl border shadow-sm transition-colors
-                            bg-blue-50 border-blue-100 text-blue-600
+                            bg-slate-100 border-slate-300 text-slate-700
                             dark:bg-slate-700/50 dark:border-slate-600 dark:text-blue-400">
                     {{-- Ícone: Users Group --}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -76,9 +80,10 @@
                 </div>
 
                 {{-- 2. Link --}}  
+                {{-- LIGHT: Hover Preto/Cinza --}}
                 <a href="{{ $redirectUrl }}" 
                    class="p-1.5 rounded-lg transition-colors cursor-pointer
-                          text-slate-400 hover:text-blue-600 hover:bg-blue-50 
+                          text-slate-500 hover:text-slate-900 hover:bg-slate-200 
                           dark:text-slate-600 dark:hover:text-blue-400 dark:hover:bg-slate-800">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>

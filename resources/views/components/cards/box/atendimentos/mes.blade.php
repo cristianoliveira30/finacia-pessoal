@@ -21,41 +21,45 @@
 @endphp
 
 <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+    {{-- LIGHT: Borda Slate-300 para contraste --}}
     <div class="relative w-full min-w-[260px] overflow-hidden
                 bg-white dark:bg-gradient-to-br dark:from-slate-800 dark:to-slate-900
                 p-5 rounded-2xl
-                border border-slate-200 dark:border-slate-700
-                shadow-sm hover:shadow-md dark:shadow-xl
+                border border-slate-300 dark:border-slate-700
+                shadow-sm hover:shadow dark:shadow-xl
                 transition-all duration-300 group">
         
-        {{-- Glow Effect (Violeta) --}}
+        {{-- Glow Effect: Light = Sombra cinza sutil / Dark = Violeta original --}}
         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full blur-2xl transition-all pointer-events-none
-                    bg-violet-500/5 dark:bg-violet-500/20
-                    group-hover:bg-violet-500/10 dark:group-hover:bg-violet-500/30"></div>
+                    bg-slate-900/5 dark:bg-violet-500/20
+                    group-hover:bg-slate-900/10 dark:group-hover:bg-violet-500/30"></div>
         
         <div class="relative z-10 flex justify-between h-full">
             
             {{-- COLUNA ESQUERDA --}}
             <div class="flex flex-col justify-between">
                 <div class="mb-4">
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1 capitalize">
+                    {{-- Label: Slate-600 Semibold --}}
+                    <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1 capitalize">
                         {{ $weekLabel }}
                     </p>
-                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
+                    {{-- Value: Slate-950 --}}
+                    <h3 class="text-3xl font-bold text-slate-950 dark:text-white tracking-tight">
                         {{ $valuePrefix }}{{ $weekValue }}{{ $valueSuffix}}
                     </h3>
                 </div>
 
                 <div class="flex items-center text-sm">
-                    <span class="font-medium flex items-center px-2 py-0.5 rounded border
-                                 bg-emerald-50 text-emerald-700 border-emerald-100
+                    {{-- Badge de Variação --}}
+                    <span class="font-bold flex items-center px-2 py-0.5 rounded border
+                                 bg-emerald-50 text-emerald-800 border-emerald-200
                                  dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                             <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
                         </svg>
                         <span>{{ $variationText }}{{ $variationSuffix }}</span>
                     </span>
-                    <span class="text-slate-500 dark:text-slate-500 ml-3 font-medium truncate">
+                    <span class="text-slate-600 dark:text-slate-500 ml-3 font-semibold truncate">
                         {{ $weekRanges }}
                     </span>
                 </div>
@@ -65,8 +69,9 @@
             <div class="flex flex-col justify-between items-end pl-4">
                 
                 {{-- Ícone de Histórico/Lista de Atendimentos --}}
+                {{-- LIGHT: Slate Sólido --}}
                 <div class="p-2.5 rounded-xl border shadow-sm transition-colors
-                            bg-violet-50 border-violet-100 text-violet-600
+                            bg-slate-100 border-slate-300 text-slate-700
                             dark:bg-slate-700/50 dark:border-slate-600 dark:text-violet-400">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -78,9 +83,10 @@
                 </div>
 
                 {{-- Seta de Redirecionamento --}}  
+                {{-- LIGHT: Hover Preto --}}
                 <a href="{{ $redirectUrl }}" 
                    class="p-1.5 rounded-lg transition-colors cursor-pointer
-                          text-slate-400 hover:text-violet-600 hover:bg-violet-50 
+                          text-slate-500 hover:text-slate-900 hover:bg-slate-200 
                           dark:text-slate-600 dark:hover:text-violet-400 dark:hover:bg-slate-800">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>

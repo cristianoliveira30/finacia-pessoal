@@ -19,17 +19,27 @@
 @endphp
 
 <div class="grid grid-cols-1 md:grid-cols-1 gap-2 w-full">
+    {{-- 
+        AJUSTES DE CONTRASTE (LIGHT MODE):
+        - border-slate-300: Borda mais escura e visível (era 200).
+        - shadow-sm: Sombra contida.
+        - bg-white: Mantido, mas agora contido pela borda forte.
+    --}}
     <div class="relative w-full min-w-[260px] overflow-hidden
-                bg-white dark:bg-gradient-to-br dark:from-slate-800 dark:to-slate-900
+                bg-gray-100/75 dark:bg-gradient-to-br dark:from-slate-800 dark:to-slate-900
                 p-5 rounded-2xl
-                border border-slate-200 dark:border-slate-700
-                shadow-sm hover:shadow-md dark:shadow-xl
+                border border-slate-300 dark:border-slate-700
+                shadow-sm hover:shadow dark:shadow-xl
                 transition-all duration-300 group">
 
-        {{-- Glow Effect (Mantendo Indigo) --}}
+        {{-- 
+            Efeito de Fundo (Glow/Mancha):
+            - Light Mode: Mudei de 'white/indigo' para 'slate-900/5'. 
+              Isso cria uma mancha cinza muito sutil (não branca) para dar textura de papel.
+        --}}
         <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full blur-2xl transition-all pointer-events-none
-                    bg-indigo-500/5 dark:bg-indigo-500/20
-                    group-hover:bg-indigo-500/10 dark:group-hover:bg-indigo-500/30"></div>
+                    bg-slate-900/5 dark:bg-indigo-500/20
+                    group-hover:bg-slate-900/10 dark:group-hover:bg-indigo-500/30"></div>
 
         <div class="relative z-10 flex justify-between h-full">
 
@@ -37,25 +47,35 @@
             <div class="flex flex-col justify-between">
                 {{-- Bloco Superior: Label e Valor --}}
                 <div class="mb-4">
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1 capitalize">
+                    {{-- 
+                       LABEL: text-slate-600 (Cinza Chumbo) e font-semibold.
+                       Aumentei o peso da fonte e escureci para tirar o aspecto "lavado".
+                    --}}
+                    <p class="text-slate-600 dark:text-slate-400 text-sm font-semibold mb-1 capitalize">
                         {{ $weekLabel }}
                     </p>
-                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
+                    {{-- 
+                       VALOR: text-slate-950 (Quase preto). 
+                       Contraste máximo no modo claro.
+                    --}}
+                    <h3 class="text-3xl font-bold text-slate-950 dark:text-white tracking-tight">
                         {{ $valuePrefix }}{{ $weekValue }}{{ $valueSuffix}}
                     </h3>
                 </div>
 
                 {{-- Bloco Inferior: Badge de Variação --}}
                 <div class="flex items-center text-sm">
-                    <span class="font-medium flex items-center px-2 py-0.5 rounded border
-                                 bg-emerald-50 text-emerald-700 border-emerald-100
+                    {{-- Badge Verde: Mantido, mas bordas levemente ajustadas --}}
+                    <span class="font-bold flex items-center px-2 py-0.5 rounded border
+                                 bg-emerald-50 text-emerald-800 border-emerald-200
                                  dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                             <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
                         </svg>
                         <span>+5.4{{ $variationSuffix }}</span>
                     </span>
-                    <span class="text-slate-500 dark:text-slate-500 ml-3 font-medium truncate">
+                    {{-- Texto de range: Slate-600 para leitura melhor --}}
+                    <span class="text-slate-600 dark:text-slate-500 ml-3 font-semibold truncate">
                         {{ $weekRanges }}
                     </span>
                 </div>
@@ -64,11 +84,15 @@
             {{-- COLUNA DIREITA: Ícones --}}
             <div class="flex flex-col justify-between items-end pl-4">
 
-                {{-- 1. Ícone do Cartão/Documento (TOPO) --}}
+                {{-- 
+                    1. Ícone do Cartão (TOPO) - ESTILO OFFICE FORTE
+                    - bg-slate-100: Fundo cinza sólido (não branco).
+                    - border-slate-300: Borda definida.
+                    - text-slate-700: Ícone escuro.
+                --}}
                 <div class="p-2.5 rounded-xl border shadow-sm transition-colors
-                            bg-indigo-50 border-indigo-100 text-indigo-600
+                            bg-slate-100 border-slate-300 text-slate-700
                             dark:bg-slate-700/50 dark:border-slate-600 dark:text-indigo-400">
-                    {{-- Ícone de ID Card (Identidade/Título) --}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 10h2"/>
                         <path d="M16 14h2"/>
@@ -78,10 +102,14 @@
                     </svg>
                 </div>
 
-                {{-- 2. Ícone de Seta (FUNDO) --}}
+                {{-- 
+                    2. Ícone de Seta (FUNDO)
+                    - text-slate-500: Cinza médio base.
+                    - hover:text-slate-900: Preto no hover.
+                --}}
                 <a href="{{ $redirectUrl }}"
                    class="p-1.5 rounded-lg transition-colors cursor-pointer
-                          text-slate-400 hover:text-indigo-600 hover:bg-indigo-50
+                          text-slate-500 hover:text-slate-900 hover:bg-slate-200
                           dark:text-slate-600 dark:hover:text-indigo-400 dark:hover:bg-slate-800"
                    title="Ver detalhes de emissão">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
