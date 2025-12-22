@@ -82,8 +82,28 @@
 
         {{-- “Shell” da aplicação: onde o sidebar vai ficar absoluto --}}
         <div id="app-shell" class="relative flex-1 overflow-y-auto">
-            {{-- SIDEBAR (overlay, absoluto dentro do shell) --}}
-            @include('components.layouts.app.sidebar')
+            @php
+                $sidebarView = match (true) {
+                    request()->routeIs('geral.*')
+                        => 'components.layouts.app.sidebar', // ou uma sidebar própria do dashboard
+                    request()->routeIs('financeiro.*')
+                        => 'components.layouts.home.financeiro', // ou uma sidebar própria do dashboard
+                    request()->routeIs('educacao.*')
+                        => 'components.layouts.home.educacao', // ou uma sidebar própria do dashboard
+                    request()->routeIs('saude.*')
+                        => 'components.layouts.home.saude', // ou uma sidebar própria do dashboard
+                    default => 'components.layouts.app.sidebar',
+                };
+
+                // Se você quiser saber "onde estou":
+                $currentRouteName = optional(request()->route())->getName(); // ex: dashboard.central
+                $currentPath = request()->path(); // ex: dashboard/central
+            @endphp
+
+            @include($sidebarView, [
+                'currentRouteName' => $currentRouteName,
+                'currentPath' => $currentPath,
+            ])
 
             {{-- CONTEÚDO PRINCIPAL --}}
             <main class="min-h-full px-2 sm:px-4 lg:px-6 lg:pl-[1.5rem] transition-[padding-left] duration-300">

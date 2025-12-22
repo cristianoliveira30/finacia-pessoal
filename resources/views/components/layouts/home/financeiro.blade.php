@@ -1,56 +1,132 @@
 {{-- CONFIGURAÇÃO DOS MENUS (DADOS) --}}
 @php
     $menus = [
+        // 1) Relatórios (visão analítica)
         [
-            'id' => 'financeiro',
-            'label' => 'Financeiro',
-            'popover_title' => 'Financeiro',
+            'id' => 'fin-relatorios',
+            'label' => 'Relatórios',
+            'popover_title' => 'Relatórios Financeiros',
             'hex_main' => '#fbbf24', // amber-400
             'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)', // amber-900/40
             'hex_light' => '#fcd34d', // amber-300
-            'icon_main' => 'cash',
+            'icon_main' => 'clipboard-data',
             'items' => [
-                ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
-                ['label' => 'Investimento Realizado', 'route' => 'financeiro.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Execuções Orçamentárias', 'route' => 'financeiro.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
-                ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin']
+                ['label' => 'Painel Financeiro (Geral)', 'route' => 'financeiro.home', 'icon' => 'speedometer2'],
+                ['label' => 'Receitas x Despesas (Séries)', 'route' => 'financeiro.relatorios.rx_d', 'icon' => 'graph-up'],
+                ['label' => 'Execução Orçamentária (Mês/Ano)', 'route' => 'financeiro.relatorios.execucao', 'icon' => 'bar-chart'],
+                ['label' => 'Despesas por Função/Subfunção', 'route' => 'financeiro.relatorios.despesas_funcao', 'icon' => 'pie-chart'],
+                ['label' => 'Fornecedores (Top / Concentração)', 'route' => 'financeiro.relatorios.fornecedores', 'icon' => 'people'],
+                ['label' => 'Empenhos / Liquidações / Pagamentos', 'route' => 'financeiro.relatorios.elp', 'icon' => 'receipt'],
             ]
         ],
+
+        // 2) Orçamento (PPA/LDO/LOA + execução)
         [
-            'id' => 'educacao',
-            'label' => 'Educação',
-            'popover_title' => 'Educação',
+            'id' => 'fin-orcamento',
+            'label' => 'Orçamento',
+            'popover_title' => 'Orçamento (PPA/LDO/LOA)',
             'hex_main' => '#34d399', // emerald-400
             'hex_hover_bg' => 'rgba(6, 78, 59, 0.4)', // emerald-900/40
             'hex_light' => '#6ee7b7', // emerald-300
             'icon_main' => 'journal-bookmark',
             'items' => [
-                ['label' => 'Dashboard', 'route' => 'educacao.home', 'icon' => 'list'],
-                ['label' => 'Merendas Servidas', 'route' => 'educacao.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Frequência Escolar', 'route' => 'educacao.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Lançamentos', 'route' => 'educacao.lancamentos', 'icon' => 'rocket-takeoff'],
-                ['label' => 'Contas', 'route' => 'educacao.contas', 'icon' => 'coin']
+                ['label' => 'LOA (Dotação Inicial)', 'route' => 'financeiro.orcamento.loa', 'icon' => 'file-earmark-text'],
+                ['label' => 'PPA / Programas e Ações', 'route' => 'financeiro.orcamento.ppa', 'icon' => 'file-earmark-text'],
+                ['label' => 'LDO / Metas e Prioridades', 'route' => 'financeiro.orcamento.ldo', 'icon' => 'file-earmark-text'],
+                ['label' => 'Alterações (Créditos Adicionais)', 'route' => 'financeiro.orcamento.creditos', 'icon' => 'arrow-left-right'],
+                ['label' => 'Restos a Pagar (Processados/Não)', 'route' => 'financeiro.orcamento.restos_pagar', 'icon' => 'exclamation-triangle'],
             ]
         ],
+
+        // 3) Receitas (arrecadação e projeções)
         [
-            'id' => 'saude',
-            'label' => 'Saúde',
-            'popover_title' => 'Saúde',
+            'id' => 'fin-receitas',
+            'label' => 'Receitas',
+            'popover_title' => 'Receitas',
+            'hex_main' => '#38bdf8', // sky-400
+            'hex_hover_bg' => 'rgba(12, 74, 110, 0.4)', // sky-900/40
+            'hex_light' => '#7dd3fc', // sky-300
+            'icon_main' => 'cash',
+            'items' => [
+                ['label' => 'Arrecadação (Real x Previsto)', 'route' => 'financeiro.receitas.arrecadacao', 'icon' => 'graph-up'],
+                ['label' => 'Receita por Fonte (Própria/Transf.)', 'route' => 'financeiro.receitas.fontes', 'icon' => 'pie-chart'],
+                ['label' => 'Transferências (FPM/ICMS/SUS/FUNDEB)', 'route' => 'financeiro.receitas.transferencias', 'icon' => 'bank'],
+                ['label' => 'Dívida Ativa / Recuperação', 'route' => 'financeiro.receitas.divida_ativa', 'icon' => 'exclamation-triangle'],
+                ['label' => 'Projeções (Forecast)', 'route' => 'financeiro.receitas.projecoes', 'icon' => 'bar-chart'],
+            ]
+        ],
+
+        // 4) Despesas (controle fino)
+        [
+            'id' => 'fin-despesas',
+            'label' => 'Despesas',
+            'popover_title' => 'Despesas',
             'hex_main' => '#f43f5e', // rose-500
             'hex_hover_bg' => 'rgba(136, 19, 55, 0.4)', // rose-900/40
             'hex_light' => '#fda4af', // rose-300
-            'icon_main' => 'plus-circle',
+            'icon_main' => 'receipt',
             'items' => [
-                ['label' => 'Dashboard', 'route' => 'saude.home', 'icon' => 'list'],
-                ['label' => 'Cobertura de Vacinação', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Faltas em Consultas', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Lançamentos', 'route' => 'saude.lancamentos', 'icon' => 'rocket-takeoff'],
-                ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin']
+                ['label' => 'Empenhos', 'route' => 'financeiro.despesas.empenhos', 'icon' => 'file-earmark-text'],
+                ['label' => 'Liquidações', 'route' => 'financeiro.despesas.liquidacoes', 'icon' => 'file-earmark-text'],
+                ['label' => 'Pagamentos', 'route' => 'financeiro.despesas.pagamentos', 'icon' => 'coin'],
+                ['label' => 'Despesas por Elemento', 'route' => 'financeiro.despesas.elemento', 'icon' => 'bar-chart'],
+                ['label' => 'Centros de Custo / Unidades', 'route' => 'financeiro.despesas.centros_custo', 'icon' => 'building'],
+            ]
+        ],
+
+        // 5) Investimentos (CAPEX, emendas, convênios)
+        [
+            'id' => 'fin-investimentos',
+            'label' => 'Investimentos',
+            'popover_title' => 'Investimentos / CAPEX',
+            'hex_main' => '#a78bfa', // violet-400
+            'hex_hover_bg' => 'rgba(88, 28, 135, 0.35)', // violet-900/35
+            'hex_light' => '#c4b5fd', // violet-300
+            'icon_main' => 'graph-up',
+            'items' => [
+                ['label' => 'CAPEX (Obras/Equipamentos)', 'route' => 'financeiro.investimentos.capex', 'icon' => 'bar-chart'],
+                ['label' => 'Emendas / Convênios', 'route' => 'financeiro.investimentos.convenios', 'icon' => 'file-earmark-text'],
+                ['label' => 'Cronograma Físico-Financeiro', 'route' => 'financeiro.investimentos.cronograma', 'icon' => 'calendar3'],
+                ['label' => 'Contrapartidas', 'route' => 'financeiro.investimentos.contrapartidas', 'icon' => 'arrow-left-right'],
+            ]
+        ],
+
+        // 6) Tesouraria (caixa, bancos, conciliação)
+        [
+            'id' => 'fin-tesouraria',
+            'label' => 'Tesouraria',
+            'popover_title' => 'Tesouraria / Caixa',
+            'hex_main' => '#60a5fa', // blue-400
+            'hex_hover_bg' => 'rgba(30, 58, 138, 0.35)', // blue-900/35
+            'hex_light' => '#93c5fd', // blue-300
+            'icon_main' => 'bank',
+            'items' => [
+                ['label' => 'Saldos Bancários', 'route' => 'financeiro.tesouraria.saldos', 'icon' => 'bank'],
+                ['label' => 'Fluxo de Caixa (D+30/D+90)', 'route' => 'financeiro.tesouraria.fluxo', 'icon' => 'graph-up'],
+                ['label' => 'Conciliação Bancária', 'route' => 'financeiro.tesouraria.conciliacao', 'icon' => 'arrow-left-right'],
+                ['label' => 'Aplicações / Rendimentos', 'route' => 'financeiro.tesouraria.aplicacoes', 'icon' => 'coin'],
+            ]
+        ],
+
+        // 7) Compliance / LRF (alertas e limites)
+        [
+            'id' => 'fin-compliance',
+            'label' => 'LRF & Compliance',
+            'popover_title' => 'LRF / Alertas',
+            'hex_main' => '#94a3b8', // slate-400
+            'hex_hover_bg' => 'rgba(15, 23, 42, 0.35)', // slate-950/35
+            'hex_light' => '#cbd5e1', // slate-300
+            'icon_main' => 'shield-check',
+            'items' => [
+                ['label' => 'Gasto com Pessoal (Limites)', 'route' => 'financeiro.lrf.pessoal', 'icon' => 'exclamation-triangle'],
+                ['label' => 'Saúde (Mínimo Constitucional)', 'route' => 'financeiro.lrf.saude', 'icon' => 'exclamation-triangle'],
+                ['label' => 'Educação/FUNDEB (Mínimos)', 'route' => 'financeiro.lrf.educacao', 'icon' => 'exclamation-triangle'],
+                ['label' => 'Endividamento / Precatórios', 'route' => 'financeiro.lrf.divida', 'icon' => 'file-earmark-text'],
             ]
         ],
     ];
 @endphp
+
 
 {{-- CSS específico do sidebar com suporte a tema --}}
 <style>
@@ -176,7 +252,11 @@
                                     <span class="w-px bg-slate-700 ml-2"></span>
                                     <div class="space-y-1">
                                         @foreach($menu['items'] as $item)
-                                            <a href="{{ route($item['route']) }}"
+                                            @php
+                                                $r = $item['route'] ?? null;
+                                                $href = ($r && \Illuminate\Support\Facades\Route::has($r)) ? route($r) : '#';
+                                            @endphp
+                                            <a href="{{ $href }}"
                                                class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
                                                {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
                                                onmouseover="this.style.color='{{ $menu['hex_light'] }}'"

@@ -1,55 +1,159 @@
-{{-- CONFIGURAÇÃO DOS MENUS (DADOS) --}}
 @php
-    $menus = [
-        [
-            'id' => 'financeiro',
-            'label' => 'Financeiro',
-            'popover_title' => 'Financeiro',
-            'hex_main' => '#fbbf24', // amber-400
-            'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)', // amber-900/40
-            'hex_light' => '#fcd34d', // amber-300
-            'icon_main' => 'cash',
-            'items' => [
-                ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
-                ['label' => 'Investimento Realizado', 'route' => 'financeiro.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Execuções Orçamentárias', 'route' => 'financeiro.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
-                ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin']
-            ]
+$menus = [
+
+    // 1) Visão Geral / Gestão
+    [
+        'id' => 'edu-painel',
+        'label' => 'Painel',
+        'popover_title' => 'Painel de Educação',
+        'hex_main' => '#38bdf8', // sky-400
+        'hex_hover_bg' => 'rgba(12, 74, 110, 0.4)', // sky-900/40
+        'hex_light' => '#7dd3fc', // sky-300
+        'icon_main' => 'speedometer2',
+        'items' => [
+            ['label' => 'Dashboard Educação', 'route' => 'educacao.home', 'icon' => 'speedometer2'],
+            ['label' => 'Indicadores (Resumo)', 'route' => 'educacao.painel.indicadores', 'icon' => 'clipboard-data'],
+            ['label' => 'Metas e Acompanhamento', 'route' => 'educacao.painel.metas', 'icon' => 'bullseye'],
         ],
-        [
-            'id' => 'educacao',
-            'label' => 'Educação',
-            'popover_title' => 'Educação',
-            'hex_main' => '#34d399', // emerald-400
-            'hex_hover_bg' => 'rgba(6, 78, 59, 0.4)', // emerald-900/40
-            'hex_light' => '#6ee7b7', // emerald-300
-            'icon_main' => 'journal-bookmark',
-            'items' => [
-                ['label' => 'Dashboard', 'route' => 'educacao.home', 'icon' => 'list'],
-                ['label' => 'Merendas Servidas', 'route' => 'educacao.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Frequência Escolar', 'route' => 'educacao.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Lançamentos', 'route' => 'educacao.lancamentos', 'icon' => 'rocket-takeoff'],
-                ['label' => 'Contas', 'route' => 'educacao.contas', 'icon' => 'coin']
-            ]
+    ],
+
+    // 2) Relatórios (núcleo BI)
+    [
+        'id' => 'edu-relatorios',
+        'label' => 'Relatórios',
+        'popover_title' => 'Relatórios Educacionais',
+        'hex_main' => '#34d399', // emerald-400
+        'hex_hover_bg' => 'rgba(6, 78, 59, 0.4)', // emerald-900/40
+        'hex_light' => '#6ee7b7', // emerald-300
+        'icon_main' => 'bar-chart',
+        'items' => [
+            ['label' => 'Frequência Escolar', 'route' => 'educacao.relatorios.frequencia', 'icon' => 'calendar-check'],
+            ['label' => 'Evasão / Abandono', 'route' => 'educacao.relatorios.evasao', 'icon' => 'exclamation-triangle'],
+            ['label' => 'Aprendizagem (Indicadores)', 'route' => 'educacao.relatorios.aprendizagem', 'icon' => 'graph-up'],
+            ['label' => 'Matrículas (Evolução)', 'route' => 'educacao.relatorios.matriculas', 'icon' => 'person-plus'],
+            ['label' => 'Turmas / Lotação', 'route' => 'educacao.relatorios.turmas', 'icon' => 'people'],
+            ['label' => 'Transferências', 'route' => 'educacao.relatorios.transferencias', 'icon' => 'arrow-left-right'],
+            ['label' => 'Infraestrutura (Escolas)', 'route' => 'educacao.relatorios.infraestrutura', 'icon' => 'building'],
+            ['label' => 'Merenda (Resumo)', 'route' => 'educacao.relatorios.merenda', 'icon' => 'cup-hot'],
+            ['label' => 'Transporte (Resumo)', 'route' => 'educacao.relatorios.transporte', 'icon' => 'bus-front'],
+            ['label' => 'Inclusão / AEE', 'route' => 'educacao.relatorios.inclusao', 'icon' => 'universal-access'],
         ],
-        [
-            'id' => 'saude',
-            'label' => 'Saúde',
-            'popover_title' => 'Saúde',
-            'hex_main' => '#f43f5e', // rose-500
-            'hex_hover_bg' => 'rgba(136, 19, 55, 0.4)', // rose-900/40
-            'hex_light' => '#fda4af', // rose-300
-            'icon_main' => 'plus-circle',
-            'items' => [
-                ['label' => 'Dashboard', 'route' => 'saude.home', 'icon' => 'list'],
-                ['label' => 'Cobertura de Vacinação', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Faltas em Consultas', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Lançamentos', 'route' => 'saude.lancamentos', 'icon' => 'rocket-takeoff'],
-                ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin']
-            ]
+    ],
+
+    // 3) Rede / Escolas (cadastro + mapa)
+    [
+        'id' => 'edu-rede',
+        'label' => 'Rede Escolar',
+        'popover_title' => 'Rede / Escolas',
+        'hex_main' => '#a78bfa', // violet-400
+        'hex_hover_bg' => 'rgba(88, 28, 135, 0.35)', // violet-900/35
+        'hex_light' => '#c4b5fd', // violet-300
+        'icon_main' => 'building',
+        'items' => [
+            ['label' => 'Escolas / Unidades', 'route' => 'educacao.rede.escolas', 'icon' => 'building'],
+            ['label' => 'Unidades (Detalhes)', 'route' => 'educacao.rede.unidades', 'icon' => 'ui-checks-grid'],
+            ['label' => 'Mapa da Rede', 'route' => 'educacao.rede.mapa', 'icon' => 'map'],
         ],
-    ];
+    ],
+
+    // 4) Alunos / Matrículas (gestão operacional)
+    [
+        'id' => 'edu-alunos',
+        'label' => 'Alunos',
+        'popover_title' => 'Alunos / Matrículas',
+        'hex_main' => '#fbbf24', // amber-400
+        'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)', // amber-900/40
+        'hex_light' => '#fcd34d', // amber-300
+        'icon_main' => 'person-badge',
+        'items' => [
+            ['label' => 'Cadastro de Aluno', 'route' => 'educacao.alunos.cadastro', 'icon' => 'person-plus'],
+            ['label' => 'Buscar Aluno', 'route' => 'educacao.alunos.buscar', 'icon' => 'search'],
+            ['label' => 'Gestão de Matrículas', 'route' => 'educacao.matriculas.gestao', 'icon' => 'file-earmark-text'],
+            ['label' => 'Fila de Creche', 'route' => 'educacao.matriculas.fila_creche', 'icon' => 'list-ol'],
+        ],
+    ],
+
+    // 5) RH Educação (lotação, ausências, formação)
+    [
+        'id' => 'edu-rh',
+        'label' => 'RH Educação',
+        'popover_title' => 'RH / Professores',
+        'hex_main' => '#60a5fa', // blue-400
+        'hex_hover_bg' => 'rgba(30, 58, 138, 0.35)', // blue-900/35
+        'hex_light' => '#93c5fd', // blue-300
+        'icon_main' => 'people',
+        'items' => [
+            ['label' => 'Professores', 'route' => 'educacao.rh.professores', 'icon' => 'people'],
+            ['label' => 'Lotação / Distribuição', 'route' => 'educacao.rh.lotacao', 'icon' => 'diagram-3'],
+            ['label' => 'Ausências / Substituições', 'route' => 'educacao.rh.ausencias', 'icon' => 'calendar-x'],
+            ['label' => 'Formação / Capacitação', 'route' => 'educacao.rh.formacao', 'icon' => 'mortarboard'],
+        ],
+    ],
+
+    // 6) Transporte Escolar
+    [
+        'id' => 'edu-transporte',
+        'label' => 'Transporte',
+        'popover_title' => 'Transporte Escolar',
+        'hex_main' => '#f97316', // orange-500
+        'hex_hover_bg' => 'rgba(124, 45, 18, 0.35)', // orange-900/35
+        'hex_light' => '#fdba74', // orange-300
+        'icon_main' => 'bus-front',
+        'items' => [
+            ['label' => 'Rotas', 'route' => 'educacao.transporte.rotas', 'icon' => 'map'],
+            ['label' => 'Frota', 'route' => 'educacao.transporte.frota', 'icon' => 'truck'],
+            ['label' => 'Atrasos / Ocorrências', 'route' => 'educacao.transporte.atrasos', 'icon' => 'exclamation-triangle'],
+        ],
+    ],
+
+    // 7) Merenda / Alimentação
+    [
+        'id' => 'edu-merenda',
+        'label' => 'Merenda',
+        'popover_title' => 'Merenda / Alimentação Escolar',
+        'hex_main' => '#22c55e', // green-500
+        'hex_hover_bg' => 'rgba(20, 83, 45, 0.35)', // green-900/35
+        'hex_light' => '#86efac', // green-300
+        'icon_main' => 'cup-hot',
+        'items' => [
+            ['label' => 'Estoque', 'route' => 'educacao.merenda.estoque', 'icon' => 'boxes'],
+            ['label' => 'Cardápios', 'route' => 'educacao.merenda.cardapios', 'icon' => 'journal-text'],
+            ['label' => 'Distribuição', 'route' => 'educacao.merenda.distribuicao', 'icon' => 'truck'],
+        ],
+    ],
+
+    // 8) FUNDEB / Financeiro da Educação
+    [
+        'id' => 'edu-fundeb',
+        'label' => 'FUNDEB',
+        'popover_title' => 'FUNDEB / Financeiro',
+        'hex_main' => '#64748b', // slate-500
+        'hex_hover_bg' => 'rgba(15, 23, 42, 0.35)', // slate-950/35
+        'hex_light' => '#cbd5e1', // slate-300
+        'icon_main' => 'bank',
+        'items' => [
+            ['label' => 'Receitas FUNDEB', 'route' => 'educacao.fundeb.receitas', 'icon' => 'cash'],
+            ['label' => 'Aplicação / Despesas', 'route' => 'educacao.fundeb.aplicacao', 'icon' => 'receipt'],
+            ['label' => 'Indicadores e Limites', 'route' => 'educacao.fundeb.indicadores', 'icon' => 'shield-check'],
+        ],
+    ],
+
+    // 9) Obras / Manutenção Escolar
+    [
+        'id' => 'edu-obras',
+        'label' => 'Infra / Obras',
+        'popover_title' => 'Obras / Manutenção Escolar',
+        'hex_main' => '#f43f5e', // rose-500
+        'hex_hover_bg' => 'rgba(136, 19, 55, 0.35)', // rose-900/35
+        'hex_light' => '#fda4af', // rose-300
+        'icon_main' => 'tools',
+        'items' => [
+            ['label' => 'Ordens de Serviço', 'route' => 'educacao.obras.ordens_servico', 'icon' => 'clipboard-check'],
+            ['label' => 'Cronograma', 'route' => 'educacao.obras.cronograma', 'icon' => 'calendar3'],
+            ['label' => 'Pendências', 'route' => 'educacao.obras.pendencias', 'icon' => 'exclamation-triangle'],
+        ],
+    ],
+];
 @endphp
 
 {{-- CSS específico do sidebar com suporte a tema --}}
@@ -176,7 +280,11 @@
                                     <span class="w-px bg-slate-700 ml-2"></span>
                                     <div class="space-y-1">
                                         @foreach($menu['items'] as $item)
-                                            <a href="{{ route($item['route']) }}"
+                                            @php
+                                                $r = $item['route'] ?? null;
+                                                $href = ($r && \Illuminate\Support\Facades\Route::has($r)) ? route($r) : '#';
+                                            @endphp
+                                            <a href="{{ $href }}"
                                                class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
                                                {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
                                                onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
