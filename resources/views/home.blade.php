@@ -1,121 +1,174 @@
-<x-layouts.app :title="__('Dashboard')">
+<x-layouts.app :title="__('Painel do Prefeito')">
 
-    {{-- Wrapper geral do conteúdo da página --}}
     <div class="w-full min-h-screen pt-4 px-8 sm:px-4 lg:pl-16 space-y-4">
-        <!-- cards de cima -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
-            <div class="md:col-span-1">
-                <x-cards.box.box-01 :config="['link' => '/report', 'label' => 'Eleitores Cadastrados']" />
-            </div>
-            <div class="md:col-span-1">
-                <x-cards.box.box-02 :config="['link' => '/report', 'label' => 'Investimento por setor']" />
-            </div>
-            <div class="md:col-span-1">
-                <x-cards.box.box-01 :config="['link' => '/report', 'label' => 'Retorno Líquido']" />
-            </div>
-            <div class="md:col-span-1">
-                <x-cards.box.box-02 :config="['link' => '/report', 'label' => 'Total de retabilidade']" />
-            </div>
-        </div>
 
         @php
-            // 1. Gráfico de Linha: Atendimentos do Gabinete (Saúde vs Infraestrutura)
-            // Mostra a evolução das demandas que chegam ao escritório político
-            $chartData = [
-                'x_label' => 'Dia da Semana',
-                'categories' => ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta'],
-                'series' => [
-                    // Série 1: Custos operacionais (Gasolina, Lanches, Material Gráfico)
-                    // (Antigo "Atendimento Presencial")
-                    ['name' => 'Gasto Operacional/Gabinete', 'data' => [150.0, 220.5, 180.0, 300.0, 120.0]],
+            // -----------------------------
+            // 1) Scores por setor (0-100)
+            // -----------------------------
+            $setores = [
+                'Finanças' => ['score' => 82, 'link' => '/dashboard/financas', 'hint' => 'Execução 76%'],
+                'Obras'    => ['score' => 71, 'link' => '/dashboard/obras', 'hint' => 'Obras no prazo 68%'],
+                'Saúde'    => ['score' => 74, 'link' => '/dashboard/saude', 'hint' => 'Espera 42 min'],
+                'Educação' => ['score' => 79, 'link' => '/dashboard/educacao', 'hint' => 'Frequência 92%'],
+                'Assist.'  => ['score' => 77, 'link' => '/dashboard/assistencia', 'hint' => 'Famílias 3.210'],
+                'Ouvidoria'=> ['score' => 69, 'link' => '/dashboard/ouvidoria', 'hint' => 'Resposta 19h'],
+            ];
 
-                    // Série 2: Investimento em Mídia (Facebook Ads, Disparos, Google)
-                    // (Antigo "WhatsApp/Digital")
-                    ['name' => 'Impulsionamento Digital', 'data' => [450.0, 380.0, 550.0, 420.0, 600.0]],
+            // Pesos do índice geral (pode ajustar depois)
+            $pesos = [
+                'Finanças' => 0.25,
+                'Obras'    => 0.20,
+                'Saúde'    => 0.20,
+                'Educação' => 0.15,
+                'Assist.'  => 0.10,
+                'Ouvidoria'=> 0.10,
+            ];
+
+            $indiceGeral = 0;
+            foreach ($setores as $nome => $meta) {
+                $indiceGeral += ($meta['score'] ?? 0) * ($pesos[$nome] ?? 0);
+            }
+            $indiceGeral = (int) round($indiceGeral);
+
+            // -----------------------------
+            // 2) KPIs Macro
+            // -----------------------------
+            $execucaoOrcamentaria = 76; // %
+            $pendenciasCriticas = 143;  // qtd
+            $nps = 48;                  // -100 a 100 (ou 0-100 se preferir)
+
+            // -----------------------------
+            // 3) Gráficos gerais
+            // -----------------------------
+
+            // (A) Linha/Área: Evolução do Índice Geral (12 meses)
+            $chartIndice = [
+                'x_label' => 'Mês',
+                'categories' => ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+                'series' => [
+                    ['name' => 'Índice Geral (0-100)', 'data' => [63, 65, 66, 68, 70, 72, 74, 73, 75, 76, 77, $indiceGeral]],
                 ],
             ];
 
-            // 2. Gráfico de Pizza: Problemas de Trânsito mais relatados pelos bairros
-            // Ajuda a criar "Indicações" para a prefeitura
-            // 2. Gráfico de Pizza: Origem das Demandas (Canais de Atendimento)
-            // Mostra qual canal é mais efetivo para captar solicitações
-            $pieChartData = [
-                'x_label' => 'Canal de Origem',
-                'categories' => [
-                    'WhatsApp Oficial',
-                    'Indicação de Lideranças',
-                    'Redes Sociais (Insta/FB)',
-                    'Gabinete Presencial',
-                    'Ações de Rua',
-                ],
-                'series' => [['name' => 'Solicitações', 'data' => [45, 25, 15, 10, 5]]],
-            ];
-
-            // 3. Gráfico de Colunas: Perfil de Escolaridade dos Cidadãos Atendidos
-            // Importante para entender o público-alvo do mandato
-            $columnChartData = [
-                'x_label' => 'Região / Bairro',
-                'categories' => [
-                    'Centro Histórico',
-                    'Zona Norte',
-                    'Jd. Primavera',
-                    'Distrito Industrial',
-                    'Zona Rural',
-                ],
+            // (B) Barras: Pendências por setor (Abertas x Vencidas)
+            $chartPendencias = [
+                'categories' => array_keys($setores),
                 'series' => [
-                    // Série 1: Pedidos físicos (Buraco, Luz, Lixo)
-                    ['name' => 'Infraestrutura Urbana', 'data' => [45, 120, 85, 60, 150]],
-                    // Série 2: Pedidos assistenciais (Remédio, Cesta Básica, Vaga Creche)
-                    ['name' => 'Social e Saúde', 'data' => [90, 80, 50, 30, 40]],
+                    ['name' => 'Abertas',  'data' => [38, 52, 41, 29, 18, 33]],
+                    ['name' => 'Vencidas', 'data' => [12, 24, 15, 9, 6, 17]],
                 ],
             ];
 
-            // 4. Gráfico de Barras: Execução Orçamentária (Emendas Impositivas)
-            // MOSTRA: O dinheiro que o político destinou vs. o que a prefeitura realmente pagou.
-            // Isso é vital para cobrar o Executivo.
-            $barChartData = [
-                'categories' => [
-                    'Reforma UBS Centro',
-                    'Pavimentação Rua 12',
-                    'Aquisição Ambulância',
-                    'Iluminação da Praça',
-                ],
+            // (C) Pizza: Distribuição de Demandas por setor
+            $chartDemandas = [
+                'x_label' => 'Setor',
+                'categories' => array_keys($setores),
                 'series' => [
-                    // Quanto você mandou de verba
-                    ['name' => 'Verba Destinada (R$)', 'data' => [150000, 300000, 250000, 80000]],
-                    // Quanto a prefeitura já liberou (Execução)
-                    ['name' => 'Valor Pago (R$)', 'data' => [120000, 50000, 250000, 10000]],
+                    ['name' => 'Solicitações', 'data' => [18, 22, 26, 12, 9, 13]],
                 ],
             ];
 
-            // 5. Gráfico Radial: Andamento de Programas (Legislativo)
-            // MOSTRA: O funil de aprovação dos seus projetos de lei na Câmara.
-            $radialChartData = [
-                'categories' => ['Protocolados', 'Aprovados na Comissão', 'Sancionados (Lei)'],
+            // (D) Colunas: Execução por setor (Previsto x Realizado)
+            $chartExecucao = [
+                'x_label' => 'Setor',
+                'categories' => array_keys($setores),
                 'series' => [
-                    [
-                        'name' => 'Taxa de Conversão',
-                        'data' => [100, 65, 30], // Ex: De 100% das ideias, 30% viraram lei de fato.
-                    ],
+                    ['name' => 'Previsto (R$ mi)',  'data' => [12, 25, 18, 14, 9, 6]],
+                    ['name' => 'Realizado (R$ mi)', 'data' => [10, 16, 14, 12, 7, 4]],
+                ],
+            ];
+
+            // (E) Radial: Score por setor (0-100)
+            $chartScoreSetor = [
+                'categories' => array_keys($setores),
+                'series' => [
+                    ['name' => 'Score do Setor', 'data' => array_map(fn($s) => $s['score'], array_values($setores))],
                 ],
             ];
         @endphp
 
-        {{-- grid dos gráficos --}}
+
+        {{-- 1) KPIs Macro (4 boxes no topo) --}}
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+            <div class="md:col-span-1">
+                <x-cards.box.box-01 :config="[
+                    'link' => '/dashboard/central',
+                    'prefix' => '',
+                    'suffix' => '/100',
+                    'label' => 'Índice Geral de Gestão',
+                    'value' => $indiceGeral,
+                    'text' => 'composto por setores'
+                ]" />
+            </div>
+
+            <div class="md:col-span-1">
+                <x-cards.box.box-02 :config="[
+                    'link' => '/dashboard/financas',
+                    'prefix' => '',
+                    'suffix' => '%',
+                    'label' => 'Execução Orçamentária',
+                    'value' => $execucaoOrcamentaria,
+                    'text' => 'realizado / previsto'
+                ]" />
+            </div>
+
+            <div class="md:col-span-1">
+                <x-cards.box.box-01 :config="[
+                    'link' => '/dashboard/ouvidoria',
+                    'prefix' => '',
+                    'suffix' => '',
+                    'label' => 'Pendências Críticas',
+                    'value' => $pendenciasCriticas,
+                    'text' => 'itens vencidos/atrasados'
+                ]" />
+            </div>
+
+            <div class="md:col-span-1">
+                <x-cards.box.box-02 :config="[
+                    'link' => '/dashboard/ouvidoria',
+                    'prefix' => '',
+                    'suffix' => '',
+                    'label' => 'Satisfação (NPS)',
+                    'value' => $nps,
+                    'text' => 'pesquisas do cidadão'
+                ]" />
+            </div>
+        </div>
+
+
+        {{-- 2) KPIs por Setor (1 box por secretaria) --}}
+        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-2">
+            @foreach ($setores as $nome => $meta)
+                <div>
+                    <x-cards.box.box-01 :config="[
+                        'link' => $meta['link'],
+                        'prefix' => '',
+                        'suffix' => '/100',
+                        'label' => $nome,
+                        'value' => $meta['score'],
+                        'text' => $meta['hint']
+                    ]" />
+                </div>
+            @endforeach
+        </div>
+
+
+        {{-- 3) Gráficos gerais (painel central) --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <x-cards.card id="relatorio-vendas" title="Investimento Diário" :chart="$chartData" />
 
-            <x-cards.card id="relatorio-canais" title="Origem das Demandas" :chart="$pieChartData" chart-type="pie" />
+            <x-cards.card id="central-indice" title="Evolução do Índice Geral" :chart="$chartIndice" chart-type="area" />
 
-            <x-cards.card id="relatorio-dias" title="Diagnóstico Regional" :chart="$columnChartData" chart-type="column" />
+            <x-cards.card id="central-demandas" title="Distribuição de Demandas por Setor" :chart="$chartDemandas" chart-type="pie" />
 
-            <x-cards.card id="relatorio-mes" title="Monitoramento de Emendas" :chart="$barChartData" chart-type="bar" />
+            <x-cards.card id="central-pendencias" title="Pendências por Setor (Abertas x Vencidas)" :chart="$chartPendencias" chart-type="bar" />
 
-            <x-cards.card id="progresso-time" title="Produtividade Legislativa" :chart="$radialChartData" chart-type="radial" />
+            <x-cards.card id="central-execucao" title="Execução por Setor (Previsto x Realizado)" :chart="$chartExecucao" chart-type="column" />
+
+            <x-cards.card id="central-scores" title="Score por Setor (0-100)" :chart="$chartScoreSetor" chart-type="radial" />
+
         </div>
     </div>
-
-    <x-speed-dial onclick="window.fetchData()" />
 
     @push('scripts')
         <script>

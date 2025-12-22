@@ -4,17 +4,10 @@
 ])
 
 @php
-    // Formatação de dados com valores padrão de fallback
-    $valuePrefix = data_get($config, 'prefix', '$');
-    $valueSuffix = data_get($config, 'suffix', '');
     $variationSuffix = data_get($config, 'variation_suffix', '%');
-
-    // Dados do card mensal
-    $monthLabel = data_get($config, 'label', 'faturamento');
-    $monthValue = data_get($config, 'value', '24500');
-    $monthRanges = data_get($config, 'data_range_label', 'esse mês');
-
-    // URL de redirecionamento (NOVO)
+    $label = data_get($config, 'label', 'faturamento');
+    $value = data_get($config, 'value', '24500');
+    $text = data_get($config, 'text', 'esse mês');
     $redirectUrl = data_get($config, 'link', '#');
 @endphp
 
@@ -43,25 +36,31 @@
                 {{-- Parte Superior: Label e Valor --}}
                 <div class="mb-4">
                     <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1 capitalize">
-                        {{ $monthLabel }}
+                        {{ $label }}
                     </p>
-                    <h3 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
-                        {{ $valuePrefix }}{{ $monthValue }}{{ $valueSuffix}}
-                    </h3>
+                    <div class="grid grid-cols-2">
+                        <div class="col-span-1">
+                            <h3 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
+                                {{ $value }}
+                            </h3>
+                        </div>
+                        <div class="col-span-1 ml-2 w-20">
+                            <span class="font-medium flex items-center px-2 py-0.5 rounded border
+                                         bg-emerald-50 text-emerald-700 border-emerald-100
+                                         dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                                    <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
+                                </svg>
+                                <span>+8{{ $variationSuffix }}</span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 {{-- Parte Inferior: Badge de Variação --}}
                 <div class="flex items-center text-sm">
-                    <span class="font-medium flex items-center px-2 py-0.5 rounded border
-                                 bg-emerald-50 text-emerald-700 border-emerald-100
-                                 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
-                            <path d="M7 7h10v10"/><path d="M7 17 17 7"/>
-                        </svg>
-                        <span>+8{{ $variationSuffix }}</span>
-                    </span>
                     <span class="text-slate-500 dark:text-slate-500 ml-3 font-medium truncate">
-                        {{ $monthRanges }}
+                        {{ $text }}
                     </span>
                 </div>
             </div>
