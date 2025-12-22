@@ -3,6 +3,7 @@
     'cardId' => 'card-' . uniqid(),
 ])
 @php
+    $suffix = data_get($config, 'suffix', '');
     $variationSuffix = data_get($config, 'variation_suffix', '%');
     $label = data_get($config, 'label', 'vendas');
     $value = data_get($config, 'value', '5678');
@@ -39,7 +40,7 @@
                     <div class="grid grid-cols-2">
                         <div class="col-span-1">
                             <h3 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
-                                {{ $value }}
+                                {{ $value }}{{ $suffix }}
                             </h3>
                         </div>
                         <div class="col-span-1 ml-2">

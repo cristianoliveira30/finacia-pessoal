@@ -37,7 +37,7 @@
                     <div class="grid grid-cols-2">
                         <div class="col-span-1">
                             <h3 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
-                                {{ $value }}{{$suffix}}
+                                {{ $value }}{{ $suffix }}
                             </h3>
                         </div>
                         

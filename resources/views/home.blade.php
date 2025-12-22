@@ -1,7 +1,5 @@
 <x-layouts.app :title="__('Painel do Prefeito')">
-
-    <div class="w-full min-h-screen pt-2 px-4 sm:px-4 lg:pl-16 space-y-4">
-
+    <div class="w-full min-h-screen pt-4 px-8 sm:px-4 lg:pl-16 space-y-4">
         @php
             // Lógica de dados mantida intacta
             $setoresDados = [
@@ -36,7 +34,7 @@
             $chartScoreSetor = ['categories' => [], 'series' => []];
         @endphp
 
-        {{-- 1) KPIs Macro (Mantido) --}}
+        {{-- 1) KPIs Macro (4 boxes no topo) --}}
         <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
             <div class="md:col-span-1">
                 <x-cards.box.box-01 :config="['link' => '/dashboard/central', 'prefix' => '', 'suffix' => '/100', 'label' => 'Índice Geral de Gestão', 'value' => $indiceGeral, 'text' => 'composto por setores']" />
@@ -51,21 +49,22 @@
                 <x-cards.box.box-02 :config="['link' => '/dashboard/ouvidoria', 'prefix' => '', 'suffix' => '', 'label' => 'Satisfação (NPS)', 'value' => $nps, 'text' => 'pesquisas do cidadão']" />
             </div>
         </div>
-
-        {{-- 2) KPIs por Setor (CORRIGIDO) --}}
-        {{-- Alteração: Removido o grid aninhado desnecessário e ajustado o gap/cols --}}
-        {{-- 2) KPIs por Setor (CORRIGIDO) --}}
-        {{-- Alteramos 'xl:grid-cols-6' para 'xl:grid-cols-3 --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
-            <x-cards.box.minibox id="Finanças" />
-            <x-cards.box.minibox id="Obras" />
-            <x-cards.box.minibox id="Saúde" />
-            <x-cards.box.minibox id="Educação" />
-            <x-cards.box.minibox id="Assist." />
-            <x-cards.box.minibox id="Ouvidoria" />
+        {{-- 2) KPIs por Setor (1 box por secretaria) --}}
+        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-2">
+            @foreach ($setores as $nome => $meta)
+                <div>
+                    <x-cards.box.box-01 :config="[
+                        'link' => $meta['link'],
+                        'prefix' => '',
+                        'suffix' => '/100',
+                        'label' => $nome,
+                        'value' => $meta['score'],
+                        'text' => $meta['hint']
+                    ]" />
+                </div>
+            @endforeach
         </div>
-
-        {{-- 3) Gráficos gerais (Mantido) --}}
+        {{-- 3) Gráficos gerais (painel central) --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <x-cards.card id="central-indice" title="Evolução do Índice Geral" :chart="$chartIndice" chart-type="area" />
             <x-cards.card id="central-demandas" title="Distribuição de Demandas por Setor" :chart="$chartDemandas" chart-type="pie" />

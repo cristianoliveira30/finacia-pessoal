@@ -27,6 +27,7 @@ Route::get('/message/envio', fn() => view('message/envio'))->name('message/envio
 // rota de relatorio
 Route::get('/report', fn() => view('reports/default'))->name('report.default');
 
+// rotas do setor financeiro
 Route::prefix('financeiro')->name('financeiro.')->group(function () {
 
     // Base (as que você já tinha)
@@ -102,6 +103,7 @@ Route::prefix('financeiro')->name('financeiro.')->group(function () {
     Route::view('/auditoria/logs', 'financeiro.placeholder')->name('auditoria.logs');
 });
 
+// rotas do setor da educacao
 Route::prefix('educacao')->name('educacao.')->group(function () {
 
     // Base (as que você já tinha)
@@ -188,6 +190,7 @@ Route::prefix('educacao')->name('educacao.')->group(function () {
     Route::view('/auditoria/logs', 'educacao.placeholder')->name('auditoria.logs');
 });
 
+// rotas do setor da saude
 Route::prefix('saude')->name('saude.')->group(function () {
 
     // Base (as que você já tinha)
