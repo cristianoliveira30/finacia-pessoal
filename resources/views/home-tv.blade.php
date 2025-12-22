@@ -68,7 +68,7 @@
                 $gastoFolha = rand(40, 48); // Limite prudencial LRF
                 $chartFinancas02 = [
                     'x_label' => 'Despesas',
-                    'categories' => ['Folha Pagto', 'Custeio', 'Investimento'],
+                    'categories' => ['Folha Pag', 'Custo', 'Investimento'],
                     'series' => [['name' => '% Orçamento', 'data' => [$gastoFolha, rand(30,40), rand(5,15)]]],
                 ];
                 
@@ -81,7 +81,7 @@
 
                 $chartSocial = [
                     'x_label' => 'Benefícios',
-                    'categories' => ['Cesta Básica', 'Auxílio', 'Aluguel Social'],
+                    'categories' => ['Cesta Básica', 'Auxílio', 'Aluguel '],
                     'series' => [['name' => 'Entregues', 'data' => [rand(50,100), rand(30,60), rand(10,20)]]],
                 ];
             @endphp

@@ -9,12 +9,8 @@
     $customColors = $data['colors'] ?? null;
 @endphp
 
-{{-- 
-    ALTERAÇÃO 1: Removi 'overflow-hidden' e adicionei 'p-2' (padding) extra no container.
-    Isso evita que sombras ou pontas de letras sejam cortadas drasticamente.
---}}
-<div class="w-full h-full flex flex-col items-center justify-center bg-transparent rounded-xl p-2">
-    <div id="{{ $chartId }}" class="w-full flex-1" style="min-height: 300px;"></div>
+<div class="w-full h-full flex flex-col bg-transparent rounded-xl p-2 overflow-hidden">
+    <div id="{{ $chartId }}" class="flex-1 w-full min-h-0"></div>
 </div>
 
 @push('scripts')
@@ -56,39 +52,35 @@
                         animations: { enabled: true },
                         toolbar: { show: false },
                         parentHeightOffset: 0,
-                        // Redesenha o gráfico se a tela mudar de tamanho
-                        redrawOnParentResize: true
+                        redrawOnParentResize: true,
                     },
-                    // ALTERAÇÃO 2: Grid Padding
-                    // Isso cria uma "margem de segurança" dentro do SVG para os textos grandes não serem cortados
                     grid: {
                         padding: {
-                            top: 20,    // Espaço para não cortar o topo
-                            bottom: 20, // Espaço perto da legenda
-                            left: 20,   // Espaço lateral
-                            right: 20
+                            top: -20,
+                            bottom: 0, 
+                            left: 0,
+                            right: 0
                         }
                     },
                     stroke: {
                         show: true,
                         colors: ['#1e293b'],
-                        width: 4 
+                        width: 2 
                     },
                     plotOptions: {
                         pie: {
-                            startAngle: 0,
-                            endAngle: 360,
+                            offsetY: 20, 
                             donut: {
-                                size: '55%', // Ajuste fino para equilibrar rosca grossa x espaço interno
+                                size: '55%',
                                 labels: {
                                     show: true,
                                     name: { show: false },
                                     value: { 
                                         show: true, 
-                                        fontSize: '32px', // Mantido GIGANTE
+                                        fontSize: '4vh',
                                         fontWeight: 800, 
                                         color: '#ffffff',
-                                        offsetY: 10, 
+                                        offsetY: 10,
                                         formatter: function (val) { return val }
                                     },
                                     total: {
@@ -105,31 +97,27 @@
                     dataLabels: {
                         enabled: true,
                         formatter: function (val, opts) {
+                            // CORREÇÃO: Removi a condição "if (percent < 12)". 
+                            // Agora ele retorna o valor SEMPRE, não importa o tamanho.
                             return opts.w.config.series[opts.seriesIndex];
                         },
                         style: {
-                            fontSize: '16px', // Mantido grande e legível
+                            // CORREÇÃO: Estava 'px', coloquei '16px' para garantir que apareça
+                            fontSize: '16px',
                             fontFamily: "Inter, sans-serif",
                             fontWeight: 'bold',
                             colors: ['#fff']
                         },
-                        background: {
-                            enabled: false, // Remove fundo quadrado atrás do número para visual mais limpo
-                        },
                         dropShadow: {
-                            enabled: true,
-                            top: 1,
-                            left: 1,
-                            blur: 3,
-                            color: '#000',
-                            opacity: 0.9
+                            enabled: true, top: 1, left: 1, blur: 2, opacity: 0.8
                         }
                     },
                     legend: {
+                        show: true,
                         position: "bottom",
-                        fontFamily: "Inter, sans-serif",
+                        floating: false,
                         fontSize: '14px',
-                        fontWeight: 500,
+                        fontWeight: 600,
                         labels: { colors: '#cbd5e1' },
                         markers: { width: 12, height: 12, radius: 12 },
                         itemMargin: { horizontal: 5, vertical: 5 },
