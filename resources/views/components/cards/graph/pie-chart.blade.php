@@ -5,11 +5,16 @@
 
 @php
     $labels = $data['categories'] ?? [];
-    $rawSeries = $data['series'][0]['data'] ?? []; // primeira série
+    $rawSeries = $data['series'][0]['data'] ?? [];
+    $customColors = $data['colors'] ?? null;
 @endphp
 
-<div class="w-full bg-neutral-primary-soft dark:bg-slate-900 rounded-xl">
-    <div id="{{ $chartId }}"></div>
+{{-- 
+    ALTERAÇÃO 1: Removi 'overflow-hidden' e adicionei 'p-2' (padding) extra no container.
+    Isso evita que sombras ou pontas de letras sejam cortadas drasticamente.
+--}}
+<div class="w-full h-full flex flex-col items-center justify-center bg-transparent rounded-xl p-2">
+    <div id="{{ $chartId }}" class="w-full flex-1" style="min-height: 300px;"></div>
 </div>
 
 @push('scripts')
@@ -18,6 +23,7 @@
             const chartId = @json($chartId);
             const labels = @json($labels);
             const rawData = @json($rawSeries);
+            const providedColors = @json($customColors);
 
             const series = (rawData || []).map(function(v) {
                 if (typeof v === 'string') {
@@ -27,13 +33,11 @@
                 return v;
             });
 
-            const warmColors = [
-                "#005c81",
-                "#d40f60",
-                "#f84339",
-                "#e79a32",
-                "#368986",
+            const defaultColors = [
+                "#3b82f6", "#f59e0b", "#10b981", "#ef4444", "#8b5cf6", "#ec4899"
             ];
+
+            const chartColors = providedColors && providedColors.length > 0 ? providedColors : defaultColors;
 
             function initChart() {
                 const el = document.getElementById(chartId);
@@ -42,45 +46,101 @@
                 const options = {
                     series: series,
                     labels: labels,
-                    colors: warmColors,
+                    colors: chartColors,
                     chart: {
-                        height: 225,
+                        type: "donut",
+                        height: "100%", 
                         width: "100%",
-                        type: "pie",
                         fontFamily: "Inter, sans-serif",
+                        background: 'transparent',
+                        animations: { enabled: true },
+                        toolbar: { show: false },
+                        parentHeightOffset: 0,
+                        // Redesenha o gráfico se a tela mudar de tamanho
+                        redrawOnParentResize: true
+                    },
+                    // ALTERAÇÃO 2: Grid Padding
+                    // Isso cria uma "margem de segurança" dentro do SVG para os textos grandes não serem cortados
+                    grid: {
+                        padding: {
+                            top: 20,    // Espaço para não cortar o topo
+                            bottom: 20, // Espaço perto da legenda
+                            left: 20,   // Espaço lateral
+                            right: 20
+                        }
                     },
                     stroke: {
-                        colors: ["#fff"], // neutral (slate-950)
-                        lineCap: "",
+                        show: true,
+                        colors: ['#1e293b'],
+                        width: 4 
                     },
                     plotOptions: {
                         pie: {
-                            size: "100%",
-                            dataLabels: {
-                                offset: -20,
-                            },
-                        },
+                            startAngle: 0,
+                            endAngle: 360,
+                            donut: {
+                                size: '55%', // Ajuste fino para equilibrar rosca grossa x espaço interno
+                                labels: {
+                                    show: true,
+                                    name: { show: false },
+                                    value: { 
+                                        show: true, 
+                                        fontSize: '32px', // Mantido GIGANTE
+                                        fontWeight: 800, 
+                                        color: '#ffffff',
+                                        offsetY: 10, 
+                                        formatter: function (val) { return val }
+                                    },
+                                    total: {
+                                        show: true,
+                                        showAlways: true,
+                                        formatter: function (w) {
+                                            return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     dataLabels: {
                         enabled: true,
-                        style: {
-                            fontFamily: "Inter, sans-serif",
-                            fontSize: '12px',
+                        formatter: function (val, opts) {
+                            return opts.w.config.series[opts.seriesIndex];
                         },
-                        formatter: function(val) {
-                            return val.toFixed(1) + "%";
+                        style: {
+                            fontSize: '16px', // Mantido grande e legível
+                            fontFamily: "Inter, sans-serif",
+                            fontWeight: 'bold',
+                            colors: ['#fff']
+                        },
+                        background: {
+                            enabled: false, // Remove fundo quadrado atrás do número para visual mais limpo
+                        },
+                        dropShadow: {
+                            enabled: true,
+                            top: 1,
+                            left: 1,
+                            blur: 3,
+                            color: '#000',
+                            opacity: 0.9
                         }
                     },
                     legend: {
                         position: "bottom",
                         fontFamily: "Inter, sans-serif",
-                    },
-                    tooltip: {
-                        y: {
-                            formatter: function(value) {
-                                return value.toFixed(1) + "%";
-                            }
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        labels: { colors: '#cbd5e1' },
+                        markers: { width: 12, height: 12, radius: 12 },
+                        itemMargin: { horizontal: 5, vertical: 5 },
+                        formatter: function(seriesName, opts) {
+                            return seriesName + ": " + opts.w.config.series[opts.seriesIndex]
                         }
+                    },
+                    tooltip: { 
+                        enabled: true,
+                        theme: 'dark',
+                        y: { formatter: function(val) { return val; } }
                     }
                 };
 
@@ -89,11 +149,7 @@
             }
 
             function waitForApex() {
-                if (window.ApexCharts) {
-                    initChart();
-                } else {
-                    setTimeout(waitForApex, 50);
-                }
+                if (window.ApexCharts) { initChart(); } else { setTimeout(waitForApex, 50); }
             }
 
             if (document.readyState === 'complete' || document.readyState === 'interactive') {

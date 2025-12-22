@@ -12,7 +12,7 @@
             <div>
                 <h2 class="text-3xl text-slate-950 dark:text-slate-100"><b>Relógio: </b><span id="realtime-clock"></span></h2>
                 <!-- This text clarifies that the clock is separate from the data update cycle -->
-                <span class="text-md text-slate-700 dark:text-slate-300">Dados atualizados a cada 5 minutos</span>
+                <span class="text-md text-slate-700 dark:text-slate-300">Dados atualizados a cada 30 segundos</span>
             </div>
         </div>
     </div>

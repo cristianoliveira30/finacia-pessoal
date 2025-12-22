@@ -9,7 +9,7 @@
 
     // Dados do card
     $monthLabel = data_get($config, 'label', 'faturamento');
-    $monthValue = data_get($config, 'value', '24500');
+    $monthValue = data_get($config, 'value', '245');
 @endphp
 
 {{-- Wrapper Grid para os dois cards --}}
