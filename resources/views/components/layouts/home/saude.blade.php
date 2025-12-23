@@ -429,7 +429,7 @@
                                                 class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
                                                 {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
                                                 onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
-                                                onmouseout="this.style.color=''" target="_blank" rel="noopener noreferrer">
+                                                onmouseout="this.style.color=''">
                                                 {{-- CORREÇÃO: Bolinha do submenu --}}
                                                 <span class="inline-flex h-4 w-1 rounded-full"
                                                     style="background-color: {{ $menu['hex_main'] }}"></span>
@@ -463,7 +463,7 @@
                     @foreach ($menu['items'] as $item)
                         <li>
                             <a href="{{ route($item['route']) }}"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors">
                                 {{-- ÍCONE INTERNO DO POPOVER --}}
                                 <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4" />
                                 <span>{{ $item['label'] }}</span>
