@@ -4,8 +4,8 @@
             <div class="flex items-center justify-start rtl:justify-end">
                 {{-- BOTÃO ÚNICO PARA ABRIR/COLAPSAR O SIDEBAR (MOBILE + DESKTOP) --}}
                 <button id="header-sidebar-toggle" type="button" aria-expanded="false"
-                    class="text-heading bg-transparent box-border border border-transparent
-           bg-neutral-secondary-medium dark:focus:outline-2 dark:focus:outline-offset-2 dark:focus:ring-neutral-tertiary
+                    class="text-white  box-border border border-transparent
+           hover:bg-neutral-secondary-medium dark:focus:outline-2 dark:focus:outline-offset-2 dark:focus:ring-neutral-tertiary
            font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
                     <span class="sr-only">Alternar sidebar</span>
                     <x-bi-justify-left class="w-6 h-6" />
@@ -97,10 +97,82 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="#"
-                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                                    role="menuitem">Dashboard</a>
+                                @php
+                                    // Dá pra deixar isso aqui ou mover pra dentro do modal.
+                                    // Aqui só pra exibir o badge no sino.
+                                    $notificacoesFake = [
+                                        [
+                                            'area' => 'Educação',
+                                            'icon' => 'mortarboard-fill',
+                                            'title' => 'Matrículas atualizadas',
+                                            'msg' => 'Novas matrículas registradas e painel recalculado.',
+                                            'time' => 'há 5 min',
+                                            'unread' => true,
+                                        ],
+                                        [
+                                            'area' => 'Finanças',
+                                            'icon' => 'cash-coin',
+                                            'title' => 'Relatório publicado',
+                                            'msg' => 'Relatório financeiro do mês disponível para consulta.',
+                                            'time' => 'há 18 min',
+                                            'unread' => true,
+                                        ],
+                                        [
+                                            'area' => 'Saúde',
+                                            'icon' => 'heart-pulse-fill',
+                                            'title' => 'Atendimentos sincronizados',
+                                            'msg' => 'Atualização concluída com sucesso.',
+                                            'time' => 'há 32 min',
+                                            'unread' => false,
+                                        ],
+                                        [
+                                            'area' => 'Finanças',
+                                            'icon' => 'file-earmark-text-fill',
+                                            'title' => 'CAPEX registrado',
+                                            'msg' => 'Novo lançamento de CAPEX (Obras/Equipamentos).',
+                                            'time' => 'há 1 h',
+                                            'unread' => true,
+                                        ],
+                                        [
+                                            'area' => 'Educação',
+                                            'icon' => 'book-fill',
+                                            'title' => 'Frequência consolidada',
+                                            'msg' => 'Frequência semanal pronta para análise.',
+                                            'time' => 'há 2 h',
+                                            'unread' => false,
+                                        ],
+                                        [
+                                            'area' => 'Saúde',
+                                            'icon' => 'capsule-pill',
+                                            'title' => 'Estoque atualizado',
+                                            'msg' => 'Movimentações de insumos registradas no sistema.',
+                                            'time' => 'há 3 h',
+                                            'unread' => true,
+                                        ],
+                                    ];
+
+                                    $unreadCount = collect($notificacoesFake)->where('unread', true)->count();
+                                @endphp
+
+                                <button type="button"
+                                    class="inline-flex items-center w-full p-2 rounded hover:bg-neutral-tertiary-medium hover:text-heading"
+                                    data-modal-target="notifications-modal" data-modal-toggle="notifications-modal"
+                                    aria-controls="notifications-modal" aria-haspopup="dialog"
+                                    aria-label="Notificações">
+
+                                    <x-bi-bell class="w-5 h-5" />
+                                    <span class="ml-2">Notificações</span>
+
+                                    @if ($unreadCount > 0)
+                                        <span
+                                            class="ml-auto inline-flex items-center justify-center text-xs font-semibold
+                         h-5 min-w-[1.25rem] px-1.5 rounded-full bg-rose-600 text-white">
+                                            {{ $unreadCount }}
+                                        </span>
+                                    @endif
+                                </button>
                             </li>
+
                             <li>
                                 <a href="#"
                                     class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
@@ -119,59 +191,99 @@
         </div>
     </div>
 </nav>
-@once
-    @push('scripts')
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const STORAGE_KEY = "tipotempo";
-                const DEFAULT = "hoje";
+@php
+    // Se você já definiu $notificacoesFake acima, pode remover esse bloco.
+    // Aqui deixo novamente pra ficar “do zero” e independente.
+    $notificacoesFake ??= [
+        ['area' => 'Educação', 'icon' => 'mortarboard-fill', 'title' => 'Matrículas atualizadas', 'msg' => 'Novas matrículas registradas e painel recalculado.', 'time' => 'há 5 min', 'unread' => true],
+        ['area' => 'Finanças', 'icon' => 'cash-coin', 'title' => 'Relatório publicado', 'msg' => 'Relatório financeiro do mês disponível para consulta.', 'time' => 'há 18 min', 'unread' => true],
+        ['area' => 'Saúde', 'icon' => 'heart-pulse-fill', 'title' => 'Atendimentos sincronizados', 'msg' => 'Atualização concluída com sucesso.', 'time' => 'há 32 min', 'unread' => false],
+        ['area' => 'Finanças', 'icon' => 'file-earmark-text-fill', 'title' => 'CAPEX registrado', 'msg' => 'Novo lançamento de CAPEX (Obras/Equipamentos).', 'time' => 'há 1 h', 'unread' => true],
+        ['area' => 'Educação', 'icon' => 'book-fill', 'title' => 'Frequência consolidada', 'msg' => 'Frequência semanal pronta para análise.', 'time' => 'há 2 h', 'unread' => false],
+        ['area' => 'Saúde', 'icon' => 'capsule-pill', 'title' => 'Estoque atualizado', 'msg' => 'Movimentações de insumos registradas no sistema.', 'time' => 'há 3 h', 'unread' => true],
+        ['area' => 'Saúde', 'icon' => 'hospital-fill', 'title' => 'Fila de regulação', 'msg' => 'Atualização de status em solicitações pendentes.', 'time' => 'há 6 h', 'unread' => false],
+        ['area' => 'Finanças', 'icon' => 'graph-up-arrow', 'title' => 'Indicadores atualizados', 'msg' => 'KPIs financeiros recalculados com os dados mais recentes.', 'time' => 'ontem', 'unread' => false],
+    ];
 
-                const btn = document.getElementById("btn-tipotempo");
-                const labelEl = document.getElementById("tipotempo-label"); // AGORA EXISTE
-                const dropdown = document.getElementById("dropdown-tipotempo");
+    $tagClass = fn($area) => match ($area) {
+        'Educação' => 'bg-emerald-600 text-white',
+        'Finanças' => 'bg-amber-600 text-white',
+        'Saúde' => 'bg-rose-600 text-white',
+        default => 'bg-slate-600 text-white',
+    };
+@endphp
 
-                if (!btn || !labelEl || !dropdown) return;
+<div id="notifications-modal" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50
+            justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-xl max-h-full">
+        <div class="relative bg-white dark:bg-slate-900 rounded-lg shadow border border-slate-200 dark:border-slate-700">
 
-                const items = Array.from(dropdown.querySelectorAll("a[data-tempo]"));
+            {{-- Header --}}
+            <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-2">
+                    <x-bi-bell class="w-5 h-5 text-slate-700 dark:text-slate-200" />
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                        Notificações
+                    </h3>
+                </div>
 
-                function closeDropdown() {
-                    dropdown.classList.add("hidden");
-                    btn.setAttribute("aria-expanded", "false");
-                }
+                <button type="button"
+                        class="text-slate-400 hover:text-slate-900 dark:hover:text-white
+                               rounded-lg text-sm w-9 h-9 inline-flex justify-center items-center"
+                        data-modal-hide="notifications-modal"
+                        aria-label="Fechar">
+                    <x-bi-x-lg class="w-4 h-4" />
+                </button>
+            </div>
 
-                function pushTempoToUrl(tempo) {
-                    const url = new URL(window.location.href);
-                    url.searchParams.set("tempo", tempo);
-                    history.pushState({}, "", url);
-                }
+            {{-- Body --}}
+            <div class="p-4 max-h-[60vh] overflow-y-auto scrollbar-hide">
+                @if(empty($notificacoesFake))
+                    <div class="text-sm text-slate-600 dark:text-slate-300">
+                        Sem notificações no momento.
+                    </div>
+                @else
+                    <ul class="space-y-2">
+                        @foreach($notificacoesFake as $n)
+                            <li class="p-3 rounded-lg border border-slate-200 dark:border-slate-700
+                                       hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                                <div class="flex items-start gap-3">
+                                    <x-dynamic-component :component="'bi-'.$n['icon']" class="w-4 h-4 mt-0.5 shrink-0" />
 
-                function applyTempo(tempo, label) {
-                    localStorage.setItem(STORAGE_KEY, tempo);
-                    labelEl.textContent = label ?? tempo;
-                    pushTempoToUrl(tempo);
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                                                {{ $n['title'] }}
+                                            </span>
 
-                    // faz um disparo global
-                    window.dispatchEvent(new CustomEvent("tipotempo:change", {
-                        detail: { tempo, label }
-                    }));
-                }
+                                            <span class="text-[11px] px-2 py-0.5 rounded-full {{ $tagClass($n['area']) }}">
+                                                {{ $n['area'] }}
+                                            </span>
 
-                // boot
-                const saved = localStorage.getItem(STORAGE_KEY) || DEFAULT;
-                const savedItem = items.find(a => a.dataset.tempo === saved);
+                                            @if(!empty($n['unread']))
+                                                <span class="ml-auto h-2 w-2 rounded-full bg-sky-500" title="Não lida"></span>
+                                            @else
+                                                <span class="ml-auto text-[11px] text-slate-500 dark:text-slate-400">
+                                                    {{ $n['time'] }}
+                                                </span>
+                                            @endif
+                                        </div>
 
-                if (savedItem) applyTempo(savedItem.dataset.tempo, savedItem.textContent.trim());
-                else applyTempo(DEFAULT, "Hoje");
+                                        <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                                            {{ $n['msg'] }}
+                                        </p>
 
-                // click
-                items.forEach((a) => {
-                    a.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        applyTempo(a.dataset.tempo, a.textContent.trim());
-                        closeDropdown();
-                    });
-                });
-            });
-        </script>
-    @endpush
-@endonce
+                                        <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                                            {{ $n['time'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>

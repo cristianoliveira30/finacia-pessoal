@@ -10,10 +10,6 @@
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -36,4 +32,24 @@ html.dark .swal2-html-container {
 
 html.dark .swal2-timer-progress-bar {
   background: #38bdf8; /* sky-400 */
+}
+
+html:not(.dark) #top-bar-sidebar{
+  box-shadow: 0 12px 30px rgba(2, 6, 23, .10);
+}
+
+/* “cartões” nos itens -> destaca as funções */
+html:not(.dark) #top-bar-sidebar .sidebar-link{
+  background: var(--sidebar-item-bg);
+  border: 1px solid rgba(203, 213, 225, .65); /* slate-300/65 */
+}
+
+html:not(.dark) #top-bar-sidebar .sidebar-link:hover{
+  background: var(--sidebar-hover-bg) !important;
+  border-color: rgba(148, 163, 184, .75); /* slate-400/75 */
+}
+
+/* submenu um pouco mais “leve” */
+html:not(.dark) #top-bar-sidebar .submenu a:hover{
+  background: #ffffff !important;
 }

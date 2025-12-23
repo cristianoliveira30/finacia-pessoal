@@ -11,8 +11,16 @@
             'icon_main' => 'bank',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
-                ['label' => 'Execuções Orçamentárias', 'route' => 'financeiro.relatorios.execucao', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'CAPEX (Obras/Equipamentos)', 'route' => 'financeiro.investimentos.capex', 'icon' => 'file-earmark-text-fill'],
+                [
+                    'label' => 'Execuções Orçamentárias',
+                    'route' => 'financeiro.relatorios.execucao',
+                    'icon' => 'file-earmark-text-fill',
+                ],
+                [
+                    'label' => 'CAPEX (Obras/Equipamentos)',
+                    'route' => 'financeiro.investimentos.capex',
+                    'icon' => 'file-earmark-text-fill',
+                ],
                 ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
             ],
@@ -56,14 +64,24 @@
 <style>
     /* =================== CORES POR TEMA =================== */
     :root {
-        --sidebar-bg: #ffffff;
-        --sidebar-border: #e5e7eb;
-        --sidebar-text: #020617;
-        --sidebar-hover-bg: #f3f4f6;
-        --sidebar-submenu-bg: #ffffff;
-        --sidebar-submenu-border: #e5e7eb;
-        --sidebar-tooltip-bg: #4b5563;
+        /* Fundo “branco mais escuro” */
+        --sidebar-bg: #f1f5f9;
+        /* slate-100 */
+        --sidebar-border: #cbd5e1;
+        /* slate-300 */
+        --sidebar-text: #0f172a;
+        /* slate-900 */
+
+        /* Itens (dá destaque nas funções) */
+        --sidebar-item-bg: rgba(255, 255, 255, 0.65);
+        --sidebar-hover-bg: #ffffff;
+
+        --sidebar-submenu-bg: rgba(255, 255, 255, 0.55);
+        --sidebar-submenu-border: #e2e8f0;
+        /* slate-200 */
+        --sidebar-tooltip-bg: #0f172a;
     }
+
 
     html.dark {
         --sidebar-bg: #020617;
