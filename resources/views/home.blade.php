@@ -36,18 +36,27 @@
 
         {{-- 1) KPIs Macro (4 boxes no topo) --}}
         <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
-            <div class="md:col-span-1">
-                <x-cards.box.box-01 :config="['link' => '/dashboard/central', 'prefix' => '', 'suffix' => '/100', 'label' => 'Índice Geral de Gestão', 'value' => $indiceGeral, 'text' => 'composto por setores']" />
+    
+            {{-- 1. Índice Geral de Gestão --}}
+            <div class="md:col-span-1" id="wrapper-card-gestao">
+                <x-cards.box.mainbox id="gestao" :value="$indiceGeral" />
             </div>
-            <div class="md:col-span-1">
-                <x-cards.box.box-02 :config="['link' => '/dashboard/financas', 'prefix' => '', 'suffix' => '%', 'label' => 'Execução Orçamentária', 'value' => $execucaoOrcamentaria, 'text' => 'realizado / previsto']" />
+
+            {{-- 2. Execução Orçamentária --}}
+            <div class="md:col-span-1" id="wrapper-card-financas">
+                <x-cards.box.mainbox id="financas" :value="$execucaoOrcamentaria" />
             </div>
-            <div class="md:col-span-1">
-                <x-cards.box.box-01 :config="['link' => '/dashboard/ouvidoria', 'prefix' => '', 'suffix' => '', 'label' => 'Pendências Críticas', 'value' => $pendenciasCriticas, 'text' => 'itens vencidos/atrasados']" />
+
+            {{-- 3. Pendências Críticas --}}
+            <div class="md:col-span-1" id="wrapper-card-pendencias">
+                <x-cards.box.mainbox id="pendencias" :value="$pendenciasCriticas" />
             </div>
-            <div class="md:col-span-1">
-                <x-cards.box.box-02 :config="['link' => '/dashboard/ouvidoria', 'prefix' => '', 'suffix' => '', 'label' => 'Satisfação (NPS)', 'value' => $nps, 'text' => 'pesquisas do cidadão']" />
+
+            {{-- 4. Satisfação (NPS) --}}
+            <div class="md:col-span-1" id="wrapper-card-nps">
+                <x-cards.box.mainbox id="nps" :value="$nps" />
             </div>
+
         </div>
         {{-- 2) KPIs por Setor (1 box por secretaria) --}}
         <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-2">
