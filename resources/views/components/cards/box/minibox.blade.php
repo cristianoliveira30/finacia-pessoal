@@ -1,5 +1,5 @@
 @props([
-    'id' => null, 
+    'id' => null,
 ])
 
 @php
@@ -8,43 +8,49 @@
             'score' => 82, 
             'link' => '/dashboard/financas', 
             'hint' => 'Execução 76%',
-            // Ícone: Cifrão / Dinheiro
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>'
+            // Componente: bi-currency-dollar
+            'icon_name' => 'bi-currency-dollar',
+            'color' => 'text-emerald-500'
         ],
         'Obras' => [
             'score' => 71, 
             'link' => '/dashboard/obras', 
-            'hint' => 'Obras no prazo 68%',
-            // Ícone: Cone de Obra / Construção
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M22 22H2"/><path d="M5.45 22 12 3l6.55 19"/><path d="M9.3 11h5.4"/><path d="M7.6 16h8.8"/></svg>'
+            'hint' => 'Prazo 68%',
+            // Componente: bi-cone-striped
+            'icon_name' => 'bi-cone-striped',
+            'color' => 'text-orange-500'
         ],
         'Saúde' => [
             'score' => 74, 
             'link' => '/dashboard/saude', 
             'hint' => 'Espera 42 min',
-            // Ícone: Coração com Pulso
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-500"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>'
+            // Componente: bi-heart-pulse
+            'icon_name' => 'bi-heart-pulse',
+            'color' => 'text-rose-500'
         ],
         'Educação' => [
             'score' => 79, 
             'link' => '/dashboard/educacao', 
-            'hint' => 'Frequência 92%',
-            // Ícone: Livro
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
+            'hint' => 'Freq. 92%',
+            // Componente: bi-book
+            'icon_name' => 'bi-book',
+            'color' => 'text-blue-500'
         ],
         'Assist.' => [
             'score' => 77, 
             'link' => '/dashboard/assistencia', 
-            'hint' => 'Famílias 3.210',
-            // Ícone: Pessoas / Família
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-500"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>'
+            'hint' => 'Famílias 3k',
+            // Componente: bi-people
+            'icon_name' => 'bi-people',
+            'color' => 'text-purple-500'
         ],
         'Ouvidoria' => [
             'score' => 69, 
             'link' => '/dashboard/ouvidoria', 
-            'hint' => 'Resposta 19h',
-            // Ícone: Headset / Atendimento
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>'
+            'hint' => 'Resp. 19h',
+            // Componente: bi-headset
+            'icon_name' => 'bi-headset',
+            'color' => 'text-yellow-500'
         ],
     ];
 
@@ -52,21 +58,72 @@
 @endphp
 
 @if($dados)
-    <div class="w-full relative min-w-0 xl:scale-85 xl:origin-top-left xl:w-[100%] xl:-mb-2">
-        <x-cards.box.box-01 :config="[
-            'link'   => $dados['link'],
-            'prefix' => '',
-            'suffix' => '/100',
-            'label'  => $id,
-            'value'  => $dados['score'],
-            'text'   => $dados['hint'],
-            'icon'   => $dados['icon'] ?? null  // Passa o ícone SVG aqui
-        ]" 
-        hide-trend="true"
-        />
+    {{-- Container Principal (Estilo baseado no box-01, mas ajustado para tamanho Mini) --}}
+    <div class="relative w-full overflow-hidden
+                bg-white dark:bg-gradient-to-br dark:from-slate-800 dark:to-slate-900
+                p-4 rounded-2xl
+                border border-slate-200 dark:border-slate-700
+                shadow-sm hover:shadow-md dark:shadow-xl
+                transition-all duration-300 group">
+
+        {{-- Decoração de Fundo (Blur) --}}
+        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-16 h-16 rounded-full blur-xl transition-all pointer-events-none
+                    bg-sky-500/5 dark:bg-sky-500/20
+                    group-hover:bg-sky-500/10 dark:group-hover:bg-sky-500/30"></div>
+
+        <div class="relative z-10 flex justify-between h-full items-start">
+
+            {{-- COLUNA ESQUERDA: Label, Valor e Hint --}}
+            <div class="flex flex-col justify-between h-full space-y-2">
+                
+                {{-- Label --}}
+                <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                    {{ $id }}
+                </p>
+
+                {{-- Valor (Score) --}}
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white tracking-tight leading-none">
+                        {{ $dados['score'] }}<span class="text-sm text-slate-400 font-normal ml-0.5">/100</span>
+                    </h3>
+                </div>
+
+                {{-- Hint (Texto inferior) --}}
+                <div class="flex items-center pt-1">
+                    <span class="text-xs text-slate-500 dark:text-slate-500 font-medium truncate">
+                        {{ $dados['hint'] }}
+                    </span>
+                </div>
+            </div>
+
+            {{-- COLUNA DIREITA: Ícone e Link --}}
+            <div class="flex flex-col justify-between items-end h-full pl-2 space-y-3">
+
+                {{-- 1. Ícone Personalizado --}}
+                <div class="p-2 rounded-xl border shadow-sm transition-colors
+                            bg-sky-50 border-sky-100 {{ $dados['color'] }}
+                            dark:bg-slate-700/50 dark:border-slate-600">
+                    
+                    {{-- Renderização Dinâmica do Ícone Blade --}}
+                    @if(isset($dados['icon_name']))
+                        <x-dynamic-component :component="$dados['icon_name']" class="w-5 h-5" />
+                    @else
+                        <x-bi-clipboard-data class="w-5 h-5"/>
+                    @endif
+                </div>
+
+                {{-- 2. Seta de Link --}}
+                <a href="{{ $dados['link'] }}"
+                   class="p-1 rounded-lg transition-colors cursor-pointer block
+                          text-slate-400 hover:text-sky-600 hover:bg-sky-50
+                          dark:text-slate-600 dark:hover:text-sky-400 dark:hover:bg-slate-800">
+                    <x-bi-arrow-right-short class="w-5 h-5" />
+                </a>
+            </div>
+        </div>
     </div>
 @else
     <div class="text-red-500 text-xs font-bold p-4 border border-red-200 bg-red-50 rounded">
-        Setor "{{ $id }}" não encontrado.
+        "{{ $id }}" n/a
     </div>
 @endif

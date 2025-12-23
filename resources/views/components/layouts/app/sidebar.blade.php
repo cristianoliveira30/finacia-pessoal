@@ -8,7 +8,7 @@
             'hex_main' => '#fbbf24', // amber-400
             'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)', // amber-900/40
             'hex_light' => '#fcd34d', // amber-300
-            'icon_main' => 'cash',
+            'icon_main' => 'bank',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
                 ['label' => 'Investimento Realizado', 'route' => 'financeiro.relatorios', 'icon' => 'file-earmark-text-fill'],
