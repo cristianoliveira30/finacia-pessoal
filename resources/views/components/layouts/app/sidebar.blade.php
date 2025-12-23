@@ -11,8 +11,8 @@
             'icon_main' => 'bank',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
-                ['label' => 'Investimento Realizado', 'route' => 'financeiro.relatorios', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Execuções Orçamentárias', 'route' => 'financeiro.relatorios', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'CAPEX (Obras/Equipamentos)', 'route' => 'financeiro.relatorios', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin']
             ]
@@ -43,8 +43,8 @@
             'icon_main' => 'plus-circle',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'saude.home', 'icon' => 'list'],
-                ['label' => 'Cobertura de Vacinação', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Faltas em Consultas', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'Cobertura Vacinal', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'Fila de Exames', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'saude.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin']
             ]
