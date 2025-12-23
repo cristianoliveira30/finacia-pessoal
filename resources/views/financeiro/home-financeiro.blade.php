@@ -1,33 +1,11 @@
 {{-- resources/views/financeiro/home-financeiro.blade.php --}}
 <x-layouts.app :title="__('Dashboard Financeiro')">
-    <div class="w-full min-h-screen pt-4 px-8 sm:px-4 lg:pl-16 space-y-4">
+    <div class="w-full min-h-screen pt-4 px-8 sm:px-4 lg:pl-16 space-y-6">
+
+        {{-- 1) Componente Unificado (KPIs + Módulos) --}}
+        <x-cards.box.diretorias id="financeiro" />
+
         @php
-            // -----------------------------
-            // KPIs Macro (topo)
-            // -----------------------------
-            $execucaoOrcamentaria = 76.4; // %
-            $saldoCaixaMi = 128.6; // R$ mi
-            $resultadoPrimarioMi = 24.9; // R$ mi (superávit)
-            $pessoalRcl = 49.2; // % (limite LRF 54)
-
-            // formatações (seu box não formata automaticamente)
-            $saldoCaixaFmt = number_format($saldoCaixaMi, 1, ',', '.');
-            $resultadoFmt = number_format($resultadoPrimarioMi, 1, ',', '.');
-            $execucaoFmt = number_format($execucaoOrcamentaria, 1, ',', '.');
-            $pessoalFmt = number_format($pessoalRcl, 1, ',', '.');
-
-            // -----------------------------
-            // "Módulos" do Financeiro (cards de navegação)
-            // -----------------------------
-            $modulos = [
-                'Receitas' => ['score' => 81, 'link' => route('financeiro.receitas.arrecadacao'), 'hint' => 'Própria 32% | Transferências 68%'],
-                'Despesas' => ['score' => 73, 'link' => route('financeiro.despesas.empenhos'), 'hint' => 'Empenhado 68% | Pago 52%'],
-                'Tesouraria' => ['score' => 77, 'link' => route('financeiro.tesouraria.saldos'), 'hint' => 'Caixa D+90: confortável'],
-                'Orçamento' => ['score' => 79, 'link' => route('financeiro.orcamento.loa'), 'hint' => 'Créditos adicionais: 6,3%'],
-                'Investimentos' => ['score' => 69, 'link' => route('financeiro.investimentos.capex'), 'hint' => 'CAPEX executado 41%'],
-                'LRF & Compliance' => ['score' => 80, 'link' => route('financeiro.lrf.pessoal'), 'hint' => 'Sem alertas críticos'],
-            ];
-
             // -----------------------------
             // GRÁFICOS (dados fakes coerentes)
             // -----------------------------
@@ -71,7 +49,7 @@
                 ],
             ];
 
-            // (E) Radial: Compliance (quanto % do limite já usado) — menor é melhor em alguns itens, mas aqui é só demo
+            // (E) Radial: Compliance (quanto % do limite já usado)
             $chartCompliance = [
                 'categories' => ['Pessoal/RCL', 'Mín. Saúde', 'Mín. Educação', 'Dívida/RCL'],
                 'series' => [
@@ -80,70 +58,7 @@
             ];
         @endphp
 
-        {{-- 1) KPIs Macro (4 boxes no topo) --}}
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
-            <div class="md:col-span-1">
-                <x-cards.box.box-02 :config="[
-                    'link' => route('financeiro.orcamento.loa'),
-                    'prefix' => '',
-                    'suffix' => '%',
-                    'label' => 'Execução Orçamentária',
-                    'value' => $execucaoFmt,
-                    'text' => 'realizado / previsto (ano)'
-                ]" />
-            </div>
-
-            <div class="md:col-span-1">
-                <x-cards.box.box-01 :config="[
-                    'link' => route('financeiro.tesouraria.saldos'),
-                    'prefix' => 'R$ ',
-                    'suffix' => ' mi',
-                    'label' => 'Saldo em Caixa',
-                    'value' => $saldoCaixaFmt,
-                    'text' => 'tesouraria (consolidado)'
-                ]" />
-            </div>
-
-            <div class="md:col-span-1">
-                <x-cards.box.box-02 :config="[
-                    'link' => route('financeiro.relatorios.rx_d'),
-                    'prefix' => 'R$ ',
-                    'suffix' => ' mi',
-                    'label' => 'Resultado Primário',
-                    'value' => $resultadoFmt,
-                    'text' => 'superávit no período'
-                ]" />
-            </div>
-
-            <div class="md:col-span-1">
-                <x-cards.box.box-01 :config="[
-                    'link' => route('financeiro.lrf.pessoal'),
-                    'prefix' => '',
-                    'suffix' => '%',
-                    'label' => 'Pessoal / RCL',
-                    'value' => $pessoalFmt,
-                    'text' => 'limite LRF: 54%'
-                ]" />
-            </div>
-        </div>
-
-        {{-- 2) “Módulos” do Financeiro (1 box por área interna) --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-2">
-            @foreach ($modulos as $nome => $meta)
-                <div>
-                    <x-cards.box.box-01 :config="[
-                        'link' => $meta['link'],
-                        'prefix' => '',
-                        'suffix' => '/100',
-                        'label' => $nome,
-                        'value' => $meta['score'],
-                        'text' => $meta['hint']
-                    ]" />
-                </div>
-            @endforeach
-        </div>
-
-        {{-- 3) Gráficos (painel financeiro) --}}
+        {{-- 2) Gráficos --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <x-cards.card id="fin-rx-d" title="Receitas x Despesas (R$ mi)" :chart="$chartReceitaDespesa" chart-type="area" />
             <x-cards.card id="fin-rec-fontes" title="Composição de Receita (%)" :chart="$chartComposicaoReceita" chart-type="pie" />

@@ -1,58 +1,11 @@
 {{-- resources/views/saude/home-saude.blade.php --}}
 <x-layouts.app :title="__('Dashboard Saúde')">
-    <div class="w-full min-h-screen pt-4 px-8 sm:px-4 lg:pl-16 space-y-4">
+    <div class="w-full min-h-screen pt-4 px-8 sm:px-4 lg:pl-16 space-y-6">
+
+        {{-- 1) Componente Unificado (KPIs + Módulos) --}}
+        <x-cards.box.diretorias id="saude" />
+
         @php
-            // -----------------------------
-            // KPIs Macro (topo) - dados fakes
-            // -----------------------------
-            $atendimentosMes = 128450;        // qtd
-            $esperaMediaMin = 42;             // min (UBS/UPA)
-            $coberturaVacinal = 87.3;         // %
-            $dispMedicamentos = 92.1;         // % itens disponíveis
-            $filaRegulacao = 3840;            // pessoas (consultas+exames)
-
-            $atendMesFmt = number_format($atendimentosMes, 0, ',', '.');
-            $esperaFmt = number_format($esperaMediaMin, 0, ',', '.');
-            $coberturaFmt = number_format($coberturaVacinal, 1, ',', '.');
-            $dispMedFmt = number_format($dispMedicamentos, 1, ',', '.');
-            $filaFmt = number_format($filaRegulacao, 0, ',', '.');
-
-            // -----------------------------
-            // Módulos (score 0-100) - navegação rápida
-            // -----------------------------
-            $modulos = [
-                'Atenção Básica' => [
-                    'score' => 78,
-                    'link'  => route('saude.aps.unidades'),
-                    'hint'  => 'ESF: 62% | Visitas: 9.2k'
-                ],
-                'Urgência' => [
-                    'score' => 71,
-                    'link'  => route('saude.urgencia.unidades'),
-                    'hint'  => 'Porta-médico: 28 min'
-                ],
-                'Regulação' => [
-                    'score' => 66,
-                    'link'  => route('saude.regulacao.fila_consultas'),
-                    'hint'  => 'SLA: 19 dias (média)'
-                ],
-                'Imunização' => [
-                    'score' => 84,
-                    'link'  => route('saude.imunizacao.cobertura'),
-                    'hint'  => 'Cobertura: 87,3%'
-                ],
-                'Farmácia' => [
-                    'score' => 73,
-                    'link'  => route('saude.farmacia.disponibilidade'),
-                    'hint'  => 'Rupturas: 4 itens críticos'
-                ],
-                'Vigilância' => [
-                    'score' => 76,
-                    'link'  => route('saude.vigilancia.indicadores'),
-                    'hint'  => 'Notificações: 312 (mês)'
-                ],
-            ];
-
             // -----------------------------
             // GRÁFICOS - dados fakes coerentes
             // -----------------------------
@@ -99,7 +52,7 @@
                 'categories' => ['Cardio', 'Ortopedia', 'Oftalmo', 'Endócrino', 'USG', 'Ressonância', 'Tomografia', 'Eco'],
                 'series' => [
                     ['name' => 'Consultas (fila)', 'data' => [420, 610, 540, 380, 0, 0, 0, 0]],
-                    ['name' => 'Exames (fila)',   'data' => [0, 0, 0, 0, 720, 460, 510, 200]],
+                    ['name' => 'Exames (fila)',    'data' => [0, 0, 0, 0, 720, 460, 510, 200]],
                 ],
             ];
 
@@ -126,102 +79,20 @@
             $chartMetas = [
                 'categories' => ['Cobertura Vacinal', 'Disp. Medicamentos', 'Tempo Espera (meta)', 'SLA Regulação (meta)'],
                 'series' => [
-                    // aqui é apenas demo; sua leitura pode ser “% atingido”
                     ['name' => 'Atingimento (%)', 'data' => [87, 92, 76, 68]],
                 ],
             ];
         @endphp
 
-        {{-- 1) KPIs Macro (topo) --}}
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-2">
-            <div class="md:col-span-1">
-                <x-cards.box.box-02 :config="[
-                    'link' => route('saude.relatorios.atendimentos'),
-                    'prefix' => '',
-                    'suffix' => '',
-                    'label' => 'Atendimentos no Mês',
-                    'value' => $atendMesFmt,
-                    'text' => 'APS + Urgência'
-                ]" />
-            </div>
-
-            <div class="md:col-span-1">
-                <x-cards.box.box-01 :config="[
-                    'link' => route('saude.relatorios.espera'),
-                    'prefix' => '',
-                    'suffix' => ' min',
-                    'label' => 'Espera Média',
-                    'value' => $esperaFmt,
-                    'text' => 'porta/triagem (média)'
-                ]" />
-            </div>
-
-            <div class="md:col-span-1">
-                <x-cards.box.box-02 :config="[
-                    'link' => route('saude.imunizacao.cobertura'),
-                    'prefix' => '',
-                    'suffix' => '%',
-                    'label' => 'Cobertura Vacinal',
-                    'value' => $coberturaFmt,
-                    'text' => 'campanhas ativas'
-                ]" />
-            </div>
-
-            <div class="md:col-span-1">
-                <x-cards.box.box-01 :config="[
-                    'link' => route('saude.farmacia.disponibilidade'),
-                    'prefix' => '',
-                    'suffix' => '%',
-                    'label' => 'Disp. Medicamentos',
-                    'value' => $dispMedFmt,
-                    'text' => 'itens essenciais'
-                ]" />
-            </div>
-
-            <div class="md:col-span-1">
-                <x-cards.box.box-02 :config="[
-                    'link' => route('saude.regulacao.fila_consultas'),
-                    'prefix' => '',
-                    'suffix' => '',
-                    'label' => 'Fila Regulação',
-                    'value' => $filaFmt,
-                    'text' => 'consultas + exames'
-                ]" />
-            </div>
-        </div>
-
-        {{-- 2) Módulos (score por área) --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-2">
-            @foreach ($modulos as $nome => $meta)
-                <div>
-                    <x-cards.box.box-01 :config="[
-                        'link' => $meta['link'],
-                        'prefix' => '',
-                        'suffix' => '/100',
-                        'label' => $nome,
-                        'value' => $meta['score'],
-                        'text' => $meta['hint']
-                    ]" />
-                </div>
-            @endforeach
-        </div>
-
-        {{-- 3) Gráficos (ordem variada + mais gráficos) --}}
+        {{-- 2) Gráficos --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <x-cards.card id="saude-atend-dia" title="Atendimentos por Dia (APS x Urgência)" :chart="$chartAtendDia" chart-type="area" />
-
             <x-cards.card id="saude-espera" title="Tempo Médio de Espera por Unidade (min)" :chart="$chartEsperaUnidade" chart-type="bar" />
-
             <x-cards.card id="saude-classificacao" title="Classificação de Risco (Urgência)" :chart="$chartClassificacao" chart-type="pie" />
-
             <x-cards.card id="saude-regulacao" title="Fila da Regulação (Consultas x Exames)" :chart="$chartFilaRegulacao" chart-type="bar" />
-
             <x-cards.card id="saude-cobertura" title="Cobertura Vacinal por Campanha (%)" :chart="$chartCoberturaCampanha" chart-type="column" />
-
             <x-cards.card id="saude-medicamentos" title="Disponibilidade por Categoria de Medicamentos (%)" :chart="$chartDispMedicamentos" chart-type="column" />
-
             <x-cards.card id="saude-noshow" title="No-show (Faltas em Consultas) (%)" :chart="$chartNoShow" chart-type="area" />
-
             <x-cards.card id="saude-metas" title="Metas do Mês (Atingimento %)" :chart="$chartMetas" chart-type="radial" />
         </div>
     </div>
