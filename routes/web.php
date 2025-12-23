@@ -30,7 +30,7 @@ Route::get('/report', fn() => view('reports/default'))->name('report.default');
 // rotas do setor financeiro
 Route::prefix('financeiro')->name('financeiro.')->group(function () {
 
-    // Base (as que você já tinha)
+    // Base
     Route::view('/home', 'financeiro.home-financeiro')->name('home');
     Route::view('/relatorios', 'financeiro.relatorios')->name('relatorios');
     Route::view('/lancamentos', 'financeiro.lancamentos')->name('lancamentos');
@@ -39,68 +39,76 @@ Route::prefix('financeiro')->name('financeiro.')->group(function () {
     // -----------------------------
     // RELATÓRIOS (inventadas)
     // -----------------------------
-    Route::view('/relatorios/receitas-despesas', 'financeiro.placeholder')->name('relatorios.rx_d');
-    Route::view('/relatorios/execucao', 'financeiro.placeholder')->name('relatorios.execucao');
-    Route::view('/relatorios/despesas-funcao', 'financeiro.placeholder')->name('relatorios.despesas_funcao');
-    Route::view('/relatorios/fornecedores', 'financeiro.placeholder')->name('relatorios.fornecedores');
-    Route::view('/relatorios/empenhos-liquidacoes-pagamentos', 'financeiro.placeholder')->name('relatorios.elp');
+    Route::prefix('relatorios')->name('relatorios.')->group(function () {
+        Route::view('receitas-despesas', 'financeiro.placeholder')->name('rx_d');
+        Route::view('execucao', 'financeiro.placeholder')->name('execucao');
+        Route::view('despesas-funcao', 'financeiro.placeholder')->name('despesas_funcao');
+        Route::view('fornecedores', 'financeiro.placeholder')->name('fornecedores');
+        Route::view('empenhos-liquidacoes-pagamentos', 'financeiro.placeholder')->name('elp');
+    });
 
     // -----------------------------
     // ORÇAMENTO (PPA/LDO/LOA)
     // -----------------------------
-    Route::view('/orcamento/loa', 'financeiro.placeholder')->name('orcamento.loa');
-    Route::view('/orcamento/ppa', 'financeiro.placeholder')->name('orcamento.ppa');
-    Route::view('/orcamento/ldo', 'financeiro.placeholder')->name('orcamento.ldo');
-    Route::view('/orcamento/creditos-adicionais', 'financeiro.placeholder')->name('orcamento.creditos');
-    Route::view('/orcamento/restos-a-pagar', 'financeiro.placeholder')->name('orcamento.restos_pagar');
+    Route::prefix('orcamento')->name('orcamento.')->group(function () {
+        Route::view('loa', 'financeiro.placeholder')->name('loa');
+        Route::view('ppa', 'financeiro.placeholder')->name('ppa');
+        Route::view('ldo', 'financeiro.placeholder')->name('ldo');
+        Route::view('creditos-adicionais', 'financeiro.placeholder')->name('creditos');
+        Route::view('restos-a-pagar', 'financeiro.placeholder')->name('restos_pagar');
+    });
 
     // -----------------------------
     // RECEITAS
     // -----------------------------
-    Route::view('/receitas/arrecadacao', 'financeiro.placeholder')->name('receitas.arrecadacao');
-    Route::view('/receitas/fontes', 'financeiro.placeholder')->name('receitas.fontes');
-    Route::view('/receitas/transferencias', 'financeiro.placeholder')->name('receitas.transferencias');
-    Route::view('/receitas/divida-ativa', 'financeiro.placeholder')->name('receitas.divida_ativa');
-    Route::view('/receitas/projecoes', 'financeiro.placeholder')->name('receitas.projecoes');
+    Route::prefix('receitas')->name('receitas.')->group(function () {
+        Route::view('arrecadacao', 'financeiro.placeholder')->name('arrecadacao');
+        Route::view('fontes', 'financeiro.placeholder')->name('fontes');
+        Route::view('transferencias', 'financeiro.placeholder')->name('transferencias');
+        Route::view('divida-ativa', 'financeiro.placeholder')->name('divida_ativa');
+        Route::view('projecoes', 'financeiro.placeholder')->name('projecoes');
+    });
 
     // -----------------------------
     // DESPESAS
     // -----------------------------
-    Route::view('/despesas/empenhos', 'financeiro.placeholder')->name('despesas.empenhos');
-    Route::view('/despesas/liquidacoes', 'financeiro.placeholder')->name('despesas.liquidacoes');
-    Route::view('/despesas/pagamentos', 'financeiro.placeholder')->name('despesas.pagamentos');
-    Route::view('/despesas/elemento', 'financeiro.placeholder')->name('despesas.elemento');
-    Route::view('/despesas/centros-custo', 'financeiro.placeholder')->name('despesas.centros_custo');
+    Route::prefix('despesas')->name('despesas.')->group(function () {
+        Route::view('empenhos', 'financeiro.placeholder')->name('empenhos');
+        Route::view('liquidacoes', 'financeiro.placeholder')->name('liquidacoes');
+        Route::view('pagamentos', 'financeiro.placeholder')->name('pagamentos');
+        Route::view('elemento', 'financeiro.placeholder')->name('elemento');
+        Route::view('centros-custo', 'financeiro.placeholder')->name('centros_custo');
+    });
 
     // -----------------------------
     // INVESTIMENTOS / CAPEX
     // -----------------------------
-    Route::view('/investimentos/capex', 'financeiro.placeholder')->name('investimentos.capex');
-    Route::view('/investimentos/convenios', 'financeiro.placeholder')->name('investimentos.convenios');
-    Route::view('/investimentos/cronograma', 'financeiro.placeholder')->name('investimentos.cronograma');
-    Route::view('/investimentos/contrapartidas', 'financeiro.placeholder')->name('investimentos.contrapartidas');
+    Route::prefix('investimentos')->name('investimentos.')->group(function () {
+        Route::view('capex', 'financeiro.placeholder')->name('capex');
+        Route::view('convenios', 'financeiro.placeholder')->name('convenios');
+        Route::view('cronograma', 'financeiro.placeholder')->name('cronograma');
+        Route::view('contrapartidas', 'financeiro.placeholder')->name('contrapartidas');
+    });
 
     // -----------------------------
     // TESOURARIA
     // -----------------------------
-    Route::view('/tesouraria/saldos', 'financeiro.placeholder')->name('tesouraria.saldos');
-    Route::view('/tesouraria/fluxo', 'financeiro.placeholder')->name('tesouraria.fluxo');
-    Route::view('/tesouraria/conciliacao', 'financeiro.placeholder')->name('tesouraria.conciliacao');
-    Route::view('/tesouraria/aplicacoes', 'financeiro.placeholder')->name('tesouraria.aplicacoes');
+    Route::prefix('tesouraria')->name('tesouraria.')->group(function () {
+        Route::view('saldos', 'financeiro.placeholder')->name('saldos');
+        Route::view('fluxo', 'financeiro.placeholder')->name('fluxo');
+        Route::view('conciliacao', 'financeiro.placeholder')->name('conciliacao');
+        Route::view('aplicacoes', 'financeiro.placeholder')->name('aplicacoes');
+    });
 
     // -----------------------------
     // LRF / COMPLIANCE
     // -----------------------------
-    Route::view('/lrf/pessoal', 'financeiro.placeholder')->name('lrf.pessoal');
-    Route::view('/lrf/saude', 'financeiro.placeholder')->name('lrf.saude');
-    Route::view('/lrf/educacao', 'financeiro.placeholder')->name('lrf.educacao');
-    Route::view('/lrf/divida', 'financeiro.placeholder')->name('lrf.divida');
-
-    // -----------------------------
-    // EXPORTAÇÕES / AUDITORIA
-    // -----------------------------
-    Route::view('/exportacoes', 'financeiro.placeholder')->name('exportacoes.index');
-    Route::view('/auditoria/logs', 'financeiro.placeholder')->name('auditoria.logs');
+    Route::prefix('lrf')->name('lrf.')->group(function () {
+        Route::view('pessoal', 'financeiro.placeholder')->name('pessoal');
+        Route::view('saude', 'financeiro.placeholder')->name('saude');
+        Route::view('educacao', 'financeiro.placeholder')->name('educacao');
+        Route::view('divida', 'financeiro.placeholder')->name('divida');
+    });
 });
 
 // rotas do setor da educacao
