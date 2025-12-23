@@ -11,16 +11,8 @@
             'icon_main' => 'bank',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
-                [
-                    'label' => 'Execuções Orçamentárias',
-                    'route' => 'financeiro.relatorios',
-                    'icon' => 'file-earmark-text-fill',
-                ],
-                [
-                    'label' => 'CAPEX (Obras/Equipamentos)',
-                    'route' => 'financeiro.relatorios',
-                    'icon' => 'file-earmark-text-fill',
-                ],
+                ['label' => 'Execuções Orçamentárias', 'route' => 'financeiro.relatorios.execucao', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'CAPEX (Obras/Equipamentos)', 'route' => 'financeiro.investimentos.capex', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
             ],
