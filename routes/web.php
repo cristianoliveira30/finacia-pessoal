@@ -40,11 +40,11 @@ Route::prefix('financeiro')->name('financeiro.')->group(function () {
     // RELATÓRIOS (inventadas)
     // -----------------------------
     Route::prefix('relatorios')->name('relatorios.')->group(function () {
-        Route::view('receitas-despesas', 'financeiro.placeholder')->name('rx_d');
-        Route::view('execucao', 'financeiro.placeholder')->name('execucao');
-        Route::view('despesas-funcao', 'financeiro.placeholder')->name('despesas_funcao');
-        Route::view('fornecedores', 'financeiro.placeholder')->name('fornecedores');
-        Route::view('empenhos-liquidacoes-pagamentos', 'financeiro.placeholder')->name('elp');
+        Route::view('rx_d', 'financeiro.relatorios.receita-despesas')->name('rx_d');
+        Route::view('execucao', 'financeiro.relatorios.execucao')->name('execucao');
+        Route::view('despesas-funcao', 'financeiro.relatorios.despesas-funcao')->name('despesas_funcao');
+        Route::view('fornecedores', 'financeiro.relatorios.fornecedores')->name('fornecedores');
+        Route::view('empenhos-liquidacoes-pagamentos', 'financeiro.relatorios.empenhos')->name('elp');
     });
 
     // -----------------------------
@@ -129,16 +129,16 @@ Route::prefix('educacao')->name('educacao.')->group(function () {
     // -----------------------------
     // RELATÓRIOS (BI educacional)
     // -----------------------------
-    Route::view('/relatorios/frequencia', 'educacao.placeholder')->name('relatorios.frequencia');
-    Route::view('/relatorios/evasao', 'educacao.placeholder')->name('relatorios.evasao');
-    Route::view('/relatorios/aprendizagem', 'educacao.placeholder')->name('relatorios.aprendizagem');
-    Route::view('/relatorios/turmas', 'educacao.placeholder')->name('relatorios.turmas');
-    Route::view('/relatorios/matriculas', 'educacao.placeholder')->name('relatorios.matriculas');
-    Route::view('/relatorios/transferencias', 'educacao.placeholder')->name('relatorios.transferencias');
-    Route::view('/relatorios/infraestrutura', 'educacao.placeholder')->name('relatorios.infraestrutura');
-    Route::view('/relatorios/merenda', 'educacao.placeholder')->name('relatorios.merenda');
-    Route::view('/relatorios/transporte', 'educacao.placeholder')->name('relatorios.transporte');
-    Route::view('/relatorios/inclusao', 'educacao.placeholder')->name('relatorios.inclusao');
+    Route::view('/relatorios/frequencia', 'educacao.relatorios.frequenciaescolar')->name('relatorios.frequencia');
+    Route::view('/relatorios/evasao', 'educacao.relatorios.evasao')->name('relatorios.evasao');
+    Route::view('/relatorios/aprendizagem', 'educacao.relatorios.aprendizagem')->name('relatorios.aprendizagem');
+    Route::view('/relatorios/turmas', 'educacao.relatorios.turmas')->name('relatorios.turmas');
+    Route::view('/relatorios/matriculas', 'educacao.relatorios.matriculas')->name('relatorios.matriculas');
+    Route::view('/relatorios/transferencias', 'educacao.relatorios.transferencias')->name('relatorios.transferencias');
+    Route::view('/relatorios/infraestrutura', 'educacao.relatorios.infraestrutura')->name('relatorios.infraestrutura');
+    Route::view('/relatorios/merenda', 'educacao.relatorios.merenda')->name('relatorios.merenda');
+    Route::view('/relatorios/transporte', 'educacao.relatorios.transporte')->name('relatorios.transporte');
+    Route::view('/relatorios/inclusao', 'educacao.relatorios.inclusao')->name('relatorios.inclusao');
 
     // -----------------------------
     // REDE / ESCOLAS
@@ -216,13 +216,13 @@ Route::prefix('saude')->name('saude.')->group(function () {
     // -----------------------------
     // RELATÓRIOS (BI)
     // -----------------------------
-    Route::view('/relatorios/atendimentos', 'saude.placeholder')->name('relatorios.atendimentos');
-    Route::view('/relatorios/espera', 'saude.placeholder')->name('relatorios.espera');
-    Route::view('/relatorios/producao-unidade', 'saude.placeholder')->name('relatorios.producao_unidade');
-    Route::view('/relatorios/producao-profissional', 'saude.placeholder')->name('relatorios.producao_profissional');
-    Route::view('/relatorios/no-show', 'saude.placeholder')->name('relatorios.no_show');
-    Route::view('/relatorios/regulacao', 'saude.placeholder')->name('relatorios.regulacao');
-    Route::view('/relatorios/indicadores-sus', 'saude.placeholder')->name('relatorios.indicadores_sus');
+    Route::view('/relatorios/atendimentos', 'saude.relatorios.atendimentos')->name('relatorios.atendimentos');
+    Route::view('/relatorios/espera', 'saude.relatorios.espera')->name('relatorios.espera');
+    Route::view('/relatorios/producao-unidade', 'saude.relatorios.producao-unidade')->name('relatorios.producao_unidade');
+    Route::view('/relatorios/producao-profissional', 'saude.relatorios.producao-profissional')->name('relatorios.producao_profissional');
+    Route::view('/relatorios/no-show', 'saude.relatorios.no-show')->name('relatorios.no_show');
+    Route::view('/relatorios/regulacao', 'saude.relatorios.regulacao')->name('relatorios.regulacao');
+    Route::view('/relatorios/indicadores-sus', 'saude.relatorios.indicadores-sus')->name('relatorios.indicadores_sus');
 
     // -----------------------------
     // ATENÇÃO BÁSICA (APS/UBS/ESF)

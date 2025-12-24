@@ -205,7 +205,7 @@
                     <li>
                         <a href="{{ route('home') }}"
                             class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
-                            data-tooltip="Dashboard">
+                            data-tooltip="Dashboard" target="_blank" rel="noopener noreferrer">
                             {{-- ÍCONE DE TV (DASHBOARD) --}}
                             <x-bi-house class="w-5 h-5" />
                             <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
@@ -214,7 +214,7 @@
                     <li>
                         <a href="/tv"
                             class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
-                            data-tooltip="Modo Tv">
+                            data-tooltip="Modo Tv" target="_blank" rel="noopener noreferrer">
                             <x-bi-tv class="w-5 h-5" />
                             <span class="sidebar-label whitespace-nowrap font-semibold">Modo TV</span>
                         </a>
@@ -260,7 +260,7 @@
                                                class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
                                                {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
                                                onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
-                                               onmouseout="this.style.color=''">
+                                               onmouseout="this.style.color=''" target="_blank" rel="noopener noreferrer">
                                                 {{-- CORREÇÃO: Bolinha do submenu --}}
                                                 <span class="inline-flex h-4 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
                                                 <span>{{ $item['label'] }}</span>
@@ -290,7 +290,7 @@
                 <ul class="space-y-1">
                     @foreach($menu['items'] as $item)
                         <li>
-                            <a href="{{ route($item['route']) }}" class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors">
+                            <a href="{{ route($item['route']) }}" class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
                                 {{-- ÍCONE INTERNO DO POPOVER --}}
                                 <x-dynamic-component
                                     :component="'bi-'.$item['icon']"
