@@ -15,6 +15,7 @@
                 ['label' => 'CAPEX (Obras/Equipamentos)', 'route' => 'financeiro.investimentos.capex', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
+
             ],
         ],
         [
@@ -179,15 +180,25 @@
         <nav class="flex-1 px-2 pb-4 text-sm font-medium">
             <ul class="space-y-1">
 
-                {{-- DASHBOARD --}}
-                <li>
-                    <a href="{{ route('home') }}"
-                       class="{{ $linkBase }} text-slate-100 hover:bg-slate-800"
-                       data-tooltip="Dashboard">
-                        <x-bi-house class="w-5 h-5" />
-                        <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
-                    </a>
-                </li>
+                    {{-- DASHBOARD --}}
+                    <li>
+                        <a href="{{ route('home') }}"
+                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
+                            data-tooltip="Dashboard" target="_blank" rel="noopener noreferrer">
+                            {{-- ÍCONE DE TV (DASHBOARD) --}}
+                            <x-bi-house class="w-5 h-5" />
+                            <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/tv"
+                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
+                            data-tooltip="Modo Tv" target="_blank" rel="noopener noreferrer">
+                            {{-- ÍCONE DE TV (DASHBOARD) --}}
+                            <x-bi-tv class="w-5 h-5" />
+                            <span class="sidebar-label whitespace-nowrap font-semibold">Modo TV</span>
+                        </a>
+                    </li>
 
                 <li>
                     <a href="/tv"
@@ -217,17 +228,43 @@
                             <x-bi-chevron-right class="chevron-icon w-3 h-3" />
                         </button>
 
-                        <div id="submenu-{{ $menu['id'] }}" class="submenu mt-1 pl-9 pr-3 p-1 text-xs">
-                            <div class="flex gap-3">
-                                <span class="w-px bg-slate-700 ml-2"></span>
-                                <div class="space-y-1">
-                                    @foreach ($menu['items'] as $item)
-                                        <a href="{{ route($item['route']) }}"
-                                           class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors">
-                                            <span class="menu-bar inline-flex h-4 w-1 rounded-full"></span>
-                                            <span>{{ $item['label'] }}</span>
-                                        </a>
-                                    @endforeach
+                            <button type="button"
+                                class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}"
+                                data-submenu-toggle="submenu-{{ $menu['id'] }}"
+                                data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right">
+                                <div class="flex items-center gap-3">
+                                    {{-- ÍCONE PRINCIPAL DINÂMICO --}}
+                                    <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
+
+                                    {{-- CORREÇÃO: Barra lateral colorida usando style inline --}}
+                                    <span class="inline-flex h-6 w-1 rounded-full"
+                                        style="background-color: {{ $menu['hex_main'] }}"></span>
+                                    <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
+                                </div>
+
+                                {{-- CHEVRON (SETA) - CORREÇÃO DE COR --}}
+                                <x-bi-chevron-right class="chevron-icon w-3 h-3"
+                                    style="color: {{ $menu['hex_light'] }}" />
+                            </button>
+
+                            <div id="submenu-{{ $menu['id'] }}"
+                                class="submenu mt-1 pl-9 pr-3 p-1 text-xs {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}">
+                                <div class="flex gap-3">
+                                    <span class="w-px bg-slate-700 ml-2"></span>
+                                    <div class="space-y-1">
+                                        @foreach ($menu['items'] as $item)
+                                            <a href="{{ route($item['route']) }}"
+                                                class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
+                                                {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
+                                                onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
+                                                onmouseout="this.style.color=''" target="_blank" rel="noopener noreferrer>
+                                                {{-- CORREÇÃO: Bolinha do submenu --}}
+                                                <span class="inline-flex h-4 w-1 rounded-full"
+                                                    style="background-color: {{ $menu['hex_main'] }}"></span>
+                                                <span>{{ $item['label'] }}</span>
+                                            </a>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -255,9 +292,9 @@
                     @foreach ($menu['items'] as $item)
                         <li>
                             <a href="{{ route($item['route']) }}"
-                               class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors">
-                                <x-dynamic-component :component="'bi-' . $item['icon']"
-                                    class="w-4 h-4 shrink-0"
+                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+                                {{-- ÍCONE INTERNO DO POPOVER --}}
+                                <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0"
                                     style="width: 1rem; height: 1rem;" />
                                 <span>{{ $item['label'] }}</span>
                             </a>

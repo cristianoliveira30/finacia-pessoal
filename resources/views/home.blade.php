@@ -34,23 +34,16 @@
             $pendenciasCriticas = 143;
             $nps = 48;
 
-            // Variáveis dos gráficos mantidas para evitar erros no JS existente
-            $chartIndice = ['x_label' => 'Mês', 'categories' => ['Jan', 'Fev'], 'series' => []];
-            $chartPendencias = ['categories' => [], 'series' => []];
-            $chartDemandas = ['categories' => [], 'series' => []];
-            $chartExecucao = ['categories' => [], 'series' => []];
-            $chartScoreSetor = ['categories' => [], 'series' => []];
-        @endphp
+            // ------------------------------------------------------
+            // CORREÇÃO: Preenchimento dos Arrays para os Gráficos
+            // ------------------------------------------------------
 
             // (A) Linha/Área: Evolução do Índice Geral
             $chartIndice = [
                 'x_label' => 'Mês',
-                'categories' => ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                'categories' => ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
                 'series' => [
-                    [
-                        'name' => 'Índice Geral (0-100)',
-                        'data' => [63, 65, 66, 68, 70, 72, 74, 73, 75, 76, 77, $indiceGeral],
-                    ],
+                    ['name' => 'Índice Geral (0-100)', 'data' => [63, 65, 66, 68, 70, 72, 74, 73, 75, 76, 77, $indiceGeral]],
                 ],
             ];
 
@@ -59,7 +52,7 @@
             $chartPendencias = [
                 'categories' => array_keys($setoresDados),
                 'series' => [
-                    ['name' => 'Abertas', 'data' => [38, 52, 41, 29, 18, 33]],
+                    ['name' => 'Abertas',  'data' => [38, 52, 41, 29, 18, 33]],
                     ['name' => 'Vencidas', 'data' => [12, 24, 15, 9, 6, 17]],
                 ],
             ];
@@ -68,7 +61,9 @@
             $chartDemandas = [
                 'x_label' => 'Setor',
                 'categories' => array_keys($setoresDados),
-                'series' => [['name' => 'Solicitações', 'data' => [18, 22, 26, 12, 9, 13]]],
+                'series' => [
+                    ['name' => 'Solicitações', 'data' => [18, 22, 26, 12, 9, 13]],
+                ],
             ];
 
             // (D) Colunas: Execução por setor
@@ -76,7 +71,7 @@
                 'x_label' => 'Setor',
                 'categories' => array_keys($setoresDados),
                 'series' => [
-                    ['name' => 'Previsto (R$ mi)', 'data' => [12, 25, 18, 14, 9, 6]],
+                    ['name' => 'Previsto (R$ mi)',  'data' => [12, 25, 18, 14, 9, 6]],
                     ['name' => 'Realizado (R$ mi)', 'data' => [10, 16, 14, 12, 7, 4]],
                 ],
             ];
@@ -85,10 +80,7 @@
             $chartScoreSetor = [
                 'categories' => array_keys($setoresDados),
                 'series' => [
-                    [
-                        'name' => 'Score do Setor',
-                        'data' => array_map(fn($s) => $s['score'], array_values($setoresDados)),
-                    ],
+                    ['name' => 'Score do Setor', 'data' => array_map(fn($s) => $s['score'], array_values($setoresDados))],
                 ],
             ];
         @endphp
@@ -152,36 +144,12 @@
 
                 const btnSelector = "[data-action='refresh-dashboard']";
 
-                const jobs = [{
-                        targetId: "central-indice",
-                        link: "/api/graph/indice-geral",
-                        method: "POST",
-                        filtros: {}
-                    },
-                    {
-                        targetId: "central-demandas",
-                        link: "/api/graph/demandas",
-                        method: "POST",
-                        filtros: {}
-                    },
-                    {
-                        targetId: "central-pendencias",
-                        link: "/api/graph/pendencias",
-                        method: "POST",
-                        filtros: {}
-                    },
-                    {
-                        targetId: "central-execucao",
-                        link: "/api/graph/execucao",
-                        method: "POST",
-                        filtros: {}
-                    },
-                    {
-                        targetId: "central-scores",
-                        link: "/api/graph/scores",
-                        method: "POST",
-                        filtros: {}
-                    },
+                const jobs = [
+                    { targetId: "central-indice",     link: "/api/graph/indice-geral", method: "POST", filtros: {} },
+                    { targetId: "central-demandas",   link: "/api/graph/demandas",     method: "POST", filtros: {} },
+                    { targetId: "central-pendencias", link: "/api/graph/pendencias",   method: "POST", filtros: {} },
+                    { targetId: "central-execucao",   link: "/api/graph/execucao",     method: "POST", filtros: {} },
+                    { targetId: "central-scores",     link: "/api/graph/scores",       method: "POST", filtros: {} },
                 ];
 
                 const setLoading = (id, on) => {
