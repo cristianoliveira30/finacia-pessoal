@@ -33,8 +33,8 @@ Route::prefix('financeiro')->name('financeiro.')->group(function () {
     // Base
     Route::view('/home', 'financeiro.home-financeiro')->name('home');
     Route::view('/relatorios', 'financeiro.relatorios')->name('relatorios');
-    Route::view('/lancamentos', 'financeiro.lancamentos')->name('lancamentos');
-    Route::view('/contas', 'financeiro.contas')->name('contas');
+    Route::view('/lancamentos', 'financeiro.lancamentos-financeiro')->name('lancamentos');
+    Route::view('/contas', 'financeiro.contas-financeiro')->name('contas');
 
     // -----------------------------
     // RELATÓRIOS (inventadas)
