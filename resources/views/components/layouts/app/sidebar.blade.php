@@ -5,9 +5,9 @@
             'id' => 'financeiro',
             'label' => 'Financeiro',
             'popover_title' => 'Financeiro',
-            'hex_main' => '#fbbf24', // amber-400
-            'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)', // amber-900/40
-            'hex_light' => '#fcd34d', // amber-300
+            'hex_main' => '#fbbf24',
+            'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)',
+            'hex_light' => '#fcd34d',
             'icon_main' => 'bank',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
@@ -15,16 +15,15 @@
                 ['label' => 'CAPEX (Obras/Equipamentos)', 'route' => 'financeiro.investimentos.capex', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
-
             ],
         ],
         [
             'id' => 'educacao',
             'label' => 'Educação',
             'popover_title' => 'Educação',
-            'hex_main' => '#34d399', // emerald-400
-            'hex_hover_bg' => 'rgba(6, 78, 59, 0.4)', // emerald-900/40
-            'hex_light' => '#6ee7b7', // emerald-300
+            'hex_main' => '#34d399',
+            'hex_hover_bg' => 'rgba(6, 78, 59, 0.4)',
+            'hex_light' => '#6ee7b7',
             'icon_main' => 'journal-bookmark',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'educacao.home', 'icon' => 'list'],
@@ -38,9 +37,9 @@
             'id' => 'saude',
             'label' => 'Saúde',
             'popover_title' => 'Saúde',
-            'hex_main' => '#f43f5e', // rose-500
-            'hex_hover_bg' => 'rgba(136, 19, 55, 0.4)', // rose-900/40
-            'hex_light' => '#fda4af', // rose-300
+            'hex_main' => '#f43f5e',
+            'hex_hover_bg' => 'rgba(136, 19, 55, 0.4)',
+            'hex_light' => '#fda4af',
             'icon_main' => 'plus-circle',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'saude.home', 'icon' => 'list'],
@@ -56,28 +55,26 @@
 @endphp
 
 <style>
-    /* =================== CORES POR TEMA =================== */
     :root{
-        --sidebar-bg: #f1f5f9;              /* slate-100 */
-        --sidebar-border: #cbd5e1;          /* slate-300 */
-        --sidebar-text: #0f172a;            /* slate-900 */
+        --sidebar-bg: #f1f5f9;
+        --sidebar-border: #cbd5e1;
+        --sidebar-text: #0f172a;
         --sidebar-item-bg: rgba(255,255,255,.65);
         --sidebar-hover-bg: #ffffff;
         --sidebar-submenu-bg: rgba(255,255,255,.55);
-        --sidebar-submenu-border: #e2e8f0;  /* slate-200 */
+        --sidebar-submenu-border: #e2e8f0;
         --sidebar-tooltip-bg: #0f172a;
     }
     html.dark{
-        --sidebar-bg: #020617;              /* slate-950 */
-        --sidebar-border: #1e293b;          /* slate-800 */
-        --sidebar-text: #e5e7eb;            /* slate-200 */
-        --sidebar-hover-bg: #111827;        /* slate-900 */
-        --sidebar-submenu-bg: #374151;      /* slate-700 */
+        --sidebar-bg: #020617;
+        --sidebar-border: #1e293b;
+        --sidebar-text: #e5e7eb;
+        --sidebar-hover-bg: #111827;
+        --sidebar-submenu-bg: #374151;
         --sidebar-submenu-border: #4b5563;
-        --sidebar-tooltip-bg: #4b5563;      /* slate-600 */
+        --sidebar-tooltip-bg: #4b5563;
     }
 
-    /* =================== LAYOUT / ESTILOS =================== */
     @media (min-width: 1024px){
         body.sidebar-collapsed #top-bar-sidebar{ width: 4.5rem; }
         body.sidebar-collapsed #top-bar-sidebar .sidebar-label{ display:none; }
@@ -99,7 +96,6 @@
     #top-bar-sidebar nav{
         overflow-y:auto;
         overflow-x:hidden;
-
     }
 
     #top-bar-sidebar .sidebar-link{ color:inherit; }
@@ -117,7 +113,6 @@
     html:not(.dark) #top-bar-sidebar .submenu a:hover{ background:#ffffff !important; }
 
     .menu-group{ position:relative; }
-
     .menu-highlight{
         position:absolute;
         inset: .15rem .25rem;
@@ -144,7 +139,7 @@
         box-shadow:none;
     }
 
-    /* tira o JS inline do hover do submenu */
+    /* tira o hover inline: usa variável */
     .submenu a:hover{ color: var(--menu-light); }
 
     body.sidebar-collapsed .sidebar-link[data-tooltip]{ position:relative; }
@@ -180,30 +175,23 @@
         <nav class="flex-1 px-2 pb-4 text-sm font-medium">
             <ul class="space-y-1">
 
-                    {{-- DASHBOARD --}}
-                    <li>
-                        <a href="{{ route('home') }}"
-                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
-                            data-tooltip="Dashboard" target="_blank" rel="noopener noreferrer">
-                            {{-- ÍCONE DE TV (DASHBOARD) --}}
-                            <x-bi-house class="w-5 h-5" />
-                            <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/tv"
-                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
-                            data-tooltip="Modo Tv" target="_blank" rel="noopener noreferrer">
-                            {{-- ÍCONE DE TV (DASHBOARD) --}}
-                            <x-bi-tv class="w-5 h-5" />
-                            <span class="sidebar-label whitespace-nowrap font-semibold">Modo TV</span>
-                        </a>
-                    </li>
+                {{-- DASHBOARD --}}
+                <li>
+                    <a href="{{ route('home') }}"
+                       class="{{ $linkBase }}"
+                       data-tooltip="Dashboard"
+                       target="_blank" rel="noopener noreferrer">
+                        <x-bi-house class="w-5 h-5" />
+                        <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
+                    </a>
+                </li>
 
+                {{-- MODO TV (apenas 1x) --}}
                 <li>
                     <a href="/tv"
-                       class="{{ $linkBase }} text-slate-100 hover:bg-slate-800"
-                       data-tooltip="Modo Tv">
+                       class="{{ $linkBase }}"
+                       data-tooltip="Modo TV"
+                       target="_blank" rel="noopener noreferrer">
                         <x-bi-tv class="w-5 h-5" />
                         <span class="sidebar-label whitespace-nowrap font-semibold">Modo TV</span>
                     </a>
@@ -215,6 +203,7 @@
                         style="--menu-main: {{ $menu['hex_main'] }}; --menu-hover-bg: {{ $menu['hex_hover_bg'] }}; --menu-light: {{ $menu['hex_light'] }};">
                         <div class="menu-highlight -z-10"></div>
 
+                        {{-- botão (somente 1x) --}}
                         <button type="button"
                             class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
                             data-submenu-toggle="submenu-{{ $menu['id'] }}"
@@ -228,43 +217,19 @@
                             <x-bi-chevron-right class="chevron-icon w-3 h-3" />
                         </button>
 
-                            <button type="button"
-                                class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}"
-                                data-submenu-toggle="submenu-{{ $menu['id'] }}"
-                                data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right">
-                                <div class="flex items-center gap-3">
-                                    {{-- ÍCONE PRINCIPAL DINÂMICO --}}
-                                    <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
-
-                                    {{-- CORREÇÃO: Barra lateral colorida usando style inline --}}
-                                    <span class="inline-flex h-6 w-1 rounded-full"
-                                        style="background-color: {{ $menu['hex_main'] }}"></span>
-                                    <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
-                                </div>
-
-                                {{-- CHEVRON (SETA) - CORREÇÃO DE COR --}}
-                                <x-bi-chevron-right class="chevron-icon w-3 h-3"
-                                    style="color: {{ $menu['hex_light'] }}" />
-                            </button>
-
-                            <div id="submenu-{{ $menu['id'] }}"
-                                class="submenu mt-1 pl-9 pr-3 p-1 text-xs {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}">
-                                <div class="flex gap-3">
-                                    <span class="w-px bg-slate-700 ml-2"></span>
-                                    <div class="space-y-1">
-                                        @foreach ($menu['items'] as $item)
-                                            <a href="{{ route($item['route']) }}"
-                                                class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
-                                                {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
-                                                onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
-                                                onmouseout="this.style.color=''" target="_blank" rel="noopener noreferrer>
-                                                {{-- CORREÇÃO: Bolinha do submenu --}}
-                                                <span class="inline-flex h-4 w-1 rounded-full"
-                                                    style="background-color: {{ $menu['hex_main'] }}"></span>
-                                                <span>{{ $item['label'] }}</span>
-                                            </a>
-                                        @endforeach
-                                    </div>
+                        {{-- submenu (somente 1x) --}}
+                        <div id="submenu-{{ $menu['id'] }}" class="submenu mt-1 pl-9 pr-3 p-1 text-xs">
+                            <div class="flex gap-3">
+                                <span class="w-px bg-slate-300/80 dark:bg-slate-700 ml-2"></span>
+                                <div class="space-y-1">
+                                    @foreach ($menu['items'] as $item)
+                                        <a href="{{ route($item['route']) }}"
+                                           class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
+                                           target="_blank" rel="noopener noreferrer">
+                                            <span class="menu-bar inline-flex h-4 w-1 rounded-full"></span>
+                                            <span>{{ $item['label'] }}</span>
+                                        </a>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -292,10 +257,9 @@
                     @foreach ($menu['items'] as $item)
                         <li>
                             <a href="{{ route($item['route']) }}"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
-                                {{-- ÍCONE INTERNO DO POPOVER --}}
-                                <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0"
-                                    style="width: 1rem; height: 1rem;" />
+                               class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
+                               target="_blank" rel="noopener noreferrer">
+                                <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
                                 <span>{{ $item['label'] }}</span>
                             </a>
                         </li>
