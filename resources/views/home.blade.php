@@ -1,7 +1,9 @@
 <x-layouts.app :title="__('Painel do Prefeito')">
     <div class="w-full min-h-screen pt-4 px-8 sm:px-4 lg:pl-16 space-y-4">
         @php
-            // Lógica de dados mantida intacta
+            // ------------------------------------------------------
+            // Lógica de dados (Scores e Pesos)
+            // ------------------------------------------------------
             $setoresDados = [
                 'Finanças' => ['score' => 82],
                 'Obras'    => ['score' => 71],
@@ -26,17 +28,60 @@
             $pendenciasCriticas = 143;
             $nps = 48;
 
-            // Variáveis dos gráficos mantidas para evitar erros no JS existente
-            $chartIndice = ['x_label' => 'Mês', 'categories' => ['Jan','Fev'], 'series' => []]; 
-            $chartPendencias = ['categories' => [], 'series' => []];
-            $chartDemandas = ['categories' => [], 'series' => []];
-            $chartExecucao = ['categories' => [], 'series' => []];
-            $chartScoreSetor = ['categories' => [], 'series' => []];
+            // ------------------------------------------------------
+            // CORREÇÃO: Preenchimento dos Arrays para os Gráficos
+            // ------------------------------------------------------
+
+            // (A) Linha/Área: Evolução do Índice Geral
+            $chartIndice = [
+                'x_label' => 'Mês',
+                'categories' => ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+                'series' => [
+                    ['name' => 'Índice Geral (0-100)', 'data' => [63, 65, 66, 68, 70, 72, 74, 73, 75, 76, 77, $indiceGeral]],
+                ],
+            ];
+
+            // (B) Barras: Pendências por setor
+            // Nota: usamos array_keys($setoresDados) pois $setores não existe nesta branch
+            $chartPendencias = [
+                'categories' => array_keys($setoresDados),
+                'series' => [
+                    ['name' => 'Abertas',  'data' => [38, 52, 41, 29, 18, 33]],
+                    ['name' => 'Vencidas', 'data' => [12, 24, 15, 9, 6, 17]],
+                ],
+            ];
+
+            // (C) Pizza: Distribuição de Demandas
+            $chartDemandas = [
+                'x_label' => 'Setor',
+                'categories' => array_keys($setoresDados),
+                'series' => [
+                    ['name' => 'Solicitações', 'data' => [18, 22, 26, 12, 9, 13]],
+                ],
+            ];
+
+            // (D) Colunas: Execução por setor
+            $chartExecucao = [
+                'x_label' => 'Setor',
+                'categories' => array_keys($setoresDados),
+                'series' => [
+                    ['name' => 'Previsto (R$ mi)',  'data' => [12, 25, 18, 14, 9, 6]],
+                    ['name' => 'Realizado (R$ mi)', 'data' => [10, 16, 14, 12, 7, 4]],
+                ],
+            ];
+
+            // (E) Radial: Score por setor
+            $chartScoreSetor = [
+                'categories' => array_keys($setoresDados),
+                'series' => [
+                    ['name' => 'Score do Setor', 'data' => array_map(fn($s) => $s['score'], array_values($setoresDados))],
+                ],
+            ];
         @endphp
 
         {{-- 1) KPIs Macro (4 boxes no topo) --}}
         <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
-    
+            
             {{-- 1. Índice Geral de Gestão --}}
             <div class="md:col-span-1" id="wrapper-card-gestao">
                 <x-cards.box.mainbox id="gestao" :value="$indiceGeral" />
@@ -58,22 +103,18 @@
             </div>
 
         </div>
-        {{-- 2) KPIs por Setor (1 box por secretaria) --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-6 gap-2">
-            @foreach ($setores as $nome => $meta)
-                <div>
-                    <x-cards.box.box-01 :config="[
-                        'link' => $meta['link'],
-                        'prefix' => '',
-                        'suffix' => '/100',
-                        'label' => $nome,
-                        'value' => $meta['score'],
-                        'text' => $meta['hint']
-                    ]" />
-                </div>
-            @endforeach
+
+        {{-- 2) KPIs por Setor --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+            <x-cards.box.minibox id="Finanças" />
+            <x-cards.box.minibox id="Obras" />
+            <x-cards.box.minibox id="Saúde" />
+            <x-cards.box.minibox id="Educação" />
+            <x-cards.box.minibox id="Assist." />
+            <x-cards.box.minibox id="Ouvidoria" />
         </div>
-        {{-- 3) Gráficos gerais (painel central) --}}
+
+        {{-- 3) Gráficos gerais --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <x-cards.card id="central-indice" title="Evolução do Índice Geral" :chart="$chartIndice" chart-type="area" />
             <x-cards.card id="central-demandas" title="Distribuição de Demandas por Setor" :chart="$chartDemandas" chart-type="pie" />
