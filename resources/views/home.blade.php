@@ -6,16 +6,20 @@
             // ------------------------------------------------------
             $setoresDados = [
                 'Finanças' => ['score' => 82],
-                'Obras'    => ['score' => 71],
-                'Saúde'    => ['score' => 74],
+                'Obras' => ['score' => 71],
+                'Saúde' => ['score' => 74],
                 'Educação' => ['score' => 79],
-                'Assist.'  => ['score' => 77],
-                'Ouvidoria'=> ['score' => 69],
+                'Assist.' => ['score' => 77],
+                'Ouvidoria' => ['score' => 69],
             ];
 
             $pesos = [
-                'Finanças' => 0.25, 'Obras' => 0.20, 'Saúde' => 0.20,
-                'Educação' => 0.15, 'Assist.' => 0.10, 'Ouvidoria'=> 0.10,
+                'Finanças' => 0.25,
+                'Obras' => 0.2,
+                'Saúde' => 0.2,
+                'Educação' => 0.15,
+                'Assist.' => 0.1,
+                'Ouvidoria' => 0.1,
             ];
 
             $indiceGeral = 0;
@@ -28,9 +32,13 @@
             $pendenciasCriticas = 143;
             $nps = 48;
 
-            // ------------------------------------------------------
-            // CORREÇÃO: Preenchimento dos Arrays para os Gráficos
-            // ------------------------------------------------------
+            // Variáveis dos gráficos mantidas para evitar erros no JS existente
+            $chartIndice = ['x_label' => 'Mês', 'categories' => ['Jan', 'Fev'], 'series' => []];
+            $chartPendencias = ['categories' => [], 'series' => []];
+            $chartDemandas = ['categories' => [], 'series' => []];
+            $chartExecucao = ['categories' => [], 'series' => []];
+            $chartScoreSetor = ['categories' => [], 'series' => []];
+        @endphp
 
             // (A) Linha/Área: Evolução do Índice Geral
             $chartIndice = [
@@ -81,7 +89,7 @@
 
         {{-- 1) KPIs Macro (4 boxes no topo) --}}
         <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
-            
+
             {{-- 1. Índice Geral de Gestão --}}
             <div class="md:col-span-1" id="wrapper-card-gestao">
                 <x-cards.box.mainbox id="gestao" :value="$indiceGeral" />
@@ -117,9 +125,12 @@
         {{-- 3) Gráficos gerais --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <x-cards.card id="central-indice" title="Evolução do Índice Geral" :chart="$chartIndice" chart-type="area" />
-            <x-cards.card id="central-demandas" title="Distribuição de Demandas por Setor" :chart="$chartDemandas" chart-type="pie" />
-            <x-cards.card id="central-pendencias" title="Pendências por Setor (Abertas x Vencidas)" :chart="$chartPendencias" chart-type="bar" />
-            <x-cards.card id="central-execucao" title="Execução por Setor (Previsto x Realizado)" :chart="$chartExecucao" chart-type="column" />
+            <x-cards.card id="central-demandas" title="Distribuição de Demandas por Setor" :chart="$chartDemandas"
+                chart-type="pie" />
+            <x-cards.card id="central-pendencias" title="Pendências por Setor (Abertas x Vencidas)" :chart="$chartPendencias"
+                chart-type="bar" />
+            <x-cards.card id="central-execucao" title="Execução por Setor (Previsto x Realizado)" :chart="$chartExecucao"
+                chart-type="column" />
             <x-cards.card id="central-scores" title="Score por Setor (0-100)" :chart="$chartScoreSetor" chart-type="radial" />
         </div>
 
@@ -128,104 +139,99 @@
     @push('scripts')
         <script>
             document.addEventListener("DOMContentLoaded", () => {
-                if (!document.getElementById("relatorio-vendas")) return;
+                if (!document.getElementById("central-indice")) return;
 
                 const alerts = window.Alerts;
                 let controller = null;
 
-                function setLoading(id, on) {
+                const btnSelector = "[data-action='refresh-dashboard']";
+
+                const jobs = [
+                    { targetId: "central-indice",     link: "/api/graph/indice-geral", method: "POST", filtros: {} },
+                    { targetId: "central-demandas",   link: "/api/graph/demandas",     method: "POST", filtros: {} },
+                    { targetId: "central-pendencias", link: "/api/graph/pendencias",   method: "POST", filtros: {} },
+                    { targetId: "central-execucao",   link: "/api/graph/execucao",     method: "POST", filtros: {} },
+                    { targetId: "central-scores",     link: "/api/graph/scores",       method: "POST", filtros: {} },
+                ];
+
+                const setLoading = (id, on) => {
                     const el = document.getElementById(id);
                     if (!el) return;
                     el.classList.toggle("opacity-60", on);
                     el.classList.toggle("pointer-events-none", on);
-                }
+                };
 
-                function renderChart(id, chartData) {
+                const setBusy = (on) => {
+                    const btn = document.querySelector(btnSelector);
+                    btn?.toggleAttribute("disabled", on);
+                    btn?.setAttribute("aria-busy", on ? "true" : "false");
+                };
+
+                const renderChart = (id, chartData) => {
                     console.log("Render", id, chartData);
-                }
+                    // aqui você atualiza ApexCharts / DOM etc.
+                };
 
-                window.fetchData = async function() {
-                    const btn = document.querySelector("[data-action='refresh-dashboard']");
-                    btn?.toggleAttribute("disabled", true);
-                    btn?.setAttribute("aria-busy", "true");
+                const getTipotempo = () => localStorage.getItem("tipotempo") || "hoje";
 
-                    // se clicar várias vezes, cancela a anterior
+                async function fetchData() {
+                    // cancela a anterior
                     if (controller) controller.abort();
                     controller = new AbortController();
 
-                    const jobs = [{
-                            targetId: "relatorio-vendas",
-                            link: "/api/graph/semana",
-                            method: "POST",
-                            filtros: {
-                                range: "7d"
-                            }
-                        },
-                        {
-                            targetId: "relatorio-canais",
-                            link: "/api/graph/canais",
-                            method: "POST",
-                            filtros: {
-                                range: "7d"
-                            }
-                        },
-                        {
-                            targetId: "relatorio-dias",
-                            link: "/api/graph/areas",
-                            method: "POST",
-                            filtros: {
-                                range: "30d"
-                            }
-                        },
-                        {
-                            targetId: "relatorio-mes",
-                            link: "/api/graph/mes",
-                            method: "POST",
-                            filtros: {
-                                year: 2025
-                            }
-                        },
-                        {
-                            targetId: "progresso-time",
-                            link: "/api/graph/status",
-                            method: "POST",
-                            filtros: {}
-                        },
-                    ];
+                    const tipotempo = getTipotempo();
 
-                    const promises = jobs.map(async (job) => {
-                        setLoading(job.targetId, true);
-                        try {
-                            const data = await window.Api.getRelatoriosGraph(job, {
-                                signal: controller.signal
-                            });
-                            renderChart(job.targetId, data);
-                        } catch (err) {
-                            // não alerta se foi abort
-                            if (err?.name !== "AbortError") {
-                                alerts?.showError?.({
-                                    title: "Erro ao carregar",
-                                    msg: "Erro ao chamar os dados"
-                                });
+                    setBusy(true);
+                    jobs.forEach(j => setLoading(j.targetId, true));
+
+                    try {
+                        const results = await Promise.allSettled(
+                            jobs.map(j => window.Api.getRelatoriosGraph({
+                                    ...j,
+                                    filtros: {
+                                        ...j.filtros,
+                                        tipotempo
+                                    }
+                                }, // <<< injeta tipotempo em todas
+                                {
+                                    signal: controller.signal
+                                }
+                            ))
+                        );
+
+                        results.forEach((r, idx) => {
+                            const job = jobs[idx];
+                            if (r.status === "fulfilled") {
+                                renderChart(job.targetId, r.value);
+                            } else {
+                                const err = r.reason;
+                                if (err?.code !== "ERR_CANCELED" && err?.name !== "AbortError") {
+                                    alerts?.showError?.({
+                                        title: "Erro ao carregar",
+                                        msg: `Falha em ${job.targetId}`
+                                    });
+                                }
                             }
-                        } finally {
-                            setLoading(job.targetId, false);
-                            btn?.toggleAttribute("disabled", false);
-                            btn?.setAttribute("aria-busy", "false");
-                        }
-                    });
+                        });
+                    } finally {
+                        jobs.forEach(j => setLoading(j.targetId, false));
+                        setBusy(false);
+                    }
+                }
 
-                    await Promise.allSettled(promises);
-                };
-
-                // ✅ clique em qualquer lugar, pega o botão certo
+                // Clique no botão refresh
                 document.addEventListener("click", (e) => {
-                    const btn = e.target.closest("[data-action='refresh-dashboard']");
+                    const btn = e.target.closest(btnSelector);
                     if (!btn) return;
-                    window.fetchData();
+                    fetchData();
                 });
 
-                window.fetchData();
+                // ✅ Quando o tipotempo mudar, refaz tudo
+                window.addEventListener("tipotempo:change", () => fetchData());
+
+                // primeira carga
+                fetchData();
+
                 window.addEventListener("beforeunload", () => controller?.abort(), {
                     once: true
                 });

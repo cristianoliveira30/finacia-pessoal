@@ -1,33 +1,24 @@
-// resources/js/api/reports.js
-async function getRelatoriosGraph(data, { signal } = {}) {
-  const endpoint = data.link;
-  const method = (data.method || "POST").toUpperCase();
-  const filtros = data.filtros || {};
+// resources/js/api/useApi.js
+import axios from "axios";
 
-  const init = {
-    method,
-    headers: { "Content-Type": "application/json" },
-    signal,
-  };
+export const api = axios.create({
+  withCredentials: true,
+  headers: {
+    "X-Requested-With": "XMLHttpRequest",
+    Accept: "application/json",
+  },
+});
 
-  // Only send body when not GET/HEAD
-  if (method !== "GET" && method !== "HEAD") {
-    init.body = JSON.stringify(filtros);
+// Interceptor opcional pra normalizar erro
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    // abort/cancel
+    if (axios.isCancel?.(err) || err?.code === "ERR_CANCELED") {
+      return Promise.reject(err);
+    }
+
+    // você pode padronizar aqui (401/419 etc.)
+    return Promise.reject(err);
   }
-
-  const response = await fetch(endpoint, init);
-
-  if (!response.ok) {
-    const text = await response.text().catch(() => "");
-    throw new Error(`HTTP ${response.status}: ${text || response.statusText}`);
-  }
-
-  // in case 204
-  if (response.status === 204) return null;
-
-  return await response.json();
-}
-
-export {
-    getRelatoriosGraph
-}
+);

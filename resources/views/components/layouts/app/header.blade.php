@@ -8,10 +8,10 @@
            hover:bg-neutral-secondary-medium dark:focus:outline-2 dark:focus:outline-offset-2 dark:focus:ring-neutral-tertiary
            font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
                     <span class="sr-only">Alternar sidebar</span>
-                  <x-bi-justify-left class="w-6 h-6"/>
+                    <x-bi-justify-left class="w-6 h-6" />
                 </button>
 
-                <a href="{{ route('home')}}" class="flex ms-2 md:me-6 me-2">
+                <a href="{{ route('home') }}" class="flex ms-2 md:me-6 me-2">
                     <img src="{{ asset('assets/img/belem.png') }}" class="h-6 me-3" alt="pará Logo" />
                     <span
                         class="self-center text-lg font-semibold whitespace-nowrap text-white dark:text-white">Core</span>
@@ -25,7 +25,7 @@
                                focus:outline-none focus:ring-2 focus:ring-slate-300
                                dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600
                                dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40">
-                        <span class="whitespace-nowrap">Hoje</span>
+                        <span id="tipotempo-label" class="whitespace-nowrap">Hoje</span>
                         <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 1 4 4 4-4" />
@@ -36,13 +36,27 @@
                         class="z-20 hidden mt-2 bg-white divide-y divide-slate-100 rounded-lg shadow-lg w-44
                         border border-slate-100 dark:bg-slate-800 dark:divide-slate-700 dark:border-slate-700">
                         <ul class="py-2 text-sm text-slate-700 dark:text-slate-200" aria-labelledby="btn-tipotempo">
-                            <li><a href="#" data-tempo="hoje"  class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Hoje</a></li>
-                            <li><a href="#" data-tempo="ontem"  class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Ontem</a></li>
-                            <li><a href="#" data-tempo="semana-atual"  class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana Atual</a></li>
-                            <li><a href="#" data-tempo="semana-passada" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana Passada</a></li>
-                            <li><a href="#" data-tempo="mes-atual"  class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês Atual</a></li>
-                            <li><a href="#" data-tempo="mes-passado"  class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês Passado</a></li>
-                            <li><a href="#" data-tempo="periodo"  class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Período Personalizado</a></li>
+                            <li><a href="#" data-tempo="hoje"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Hoje</a>
+                            </li>
+                            <li><a href="#" data-tempo="ontem"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Ontem</a>
+                            </li>
+                            <li><a href="#" data-tempo="semana-atual"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana
+                                    Atual</a></li>
+                            <li><a href="#" data-tempo="semana-passada"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana
+                                    Passada</a></li>
+                            <li><a href="#" data-tempo="mes-atual"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês
+                                    Atual</a></li>
+                            <li><a href="#" data-tempo="mes-passado"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês
+                                    Passado</a></li>
+                            <li><a href="#" data-tempo="periodo"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Período
+                                    Personalizado</a></li>
                         </ul>
                     </div>
                 </div>
@@ -105,3 +119,59 @@
         </div>
     </div>
 </nav>
+@once
+    @push('scripts')
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const STORAGE_KEY = "tipotempo";
+                const DEFAULT = "hoje";
+
+                const btn = document.getElementById("btn-tipotempo");
+                const labelEl = document.getElementById("tipotempo-label"); // AGORA EXISTE
+                const dropdown = document.getElementById("dropdown-tipotempo");
+
+                if (!btn || !labelEl || !dropdown) return;
+
+                const items = Array.from(dropdown.querySelectorAll("a[data-tempo]"));
+
+                function closeDropdown() {
+                    dropdown.classList.add("hidden");
+                    btn.setAttribute("aria-expanded", "false");
+                }
+
+                function pushTempoToUrl(tempo) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("tempo", tempo);
+                    history.pushState({}, "", url);
+                }
+
+                function applyTempo(tempo, label) {
+                    localStorage.setItem(STORAGE_KEY, tempo);
+                    labelEl.textContent = label ?? tempo;
+                    pushTempoToUrl(tempo);
+
+                    // faz um disparo global
+                    window.dispatchEvent(new CustomEvent("tipotempo:change", {
+                        detail: { tempo, label }
+                    }));
+                }
+
+                // boot
+                const saved = localStorage.getItem(STORAGE_KEY) || DEFAULT;
+                const savedItem = items.find(a => a.dataset.tempo === saved);
+
+                if (savedItem) applyTempo(savedItem.dataset.tempo, savedItem.textContent.trim());
+                else applyTempo(DEFAULT, "Hoje");
+
+                // click
+                items.forEach((a) => {
+                    a.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        applyTempo(a.dataset.tempo, a.textContent.trim());
+                        closeDropdown();
+                    });
+                });
+            });
+        </script>
+    @endpush
+@endonce
