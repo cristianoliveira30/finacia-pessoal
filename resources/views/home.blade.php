@@ -1,5 +1,7 @@
 <x-layouts.app :title="__('Painel do Prefeito')">
-    <div class="w-full min-h-screen pt-4 px-8 sm:px-4 lg:pl-16 space-y-4">
+
+    <div class="w-full min-h-screen pt-2 px-4 sm:px-4 lg:pl-16 space-y-4" data-page-ai>
+
         @php
             // ------------------------------------------------------
             // Lógica de dados (Scores e Pesos)
@@ -43,9 +45,12 @@
             // (A) Linha/Área: Evolução do Índice Geral
             $chartIndice = [
                 'x_label' => 'Mês',
-                'categories' => ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+                'categories' => ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
                 'series' => [
-                    ['name' => 'Índice Geral (0-100)', 'data' => [63, 65, 66, 68, 70, 72, 74, 73, 75, 76, 77, $indiceGeral]],
+                    [
+                        'name' => 'Índice Geral (0-100)',
+                        'data' => [63, 65, 66, 68, 70, 72, 74, 73, 75, 76, 77, $indiceGeral],
+                    ],
                 ],
             ];
 
@@ -54,7 +59,7 @@
             $chartPendencias = [
                 'categories' => array_keys($setoresDados),
                 'series' => [
-                    ['name' => 'Abertas',  'data' => [38, 52, 41, 29, 18, 33]],
+                    ['name' => 'Abertas', 'data' => [38, 52, 41, 29, 18, 33]],
                     ['name' => 'Vencidas', 'data' => [12, 24, 15, 9, 6, 17]],
                 ],
             ];
@@ -63,9 +68,7 @@
             $chartDemandas = [
                 'x_label' => 'Setor',
                 'categories' => array_keys($setoresDados),
-                'series' => [
-                    ['name' => 'Solicitações', 'data' => [18, 22, 26, 12, 9, 13]],
-                ],
+                'series' => [['name' => 'Solicitações', 'data' => [18, 22, 26, 12, 9, 13]]],
             ];
 
             // (D) Colunas: Execução por setor
@@ -73,7 +76,7 @@
                 'x_label' => 'Setor',
                 'categories' => array_keys($setoresDados),
                 'series' => [
-                    ['name' => 'Previsto (R$ mi)',  'data' => [12, 25, 18, 14, 9, 6]],
+                    ['name' => 'Previsto (R$ mi)', 'data' => [12, 25, 18, 14, 9, 6]],
                     ['name' => 'Realizado (R$ mi)', 'data' => [10, 16, 14, 12, 7, 4]],
                 ],
             ];
@@ -82,7 +85,10 @@
             $chartScoreSetor = [
                 'categories' => array_keys($setoresDados),
                 'series' => [
-                    ['name' => 'Score do Setor', 'data' => array_map(fn($s) => $s['score'], array_values($setoresDados))],
+                    [
+                        'name' => 'Score do Setor',
+                        'data' => array_map(fn($s) => $s['score'], array_values($setoresDados)),
+                    ],
                 ],
             ];
         @endphp
@@ -146,12 +152,36 @@
 
                 const btnSelector = "[data-action='refresh-dashboard']";
 
-                const jobs = [
-                    { targetId: "central-indice",     link: "/api/graph/indice-geral", method: "POST", filtros: {} },
-                    { targetId: "central-demandas",   link: "/api/graph/demandas",     method: "POST", filtros: {} },
-                    { targetId: "central-pendencias", link: "/api/graph/pendencias",   method: "POST", filtros: {} },
-                    { targetId: "central-execucao",   link: "/api/graph/execucao",     method: "POST", filtros: {} },
-                    { targetId: "central-scores",     link: "/api/graph/scores",       method: "POST", filtros: {} },
+                const jobs = [{
+                        targetId: "central-indice",
+                        link: "/api/graph/indice-geral",
+                        method: "POST",
+                        filtros: {}
+                    },
+                    {
+                        targetId: "central-demandas",
+                        link: "/api/graph/demandas",
+                        method: "POST",
+                        filtros: {}
+                    },
+                    {
+                        targetId: "central-pendencias",
+                        link: "/api/graph/pendencias",
+                        method: "POST",
+                        filtros: {}
+                    },
+                    {
+                        targetId: "central-execucao",
+                        link: "/api/graph/execucao",
+                        method: "POST",
+                        filtros: {}
+                    },
+                    {
+                        targetId: "central-scores",
+                        link: "/api/graph/scores",
+                        method: "POST",
+                        filtros: {}
+                    },
                 ];
 
                 const setLoading = (id, on) => {
@@ -235,6 +265,15 @@
                 window.addEventListener("beforeunload", () => controller?.abort(), {
                     once: true
                 });
+            });
+        </script>
+    @endpush
+
+    {{-- script para a ia nos cards --}}
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                window.CardAI?.init?.();
             });
         </script>
     @endpush

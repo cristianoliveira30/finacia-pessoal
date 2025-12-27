@@ -9,16 +9,16 @@ export const api = axios.create({
   },
 });
 
-// Interceptor opcional pra normalizar erro
+// CSRF (Laravel)
+const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
+if (token) {
+  api.defaults.headers.common["X-CSRF-TOKEN"] = token;
+}
+
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    // abort/cancel
-    if (axios.isCancel?.(err) || err?.code === "ERR_CANCELED") {
-      return Promise.reject(err);
-    }
-
-    // você pode padronizar aqui (401/419 etc.)
+    if (axios.isCancel?.(err) || err?.code === "ERR_CANCELED") return Promise.reject(err);
     return Promise.reject(err);
   }
 );

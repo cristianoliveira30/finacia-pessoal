@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalisesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -286,6 +287,8 @@ Route::prefix('saude')->name('saude.')->group(function () {
     Route::view('/exportacoes', 'saude.placeholder')->name('exportacoes.index');
     Route::view('/auditoria/logs', 'saude.placeholder')->name('auditoria.logs');
 });
+
+Route::post('/ai/analise', [AnalisesController::class, 'analise'])->name('ai.analise');
 
 // rota modo TV
 Route::prefix('tv')->name('tv')->group(function () {
