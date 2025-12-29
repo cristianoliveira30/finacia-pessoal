@@ -168,12 +168,10 @@
 </style>
 
 <aside id="top-bar-sidebar"
-    class="absolute inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 border-e transition-transform duration-300 bg-gray-100"
+    class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 border-e transition-transform duration-300 bg-white dark:bg-gray-800"
     aria-label="Sidebar">
-
-    <div class="h-full flex flex-col">
+    <div class="h-full flex flex-col pt-20 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
         <nav class="flex-1 px-2 pb-4 text-sm font-medium">
-            <ul class="space-y-1">
 
                 {{-- DASHBOARD --}}
                 <li>
@@ -270,6 +268,7 @@
         </div>
     @endforeach
 </aside>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
