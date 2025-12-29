@@ -83,7 +83,7 @@
 @endphp
 
 <nav id="app-header"
-     class="fixed top-0 inset-x-0 z-50 h-16 w-full bg-neutral-900 dark:bg-neutral-900 border-b border-default">
+    class="fixed top-0 inset-x-0 z-50 h-16 w-full bg-neutral-900 dark:bg-neutral-900 border-b border-default">
     <div class="h-full px-3 lg:px-5 lg:pl-3">
         <div class="h-full flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -98,7 +98,8 @@
 
                 <a href="{{ route('home') }}" class="flex ms-2 md:me-6 me-2 items-center">
                     <img src="{{ asset('assets/img/belem.png') }}" class="h-6 me-3" alt="pará Logo" />
-                    <span class="self-center text-lg font-semibold whitespace-nowrap text-white dark:text-white">Core</span>
+                    <span
+                        class="self-center text-lg font-semibold whitespace-nowrap text-white dark:text-white">Core</span>
                 </a>
 
                 <div class="relative">
@@ -112,7 +113,7 @@
                         <span id="tipotempo-label" class="whitespace-nowrap">Hoje</span>
                         <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="m1 1 4 4 4-4" />
+                                d="m1 1 4 4 4-4" />
                         </svg>
                     </button>
 
@@ -120,13 +121,27 @@
                         class="z-20 hidden mt-2 bg-neutral-50 hover:bg-slate-100 divide-y divide-slate-100 rounded-lg shadow-lg w-44
                         border border-slate-100 dark:bg-slate-800 dark:divide-slate-700 dark:border-slate-700">
                         <ul class="py-2 text-sm text-slate-700 dark:text-slate-200" aria-labelledby="btn-tipotempo">
-                            <li><a href="#" data-tempo="hoje" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Hoje</a></li>
-                            <li><a href="#" data-tempo="ontem" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Ontem</a></li>
-                            <li><a href="#" data-tempo="semana-atual" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana Atual</a></li>
-                            <li><a href="#" data-tempo="semana-passada" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana Passada</a></li>
-                            <li><a href="#" data-tempo="mes-atual" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês Atual</a></li>
-                            <li><a href="#" data-tempo="mes-passado" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês Passado</a></li>
-                            <li><a href="#" data-tempo="periodo" class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Período Personalizado</a></li>
+                            <li><a href="#" data-tempo="hoje"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Hoje</a>
+                            </li>
+                            <li><a href="#" data-tempo="ontem"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Ontem</a>
+                            </li>
+                            <li><a href="#" data-tempo="semana-atual"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana
+                                    Atual</a></li>
+                            <li><a href="#" data-tempo="semana-passada"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Semana
+                                    Passada</a></li>
+                            <li><a href="#" data-tempo="mes-atual"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês
+                                    Atual</a></li>
+                            <li><a href="#" data-tempo="mes-passado"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês
+                                    Passado</a></li>
+                            <li><a href="#" data-tempo="periodo"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Período
+                                    Personalizado</a></li>
                         </ul>
                     </div>
                 </div>
@@ -141,9 +156,9 @@
 
                         <span class="relative inline-block leading-none">
                             <img class="w-8 h-8 rounded-full object-cover block"
-                                 src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
                             <span id="notif-avatar-badge"
-                                  class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-600 text-white text-[11px] flex items-center justify-center ring-2 ring-gray-800 dark:ring-gray-800">
+                                class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-600 text-white text-[11px] flex items-center justify-center ring-2 ring-gray-800 dark:ring-gray-800">
                             </span>
                         </span>
                     </button>
@@ -157,7 +172,8 @@
                         </div>
                         <ul class="p-2 text-sm text-body font-medium" role="none">
                             <li>
-                                <div class="flex items-center px-4 py-2 hover:bg-neutral-tertiary-medium rounded cursor-pointer">
+                                <div
+                                    class="flex items-center px-4 py-2 hover:bg-neutral-tertiary-medium rounded cursor-pointer">
                                     <label class="ui-switch mr-3">
                                         <input type="checkbox" class="theme-toggle-input">
                                         <div class="slider">
@@ -172,24 +188,25 @@
                                 <button type="button"
                                     class="inline-flex items-center w-full p-2 rounded hover:bg-neutral-tertiary-medium hover:text-heading"
                                     data-modal-target="notifications-modal" data-modal-toggle="notifications-modal"
-                                    aria-controls="notifications-modal" aria-haspopup="dialog" aria-label="Notificações">
+                                    aria-controls="notifications-modal" aria-haspopup="dialog"
+                                    aria-label="Notificações">
                                     <x-bi-bell class="w-5 h-5" />
                                     <span class="ml-2">Notificações</span>
                                     <span id="notif-menu-badge"
-                                          class="hidden ml-auto text-xs font-semibold h-5 min-w-[1.25rem] px-1.5 rounded-full bg-rose-600 text-white inline-flex items-center justify-center"></span>
+                                        class="hidden ml-auto text-xs font-semibold h-5 min-w-[1.25rem] px-1.5 rounded-full bg-rose-600 text-white inline-flex items-center justify-center"></span>
                                 </button>
                             </li>
 
                             <li>
                                 <a href="#"
-                                   class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                                   role="menuitem">Configurações</a>
+                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                                    role="menuitem">Configurações</a>
                             </li>
 
                             <li>
                                 <a href="#"
-                                   class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                                   role="menuitem">Log out</a>
+                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                                    role="menuitem">Log out</a>
                             </li>
                         </ul>
                     </div>
@@ -201,37 +218,20 @@
     </div>
 </nav>
 
+{{-- Modal (Flowbite) --}}
+<div id="notifications-modal" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50
+           justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
 
-{{-- 
-    ========================================================================
-    MODAL DE CONFIGURAÇÕES (REESTRUTURADA COM SIDEBAR)
-    ========================================================================
---}}
-<div id="profileModal" class="fixed inset-0 z-[60] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    
-    {{-- Backdrop (Mantido) --}}
-    <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" onclick="closeModal('profileModal')"></div>
+    <div class="relative p-4 w-full max-w-3xl max-h-full">
+        <div
+            class="relative bg-white dark:bg-slate-900 rounded-lg shadow border border-slate-200 dark:border-slate-700 overflow-hidden">
 
-    {{-- Panel (Aumentado para max-w-5xl para acomodar a sidebar) --}}
-    <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-neutral-900 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-5xl border border-slate-200 dark:border-neutral-700 h-[650px] flex flex-col md:flex-row">
-            
-            {{-- Botão Fechar (X) Absoluto no topo direito --}}
-            <button type="button" onclick="closeModal('profileModal')" class="absolute top-4 right-4 z-20 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none">
-                <span class="sr-only">Fechar</span>
-                <x-bi-x-lg class="w-5 h-5" />
-            </button>
-
-            {{-- 
-               COLUNA 1: SIDEBAR (NAVEGAÇÃO) 
-               Estilo baseado na referência image_94ccdd.png e image_94ccb8.jpg
-            --}}
-            <aside class="w-full md:w-64 bg-gray-50 dark:bg-[#0f1115] border-r border-gray-200 dark:border-neutral-700 flex-shrink-0 flex flex-col">
-                <div class="p-6 border-b border-gray-200 dark:border-neutral-700">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <x-bi-sliders class="w-5 h-5 text-indigo-500"/>
-                        Configurações
-                    </h2>
+            {{-- HEADER --}}
+            <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-2">
+                    <x-bi-bell class="w-5 h-5 text-slate-700 dark:text-slate-200" />
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Central de Notificações</h3>
                 </div>
                 
                 <nav class="flex-1 overflow-y-auto p-4 space-y-1">
@@ -242,152 +242,169 @@
                         <span class="text-gray-700 dark:text-gray-300 group-[.active]:text-indigo-600 dark:group-[.active]:text-white">Geral</span>
                     </button>
 
-                    <button onclick="switchTab('security')" id="nav-security" class="sidebar-tab-btn flex items-center w-full px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors group">
-                        <x-bi-shield-lock class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
-                        Segurança
+                <div class="flex items-center gap-2">
+                    {{-- Tabs --}}
+                    <div class="inline-flex rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <button type="button" data-notif-tab="inbox"
+                            class="px-3 py-1.5 text-xs md:text-sm font-semibold
+                                   bg-slate-100 text-slate-900
+                                   dark:bg-slate-800 dark:text-slate-100">
+                            Recebidas
+                        </button>
+                        <button type="button" data-notif-tab="send"
+                            class="px-3 py-1.5 text-xs md:text-sm font-semibold
+                                   bg-white text-slate-600 hover:bg-slate-50
+                                   dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800">
+                            Enviar
+                        </button>
+                    </div>
+
+                    <button type="button"
+                        class="text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg text-sm w-9 h-9 inline-flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
+                        data-modal-hide="notifications-modal" aria-label="Fechar">
+                        <x-bi-x-lg class="w-4 h-4" />
                     </button>
-
-                    <button onclick="switchTab('notifications')" id="nav-notifications" class="sidebar-tab-btn flex items-center w-full px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors group">
-                        <x-bi-bell class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
-                        Notificações
-                    </button>
-
-                    {{-- <button onclick="switchTab('plan')" id="nav-plan" class="sidebar-tab-btn flex items-center w-full px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors group">
-                        <x-bi-box class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
-                        Planos
-                    </button>
-
-                    <button onclick="switchTab('billing')" id="nav-billing" class="sidebar-tab-btn flex items-center w-full px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors group">
-                        <x-bi-credit-card class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
-                        Cobrança
-                    </button>
-
-                    <button onclick="switchTab('team')" id="nav-team" class="sidebar-tab-btn flex items-center w-full px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-neutral-800 transition-colors group">
-                        <x-bi-people class="w-5 h-5 mr-3 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" />
-                        Membros
-                    </button> --}}
-                </nav>
-
-                {{-- Footer da Sidebar (Opcional) --}}
-                <div class="p-4 border-t border-gray-200 dark:border-neutral-700">
-                   <div class="text-xs text-gray-400">v1.0.2 - Core System</div>
                 </div>
-            </aside>
+            </div>
 
-            {{-- 
-               COLUNA 2: ÁREA DE CONTEÚDO (FORMULÁRIOS)
-               O conteúdo muda baseado na seleção da sidebar
-            --}}
-            <main class="flex-1 flex flex-col h-full bg-white dark:bg-neutral-800 overflow-hidden">
-                <form action="#" method="POST" class="flex flex-col h-full">
-                    
-                    {{-- Scroll Area --}}
-                    <div class="flex-1 overflow-y-auto p-6 md:p-10 space-y-6">
+            {{-- BODY --}}
+            <div class="p-4">
+                {{-- ABA: RECEBIDAS --}}
+                <section data-notif-panel="inbox">
+                    <div class="max-h-[60vh] overflow-y-auto scrollbar-hide">
+                        <ul class="space-y-2" id="notifications-list">
+                            @foreach ($notificacoesFake as $n)
+                                <li class="notif-item p-3 rounded-lg border border-slate-200 dark:border-slate-700
+                                           hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer"
+                                    data-notif-id="{{ $n['id'] }}"
+                                    data-unread-default="{{ $n['unread'] ? '1' : '0' }}">
+                                    <div class="flex items-start gap-3">
+                                        <x-dynamic-component :component="'bi-' . $n['icon']" class="w-4 h-4 mt-0.5 shrink-0" />
 
-                        {{-- ================= TAB: GERAL ================= --}}
-                        <div id="tab-general" class="tab-content block animate-fade-in">
-                            <div class="mb-6 border-b border-gray-200 dark:border-neutral-700 pb-4">
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Informações Gerais</h3>
-                                <p class="text-sm text-gray-500 mt-1">Atualize sua foto e detalhes pessoais.</p>
-                            </div>
+                                        <div class="min-w-0 flex-1">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                                                    {{ $n['title'] }}
+                                                </span>
 
-                            {{-- Foto de Perfil (Layout Horizontal) --}}
-                            <div class="flex items-center gap-6 mb-8">
-                                <div class="relative group shrink-0">
-                                    <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-50 dark:border-neutral-700 shadow-sm">
-                                        <img src="https://ui-avatars.com/api/?name=Usuario+Exemplo&background=4F46E5&color=fff" alt="Foto" class="w-full h-full object-cover">
-                                    </div>
-                                    <label for="profile_photo" class="absolute bottom-0 right-0 bg-indigo-600 text-white p-1.5 rounded-full cursor-pointer hover:bg-indigo-700 shadow-sm transition-all transform hover:scale-110">
-                                        <x-bi-camera class="w-3.5 h-3.5" />
-                                    </label>
-                                    <input type="file" id="profile_photo" name="profile_photo" class="hidden">
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900 dark:text-white">Sua Foto</h4>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-2">Isso será exibido no seu perfil.</p>
-                                    <button type="button" class="text-xs font-medium text-red-500 hover:text-red-700">Remover foto</button>
-                                </div>
-                            </div>
+                                                <span
+                                                    class="text-[11px] px-2 py-0.5 rounded-full {{ $tagClass($n['area']) }}">
+                                                    {{ $n['area'] }}
+                                                </span>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Primeiro Nome</label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <x-bi-person class="text-gray-400" />
-                                        </div>
-                                        <input type="text" name="nome" value="João" class="pl-10 block w-full rounded-lg border-gray-300 dark:border-neutral-600 bg-gray-50 dark:bg-neutral-900 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2.5">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Sobrenome</label>
-                                    <input type="text" name="sobrenome" value="da Silva" class="block w-full rounded-lg border-gray-300 dark:border-neutral-600 bg-gray-50 dark:bg-neutral-900 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2.5">
-                                </div>
-                            </div>
+                                                <span data-notif-dot class="ml-auto h-2 w-2 rounded-full bg-sky-500"
+                                                    title="Não lida"></span>
+                                            </div>
 
-                            {{-- SEÇÃO DE TEMA (SOLICITADA) --}}
-                            <div class="mt-8 pt-6 border-t border-gray-200 dark:border-neutral-700">
-                                <h4 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Aparência</h4>
-                                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-neutral-900 rounded-lg border border-gray-200 dark:border-neutral-700">
-                                    <div class="flex items-center gap-3">
-                                        <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
-                                            <x-bi-moon class="w-5 h-5" />
-                                        </div>
-                                        <div>
-                                            <p class="font-medium text-gray-900 dark:text-white text-sm">Modo Escuro</p>
-                                            <p class="text-xs text-gray-500">Alternar entre tema claro e escuro</p>
+                                            <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+                                                {{ $n['msg'] }}</p>
+                                            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                                                {{ $n['time'] }}
+                                            </div>
                                         </div>
                                     </div>
-                                    {{-- Toggle Switch --}}
-                                    <label class="ui-switch relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" class="theme-toggle-input sr-only peer">
-                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
-                                    </label>
-                                </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </section>
+                <section data-notif-panel="send" class="hidden">
+                    <form id="send-notification-form" method="POST" action="#">
+                        @csrf
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+                            {{-- Destino --}}
+                            <div>
+                                <label
+                                    class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">Enviar
+                                    para</label>
+                                <select id="notif-destino" name="destino"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
+                 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100">
+                                    <option value="todos">Todos</option>
+                                    <option value="setor">Por setor</option>
+                                    <option value="usuario">Usuário específico</option>
+                                </select>
                             </div>
+
+                            {{-- Setor (tag e/ou destino) --}}
+                            <div id="notif-box-setor" class="md:col-span-1">
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                                    Setor <span id="notif-setor-hint"
+                                        class="text-[11px] font-normal text-slate-500 dark:text-slate-400">(tag
+                                        opcional)</span>
+                                </label>
+
+                                <select id="notif-setor" name="setor"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
+                 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100">
+                                    <option value="">Sem setor</option>
+                                    <option value="Finanças">Finanças</option>
+                                    <option value="Educação">Educação</option>
+                                    <option value="Saúde">Saúde</option>
+                                    <option value="Obras">Obras</option>
+                                    <option value="Ouvidoria">Ouvidoria</option>
+                                    <option value="Assistência">Assistência</option>
+                                </select>
+                            </div>
+
+                            {{-- Usuário (só quando destino = usuario) --}}
+                            <div id="notif-por-usuario" class="hidden md:col-span-2">
+                                <label
+                                    class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">Usuário</label>
+                                <input name="usuario" type="text" placeholder="ID, nome ou e-mail…"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
+                 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                            </div>
+
+                            {{-- Título --}}
+                            <div class="md:col-span-2">
+                                <label
+                                    class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">Título</label>
+                                <input name="title" type="text" maxlength="80"
+                                    placeholder="Ex: Relatório publicado"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
+                 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                            </div>
+
+                            {{-- Mensagem --}}
+                            <div class="md:col-span-2">
+                                <label
+                                    class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">Mensagem</label>
+                                <textarea name="message" rows="4" maxlength="300" placeholder="Escreva a notificação…"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
+                 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100"></textarea>
+                            </div>
+
+                            {{-- Link (opcional) --}}
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">Link
+                                    (opcional)</label>
+                                <input name="url" type="text" placeholder="/financeiro/relatorios"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
+                 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                            </div>
+
                         </div>
 
-                        {{-- ================= TAB: SEGURANÇA ================= --}}
-                        <div id="tab-security" class="tab-content hidden animate-fade-in">
-                            <div class="mb-6 border-b border-gray-200 dark:border-neutral-700 pb-4">
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Login e Segurança</h3>
-                                <p class="text-sm text-gray-500 mt-1">Gerencie sua senha e acesso à conta.</p>
-                            </div>
+                        <div class="mt-4 flex items-center justify-end gap-2">
+                            <button type="button" data-notif-tab="inbox"
+                                class="px-3 py-2 rounded-lg text-sm font-semibold
+               border border-slate-200 text-slate-700 hover:bg-slate-50
+               dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                                Voltar
+                            </button>
 
-                            <div class="space-y-5">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email de Acesso</label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <x-bi-envelope class="text-gray-400" />
-                                        </div>
-                                        <input type="email" name="email" class="pl-10 block w-full rounded-lg border-gray-300 dark:border-neutral-600 bg-gray-50 dark:bg-neutral-900 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2.5" placeholder="seu@email.com">
-                                    </div>
-                                </div>
-
-                                <div class="border-t border-gray-100 dark:border-neutral-700 my-4"></div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nova Senha</label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <x-bi-lock class="text-gray-400" />
-                                        </div>
-                                        <input type="password" name="password" class="pl-10 block w-full rounded-lg border-gray-300 dark:border-neutral-600 bg-gray-50 dark:bg-neutral-900 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2.5" placeholder="••••••••">
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirmar Senha</label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <x-bi-lock-fill class="text-gray-400" />
-                                        </div>
-                                        <input type="password" name="password_confirmation" class="pl-10 block w-full rounded-lg border-gray-300 dark:border-neutral-600 bg-gray-50 dark:bg-neutral-900 text-gray-900 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2.5" placeholder="••••••••">
-                                    </div>
-                                </div>
-                            </div>
+                            <button type="submit"
+                                class="px-4 py-2 rounded-lg text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700">
+                                Enviar
+                            </button>
                         </div>
+                    </form>
+                </section>
+
+            </div>
 
                         {{-- ================= TABS PLACEHOLDER (OUTROS) ================= --}}
                         <div id="tab-notifications" class="tab-content hidden animate-fade-in">
@@ -435,70 +452,148 @@
         </div>
     </div>
 </div>
+@once
+  @push('scripts')
+    <script>
+      (() => {
+        const qs  = (s, r = document) => r.querySelector(s);
+        const qsa = (s, r = document) => Array.from(r.querySelectorAll(s));
+        const setHidden = (el, hide) => el && el.classList.toggle('hidden', !!hide);
 
-<style>
-    /* Estilos auxiliares para a sidebar ativa */
-    .sidebar-tab-btn.active {
-        background-color: #F3F4F6; /* gray-100 */
-    }
-    .dark .sidebar-tab-btn.active {
-        background-color: #262626; /* neutral-800 */
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(5px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-        animation: fadeIn 0.3s ease-out forwards;
-    }
-</style>
+        document.addEventListener('DOMContentLoaded', () => {
+          const modal = qs('#notifications-modal');
+          if (!modal) return;
 
-{{-- SCRIPT PARA CONTROLE DA MODAL E TABS --}}
-<script>
-    function openModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-    }
+          /* =========================
+           * 1) ABAS (Recebidas / Enviar)
+           * ========================= */
+          const tabBtns = qsa('[data-notif-tab]', modal);
+          const panels  = qsa('[data-notif-panel]', modal);
 
-    function closeModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-    }
+          const activateTab = (tab) => {
+            panels.forEach(p => setHidden(p, p.dataset.notifPanel !== tab));
 
-    // Função para alternar abas da sidebar
-    function switchTab(tabName) {
-        // 1. Esconde todos os conteúdos
-        const contents = document.querySelectorAll('.tab-content');
-        contents.forEach(content => content.classList.add('hidden'));
+            tabBtns.forEach(btn => {
+              const active = btn.dataset.notifTab === tab;
 
-        // 2. Mostra o conteúdo selecionado
-        const selectedContent = document.getElementById('tab-' + tabName);
-        if (selectedContent) {
-            selectedContent.classList.remove('hidden');
-        }
+              btn.classList.toggle('bg-slate-100', active);
+              btn.classList.toggle('text-slate-900', active);
+              btn.classList.toggle('dark:bg-slate-800', active);
+              btn.classList.toggle('dark:text-slate-100', active);
 
-        // 3. Atualiza estilos dos botões da sidebar
-        const buttons = document.querySelectorAll('.sidebar-tab-btn');
-        buttons.forEach(btn => {
-            btn.classList.remove('active');
-            // Remove cores ativas de texto/ícone (reset para padrão)
-            const icon = btn.querySelector('svg');
-            const text = btn.querySelector('span'); // span pode não existir em todos se mudar layout, mas aqui existe
-            
-            // O CSS .group-[.active] cuida da maior parte, mas removemos a classe 'active'
+              btn.classList.toggle('bg-white', !active);
+              btn.classList.toggle('text-slate-600', !active);
+              btn.classList.toggle('dark:bg-slate-900', !active);
+              btn.classList.toggle('dark:text-slate-300', !active);
+            });
+          };
+
+          tabBtns.forEach(btn => btn.addEventListener('click', () => activateTab(btn.dataset.notifTab)));
+          activateTab('inbox');
+
+          /* =========================
+           * 2) NOTIFICAÇÕES (badge + lidas na sessão)
+           * ========================= */
+          const avatarBadge = qs('#notif-avatar-badge');
+          const menuBadge   = qs('#notif-menu-badge');
+          const list        = qs('#notifications-list', modal);
+          const read        = new Set();
+
+          const setBadge = (el, n) => {
+            if (!el) return;
+            el.textContent = n ? String(n) : '';
+            el.classList.toggle('hidden', !n);
+          };
+
+          const renderNotifs = () => {
+            if (!list) return;
+
+            const items = qsa('.notif-item', list);
+            let unreadCount = 0;
+
+            items.forEach((el) => {
+              const id = el.dataset.notifId;
+              const unread = el.dataset.unreadDefault === '1' && id && !read.has(id);
+
+              unreadCount += unread ? 1 : 0;
+              el.classList.toggle('opacity-60', !unread);
+              qs('[data-notif-dot]', el)?.classList.toggle('hidden', !unread);
+            });
+
+            setBadge(avatarBadge, unreadCount);
+            setBadge(menuBadge, unreadCount);
+          };
+
+          list?.addEventListener('click', (e) => {
+            const item = e.target.closest('.notif-item');
+            if (!item || item.dataset.unreadDefault !== '1') return;
+
+            const id = item.dataset.notifId;
+            if (!id) return;
+
+            read.add(id);
+            renderNotifs();
+          });
+
+          renderNotifs();
+
+          /* =========================
+           * 3) ENVIAR (modelo 1 campo Setor)
+           * - Setor é tag opcional quando destino != setor
+           * - Quando destino = setor, setor vira obrigatório (destino)
+           * ========================= */
+          const destino    = qs('#notif-destino', modal);
+          const boxUser    = qs('#notif-por-usuario', modal);
+
+          const setorBox   = qs('#notif-box-setor', modal);     // opcional (se você quiser esconder)
+          const setorSel   = qs('#notif-setor', modal);
+          const setorHint  = qs('#notif-setor-hint', modal);
+
+          const syncDestino = () => {
+            const v = destino?.value;
+
+            // usuário
+            setHidden(boxUser, v !== 'usuario');
+
+            // hint do setor (tag vs destino)
+            if (setorHint) {
+              setorHint.textContent = (v === 'setor')
+                ? '(destino obrigatório)'
+                : '(tag opcional)';
+            }
+
+            // Se você quiser esconder "Setor" quando for usuário, descomenta:
+            // setHidden(setorBox, v === 'usuario');
+          };
+
+          destino?.addEventListener('change', syncDestino);
+          syncDestino();
+
+          /* =========================
+           * 4) SUBMIT (por enquanto só feedback)
+           * ========================= */
+          const form = qs('#send-notification-form', modal);
+          form?.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // validação leve só pra UX (controller faz a real depois)
+            const v = destino?.value;
+            if (v === 'setor' && setorSel && !setorSel.value) {
+              if (window.Alerts?.error) window.Alerts.error('Atenção', 'Selecione um setor.');
+              else alert('Selecione um setor.');
+              return;
+            }
+
+            if (window.Alerts?.success) {
+              window.Alerts.success('OK', 'Layout pronto. Agora é só ligar no controller.');
+            } else {
+              alert('Layout pronto. Agora é só ligar no controller.');
+            }
+
+            activateTab('inbox');
+          });
         });
-
-        // Adiciona active ao botão clicado
-        const activeBtn = document.getElementById('nav-' + tabName);
-        if (activeBtn) {
-            activeBtn.classList.add('active');
-        }
-    }
-</script>
+      })();
+    </script>
+  @endpush
+@endonce
