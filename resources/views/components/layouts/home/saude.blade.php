@@ -361,9 +361,9 @@
 </style>
 
 <aside id="top-bar-sidebar"
-    class="absolute inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 border-e transition-transform duration-300"
+    class="fixed top-16 bottom-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0
+         border-e transition-transform duration-300 bg-white dark:bg-gray-800"
     aria-label="Sidebar">
-
     <div class="h-full flex flex-col">
         <div class="h-full flex flex-col">
             <nav class="flex-1 px-2 pb-4 text-sm font-medium scrollbar-hide">
@@ -398,7 +398,8 @@
                             <button type="button"
                                 class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}"
                                 data-submenu-toggle="submenu-{{ $menu['id'] }}"
-                                data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right">
+                                data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right-start"
+                                data-popover-offset="8">
                                 <div class="flex items-center gap-3">
                                     {{-- ÍCONE PRINCIPAL DINÂMICO --}}
                                     <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
@@ -429,10 +430,12 @@
                                                 class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
                                                 {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
                                                 onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
-                                                onmouseout="this.style.color=''" target="_blank" rel="noopener noreferrer>
+                                                onmouseout="this.style.color=''" target="_blank"
+                                                rel="noopener noreferrer">
                                                 {{-- CORREÇÃO: Bolinha do submenu --}}
-                                                <span class="inline-flex h-4 w-1 rounded-full"
-                                                    style="background-color: {{ $menu['hex_main'] }}"></span>
+                                                <span class="inline-flex
+                                                h-4 w-1 rounded-full"
+                                                style="background-color: {{ $menu['hex_main'] }}"></span>
                                                 <span>{{ $item['label'] }}</span>
                                             </a>
                                         @endforeach
@@ -463,10 +466,13 @@
                     @foreach ($menu['items'] as $item)
                         <li>
                             <a href="{{ route($item['route']) }}"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors" target="_blank" rel="noopener noreferrer>
+                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                target="_blank"
+                                rel="noopener noreferrer>
                                 {{-- ÍCONE INTERNO DO POPOVER --}}
-                                <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4" />
-                                <span>{{ $item['label'] }}</span>
+                                <x-dynamic-component :component="'bi-'
+                                . $item['icon']" class="w-4 h-4" />
+                            <span>{{ $item['label'] }}</span>
                             </a>
                         </li>
                     @endforeach

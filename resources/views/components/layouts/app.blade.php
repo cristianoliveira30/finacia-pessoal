@@ -81,7 +81,7 @@
         @include('components.layouts.app.header')
 
         {{-- “Shell” da aplicação: onde o sidebar vai ficar absoluto --}}
-        <div id="app-shell" class="relative flex-1 overflow-y-auto">
+        <div id="app-shell" class="relative flex-1 overflow-y-auto pt-16">
             @php
                 $sidebarView = match (true) {
                     request()->routeIs('geral.*')

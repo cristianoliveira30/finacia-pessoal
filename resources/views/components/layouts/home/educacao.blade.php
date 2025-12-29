@@ -1,159 +1,202 @@
 @php
-$menus = [
-
-    // 1) Visão Geral / Gestão
-    [
-        'id' => 'edu-painel',
-        'label' => 'Painel',
-        'popover_title' => 'Painel de Educação',
-        'hex_main' => '#38bdf8', // sky-400
-        'hex_hover_bg' => 'rgba(12, 74, 110, 0.4)', // sky-900/40
-        'hex_light' => '#7dd3fc', // sky-300
-        'icon_main' => 'speedometer2',
-        'items' => [
-            ['label' => 'Dashboard Educação', 'route' => 'educacao.home', 'icon' => 'speedometer2'],
-            ['label' => 'Indicadores (Resumo)', 'route' => 'educacao.painel.indicadores', 'icon' => 'clipboard-data'],
-            ['label' => 'Metas e Acompanhamento', 'route' => 'educacao.painel.metas', 'icon' => 'bullseye'],
+    $menus = [
+        // 1) Visão Geral / Gestão
+        [
+            'id' => 'edu-painel',
+            'label' => 'Painel',
+            'popover_title' => 'Painel de Educação',
+            'hex_main' => '#38bdf8', // sky-400
+            'hex_hover_bg' => 'rgba(12, 74, 110, 0.4)', // sky-900/40
+            'hex_light' => '#7dd3fc', // sky-300
+            'icon_main' => 'speedometer2',
+            'items' => [
+                ['label' => 'Dashboard Educação', 'route' => 'educacao.home', 'icon' => 'speedometer2'],
+                [
+                    'label' => 'Indicadores (Resumo)',
+                    'route' => 'educacao.painel.indicadores',
+                    'icon' => 'clipboard-data',
+                ],
+                ['label' => 'Metas e Acompanhamento', 'route' => 'educacao.painel.metas', 'icon' => 'bullseye'],
+            ],
         ],
-    ],
 
-    // 2) Relatórios (núcleo BI)
-    [
-        'id' => 'edu-relatorios',
-        'label' => 'Relatórios',
-        'popover_title' => 'Relatórios Educacionais',
-        'hex_main' => '#34d399', // emerald-400
-        'hex_hover_bg' => 'rgba(6, 78, 59, 0.4)', // emerald-900/40
-        'hex_light' => '#6ee7b7', // emerald-300
-        'icon_main' => 'bar-chart',
-        'items' => [
-            ['label' => 'Frequência Escolar', 'route' => 'educacao.relatorios.frequencia', 'icon' => 'calendar-check'],
-            ['label' => 'Evasão / Abandono', 'route' => 'educacao.relatorios.evasao', 'icon' => 'exclamation-triangle'],
-            ['label' => 'Aprendizagem (Indicadores)', 'route' => 'educacao.relatorios.aprendizagem', 'icon' => 'graph-up'],
-            ['label' => 'Matrículas (Evolução)', 'route' => 'educacao.relatorios.matriculas', 'icon' => 'person-plus'],
-            ['label' => 'Turmas / Lotação', 'route' => 'educacao.relatorios.turmas', 'icon' => 'people'],
-            ['label' => 'Transferências', 'route' => 'educacao.relatorios.transferencias', 'icon' => 'arrow-left-right'],
-            ['label' => 'Infraestrutura (Escolas)', 'route' => 'educacao.relatorios.infraestrutura', 'icon' => 'building'],
-            ['label' => 'Merenda (Resumo)', 'route' => 'educacao.relatorios.merenda', 'icon' => 'cup-hot'],
-            ['label' => 'Transporte (Resumo)', 'route' => 'educacao.relatorios.transporte', 'icon' => 'bus-front'],
-            ['label' => 'Inclusão / AEE', 'route' => 'educacao.relatorios.inclusao', 'icon' => 'universal-access'],
+        // 2) Relatórios (núcleo BI)
+        [
+            'id' => 'edu-relatorios',
+            'label' => 'Relatórios',
+            'popover_title' => 'Relatórios Educacionais',
+            'hex_main' => '#34d399', // emerald-400
+            'hex_hover_bg' => 'rgba(6, 78, 59, 0.4)', // emerald-900/40
+            'hex_light' => '#6ee7b7', // emerald-300
+            'icon_main' => 'bar-chart',
+            'items' => [
+                [
+                    'label' => 'Frequência Escolar',
+                    'route' => 'educacao.relatorios.frequencia',
+                    'icon' => 'calendar-check',
+                ],
+                [
+                    'label' => 'Evasão / Abandono',
+                    'route' => 'educacao.relatorios.evasao',
+                    'icon' => 'exclamation-triangle',
+                ],
+                [
+                    'label' => 'Aprendizagem (Indicadores)',
+                    'route' => 'educacao.relatorios.aprendizagem',
+                    'icon' => 'graph-up',
+                ],
+                [
+                    'label' => 'Matrículas (Evolução)',
+                    'route' => 'educacao.relatorios.matriculas',
+                    'icon' => 'person-plus',
+                ],
+                ['label' => 'Turmas / Lotação', 'route' => 'educacao.relatorios.turmas', 'icon' => 'people'],
+                [
+                    'label' => 'Transferências',
+                    'route' => 'educacao.relatorios.transferencias',
+                    'icon' => 'arrow-left-right',
+                ],
+                [
+                    'label' => 'Infraestrutura (Escolas)',
+                    'route' => 'educacao.relatorios.infraestrutura',
+                    'icon' => 'building',
+                ],
+                ['label' => 'Merenda (Resumo)', 'route' => 'educacao.relatorios.merenda', 'icon' => 'cup-hot'],
+                ['label' => 'Transporte (Resumo)', 'route' => 'educacao.relatorios.transporte', 'icon' => 'bus-front'],
+                ['label' => 'Inclusão / AEE', 'route' => 'educacao.relatorios.inclusao', 'icon' => 'universal-access'],
+            ],
         ],
-    ],
 
-    // 3) Rede / Escolas (cadastro + mapa)
-    [
-        'id' => 'edu-rede',
-        'label' => 'Rede Escolar',
-        'popover_title' => 'Rede / Escolas',
-        'hex_main' => '#a78bfa', // violet-400
-        'hex_hover_bg' => 'rgba(88, 28, 135, 0.35)', // violet-900/35
-        'hex_light' => '#c4b5fd', // violet-300
-        'icon_main' => 'building',
-        'items' => [
-            ['label' => 'Escolas / Unidades', 'route' => 'educacao.rede.escolas', 'icon' => 'building'],
-            ['label' => 'Unidades (Detalhes)', 'route' => 'educacao.rede.unidades', 'icon' => 'ui-checks-grid'],
-            ['label' => 'Mapa da Rede', 'route' => 'educacao.rede.mapa', 'icon' => 'map'],
+        // 3) Rede / Escolas (cadastro + mapa)
+        [
+            'id' => 'edu-rede',
+            'label' => 'Rede Escolar',
+            'popover_title' => 'Rede / Escolas',
+            'hex_main' => '#a78bfa', // violet-400
+            'hex_hover_bg' => 'rgba(88, 28, 135, 0.35)', // violet-900/35
+            'hex_light' => '#c4b5fd', // violet-300
+            'icon_main' => 'building',
+            'items' => [
+                ['label' => 'Escolas / Unidades', 'route' => 'educacao.rede.escolas', 'icon' => 'building'],
+                ['label' => 'Unidades (Detalhes)', 'route' => 'educacao.rede.unidades', 'icon' => 'ui-checks-grid'],
+                ['label' => 'Mapa da Rede', 'route' => 'educacao.rede.mapa', 'icon' => 'map'],
+            ],
         ],
-    ],
 
-    // 4) Alunos / Matrículas (gestão operacional)
-    [
-        'id' => 'edu-alunos',
-        'label' => 'Alunos',
-        'popover_title' => 'Alunos / Matrículas',
-        'hex_main' => '#fbbf24', // amber-400
-        'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)', // amber-900/40
-        'hex_light' => '#fcd34d', // amber-300
-        'icon_main' => 'person-badge',
-        'items' => [
-            ['label' => 'Cadastro de Aluno', 'route' => 'educacao.alunos.cadastro', 'icon' => 'person-plus'],
-            ['label' => 'Buscar Aluno', 'route' => 'educacao.alunos.buscar', 'icon' => 'search'],
-            ['label' => 'Gestão de Matrículas', 'route' => 'educacao.matriculas.gestao', 'icon' => 'file-earmark-text'],
-            ['label' => 'Fila de Creche', 'route' => 'educacao.matriculas.fila_creche', 'icon' => 'list-ol'],
+        // 4) Alunos / Matrículas (gestão operacional)
+        [
+            'id' => 'edu-alunos',
+            'label' => 'Alunos',
+            'popover_title' => 'Alunos / Matrículas',
+            'hex_main' => '#fbbf24', // amber-400
+            'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)', // amber-900/40
+            'hex_light' => '#fcd34d', // amber-300
+            'icon_main' => 'person-badge',
+            'items' => [
+                ['label' => 'Cadastro de Aluno', 'route' => 'educacao.alunos.cadastro', 'icon' => 'person-plus'],
+                ['label' => 'Buscar Aluno', 'route' => 'educacao.alunos.buscar', 'icon' => 'search'],
+                [
+                    'label' => 'Gestão de Matrículas',
+                    'route' => 'educacao.matriculas.gestao',
+                    'icon' => 'file-earmark-text',
+                ],
+                ['label' => 'Fila de Creche', 'route' => 'educacao.matriculas.fila_creche', 'icon' => 'list-ol'],
+            ],
         ],
-    ],
 
-    // 5) RH Educação (lotação, ausências, formação)
-    [
-        'id' => 'edu-rh',
-        'label' => 'RH Educação',
-        'popover_title' => 'RH / Professores',
-        'hex_main' => '#60a5fa', // blue-400
-        'hex_hover_bg' => 'rgba(30, 58, 138, 0.35)', // blue-900/35
-        'hex_light' => '#93c5fd', // blue-300
-        'icon_main' => 'people',
-        'items' => [
-            ['label' => 'Professores', 'route' => 'educacao.rh.professores', 'icon' => 'people'],
-            ['label' => 'Lotação / Distribuição', 'route' => 'educacao.rh.lotacao', 'icon' => 'diagram-3'],
-            ['label' => 'Ausências / Substituições', 'route' => 'educacao.rh.ausencias', 'icon' => 'calendar-x'],
-            ['label' => 'Formação / Capacitação', 'route' => 'educacao.rh.formacao', 'icon' => 'mortarboard'],
+        // 5) RH Educação (lotação, ausências, formação)
+        [
+            'id' => 'edu-rh',
+            'label' => 'RH Educação',
+            'popover_title' => 'RH / Professores',
+            'hex_main' => '#60a5fa', // blue-400
+            'hex_hover_bg' => 'rgba(30, 58, 138, 0.35)', // blue-900/35
+            'hex_light' => '#93c5fd', // blue-300
+            'icon_main' => 'people',
+            'items' => [
+                ['label' => 'Professores', 'route' => 'educacao.rh.professores', 'icon' => 'people'],
+                ['label' => 'Lotação / Distribuição', 'route' => 'educacao.rh.lotacao', 'icon' => 'diagram-3'],
+                ['label' => 'Ausências / Substituições', 'route' => 'educacao.rh.ausencias', 'icon' => 'calendar-x'],
+                ['label' => 'Formação / Capacitação', 'route' => 'educacao.rh.formacao', 'icon' => 'mortarboard'],
+            ],
         ],
-    ],
 
-    // 6) Transporte Escolar
-    [
-        'id' => 'edu-transporte',
-        'label' => 'Transporte',
-        'popover_title' => 'Transporte Escolar',
-        'hex_main' => '#f97316', // orange-500
-        'hex_hover_bg' => 'rgba(124, 45, 18, 0.35)', // orange-900/35
-        'hex_light' => '#fdba74', // orange-300
-        'icon_main' => 'bus-front',
-        'items' => [
-            ['label' => 'Rotas', 'route' => 'educacao.transporte.rotas', 'icon' => 'map'],
-            ['label' => 'Frota', 'route' => 'educacao.transporte.frota', 'icon' => 'truck'],
-            ['label' => 'Atrasos / Ocorrências', 'route' => 'educacao.transporte.atrasos', 'icon' => 'exclamation-triangle'],
+        // 6) Transporte Escolar
+        [
+            'id' => 'edu-transporte',
+            'label' => 'Transporte',
+            'popover_title' => 'Transporte Escolar',
+            'hex_main' => '#f97316', // orange-500
+            'hex_hover_bg' => 'rgba(124, 45, 18, 0.35)', // orange-900/35
+            'hex_light' => '#fdba74', // orange-300
+            'icon_main' => 'bus-front',
+            'items' => [
+                ['label' => 'Rotas', 'route' => 'educacao.transporte.rotas', 'icon' => 'map'],
+                ['label' => 'Frota', 'route' => 'educacao.transporte.frota', 'icon' => 'truck'],
+                [
+                    'label' => 'Atrasos / Ocorrências',
+                    'route' => 'educacao.transporte.atrasos',
+                    'icon' => 'exclamation-triangle',
+                ],
+            ],
         ],
-    ],
 
-    // 7) Merenda / Alimentação
-    [
-        'id' => 'edu-merenda',
-        'label' => 'Merenda',
-        'popover_title' => 'Merenda / Alimentação Escolar',
-        'hex_main' => '#22c55e', // green-500
-        'hex_hover_bg' => 'rgba(20, 83, 45, 0.35)', // green-900/35
-        'hex_light' => '#86efac', // green-300
-        'icon_main' => 'cup-hot',
-        'items' => [
-            ['label' => 'Estoque', 'route' => 'educacao.merenda.estoque', 'icon' => 'boxes'],
-            ['label' => 'Cardápios', 'route' => 'educacao.merenda.cardapios', 'icon' => 'journal-text'],
-            ['label' => 'Distribuição', 'route' => 'educacao.merenda.distribuicao', 'icon' => 'truck'],
+        // 7) Merenda / Alimentação
+        [
+            'id' => 'edu-merenda',
+            'label' => 'Merenda',
+            'popover_title' => 'Merenda / Alimentação Escolar',
+            'hex_main' => '#22c55e', // green-500
+            'hex_hover_bg' => 'rgba(20, 83, 45, 0.35)', // green-900/35
+            'hex_light' => '#86efac', // green-300
+            'icon_main' => 'cup-hot',
+            'items' => [
+                ['label' => 'Estoque', 'route' => 'educacao.merenda.estoque', 'icon' => 'boxes'],
+                ['label' => 'Cardápios', 'route' => 'educacao.merenda.cardapios', 'icon' => 'journal-text'],
+                ['label' => 'Distribuição', 'route' => 'educacao.merenda.distribuicao', 'icon' => 'truck'],
+            ],
         ],
-    ],
 
-    // 8) FUNDEB / Financeiro da Educação
-    [
-        'id' => 'edu-fundeb',
-        'label' => 'FUNDEB',
-        'popover_title' => 'FUNDEB / Financeiro',
-        'hex_main' => '#64748b', // slate-500
-        'hex_hover_bg' => 'rgba(15, 23, 42, 0.35)', // slate-950/35
-        'hex_light' => '#cbd5e1', // slate-300
-        'icon_main' => 'bank',
-        'items' => [
-            ['label' => 'Receitas FUNDEB', 'route' => 'educacao.fundeb.receitas', 'icon' => 'cash'],
-            ['label' => 'Aplicação / Despesas', 'route' => 'educacao.fundeb.aplicacao', 'icon' => 'receipt'],
-            ['label' => 'Indicadores e Limites', 'route' => 'educacao.fundeb.indicadores', 'icon' => 'shield-check'],
+        // 8) FUNDEB / Financeiro da Educação
+        [
+            'id' => 'edu-fundeb',
+            'label' => 'FUNDEB',
+            'popover_title' => 'FUNDEB / Financeiro',
+            'hex_main' => '#64748b', // slate-500
+            'hex_hover_bg' => 'rgba(15, 23, 42, 0.35)', // slate-950/35
+            'hex_light' => '#cbd5e1', // slate-300
+            'icon_main' => 'bank',
+            'items' => [
+                ['label' => 'Receitas FUNDEB', 'route' => 'educacao.fundeb.receitas', 'icon' => 'cash'],
+                ['label' => 'Aplicação / Despesas', 'route' => 'educacao.fundeb.aplicacao', 'icon' => 'receipt'],
+                [
+                    'label' => 'Indicadores e Limites',
+                    'route' => 'educacao.fundeb.indicadores',
+                    'icon' => 'shield-check',
+                ],
+            ],
         ],
-    ],
 
-    // 9) Obras / Manutenção Escolar
-    [
-        'id' => 'edu-obras',
-        'label' => 'Infra / Obras',
-        'popover_title' => 'Obras / Manutenção Escolar',
-        'hex_main' => '#f43f5e', // rose-500
-        'hex_hover_bg' => 'rgba(136, 19, 55, 0.35)', // rose-900/35
-        'hex_light' => '#fda4af', // rose-300
-        'icon_main' => 'tools',
-        'items' => [
-            ['label' => 'Ordens de Serviço', 'route' => 'educacao.obras.ordens_servico', 'icon' => 'clipboard-check'],
-            ['label' => 'Cronograma', 'route' => 'educacao.obras.cronograma', 'icon' => 'calendar3'],
-            ['label' => 'Pendências', 'route' => 'educacao.obras.pendencias', 'icon' => 'exclamation-triangle'],
+        // 9) Obras / Manutenção Escolar
+        [
+            'id' => 'edu-obras',
+            'label' => 'Infra / Obras',
+            'popover_title' => 'Obras / Manutenção Escolar',
+            'hex_main' => '#f43f5e', // rose-500
+            'hex_hover_bg' => 'rgba(136, 19, 55, 0.35)', // rose-900/35
+            'hex_light' => '#fda4af', // rose-300
+            'icon_main' => 'tools',
+            'items' => [
+                [
+                    'label' => 'Ordens de Serviço',
+                    'route' => 'educacao.obras.ordens_servico',
+                    'icon' => 'clipboard-check',
+                ],
+                ['label' => 'Cronograma', 'route' => 'educacao.obras.cronograma', 'icon' => 'calendar3'],
+                ['label' => 'Pendências', 'route' => 'educacao.obras.pendencias', 'icon' => 'exclamation-triangle'],
+            ],
         ],
-    ],
-];
+    ];
 @endphp
 
 {{-- CSS específico do sidebar com suporte a tema --}}
@@ -170,20 +213,36 @@ $menus = [
     }
 
     html.dark {
-        --sidebar-bg: #020617;          /* bg-slate-950 */
-        --sidebar-border: #1e293b;      /* border-slate-800 */
-        --sidebar-text: #e5e7eb;        /* text-slate-200 */
-        --sidebar-hover-bg: #111827;    /* bg-slate-900 */
-        --sidebar-submenu-bg: #374151;  /* bg-slate-700 */
+        --sidebar-bg: #020617;
+        /* bg-slate-950 */
+        --sidebar-border: #1e293b;
+        /* border-slate-800 */
+        --sidebar-text: #e5e7eb;
+        /* text-slate-200 */
+        --sidebar-hover-bg: #111827;
+        /* bg-slate-900 */
+        --sidebar-submenu-bg: #374151;
+        /* bg-slate-700 */
         --sidebar-submenu-border: #4b5563;
-        --sidebar-tooltip-bg: #4b5563;  /* bg-slate-600 */
+        --sidebar-tooltip-bg: #4b5563;
+        /* bg-slate-600 */
     }
 
     /* =================== LAYOUT / ESTILOS =================== */
     @media (min-width: 1024px) {
-        body.sidebar-collapsed #top-bar-sidebar { width: 4.5rem; }
-        body.sidebar-collapsed #top-bar-sidebar .sidebar-label { display: none; }
-        body.sidebar-collapsed #top-bar-sidebar .sidebar-link { justify-content: center; padding-left: 0.75rem; padding-right: 0.75rem; }
+        body.sidebar-collapsed #top-bar-sidebar {
+            width: 4.5rem;
+        }
+
+        body.sidebar-collapsed #top-bar-sidebar .sidebar-label {
+            display: none;
+        }
+
+        body.sidebar-collapsed #top-bar-sidebar .sidebar-link {
+            justify-content: center;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
 
         body:not(.sidebar-collapsed) .popover-flowbite {
             display: none !important;
@@ -193,37 +252,104 @@ $menus = [
         }
     }
 
-    #top-bar-sidebar { overflow: visible; background-color: var(--sidebar-bg); color: var(--sidebar-text); border-color: var(--sidebar-border); }
-    #top-bar-sidebar nav { overflow-y: auto; overflow-x: hidden; }
-    #top-bar-sidebar .sidebar-link { color: inherit; }
-    #top-bar-sidebar .sidebar-link:hover { background-color: var(--sidebar-hover-bg); }
+    #top-bar-sidebar {
+        overflow: visible;
+        background-color: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        border-color: var(--sidebar-border);
+    }
 
-    .menu-group { position: relative; }
-    .menu-group .menu-highlight { position: absolute; inset: 0.15rem 0.25rem; border-radius: 0.75rem; opacity: 0; pointer-events: none; transition: opacity 150ms ease; }
-    body:not(.sidebar-collapsed) .menu-group:hover .menu-highlight { opacity: 1; }
-    body.sidebar-collapsed .menu-group .menu-highlight { display: none; }
-    .menu-group .chevron-icon { transition: transform 150ms ease; }
-    body:not(.sidebar-collapsed) .menu-group[data-open="true"] .chevron-icon { transform: rotate(90deg); }
+    #top-bar-sidebar nav {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
 
-    .submenu { display: none !important; }
-    body:not(.sidebar-collapsed) .menu-group[data-open="true"]>.submenu { display: block !important; position: static; padding-left: 2.25rem; padding-right: 0.75rem; margin-top: 0.25rem; background: transparent; box-shadow: none; }
-    body.sidebar-collapsed .menu-group>.submenu { display: none !important; }
+    #top-bar-sidebar .sidebar-link {
+        color: inherit;
+    }
 
-    body.sidebar-collapsed .sidebar-link[data-tooltip] { position: relative; }
+    #top-bar-sidebar .sidebar-link:hover {
+        background-color: var(--sidebar-hover-bg);
+    }
+
+    .menu-group {
+        position: relative;
+    }
+
+    .menu-group .menu-highlight {
+        position: absolute;
+        inset: 0.15rem 0.25rem;
+        border-radius: 0.75rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 150ms ease;
+    }
+
+    body:not(.sidebar-collapsed) .menu-group:hover .menu-highlight {
+        opacity: 1;
+    }
+
+    body.sidebar-collapsed .menu-group .menu-highlight {
+        display: none;
+    }
+
+    .menu-group .chevron-icon {
+        transition: transform 150ms ease;
+    }
+
+    body:not(.sidebar-collapsed) .menu-group[data-open="true"] .chevron-icon {
+        transform: rotate(90deg);
+    }
+
+    .submenu {
+        display: none !important;
+    }
+
+    body:not(.sidebar-collapsed) .menu-group[data-open="true"]>.submenu {
+        display: block !important;
+        position: static;
+        padding-left: 2.25rem;
+        padding-right: 0.75rem;
+        margin-top: 0.25rem;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    body.sidebar-collapsed .menu-group>.submenu {
+        display: none !important;
+    }
+
+    body.sidebar-collapsed .sidebar-link[data-tooltip] {
+        position: relative;
+    }
+
     body.sidebar-collapsed .sidebar-link[data-tooltip]::after {
         content: attr(data-tooltip);
-        position: absolute; left: calc(100% + 0.75rem); top: 50%; transform: translateY(-50%);
-        white-space: nowrap; background-color: var(--sidebar-tooltip-bg); color: #f9fafb;
-        font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 0.5rem;
-        opacity: 0; pointer-events: none; transition: opacity 150ms ease; z-index: 9999;
+        position: absolute;
+        left: calc(100% + 0.75rem);
+        top: 50%;
+        transform: translateY(-50%);
+        white-space: nowrap;
+        background-color: var(--sidebar-tooltip-bg);
+        color: #f9fafb;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 150ms ease;
+        z-index: 9999;
     }
-    body.sidebar-collapsed .sidebar-link[data-tooltip]:hover::after { opacity: 1; }
+
+    body.sidebar-collapsed .sidebar-link[data-tooltip]:hover::after {
+        opacity: 1;
+    }
 </style>
 
 <aside id="top-bar-sidebar"
-    class="absolute inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 border-e transition-transform duration-300"
+    class="fixed top-16 bottom-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0
+         border-e transition-transform duration-300 bg-white dark:bg-gray-800"
     aria-label="Sidebar">
-
     <div class="h-full flex flex-col">
         <div class="h-full flex flex-col">
             <nav class="flex-1 px-2 pb-4 text-sm font-medium">
@@ -249,81 +375,82 @@ $menus = [
                     </li>
 
                     {{-- LOOP PARA GERAR TODOS OS MENUS COM DROPDOWN --}}
-                    @foreach($menus as $menu)
+                    @foreach ($menus as $menu)
                         <li class="menu-group" data-open="false">
                             {{-- CORREÇÃO: Usando style inline para o background do hover --}}
-                            <div class="menu-highlight -z-10" style="background-color: {{ $menu['hex_hover_bg'] }}"></div>
+                            <div class="menu-highlight -z-10" style="background-color: {{ $menu['hex_hover_bg'] }}">
+                            </div>
 
                             <button type="button"
-                                    class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}"
-                                    data-submenu-toggle="submenu-{{ $menu['id'] }}"
-                                    data-popover-target="popover-{{ $menu['id'] }}"
-                                    data-popover-placement="right">
-                                <div class="flex items-center gap-3">
-                                    {{-- ÍCONE PRINCIPAL DINÂMICO --}}
-                                    <x-dynamic-component
-                                        :component="'bi-'.$menu['icon_main']"
-                                        class="w-5 h-5"
-                                    />
+                                class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}"
+                                data-submenu-toggle="submenu-{{ $menu['id'] }}"
+                                data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right-start"
+                                data-popover-offset="8">
+                                 <div class="flex items-center gap-3">
+                                {{-- ÍCONE PRINCIPAL DINÂMICO --}}
+                                <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
 
-                                    {{-- CORREÇÃO: Barra lateral colorida usando style inline --}}
-                                    <span class="inline-flex h-6 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
-                                    <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
-                                </div>
-
-                                {{-- CHEVRON (SETA) - CORREÇÃO DE COR --}}
-                                <x-bi-chevron-right class="chevron-icon w-3 h-3" style="color: {{ $menu['hex_light'] }}" />
-                            </button>
-
-                            <div id="submenu-{{ $menu['id'] }}" class="submenu mt-1 pl-9 pr-3 p-1 text-xs {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}">
-                                <div class="flex gap-3">
-                                    <span class="w-px bg-slate-700 ml-2"></span>
-                                    <div class="space-y-1">
-                                        @foreach($menu['items'] as $item)
-                                            @php
-                                                $r = $item['route'] ?? null;
-                                                $href = ($r && \Illuminate\Support\Facades\Route::has($r)) ? route($r) : '#';
-                                            @endphp
-                                            <a href="{{ $href }}"
-                                               class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
-                                               {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
-                                               onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
-                                               onmouseout="this.style.color=''" target="_blank" rel="noopener noreferrer">
-                                                {{-- CORREÇÃO: Bolinha do submenu --}}
-                                                <span class="inline-flex h-4 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
-                                                <span>{{ $item['label'] }}</span>
-                                            </a>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    @endforeach
-
-                </ul>
-            </nav>
+                                {{-- CORREÇÃO: Barra lateral colorida usando style inline --}}
+                                <span class="inline-flex h-6 w-1 rounded-full"
+                                    style="background-color: {{ $menu['hex_main'] }}"></span>
+                                <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
         </div>
+
+        {{-- CHEVRON (SETA) - CORREÇÃO DE COR --}}
+        <x-bi-chevron-right class="chevron-icon w-3 h-3" style="color: {{ $menu['hex_light'] }}" />
+        </button>
+
+        <div id="submenu-{{ $menu['id'] }}"
+            class="submenu mt-1 pl-9 pr-3 p-1 text-xs {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}">
+            <div class="flex gap-3">
+                <span class="w-px bg-slate-700 ml-2"></span>
+                <div class="space-y-1">
+                    @foreach ($menu['items'] as $item)
+                        @php
+                            $r = $item['route'] ?? null;
+                            $href = $r && \Illuminate\Support\Facades\Route::has($r) ? route($r) : '#';
+                        @endphp
+                        <a href="{{ $href }}"
+                            class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
+                            {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}} onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
+                            onmouseout="this.style.color=''" target="_blank" rel="noopener noreferrer">
+                            {{-- CORREÇÃO: Bolinha do submenu --}}
+                            <span class="inline-flex h-4 w-1 rounded-full"
+                                style="background-color: {{ $menu['hex_main'] }}"></span>
+                            <span>{{ $item['label'] }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        </li>
+        @endforeach
+
+        </ul>
+        </nav>
+    </div>
     </div>
 
     {{-- LOOP PARA GERAR OS POPOVERS (FORA DO NAV) --}}
-    @foreach($menus as $menu)
-        <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip" class="popover-flowbite absolute z-50 invisible inline-block w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0">
+    @foreach ($menus as $menu)
+        <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
+            class="popover-flowbite absolute z-50 invisible inline-block w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0">
             <div class="p-3">
                 <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
                     {{-- CORREÇÃO: Barra colorida do popover --}}
                     <span class="h-4 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
                     {{-- CORREÇÃO: Título colorido do popover --}}
-                    <span class="font-semibold" style="color: {{ $menu['hex_main'] }}">{{ $menu['popover_title'] }}</span>
+                    <span class="font-semibold"
+                        style="color: {{ $menu['hex_main'] }}">{{ $menu['popover_title'] }}</span>
                 </div>
                 <ul class="space-y-1">
-                    @foreach($menu['items'] as $item)
+                    @foreach ($menu['items'] as $item)
                         <li>
-                            <a href="{{ route($item['route']) }}" class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+                            <a href="{{ route($item['route']) }}"
+                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                target="_blank" rel="noopener noreferrer">
                                 {{-- ÍCONE INTERNO DO POPOVER --}}
-                                <x-dynamic-component
-                                    :component="'bi-'.$item['icon']"
-                                    class="w-4 h-4"
-                                />
+                                <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4" />
                                 <span>{{ $item['label'] }}</span>
                             </a>
                         </li>
@@ -337,7 +464,7 @@ $menus = [
 </aside>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.getElementById('top-bar-sidebar');
         const toggleBtn = document.getElementById('header-sidebar-toggle');
         const STORAGE_KEY = 'sidebarCollapsed';
@@ -362,7 +489,8 @@ $menus = [
         applyInitialState();
 
         toggleBtn.addEventListener('click', (e) => {
-            e.preventDefault(); e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
             if (isDesktop()) {
                 const collapsed = document.body.classList.toggle('sidebar-collapsed');
                 localStorage.setItem(STORAGE_KEY, collapsed);
@@ -388,11 +516,12 @@ $menus = [
 
     // Lógica dos submenus (Accordion)
     document.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
-        btn.addEventListener('click', function (e) {
-            if(document.body.classList.contains('sidebar-collapsed')) return;
-            e.preventDefault(); e.stopPropagation();
+        btn.addEventListener('click', function(e) {
+            if (document.body.classList.contains('sidebar-collapsed')) return;
+            e.preventDefault();
+            e.stopPropagation();
             const group = this.closest('.menu-group');
-            if(group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
+            if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
         });
     });
 </script>
