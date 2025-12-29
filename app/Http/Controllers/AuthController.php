@@ -15,14 +15,12 @@ class AuthController extends Controller
         ]);
 
         if (!Auth::attempt($request->only('username', 'password'))) {
-            return response()->json([
-                'message' => 'Invalid credentials',
-            ], 401);
+            return redirect()->route('login')->withErrors(['username' => 'Credenciais inválidas.']);
         }
 
         $user = Auth::user();
         Auth::login($user);
 
-        return view('home');
+        return redirect()->route('home');
     }
 }
