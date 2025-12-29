@@ -5,7 +5,7 @@
                 {{-- BOTÃO ÚNICO PARA ABRIR/COLAPSAR O SIDEBAR (MOBILE + DESKTOP) --}}
                 <button id="header-sidebar-toggle" type="button" aria-expanded="false"
                     class="text-heading bg-transparent box-border border border-transparent
-           hover:bg-neutral-secondary-medium dark:focus:outline-2 dark:focus:outline-offset-2 dark:focus:ring-neutral-tertiary
+           bg-neutral-secondary-medium dark:focus:outline-2 dark:focus:outline-offset-2 dark:focus:ring-neutral-tertiary
            font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
                     <span class="sr-only">Alternar sidebar</span>
                     <x-bi-justify-left class="w-6 h-6" />
