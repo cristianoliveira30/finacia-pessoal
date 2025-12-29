@@ -7,6 +7,9 @@
     $columns = $config['columns'] ?? [];
     $rows = $config['rows'] ?? [];
 
+    // Define a rota de destino do filtro. Se não passada na config, usa a rota 'report.default' do web.php
+    $filterRoute = $config['filter_route'] ?? route('report.default');
+
     $defaultLabels = [
         'placeholder' => 'Buscar...',
         'searchTitle' => 'Buscar na tabela',
@@ -26,83 +29,81 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 @endonce
 
-<table id="{{ $tableId }}">
-    <thead>
-        <tr>
-            @foreach ($columns as $index => $column)
-                @php
-                    $key = $column['key'] ?? '';
-                    $label = $column['label'] ?? ucfirst($key);
-                    $type = $column['type'] ?? 'text';
-                    $dateFormat = $column['date_format'] ?? null;
-                    
-                    // Definição do tipo de input HTML
-                    $inputType = 'text';
-                    if($type === 'number' || $type === 'currency' || $type === 'integer') $inputType = 'number';
-                    if($type === 'date') $inputType = 'date';
-
-                    $thAttrs = '';
-                    if ($type === 'date') {
-                        $thAttrs .= ' data-type="date"';
-                        if ($dateFormat) {
-                            $thAttrs .= ' data-format="' . e($dateFormat) . '"';
-                        }
-                    }
-                @endphp
-
-                <th{!! $thAttrs !!}>
-                    <div class="flex flex-col gap-1">
-                        <div class="flex items-center justify-between group">
-                            <span class="mr-2">{{ $label }}</span>
-                            
-                            {{-- Botão Lupa (Toggle do Input) --}}
-                            <button type="button" 
-                                    class="column-filter-toggle text-gray-400 hover:text-blue-600 focus:outline-none p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                                    data-col-index="{{ $index }}"
-                                    title="Priorizar linhas por esta coluna">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        {{-- Input de Filtro --}}
-                        <div class="column-filter-container hidden mt-1" id="filter-container-{{ $tableId }}-{{ $index }}">
-                            <input type="{{ $inputType }}" 
-                                   class="column-filter-input w-full text-xs px-2 py-1 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                   placeholder="Buscar e Mover p/ Topo..."
-                                   data-col-index="{{ $index }}"
-                                   step="any">
-                        </div>
-                    </div>
-                </th>
-            @endforeach
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach ($rows as $row)
-            <tr class="hover:bg-neutral-secondary-soft cursor-pointer transition-all duration-500">
-                @foreach ($columns as $column)
+<div class="w-full overflow-x-auto">
+    <table id="{{ $tableId }}">
+        <thead>
+            <tr>
+                @foreach ($columns as $index => $column)
                     @php
                         $key = $column['key'] ?? '';
-                        $value = is_array($row) ? $row[$key] ?? null : (is_object($row) ? $row->{$key} ?? null : null);
-                        $isFirst = $loop->first;
+                        $label = $column['label'] ?? ucfirst($key);
+                        $type = $column['type'] ?? 'text';
+                        $dateFormat = $column['date_format'] ?? null;
+                        
+                        $inputType = 'text';
+                        if($type === 'number' || $type === 'currency' || $type === 'integer') $inputType = 'number';
+                        if($type === 'date') $inputType = 'date';
+
+                        $thAttrs = '';
+                        if ($type === 'date') {
+                            $thAttrs .= ' data-type="date"';
+                            if ($dateFormat) {
+                                $thAttrs .= ' data-format="' . e($dateFormat) . '"';
+                            }
+                        }
                     @endphp
 
-                    <td class="{{ $isFirst ? 'font-medium text-heading whitespace-nowrap' : 'whitespace-nowrap' }}">
-                        {{ $value }}
-                    </td>
+                    <th{!! $thAttrs !!}>
+                        <div class="flex flex-col gap-1 min-w-[120px]">
+                            <div class="flex items-center justify-between group">
+                                <span class="mr-2">{{ $label }}</span>
+                                
+                                <button type="button" 
+                                        class="column-filter-toggle text-gray-400 hover:text-blue-600 focus:outline-none p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                        data-col-index="{{ $index }}"
+                                        title="Priorizar linhas por esta coluna">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="column-filter-container hidden mt-1" id="filter-container-{{ $tableId }}-{{ $index }}">
+                                <input type="{{ $inputType }}" 
+                                       class="column-filter-input w-full text-xs px-2 py-1 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                       placeholder="Buscar e Mover p/ Topo..."
+                                       data-col-index="{{ $index }}"
+                                       step="any">
+                            </div>
+                        </div>
+                    </th>
                 @endforeach
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach ($rows as $row)
+                <tr class="hover:bg-neutral-secondary-soft cursor-pointer transition-all duration-500">
+                    @foreach ($columns as $column)
+                        @php
+                            $key = $column['key'] ?? '';
+                            $value = is_array($row) ? $row[$key] ?? null : (is_object($row) ? $row->{$key} ?? null : null);
+                            $isFirst = $loop->first;
+                        @endphp
+
+                        <td class="{{ $isFirst ? 'font-medium text-heading whitespace-nowrap' : 'whitespace-nowrap' }}">
+                            {{ $value }}
+                        </td>
+                    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
 @once
     @push('scripts')
         <script>
-            // --- Funções Auxiliares Globais ---
             window.baixarPDFTabela = function(headers, bodyData) {
                 if (!window.jspdf) return alert("Biblioteca PDF carregando... tente novamente em instantes.");
                 const { jsPDF } = window.jspdf;
@@ -155,6 +156,9 @@
                 const labels = Object.assign({}, baseLabels, extraOptions.labels || {});
                 const filterBtnId = 'filterButton_' + id;
                 const filterContainerId = 'filterContainer_' + id;
+                
+                // Pega a rota passada via extraOptions
+                const filterAction = extraOptions.filterAction || '#';
 
                 const dtOptions = Object.assign({},
                     extraOptions.datatable || {}, {
@@ -185,9 +189,9 @@
                             "</div>" +
                             "</div>" +
                             (options.searchable ?
-                                "<div class='" + options.classes.search + " flex items-center gap-2'>" +
-                                "<input class='" + options.classes.input + "' placeholder='" + options.labels.placeholder + "' type='search' title='" + options.labels.searchTitle + "'" + (dom.id ? " aria-controls='" + dom.id + "'" : "") + ">" +
-                                "<button id='" + filterBtnId + "' type='button' class='flex w-full sm:w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none transition-colors duration-200'>" +
+                                "<div class='" + options.classes.search + " flex items-center gap-2 w-full sm:w-auto'>" +
+                                "<input class='" + options.classes.input + " w-full sm:w-auto' placeholder='" + options.labels.placeholder + "' type='search' title='" + options.labels.searchTitle + "'" + (dom.id ? " aria-controls='" + dom.id + "'" : "") + ">" +
+                                "<button id='" + filterBtnId + "' type='button' class='flex-shrink-0 text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none transition-colors duration-200'>" +
                                 "<svg class='h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'>" +
                                 "<path stroke='currentColor' stroke-linecap='round' stroke-width='2' d='M18.796 4H5.204a1 1 0 0 0-.753 1.659l5.302 6.058a1 1 0 0 1 .247.659v4.874a.5.5 0 0 0 .2.4l3 2.25a.5.5 0 0 0 .8-.4v-7.124a1 1 0 0 1 .247-.659l5.302-6.059c.566-.646.106-1.658-.753-1.658Z'/>" +
                                 "</svg>" +
@@ -196,15 +200,18 @@
                                 "</div>" : ""
                             ) +
                             "</div>" +
-                            // Filtro Global
-                            "<div id='" + filterContainerId + "' class='hidden w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md p-4 mb-3 transition-all duration-300'>" +
+                            // --- ALTERAÇÃO: Filtro Global agora é um FORMULÁRIO ---
+                            // Adicionada a tag <form> com action e method
+                            "<form action='" + filterAction + "' method='GET' id='" + filterContainerId + "' class='hidden w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md p-4 mb-3 transition-all duration-300'>" +
                             "<div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4'>" +
-                             "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Data Início</label><input type='date' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'></div>" +
-                             "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Data Fim</label><input type='date' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'></div>" +
-                             "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Status</label><select class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'><option>Todos</option><option>Ativo</option><option>Inativo</option></select></div>" +
-                             "<div class='flex items-end'><button class='w-full dark:bg-blue-900 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs'>Aplicar Filtros</button></div>" +
+                             // Adicionados atributos 'name' aos inputs para envio via GET
+                             "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Data Início</label><input type='date' name='data_inicio' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'></div>" +
+                             "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Data Fim</label><input type='date' name='data_fim' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'></div>" +
+                             "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Status</label><select name='status' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'><option value=''>Todos</option><option value='ativo'>Ativo</option><option value='inativo'>Inativo</option></select></div>" +
+                             // Botão agora é type="submit"
+                             "<div class='flex items-end'><button type='submit' class='w-full dark:bg-blue-900 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs'>Aplicar Filtros</button></div>" +
                             "</div>" +
-                            "</div>" +
+                            "</form>" + // Fim do Form
                             "<div class='" + options.classes.container + "'" + (options.scrollY.length ?
                                 " style='height: " + options.scrollY + "; overflow-Y: auto;'" : "") + "></div>" +
                             "<div class='" + options.classes.bottom + "'>" +
@@ -218,15 +225,12 @@
 
                 const table = new window.simpleDatatables.DataTable('#' + id, dtOptions);
 
-                // --- LÓGICA DE REORDENAÇÃO DE LINHAS (PRIORIDADE NO TOPO) ---
-
-                // 1. Toggle do Input
+                // --- LÓGICA DE REORDENAÇÃO (Mantida igual) ---
                 document.querySelectorAll(`#${id} .column-filter-toggle`).forEach(button => {
                     button.addEventListener('click', (e) => {
                         e.stopPropagation();
                         const colIndex = button.getAttribute('data-col-index');
                         const container = document.getElementById(`filter-container-${id}-${colIndex}`);
-                        
                         if (container) {
                             container.classList.toggle('hidden');
                             if (!container.classList.contains('hidden')) {
@@ -237,47 +241,33 @@
                     });
                 });
 
-                // 2. Prevenir ordenação de coluna ao clicar no container
                 document.querySelectorAll(`#${id} .column-filter-container`).forEach(container => {
-                    container.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                    });
+                    container.addEventListener('click', (e) => { e.stopPropagation(); });
                 });
 
-                // 3. Ao teclar ENTER, Mover linhas para o topo
                 document.querySelectorAll(`#${id} .column-filter-input`).forEach(input => {
                     input.addEventListener('keydown', (e) => {
                         if (e.key === 'Enter') {
                             e.preventDefault(); 
-                            
                             const val = input.value.trim().toLowerCase();
                             const colIndex = parseInt(input.getAttribute('data-col-index'));
-                            
-                            // Chama função de manipulação DOM das linhas
                             moveMatchesToTop(colIndex, val);
                         }
                     });
                 });
 
-                // Função Principal: Move linhas que deram Match para o início do TBODY
                 function moveMatchesToTop(colIndex, term) {
                     const tableEl = document.getElementById(id);
                     const tbody = tableEl.querySelector('tbody');
                     const rows = Array.from(tbody.querySelectorAll('tr'));
-                    
                     if(rows.length === 0) return;
-
                     const matches = [];
                     const others = [];
-
-                    // Separa as linhas em dois grupos
                     rows.forEach(row => {
                         const cells = row.children;
                         const targetCell = cells[colIndex];
-                        
                         if(targetCell) {
                             const text = targetCell.textContent.trim().toLowerCase();
-                            // Verifica se contém o termo
                             if(term !== '' && text.includes(term)) {
                                 matches.push(row);
                             } else {
@@ -287,39 +277,19 @@
                             others.push(row);
                         }
                     });
-
-                    // Se não houver termo de busca, ou nenhum match, restaura ordem original (ou mantém como está)
-                    // Aqui, vamos apenas reconstruir o DOM: Matches Primeiro, Resto Depois.
-                    
-                    // Remove todas as linhas do DOM momentaneamente
-                    // (O Fragmento ajuda na performance e evita reflow excessivo)
                     const fragment = document.createDocumentFragment();
-
-                    // Adiciona os Matches primeiro (topo)
                     matches.forEach(r => {
-                        // Opcional: Adicionar um highlight visual
                         r.classList.add('bg-blue-50', 'dark:bg-blue-900/20'); 
                         fragment.appendChild(r);
                     });
-
-                    // Adiciona o restante depois
                     others.forEach(r => {
                         r.classList.remove('bg-blue-50', 'dark:bg-blue-900/20');
                         fragment.appendChild(r);
                     });
-
-                    // Limpa o tbody e insere o fragmento reordenado
-                    // Nota: Isso afeta apenas a página visível atual do SimpleDatatables
                     tbody.appendChild(fragment);
-                    
-                    // Importante: Como manipulamos o DOM diretamente, informamos à biblioteca
-                    // que as colunas mudaram? Não, pois a biblioteca gerencia paginação.
-                    // A alteração visual é imediata, mas ao mudar de página, a biblioteca
-                    // pode restaurar a ordem original do JSON dela. 
-                    // Para um "Painel", este comportamento visual imediato costuma ser o desejado.
                 }
 
-                // Drops e Botões Padrão
+                // Exports e Filter Toggle
                 const exportButton = document.getElementById("exportDropdownButton");
                 const exportDropdownEl = document.getElementById("exportDropdown");
                 if (window.Dropdown && exportButton && exportDropdownEl) {
@@ -362,10 +332,12 @@
                     @json([
                         'labels' => $labels,
                         'datatable' => $datatableOptions,
+                        // Passamos a rota definida no PHP para o JS
+                        'filterAction' => $filterRoute 
                     ]),
                     {
                         rows: @json($rows),
-                        columns: @json($columns)
+                        'columns': @json($columns)
                     }
                 );
             }
