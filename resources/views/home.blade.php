@@ -1,10 +1,6 @@
 <x-layouts.app :title="__('Painel do Prefeito')">
 
-<<<<<<< HEAD
-    <div class="w-full min-h-screen pt-2 px-4 sm:px-4 lg:pl-16 space-y-4 ">
-=======
     <div class="w-full min-h-screen pt-2 px-4 sm:px-4 lg:pl-16 space-y-4" data-page-ai>
->>>>>>> 18d60fb252cb37b4074bc34c97be16fb14d59e74
 
         @php
             // ------------------------------------------------------
