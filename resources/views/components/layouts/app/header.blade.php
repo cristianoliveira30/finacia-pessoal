@@ -1,87 +1,3 @@
-@php
-    $notificacoesFake = [
-        [
-            'id' => 'n1',
-            'area' => 'Educação',
-            'icon' => 'mortarboard-fill',
-            'title' => 'Matrículas atualizadas',
-            'msg' => 'Novas matrículas registradas e painel recalculado.',
-            'time' => 'há 5 min',
-            'unread' => true,
-        ],
-        [
-            'id' => 'n2',
-            'area' => 'Finanças',
-            'icon' => 'cash-coin',
-            'title' => 'Relatório publicado',
-            'msg' => 'Relatório financeiro do mês disponível para consulta.',
-            'time' => 'há 18 min',
-            'unread' => true,
-        ],
-        [
-            'id' => 'n3',
-            'area' => 'Saúde',
-            'icon' => 'heart-pulse-fill',
-            'title' => 'Atendimentos sincronizados',
-            'msg' => 'Atualização concluída com sucesso.',
-            'time' => 'há 32 min',
-            'unread' => true,
-        ],
-        [
-            'id' => 'n4',
-            'area' => 'Finanças',
-            'icon' => 'file-earmark-text-fill',
-            'title' => 'CAPEX registrado',
-            'msg' => 'Novo lançamento de CAPEX (Obras/Equipamentos).',
-            'time' => 'há 1 h',
-            'unread' => true,
-        ],
-        [
-            'id' => 'n5',
-            'area' => 'Educação',
-            'icon' => 'book-fill',
-            'title' => 'Frequência consolidada',
-            'msg' => 'Frequência semanal pronta para análise.',
-            'time' => 'há 2 h',
-            'unread' => true,
-        ],
-        [
-            'id' => 'n6',
-            'area' => 'Saúde',
-            'icon' => 'capsule-pill',
-            'title' => 'Estoque atualizado',
-            'msg' => 'Movimentações de insumos registradas no sistema.',
-            'time' => 'há 3 h',
-            'unread' => true,
-        ],
-        [
-            'id' => 'n7',
-            'area' => 'Saúde',
-            'icon' => 'hospital-fill',
-            'title' => 'Fila de regulação',
-            'msg' => 'Atualização de status em solicitações pendentes.',
-            'time' => 'há 6 h',
-            'unread' => true,
-        ],
-        [
-            'id' => 'n8',
-            'area' => 'Finanças',
-            'icon' => 'graph-up-arrow',
-            'title' => 'Indicadores atualizados',
-            'msg' => 'KPIs financeiros recalculados com os dados mais recentes.',
-            'time' => 'ontem',
-            'unread' => true,
-        ],
-    ];
-
-    $tagClass = fn($area) => match ($area) {
-        'Educação' => 'bg-emerald-600 text-white',
-        'Finanças' => 'bg-amber-600 text-white',
-        'Saúde' => 'bg-rose-600 text-white',
-        default => 'bg-slate-600 text-white',
-    };
-@endphp
-
 <nav id="app-header"
     class="fixed top-0 inset-x-0 z-50 h-16 w-full bg-neutral-900 dark:bg-neutral-900 border-b border-default">
     <div class="h-full px-3 lg:px-5 lg:pl-3">
@@ -273,36 +189,103 @@
                 <section data-notif-panel="inbox">
                     <div class="max-h-[60vh] overflow-y-auto scrollbar-hide">
                         <ul class="space-y-2" id="notifications-list">
-                            @foreach ($notificacoesFake as $n)
-                                <li class="notif-item p-3 rounded-lg border border-slate-200 dark:border-slate-700
-                                           hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer"
-                                    data-notif-id="{{ $n['id'] }}"
-                                    data-unread-default="{{ $n['unread'] ? '1' : '0' }}">
-                                    <div class="flex items-start gap-3">
-                                        <x-dynamic-component :component="'bi-' . $n['icon']" class="w-4 h-4 mt-0.5 shrink-0" />
+                            @php
+                                // Quando tiver backend, o controller passa $notifications.
+                                // Se não vier nada, usa fake.
+                                $notifications = $notifications ?? [
+                                    [
+                                        'id' => 1,
+                                        'title' => 'Relatório publicado',
+                                        'message' => 'Financeiro atualizado. Confira o relatório.',
+                                        'time' => 'agora',
+                                        'unread' => true,
+                                        'flag_text' => 'Urgente',
+                                        'flag_color' => 'rose',
+                                        'url' => '/financeiro/relatorios',
+                                        'read_url' => '', // depois: route('notifications.read', 1)
+                                    ],
+                                    [
+                                        'id' => 2,
+                                        'title' => 'Atualização',
+                                        'message' => 'Entraram 12 registros novos.',
+                                        'time' => '2h',
+                                        'unread' => true,
+                                        'flag_text' => 'Info',
+                                        'flag_color' => 'sky',
+                                        'url' => '/geral/home',
+                                        'read_url' => '',
+                                    ],
+                                    [
+                                        'id' => 3,
+                                        'title' => 'Reunião',
+                                        'message' => 'Hoje às 15:00 (sala 2).',
+                                        'time' => 'ontem',
+                                        'unread' => false,
+                                        'flag_text' => '',
+                                        'flag_color' => 'slate',
+                                        'url' => '',
+                                        'read_url' => '',
+                                    ],
+                                ];
 
-                                        <div class="min-w-0 flex-1">
-                                            <div class="flex items-center gap-2">
-                                                <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                                                    {{ $n['title'] }}
-                                                </span>
+                                $flagClass = [
+                                    'sky' => 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-200',
+                                    'emerald' =>
+                                        'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200',
+                                    'amber' => 'bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-200',
+                                    'rose' => 'bg-rose-100 text-rose-900 dark:bg-rose-900/30 dark:text-rose-200',
+                                    'violet' =>
+                                        'bg-violet-100 text-violet-900 dark:bg-violet-900/30 dark:text-violet-200',
+                                    'slate' => 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100',
+                                ];
+                            @endphp
 
-                                                <span
-                                                    class="text-[11px] px-2 py-0.5 rounded-full {{ $tagClass($n['area']) }}">
-                                                    {{ $n['area'] }}
-                                                </span>
+                            @foreach ($notifications as $n)
+                                @php
+                                    $unread = !empty($n['unread']);
+                                    $flagText = trim($n['flag_text'] ?? '');
+                                    $flagColor = $n['flag_color'] ?? 'slate';
+                                    $readUrl = $n['read_url'] ?? '';
+                                    $url = $n['url'] ?? '';
+                                @endphp
 
-                                                <span data-notif-dot class="ml-auto h-2 w-2 rounded-full bg-sky-500"
-                                                    title="Não lida"></span>
-                                            </div>
+                                <li>
+                                    <button type="button"
+                                        class="notif-item w-full text-left rounded-xl border border-slate-200 bg-white p-3
+                                                     hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800 transition"
+                                        data-notif-id="{{ $n['id'] }}"
+                                        data-unread-default="{{ $unread ? '1' : '0' }}"
+                                        data-read-url="{{ $readUrl }}" data-url="{{ $url }}">
+                                        <div class="flex items-start gap-3">
+                                            <span data-notif-dot
+                                                class="mt-1.5 w-2 h-2 rounded-full bg-sky-500 {{ $unread ? '' : 'hidden' }}"></span>
 
-                                            <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                                                {{ $n['msg'] }}</p>
-                                            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                                                {{ $n['time'] }}
+                                            <div class="min-w-0 flex-1">
+                                                <div class="flex items-center gap-2">
+                                                    <div
+                                                        class="font-semibold text-slate-900 dark:text-slate-100 truncate">
+                                                        {{ $n['title'] ?? '' }}
+                                                    </div>
+
+                                                    @if ($flagText !== '')
+                                                        <span
+                                                            class="shrink-0 inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold
+                           {{ $flagClass[$flagColor] ?? $flagClass['slate'] }}">
+                                                            {{ $flagText }}
+                                                        </span>
+                                                    @endif
+
+                                                    <div class="ml-auto text-xs text-slate-500 dark:text-slate-400">
+                                                        {{ $n['time'] ?? '' }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-1 text-sm text-slate-600 dark:text-slate-200">
+                                                    {{ $n['message'] ?? '' }}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </button>
                                 </li>
                             @endforeach
                         </ul>
@@ -459,7 +442,7 @@
                                     class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">Usuário</label>
                                 <input name="usuario" type="text" placeholder="ID, nome ou e-mail…"
                                     class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                                          dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
                             </div>
 
                             {{-- Título + Flag (badge ao lado) --}}
@@ -471,7 +454,7 @@
                                     <input id="notif-title" name="title" type="text" maxlength="80"
                                         placeholder="Ex: Relatório publicado"
                                         class="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-             dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                                         dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
 
                                     {{-- Badge da flag (aparece quando definir) --}}
                                     <span id="notif-flag-badge"
@@ -483,14 +466,13 @@
                             {{-- Flag opcional --}}
                             <div class="md:col-span-2">
                                 <button type="button" id="notif-flag-toggle"
-                                    class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold
-           border border-slate-200 text-slate-700 hover:bg-slate-50
-           dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                                    class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold border border-slate-200 text-slate-700 hover:bg-slate-50
+                                         dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
                                     <x-bi-flag class="w-4 h-4" />
                                 </button>
 
                                 <div id="notif-flag-editor"
-                                    class="hidden mt-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-3">
+                                    class="hidden mt-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-2">
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
 
                                         <div class="md:col-span-2">
@@ -501,9 +483,8 @@
                                             </label>
                                             <input id="notif-flag-text" name="flag_text" type="text"
                                                 maxlength="24" placeholder="Ex: Urgente, Atenção…"
-                                                class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                 dark:bg-slate-950 dark:border-slate-700 dark:text-slate-100" />
-                                        </div> <br>
+                                                class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:bg-slate-950 dark:border-slate-700 dark:text-slate-100" />
+                                        </div>
 
                                         <div>
                                             <label
@@ -527,10 +508,8 @@
                                                         <input class="sr-only peer" type="radio" name="flag_color"
                                                             value="{{ $c['v'] }}" @checked($loop->first)>
                                                         <span
-                                                            class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold
-                           border border-slate-200 bg-white text-slate-700
-                           dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200
-                           peer-checked:ring-2 peer-checked:ring-sky-500/25 peer-checked:border-sky-500">
+                                                            class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold border border-slate-200 bg-white text-slate-700
+                                                                    dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 peer-checked:ring-2 peer-checked:ring-sky-500/25 peer-checked:border-sky-500">
                                                             <span
                                                                 class="w-2.5 h-2.5 rounded-full {{ $c['dot'] }}"></span>
                                                             {{ $c['t'] }}
@@ -543,9 +522,7 @@
 
                                     <div class="mt-3 flex items-center justify-end gap-2">
                                         <button type="button" id="notif-flag-clear"
-                                            class="px-3 py-2 rounded-lg text-sm font-semibold
-               border border-slate-200 text-slate-700 hover:bg-slate-50
-               dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                                            class="px-3 py-2 rounded-lg text-sm font-semibold border border-slate-200 text-slate-700 hover:bg-slate-50  dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
                                             Remover
                                         </button>
 
@@ -562,8 +539,7 @@
                                 <label
                                     class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">Mensagem</label>
                                 <textarea name="message" rows="4" maxlength="300" placeholder="Escreva a notificação…"
-                                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100"></textarea>
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100"></textarea>
                             </div>
 
                             {{-- Link (opcional) --}}
@@ -580,8 +556,8 @@
                         <div class="mt-4 flex items-center justify-end gap-2">
                             <button type="button" data-notif-tab="inbox"
                                 class="px-3 py-2 rounded-lg text-sm font-semibold
-               border border-slate-200 text-slate-700 hover:bg-slate-50
-               dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                             border border-slate-200 text-slate-700 hover:bg-slate-50
+                             dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
                                 Voltar
                             </button>
 
@@ -647,6 +623,7 @@
             (() => {
                 const D = document;
                 const hide = (el, v) => el && el.classList.toggle('hidden', !!v);
+
                 const setBadge = (el, n) => {
                     if (!el) return;
                     el.textContent = n ? String(n) : '';
@@ -666,6 +643,7 @@
                     /* ===== 1) ABAS ===== */
                     const tabBtns = $$('[data-notif-tab]');
                     const panels = $$('[data-notif-panel]');
+
                     const activateTab = (tab) => {
                         panels.forEach(p => hide(p, p.dataset.notifPanel !== tab));
                         tabBtns.forEach(b => {
@@ -674,36 +652,66 @@
                             clsOff.forEach(c => b.classList.toggle(c, !a));
                         });
                     };
+
                     tabBtns.forEach(b => b.addEventListener('click', () => activateTab(b.dataset.notifTab)));
                     activateTab('inbox');
 
                     /* ===== 2)
-        NOTIFICAÇÕES (lidas na sessão) ===== */
+        RECEBIDAS (lidas + backend-ready) ===== */
                     const avatarBadge = D.querySelector('#notif-avatar-badge');
                     const menuBadge = D.querySelector('#notif-menu-badge');
                     const list = $('#notifications-list');
                     const read = new Set();
 
+                    const csrf =
+                        D.querySelector('meta[name="csrf-token"]')?.content ||
+                        D.querySelector('input[name="_token"]')?.value || '';
+
                     const renderNotifs = () => {
                         if (!list) return;
                         let unread = 0;
+
                         $$('.notif-item', list).forEach(el => {
                             const id = el.dataset.notifId;
                             const u = el.dataset.unreadDefault === '1' && id && !read.has(id);
+
                             unread += u ? 1 : 0;
                             el.classList.toggle('opacity-60', !u);
                             el.querySelector('[data-notif-dot]')?.classList.toggle('hidden', !u);
                         });
+
                         setBadge(avatarBadge, unread);
                         setBadge(menuBadge, unread);
+                    };
+
+                    const persistRead = (item) => {
+                        const url = item?.dataset?.readUrl;
+                        if (!url || !csrf) return;
+
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrf,
+                                'Accept': 'application/json'
+                            },
+                            keepalive: true,
+                        }).catch(() => {});
                     };
 
                     list?.addEventListener('click', (e) => {
                         const item = e.target.closest('.notif-item');
                         const id = item?.dataset?.notifId;
+
                         if (!item || item.dataset.unreadDefault !== '1' || !id) return;
+
                         read.add(id);
+                        item.dataset.unreadDefault = '0'; // evita reprocessar
                         renderNotifs();
+                        persistRead(item);
+
+                        // opcional: navegar após marcar como lida (se você usar data-url)
+                        // const go = item.dataset.url;
+                        // if (go) window.location.href = go;
                     });
 
                     renderNotifs();
@@ -712,8 +720,7 @@
                     const destinoSelect = $('#notif-destino'); // fallback se existir
                     const getDestino = () =>
                         (modal.querySelector('input[name="destino"]:checked')?.value) ||
-                        (destinoSelect?.value) ||
-                        'todos';
+                        (destinoSelect?.value) || 'todos';
 
                     const onDestinoChange = (fn) => {
                         const radios = $$('input[name="destino"]');
@@ -722,21 +729,20 @@
                     };
 
                     const boxUser = $('#notif-por-usuario');
-
                     const setoresWrap = $('#notif-setores-wrap');
                     const setoresBtn = $('#notif-setores-btn');
                     const setoresMenu = $('#notif-setores-menu');
                     const setoresLbl = $('#notif-setores-label');
                     const setoresChps = $('#notif-setores-chips');
                     const checks = $$('.notif-setor-checkbox');
-
                     const btnClear = $('#notif-setores-clear');
                     const btnClose = $('#notif-setores-close');
 
                     const selected = () => checks.filter(c => c.checked).map(c => c.value);
-                    const menuOpen = () => setoresMenu && setoresMenu.classList.remove('hidden');
                     const menuClose = () => setoresMenu && setoresMenu.classList.add('hidden');
-                    const menuToggle = () => setoresMenu?.classList.contains('hidden') ? menuOpen() : menuClose();
+                    const menuToggle = () => setoresMenu?.classList.contains('hidden') ?
+                        setoresMenu.classList.remove('hidden') :
+                        setoresMenu.classList.add('hidden');
 
                     const renderSetores = () => {
                         const sel = selected();
@@ -811,19 +817,14 @@
                     });
                     renderSetores();
 
-                    /* ===== 4) FLAG (texto + cor, opcional, badge ao lado do título) ===== */
+                    /* ===== 4) FLAG ===== */
                     const flagToggle = $('#notif-flag-toggle');
                     const flagEditor = $('#notif-flag-editor');
                     const flagText = $('#notif-flag-text');
                     const flagBadge = $('#notif-flag-badge');
                     const flagDone = $('#notif-flag-done');
                     const flagClear = $('#notif-flag-clear');
-
                     const radiosFlag = $$('input[name="flag_color"]');
-
-                    const getFlagColor = () =>
-                        modal.querySelector('input[name="flag_color"]:checked')?.value ||
-                        radiosFlag[0]?.value || '';
 
                     const flagStyles = {
                         sky: 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-200',
@@ -833,10 +834,13 @@
                         violet: 'bg-violet-100 text-violet-900 dark:bg-violet-900/30 dark:text-violet-200',
                     };
 
+                    const getFlagColor = () =>
+                        modal.querySelector('input[name="flag_color"]:checked')?.value ||
+                        radiosFlag[0]?.value || '';
+
                     const clearFlagClasses = () => {
                         if (!flagBadge) return;
-                        Object.values(flagStyles)
-                            .flatMap(c => c.split(' '))
+                        Object.values(flagStyles).flatMap(c => c.split(' '))
                             .forEach(k => flagBadge.classList.remove(k));
                     };
 
@@ -847,14 +851,9 @@
                         const color = getFlagColor();
 
                         clearFlagClasses();
-
-                        // sempre zera o texto antes (pra não “grudar”)
                         flagBadge.textContent = '';
 
-                        if (!text) {
-                            hide(flagBadge, true);
-                            return;
-                        }
+                        if (!text) return hide(flagBadge, true);
 
                         flagBadge.textContent = text;
                         hide(flagBadge, false);
@@ -862,10 +861,8 @@
                             .add(k));
                     };
 
-                    flagToggle?.addEventListener('click', () => {
-                        hide(flagEditor, !flagEditor?.classList.contains('hidden'));
-                    });
-
+                    flagToggle?.addEventListener('click', () => hide(flagEditor, !flagEditor?.classList.contains(
+                        'hidden')));
                     flagDone?.addEventListener('click', () => {
                         applyFlag();
                         hide(flagEditor, true);
@@ -873,7 +870,6 @@
 
                     flagClear?.addEventListener('click', () => {
                         if (flagText) flagText.value = '';
-                        // reseta para a primeira cor disponível (sem depender de "slate")
                         if (radiosFlag[0]) radiosFlag[0].checked = true;
                         applyFlag();
                         hide(flagEditor, true);
@@ -881,12 +877,15 @@
 
                     flagText?.addEventListener('input', applyFlag);
                     radiosFlag.forEach(r => r.addEventListener('change', applyFlag));
-
                     applyFlag();
 
-                    /* ===== 5) SUBMIT (mock) ===== */
+                    /* ===== 5) SUBMIT ===== */
                     const form = $('#send-notification-form');
                     form?.addEventListener('submit', (e) => {
+                        const action = form.getAttribute('action') || '#';
+                        const isRealBackend = action && action !== '#';
+                        if (isRealBackend) return;
+
                         e.preventDefault();
 
                         if (getDestino() === 'setor' && selected().length === 0) {
