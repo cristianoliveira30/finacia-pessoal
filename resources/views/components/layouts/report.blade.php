@@ -133,11 +133,9 @@
             @include('components.layouts.report.header')
 
             {{-- MODIFICAÇÃO: Padding responsivo (p-4 no mobile, p-10 no desktop) --}}
-            <main class="flex-1 min-w-0 p-4 lg:p-10">
-                <div class="rounded-lg dark:bg-gray-950 bg-white/50 shadow-lg p-2 border border-slate-200 dark:border-slate-700">
-                    {{ $slot ?? '' }}
-                    @yield('content')
-                </div>
+            <main class="flex-1 min-w-0 p-1">
+                {{ $slot ?? '' }}
+                @yield('content')
             </main>
 
             @include('components.layouts.report.footer')
