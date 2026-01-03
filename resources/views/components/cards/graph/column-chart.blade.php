@@ -49,7 +49,7 @@
                     colors: [brandColor, brandSecondaryColor],
                     chart: {
                         type: "bar",
-                        height: 225,
+                        height: 290,
                         fontFamily: "Inter, sans-serif",
                         toolbar: {
                             show: false,

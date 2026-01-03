@@ -101,8 +101,93 @@
                 </div>
             </div>
 
-            {{-- Footer (Posicionado entre gráfico e filtros) --}}
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-3 border-t border-slate-100 dark:border-slate-700/80">
+            {{-- Filtros --}}
+            <div id="{{ $filterSectionId }}" class="hidden border-t border-slate-100 dark:border-slate-700/80 p-4">
+                <div class="space-y-4">
+                    <h6 class="text-sm font-medium text-slate-900 dark:text-slate-200">Período da Solicitação</h6>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400">De</label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-slate-500 dark:text-slate-400">
+                                    <x-bi-calendar class="w-3.5 h-3.5" />
+                                </div>
+                                <input type="text" id="{{ $id }}-start-date" placeholder="dd / mm / aaaa"
+                                    class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5 dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400">Até</label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-slate-500 dark:text-slate-400">
+                                    <x-bi-calendar class="w-3.5 h-3.5" />
+                                </div>
+                                <input type="text" id="{{ $id }}-end-date" placeholder="dd / mm / aaaa"
+                                    class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5 dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Aplicar
+                            Filtros</button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- IA --}}
+            <div id="{{ $aiSectionId }}" class="hidden border-t border-slate-100 dark:border-slate-700/80 p-4">
+                <form id="{{ $id }}-ai-form"
+                    action="{{ route('ai.analise') }}"
+                    method="POST"
+                    class="space-y-4"
+                    data-card-ai-form
+                    data-card-id="{{ $id }}"
+                    data-ai-title="{{ e($title ?? '') }}"
+                    data-ai-chart-type="{{ $chartType ?? '' }}">
+                @csrf
+                    <script type="application/json" id="{{ $id }}-ai-chart-json">
+                        @json($chart ?? [])
+                    </script>
+                    <h6 class="text-sm font-medium text-slate-900 dark:text-slate-200">Assistente Virtual</h6>
+
+                    <div class="space-y-2">
+                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400">
+                            O que você deseja saber sobre este gráfico?
+                        </label>
+                        <textarea id="{{ $id }}-ai-prompt" name="prompt" rows="2" required
+                            class="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 rounded-lg border border-slate-300 focus:ring-sky-500 focus:border-sky-500 resize-none dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500"
+                            placeholder="Digite sua pergunta aqui..."></textarea>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400">Resposta da IA</label>
+                        <div id="{{ $id }}-ai-response"
+                            class="block p-2.5 w-full text-sm text-slate-700 bg-slate-100 rounded-lg border border-slate-200
+                                    dark:bg-slate-900/50 dark:border-slate-700 dark:text-slate-200
+                                    whitespace-pre-wrap">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                            data-ai-submit>
+                            <span data-ai-btn-text class="inline-flex items-center gap-2">
+                                <x-bi-stars class="w-3.5 h-3.5" /> Perguntar à IA
+                            </span>
+                            <div data-ai-btn-loading class="hidden">
+                                <x-loading size="sm" />
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {{-- Footer --}}
+            <div
+                class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-3 border-t border-slate-100 dark:border-slate-700/80">
                 <div class="text-xs md:text-sm text-slate-500 dark:text-slate-400">
                     <span class="font-medium text-slate-600 dark:text-slate-200">Atualizado em:</span>
                     {{ date('d/m/Y') }}

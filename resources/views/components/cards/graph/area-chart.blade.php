@@ -72,7 +72,7 @@
                         sparkline: {
                             enabled: false
                         },
-                        height: 225,
+                        height: 290,
                         width: "100%",
                         type: "area",
                         fontFamily: "Inter, sans-serif",

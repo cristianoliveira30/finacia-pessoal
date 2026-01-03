@@ -1,3 +1,5 @@
+import { marked } from "marked";
+
 export const Refresh = (id) => {
     window.dispatchEvent(new CustomEvent('chart:refresh', { detail: { cardId: id } }));
 };
@@ -70,119 +72,127 @@ function normalizeChartPayload(chart, type, title) {
 }
 
 export const bindCardAI = (id) => {
-  const form =
-    document.getElementById(`${id}-ai-form`) ||
-    document.querySelector(`[data-card-ai-form][data-card-id="${id}"]`);
+    const form =
+        document.getElementById(`${id}-ai-form`) ||
+        document.querySelector(`[data-card-ai-form][data-card-id="${id}"]`);
 
-  if (!form) return;
-  if (form.dataset.aiBound === "1") return;
-  form.dataset.aiBound = "1";
+    if (!form) return;
+    if (form.dataset.aiBound === "1") return;
+    form.dataset.aiBound = "1";
 
-  const promptEl = document.getElementById(`${id}-ai-prompt`);
-  const responseEl = document.getElementById(`${id}-ai-response`);
-  const statusEl = document.getElementById(`${id}-ai-status`);
+    const promptEl = document.getElementById(`${id}-ai-prompt`);
+    const responseEl = document.getElementById(`${id}-ai-response`);
+    const statusEl = document.getElementById(`${id}-ai-status`);
 
-  const submitBtn = form.querySelector("[data-ai-submit]");
-  const btnText = form.querySelector("[data-ai-btn-text]");
-  const btnLoading = form.querySelector("[data-ai-btn-loading]");
+    const submitBtn = form.querySelector("[data-ai-submit]");
+    const btnText = form.querySelector("[data-ai-btn-text]");
+    const btnLoading = form.querySelector("[data-ai-btn-loading]");
 
-  const initialResponseHeight = responseEl ? responseEl.offsetHeight : 0;
+    const initialResponseHeight = responseEl ? responseEl.offsetHeight : 0;
 
-  const resetTextareaHeight = (el) => {
-    if (!el) return;
-    el.style.height = initialResponseHeight ? `${initialResponseHeight}px` : "";
-    el.style.overflowY = "hidden";
-  };
+    const resetTextareaHeight = (el) => {
+        if (!el) return;
+        el.style.height = initialResponseHeight ? `${initialResponseHeight}px` : "";
+        el.style.overflowY = "hidden";
+    };
 
-  const autoGrowTextarea = (el) => {
-    if (!el) return;
-    el.style.overflowY = "hidden";
-    el.style.height = "auto";
-    el.style.height = `${el.scrollHeight}px`;
-  };
+    const autoGrowTextarea = (el) => {
+        if (!el) return;
+        el.style.overflowY = "hidden";
+        el.style.height = "auto";
+        el.style.height = `${el.scrollHeight}px`;
+    };
 
-  const setLoading = (loading) => {
-    if (submitBtn) submitBtn.disabled = !!loading;
-    if (btnText) btnText.classList.toggle("hidden", !!loading);
-    if (btnLoading) btnLoading.classList.toggle("hidden", !loading);
-  };
+    const setLoading = (loading) => {
+        if (submitBtn) {
+            submitBtn.toggleAttribute("disabled", !!loading);
+        }
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+        // usa hidden attribute (garante) + classe hidden (tailwind)
+        if (btnText) {
+            btnText.toggleAttribute("hidden", !!loading);
+            btnText.classList.toggle("hidden", !!loading);
+        }
 
-    const Api = window.Api;
-    const Alerts = window.Alerts;
+        if (btnLoading) {
+            btnLoading.toggleAttribute("hidden", !loading);
+            btnLoading.classList.toggle("hidden", !loading);
+        }
+    };
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-    if (!Api) {
-      statusEl && (statusEl.textContent = "window.Api não encontrado.");
-      Alerts?.showError?.({ msg: "API não configurada (window.Api)." });
-      return;
-    }
+        const Api = window.Api;
+        const Alerts = window.Alerts;
 
-    const endpoint = form.getAttribute("action");
-    const comando = String(promptEl?.value ?? "").trim();
+        if (!Api) {
+            statusEl && (statusEl.textContent = "window.Api não encontrado.");
+            Alerts?.showError?.({ msg: "API não configurada (window.Api)." });
+            return;
+        }
 
-    if (!endpoint) {
-      statusEl && (statusEl.textContent = "Endpoint não configurado.");
-      Alerts?.showError?.({ msg: "Endpoint não configurado." });
-      return;
-    }
+        const endpoint = form.getAttribute("action");
+        const comando = String(promptEl?.value ?? "").trim();
 
-    if (!comando) {
-      statusEl && (statusEl.textContent = "Digite uma pergunta antes de enviar.");
-      Alerts?.showInfo?.("Digite uma pergunta antes de enviar.");
-      return;
-    }
+        if (!endpoint) {
+            statusEl && (statusEl.textContent = "Endpoint não configurado.");
+            Alerts?.showError?.({ msg: "Endpoint não configurado." });
+            return;
+        }
 
-    const title = form.dataset.aiTitle || "";
-    const chartType = form.dataset.aiChartType || "";
-    const chart = safeParseJsonScript(`${id}-ai-chart-json`);
-    const payload = normalizeChartPayload(chart, chartType, title);
+        if (!comando) {
+            statusEl && (statusEl.textContent = "Digite uma pergunta antes de enviar.");
+            Alerts?.showInfo?.("Digite uma pergunta antes de enviar.");
+            return;
+        }
 
-    const hasData = (payload.categories?.length || 0) > 0 || (payload.series?.length || 0) > 0;
-    if (!hasData) {
-      statusEl && (statusEl.textContent = "dados insuficientes");
-      Alerts?.showInfo?.("Dados insuficientes para análise.");
-      return;
-    }
+        const title = form.dataset.aiTitle || "";
+        const chartType = form.dataset.aiChartType || "";
+        const chart = safeParseJsonScript(`${id}-ai-chart-json`);
+        const payload = normalizeChartPayload(chart, chartType, title);
 
-    if (statusEl) statusEl.textContent = "";
-    if (responseEl) {
-      responseEl.value = "";
-      resetTextareaHeight(responseEl);
-    }
+        const hasData = (payload.categories?.length || 0) > 0 || (payload.series?.length || 0) > 0;
+        if (!hasData) {
+            statusEl && (statusEl.textContent = "dados insuficientes");
+            Alerts?.showInfo?.("Dados insuficientes para análise.");
+            return;
+        }
 
-    setLoading(true);
-    Alerts?.loading?.("Consultando IA...", "Gerando análise, aguarde.");
+        if (statusEl) statusEl.textContent = "";
+        if (responseEl) {
+            responseEl.value = "";
+            resetTextareaHeight(responseEl);
+        }
 
-    try {
-      const res = await Api.post(endpoint, { nome: title, comando, payload });
+        setLoading(true);
 
-      const data = res?.data ?? {};
-      const answer = data.answer ?? data.message ?? data.response ?? "";
+        try {
+            const res = await Api.post(endpoint, { nome: title, comando, payload });
 
-      if (responseEl) {
-        responseEl.value = String(answer || "Sem resposta do servidor.");
-        autoGrowTextarea(responseEl);
-      }
+            const data = res?.data ?? {};
+            const answer = data.answer ?? data.message ?? data.response ?? "";
 
-      Alerts?.close?.();
-      Alerts?.showSuccess?.("Análise gerada com sucesso");
-    } catch (err) {
-      const msg =
-        err?.response?.data?.message ||
-        err?.response?.data?.error ||
-        "Falha ao consultar a IA.";
+            if (responseEl) {
+               responseEl.innerHTML = marked.parse(String(answer || "Sem resposta do servidor."));
+            }
 
-      if (statusEl) statusEl.textContent = msg;
+            Alerts?.close?.();
+            Alerts?.showSuccess?.("Análise gerada com sucesso");
+        } catch (err) {
+            const msg =
+                err?.response?.data?.message ||
+                err?.response?.data?.error ||
+                "Falha ao consultar a IA.";
 
-      Alerts?.close?.();
-      Alerts?.showError?.({ msg });
-    } finally {
-      Alerts?.close?.();
-      setLoading(false);
-    }
-  });
+            if (statusEl) statusEl.textContent = msg;
+
+            Alerts?.close?.();
+            Alerts?.showError?.({ msg });
+        } finally {
+            Alerts?.close?.();
+            setLoading(false);
+        }
+    });
 };
 
 export const bindAllCardsAI = (root = document) => {

@@ -8,7 +8,7 @@
 
 <div
     class="overflow-x-auto border border-slate-100 bg-slate-50/40
-            dark:border-slate-700 dark:bg-slate-900/40 p-2 h-56">
+            dark:border-slate-700 dark:bg-slate-900/40 p-2 h-76">
     <table id="{{ $tableId }}" data-datatable-from-chart="true"
         class="min-w-full text-xs sm:text-sm text-left text-slate-600 dark:text-slate-200">
         <thead

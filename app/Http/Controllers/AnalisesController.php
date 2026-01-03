@@ -13,6 +13,10 @@ class AnalisesController extends Controller
 
     private const TASKS = [
         'Evolução do Índice Geral' => "Tarefa: analisar métricas de evolucao de índice no período informado.",
+        'Distribuição de Demandas por Setor' => "Tarefa: analisar métricas de distribuição de demandas por setor no período informado.",
+        'Pendências por Setor (Abertas x Vencidas)' => "Tarefa: analisar pendencias abertas e venciadas por setor no período informado.",
+        'Execução por Setor (Previsto x Realizado)' => "Tarefa: analisar as previsões e realizações por setor no período informado.",
+        'Score por Setor (0-100)' => "Tarefa: analisar o score de cada setor no período informado.",
     ];
 
     public function analise(Request $request)

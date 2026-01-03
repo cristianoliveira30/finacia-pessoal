@@ -19,6 +19,7 @@
         "flowbite": "^4.0.1",
         "jspdf": "^3.0.4",
         "jspdf-autotable": "^5.0.2",
+        "marked": "^17.0.1",
         "simple-datatables": "^10.2.0",
         "sweetalert2": "^11.26.10",
         "xlsx": "^0.18.5"

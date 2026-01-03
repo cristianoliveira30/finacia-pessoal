@@ -9,8 +9,12 @@
     $customColors = $data['colors'] ?? null;
 @endphp
 
-<div class="w-full h-full flex flex-col bg-transparent rounded-xl p-2 overflow-hidden">
-    <div id="{{ $chartId }}" class="flex-1 w-full min-h-0"></div>
+{{--
+    ALTERAÇÃO 1: Removi 'overflow-hidden' e adicionei 'p-2' (padding) extra no container.
+    Isso evita que sombras ou pontas de letras sejam cortadas drasticamente.
+--}}
+<div class="w-full h-full flex flex-col items-center justify-center bg-transparent rounded-xl p-2">
+    <div id="{{ $chartId }}" class="w-full flex-1" style="min-height: 300px;"></div>
 </div>
 
 @push('scripts')
@@ -45,7 +49,7 @@
                     colors: chartColors,
                     chart: {
                         type: "donut",
-                        height: "100%", 
+                        height: 290,
                         width: "100%",
                         fontFamily: "Inter, sans-serif",
                         background: 'transparent',
@@ -65,7 +69,7 @@
                     stroke: {
                         show: true,
                         colors: ['#1e293b'],
-                        width: 2 
+                        width: 4
                     },
                     plotOptions: {
                         pie: {
@@ -75,10 +79,10 @@
                                 labels: {
                                     show: true,
                                     name: { show: false },
-                                    value: { 
-                                        show: true, 
-                                        fontSize: '4vh',
-                                        fontWeight: 800, 
+                                    value: {
+                                        show: true,
+                                        fontSize: '32px', // Mantido GIGANTE
+                                        fontWeight: 800,
                                         color: '#ffffff',
                                         offsetY: 10,
                                         formatter: function (val) { return val }
@@ -125,7 +129,7 @@
                             return seriesName + ": " + opts.w.config.series[opts.seriesIndex]
                         }
                     },
-                    tooltip: { 
+                    tooltip: {
                         enabled: true,
                         theme: 'dark',
                         y: { formatter: function(val) { return val; } }
