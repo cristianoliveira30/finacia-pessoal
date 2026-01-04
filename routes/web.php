@@ -252,7 +252,7 @@ Route::prefix('saude')->name('saude.')->group(function () {
     // -----------------------------
     // IMUNIZAÇÃO
     // -----------------------------
-    Route::view('/imunizacao/cobertura', 'saude.placeholder')->name('imunizacao.cobertura');
+    Route::view('/imunizacao/cobertura', 'saude.imunizacao.cobertura-vacinal')->name('imunizacao.cobertura');
     Route::view('/imunizacao/campanhas', 'saude.placeholder')->name('imunizacao.campanhas');
     Route::view('/imunizacao/estoque', 'saude.placeholder')->name('imunizacao.estoque');
     Route::view('/imunizacao/perdas', 'saude.placeholder')->name('imunizacao.perdas');
@@ -269,7 +269,7 @@ Route::prefix('saude')->name('saude.')->group(function () {
     // REGULAÇÃO / FILAS
     // -----------------------------
     Route::view('/regulacao/fila-consultas', 'saude.placeholder')->name('regulacao.fila_consultas');
-    Route::view('/regulacao/fila-exames', 'saude.placeholder')->name('regulacao.fila_exames');
+    Route::view('/regulacao/fila-exames', 'saude.regulacao.fila-exames')->name('regulacao.fila-exames');
     Route::view('/regulacao/sla', 'saude.placeholder')->name('regulacao.sla');
     Route::view('/regulacao/oferta-demanda', 'saude.placeholder')->name('regulacao.oferta_demanda');
 

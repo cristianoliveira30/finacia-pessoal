@@ -172,7 +172,7 @@
             'icon_main' => 'list-check',
             'items' => [
                 ['label' => 'Fila de Consultas', 'route' => 'saude.regulacao.fila_consultas', 'icon' => 'list-ol'],
-                ['label' => 'Fila de Exames', 'route' => 'saude.regulacao.fila_exames', 'icon' => 'list-ol'],
+                ['label' => 'Fila de Exames', 'route' => 'saude.regulacao.fila-exames', 'icon' => 'list-ol'],
                 ['label' => 'SLA da Regulação', 'route' => 'saude.regulacao.sla', 'icon' => 'stopwatch'],
                 ['label' => 'Oferta x Demanda', 'route' => 'saude.regulacao.oferta_demanda', 'icon' => 'bar-chart'],
             ],
@@ -468,7 +468,7 @@
                             <a href="{{ route($item['route']) }}"
                                 class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
                                 target="_blank"
-                                rel="noopener noreferrer>
+                                rel="noopener noreferrer">
                                 {{-- ÍCONE INTERNO DO POPOVER --}}
                                 <x-dynamic-component :component="'bi-'
                                 . $item['icon']" class="w-4 h-4" />

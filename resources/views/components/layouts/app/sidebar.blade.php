@@ -51,8 +51,8 @@
             'icon_main' => 'plus-circle',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'saude.home', 'icon' => 'list'],
-                ['label' => 'Cobertura Vacinal', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Fila de Exames', 'route' => 'saude.relatorios', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'Cobertura Vacinal', 'route' => 'saude.imunizacao.cobertura', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'Fila de Exames', 'route' => 'saude.regulacao.fila-exames', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'saude.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin'],
             ],

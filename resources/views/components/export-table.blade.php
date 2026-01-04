@@ -7,7 +7,6 @@
     $columns = $config['columns'] ?? [];
     $rows = $config['rows'] ?? [];
 
-    // Define a rota de destino do filtro. Se não passada na config, usa a rota 'report.default' do web.php
     $filterRoute = $config['filter_route'] ?? route('report.default');
 
     $defaultLabels = [
@@ -56,7 +55,8 @@
                     <th{!! $thAttrs !!}>
                         <div class="flex flex-col gap-1 min-w-[120px]">
                             <div class="flex items-center justify-between group">
-                                <span class="mr-2">{{ $label }}</span>
+                                {{-- AUMENTO DE CONTRASTE: text-gray-700 --}}
+                                <span class="mr-2 text-gray-700 dark:text-gray-200 font-semibold">{{ $label }}</span>
                                 
                                 <button type="button" 
                                         class="column-filter-toggle text-gray-400 hover:text-blue-600 focus:outline-none p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -71,7 +71,7 @@
                             <div class="column-filter-container hidden mt-1" id="filter-container-{{ $tableId }}-{{ $index }}">
                                 <input type="{{ $inputType }}" 
                                        class="column-filter-input w-full text-xs px-2 py-1 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                       placeholder="Buscar e Mover p/ Topo..."
+                                       placeholder="Buscar..."
                                        data-col-index="{{ $index }}"
                                        step="any">
                             </div>
@@ -91,7 +91,8 @@
                             $isFirst = $loop->first;
                         @endphp
 
-                        <td class="{{ $isFirst ? 'font-medium text-heading whitespace-nowrap' : 'whitespace-nowrap' }}">
+                        {{-- AUMENTO DE CONTRASTE NO TEXTO --}}
+                        <td class="{{ $isFirst ? 'font-semibold text-gray-800 dark:text-gray-100 whitespace-nowrap' : 'text-gray-600 dark:text-gray-300 whitespace-nowrap' }}">
                             {{ $value }}
                         </td>
                     @endforeach
@@ -157,7 +158,6 @@
                 const filterBtnId = 'filterButton_' + id;
                 const filterContainerId = 'filterContainer_' + id;
                 
-                // Pega a rota passada via extraOptions
                 const filterAction = extraOptions.filterAction || '#';
 
                 const dtOptions = Object.assign({},
@@ -179,12 +179,12 @@
                             "</svg>" +
                             "</button>" +
                             "<div id='exportDropdown' class='z-10 hidden w-52 divide-y divide-gray-100 rounded-lg bg-white shadow-sm dark:bg-gray-700' data-popper-placement='bottom'>" +
-                            "<ul class='p-2 text-left text-sm font-medium text-gray-500 dark:text-gray-400' aria-labelledby='exportDropdownButton'>" +
-                            "<li><button id='export-pdf' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7Zm.5 6a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Zm-3 0a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Zm6 0a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Z' clip-rule='evenodd'/></svg><span>Exportar PDF</span></button></li>" +
-                            "<li><button id='export-csv' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm1.018 8.828a2.34 2.34 0 0 0-2.373 2.13v.008a2.32 2.32 0 0 0 2.06 2.497l.535.059a.993.993 0 0 0 .136.006.272.272 0 0 1 .263.367l-.008.02a.377.377 0 0 1-.018.044.49.49 0 0 1-.078.02 1.689 1.689 0 0 1-.297.021h-1.13a1 1 0 1 0 0 2h1.13c.417 0 .892-.05 1.324-.279.47-.248.78-.648.953-1.134a2.272 2.272 0 0 0-2.115-3.06l-.478-.052a.32.32 0 0 1-.285-.341.34.34 0 0 1 .344-.306l.94.02a1 1 0 1 0 .043-2l-.943-.02h-.003Zm7.933 1.482a1 1 0 1 0-1.902-.62l-.57 1.747-.522-1.726a1 1 0 0 0-1.914.578l1.443 4.773a1 1 0 0 0 1.908.021l1.557-4.773Zm-13.762.88a.647.647 0 0 1 .458-.19h1.018a1 1 0 1 0 0-2H6.647A2.647 2.647 0 0 0 4 13.647v1.706A2.647 2.647 0 0 0 6.647 18h1.018a1 1 0 1 0 0-2H6.647A.647.647 0 0 1 6 15.353v-1.706c0-.172.068-.336.19-.457Z' clip-rule='evenodd'/></svg><span>Exportar CSV</span></button></li>" +
-                            "<li><button id='export-json' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7Zm-.293 9.293a1 1 0 0 1 0 1.414L9.414 14l1.293 1.293a1 1 0 0 1-1.414 1.414l-2-2a1 1 0 0 1 0-1.414l2-2a1 1 0 0 1 1.414 0Zm2.586 1.414a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1 0 1.414l-2 2a1 1 0 0 1-1.414-1.414L14.586 14l-1.293-1.293Z' clip-rule='evenodd'/></svg><span>Exportar JSON</span></button></li>" +
-                            "<li><button id='export-txt' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7ZM8 16a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1Zm1-5a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z' clip-rule='evenodd'/></svg><span>Exportar TXT</span></button></li>" +
-                            "<li><button id='export-sql' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path d='M12 7.205c4.418 0 8-1.165 8-2.602C20 3.165 16.418 2 12 2S4 3.165 4 4.603c0 1.437 3.582 2.602 8 2.602ZM12 22c4.963 0 8-1.686 8-2.603v-4.404c-.052.032-.112.06-.165.09a7.75 7.75 0 0 1-.745.387c-.193.088-.394.173-.6.253-.063.024-.124.05-.189.073a18.934 18.934 0 0 1-6.3.998c-2.135.027-4.26-.31-6.3-.998-.065-.024-.126-.05-.189-.073a10.163 10.163 0 0 1-.852-.372 7.816 7.816 0 0 1-.493-.268c-.055-.03-.115-.058-.167-.09V12c0 .917 3.037 2.603 8 2.603s8-1.686 8-2.603V7.596c-.052.031-.112.059-.165.09a7.816 7.816 0 0 1-.745.386Z'/></svg><span>Exportar SQL</span></button></li>" +
+                            "<ul class='p-2 text-left text-sm font-medium text-gray-700 dark:text-gray-400' aria-labelledby='exportDropdownButton'>" +
+                            "<li><button id='export-pdf' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7Zm.5 6a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Zm-3 0a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Zm6 0a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Z' clip-rule='evenodd'/></svg><span>Exportar PDF</span></button></li>" +
+                            "<li><button id='export-csv' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm1.018 8.828a2.34 2.34 0 0 0-2.373 2.13v.008a2.32 2.32 0 0 0 2.06 2.497l.535.059a.993.993 0 0 0 .136.006.272.272 0 0 1 .263.367l-.008.02a.377.377 0 0 1-.018.044.49.49 0 0 1-.078.02 1.689 1.689 0 0 1-.297.021h-1.13a1 1 0 1 0 0 2h1.13c.417 0 .892-.05 1.324-.279.47-.248.78-.648.953-1.134a2.272 2.272 0 0 0-2.115-3.06l-.478-.052a.32.32 0 0 1-.285-.341.34.34 0 0 1 .344-.306l.94.02a1 1 0 1 0 .043-2l-.943-.02h-.003Zm7.933 1.482a1 1 0 1 0-1.902-.62l-.57 1.747-.522-1.726a1 1 0 0 0-1.914.578l1.443 4.773a1 1 0 0 0 1.908.021l1.557-4.773Zm-13.762.88a.647.647 0 0 1 .458-.19h1.018a1 1 0 1 0 0-2H6.647A2.647 2.647 0 0 0 4 13.647v1.706A2.647 2.647 0 0 0 6.647 18h1.018a1 1 0 1 0 0-2H6.647A.647.647 0 0 1 6 15.353v-1.706c0-.172.068-.336.19-.457Z' clip-rule='evenodd'/></svg><span>Exportar CSV</span></button></li>" +
+                            "<li><button id='export-json' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7Zm-.293 9.293a1 1 0 0 1 0 1.414L9.414 14l1.293 1.293a1 1 0 0 1-1.414 1.414l-2-2a1 1 0 0 1 0-1.414l2-2a1 1 0 0 1 1.414 0Zm2.586 1.414a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1 0 1.414l-2 2a1 1 0 0 1-1.414-1.414L14.586 14l-1.293-1.293Z' clip-rule='evenodd'/></svg><span>Exportar JSON</span></button></li>" +
+                            "<li><button id='export-txt' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7ZM8 16a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1Zm1-5a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z' clip-rule='evenodd'/></svg><span>Exportar TXT</span></button></li>" +
+                            "<li><button id='export-sql' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'><svg class='me-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'><path d='M12 7.205c4.418 0 8-1.165 8-2.602C20 3.165 16.418 2 12 2S4 3.165 4 4.603c0 1.437 3.582 2.602 8 2.602ZM12 22c4.963 0 8-1.686 8-2.603v-4.404c-.052.032-.112.06-.165.09a7.75 7.75 0 0 1-.745.387c-.193.088-.394.173-.6.253-.063.024-.124.05-.189.073a18.934 18.934 0 0 1-6.3.998c-2.135.027-4.26-.31-6.3-.998-.065-.024-.126-.05-.189-.073a10.163 10.163 0 0 1-.852-.372 7.816 7.816 0 0 1-.493-.268c-.055-.03-.115-.058-.167-.09V12c0 .917 3.037 2.603 8 2.603s8-1.686 8-2.603V7.596c-.052.031-.112.059-.165.09a7.816 7.816 0 0 1-.745.386Z'/></svg><span>Exportar SQL</span></button></li>" +
                             "</ul>" +
                             "</div>" +
                             "</div>" +
@@ -200,18 +200,14 @@
                                 "</div>" : ""
                             ) +
                             "</div>" +
-                            // --- ALTERAÇÃO: Filtro Global agora é um FORMULÁRIO ---
-                            // Adicionada a tag <form> com action e method
                             "<form action='" + filterAction + "' method='GET' id='" + filterContainerId + "' class='hidden w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md p-4 mb-3 transition-all duration-300'>" +
                             "<div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4'>" +
-                             // Adicionados atributos 'name' aos inputs para envio via GET
-                             "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Data Início</label><input type='date' name='data_inicio' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'></div>" +
-                             "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Data Fim</label><input type='date' name='data_fim' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'></div>" +
-                             "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Status</label><select name='status' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'><option value=''>Todos</option><option value='ativo'>Ativo</option><option value='inativo'>Inativo</option></select></div>" +
-                             // Botão agora é type="submit"
-                             "<div class='flex items-end'><button type='submit' class='w-full dark:bg-blue-900 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs'>Aplicar Filtros</button></div>" +
+                            "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Data Início</label><input type='date' name='data_inicio' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'></div>" +
+                            "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Data Fim</label><input type='date' name='data_fim' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'></div>" +
+                            "<div><label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Status</label><select name='status' class='w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white'><option value=''>Todos</option><option value='ativo'>Ativo</option><option value='inativo'>Inativo</option></select></div>" +
+                            "<div class='flex items-end'><button type='submit' class='w-full dark:bg-blue-900 dark:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-xs'>Aplicar Filtros</button></div>" +
                             "</div>" +
-                            "</form>" + // Fim do Form
+                            "</form>" + 
                             "<div class='" + options.classes.container + "'" + (options.scrollY.length ?
                                 " style='height: " + options.scrollY + "; overflow-Y: auto;'" : "") + "></div>" +
                             "<div class='" + options.classes.bottom + "'>" +
@@ -225,7 +221,6 @@
 
                 const table = new window.simpleDatatables.DataTable('#' + id, dtOptions);
 
-                // --- LÓGICA DE REORDENAÇÃO (Mantida igual) ---
                 document.querySelectorAll(`#${id} .column-filter-toggle`).forEach(button => {
                     button.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -289,7 +284,6 @@
                     tbody.appendChild(fragment);
                 }
 
-                // Exports e Filter Toggle
                 const exportButton = document.getElementById("exportDropdownButton");
                 const exportDropdownEl = document.getElementById("exportDropdown");
                 if (window.Dropdown && exportButton && exportDropdownEl) {
@@ -332,7 +326,6 @@
                     @json([
                         'labels' => $labels,
                         'datatable' => $datatableOptions,
-                        // Passamos a rota definida no PHP para o JS
                         'filterAction' => $filterRoute 
                     ]),
                     {

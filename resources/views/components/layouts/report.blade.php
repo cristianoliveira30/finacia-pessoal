@@ -112,14 +112,11 @@
 </head>
 
 <body class="min-h-screen antialiased overflow-hidden"> 
-    {{-- OBS: Adicionei overflow-hidden no body inicialmente para evitar scroll durante carregamento --}}
-
-    {{-- 1. O LOADER (Inserido logo no início do body) --}}
+    
     <div id="page-loader">
         <div class="flex flex-col items-center gap-4">
             <span class="loader-spinner"></span>
-            {{-- Opcional: Texto ou Logo --}}
-            <span class="text-sm font-semibold text-slate-600 dark:text-slate-300 animate-pulse">
+            <span class="text-sm font-semibold text-slate-700 dark:text-slate-300 animate-pulse">
                 Carregando dados...
             </span>
         </div>
@@ -132,7 +129,6 @@
         <div class="flex-1 min-w-0 flex flex-col">
             @include('components.layouts.report.header')
 
-            {{-- MODIFICAÇÃO: Padding responsivo (p-4 no mobile, p-10 no desktop) --}}
             <main class="flex-1 min-w-0 p-1">
                 {{ $slot ?? '' }}
                 @yield('content')
@@ -149,20 +145,14 @@
         window.addEventListener('load', function() {
             const loader = document.getElementById('page-loader');
             const body = document.body;
-
-            // Adiciona a classe que faz o fade-out
             loader.classList.add('loader-hidden');
-
-            // Restaura o scroll do body
             body.classList.remove('overflow-hidden');
-
-            // Remove o elemento do DOM após a transição (0.5s) para limpar memória
             setTimeout(() => {
                 loader.remove();
             }, 500);
         });
 
-        // --- LÓGICA DO TEMA (Seu código existente) ---
+        // --- LÓGICA DO TEMA ---
         const themeToggles = document.querySelectorAll('.theme-toggle-input');
 
         function applyTheme(isDark) {
@@ -177,7 +167,6 @@
             }
         }
 
-        // Verifica preferência salva
         if (localStorage.getItem('color-theme') === 'light') {
             applyTheme(false);
         } else {
