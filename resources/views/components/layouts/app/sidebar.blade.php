@@ -35,8 +35,8 @@
             'icon_main' => 'journal-bookmark',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'educacao.home', 'icon' => 'list'],
-                ['label' => 'Merendas Servidas', 'route' => 'educacao.relatorios', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Frequência Escolar', 'route' => 'educacao.relatorios', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'Merendas Servidas', 'route' => 'educacao.relatorios.merenda', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'Frequência Escolar', 'route' => 'educacao.relatorios.frequencia', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'educacao.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'educacao.contas', 'icon' => 'coin'],
             ],

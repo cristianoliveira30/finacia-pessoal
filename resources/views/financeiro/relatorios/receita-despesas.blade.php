@@ -1,4 +1,4 @@
-<x-layouts.report>
+<x-layouts.report :title="$tableConfig['title'] ?? 'receita vs despesas'">
     @php
         $financialReportConfig = [
             'id' => 'revenue-expenses-comparison',

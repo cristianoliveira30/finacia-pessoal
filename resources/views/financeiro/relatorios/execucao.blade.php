@@ -1,4 +1,4 @@
-<x-layouts.report>
+<x-layouts.report :title="$tableConfig['title'] ?? 'execução orçamentária'">
     @php
         $tableConfig = [
             'id' => 'budget-execution-table',

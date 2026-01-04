@@ -85,7 +85,7 @@ Route::prefix('financeiro')->name('financeiro.')->group(function () {
     // INVESTIMENTOS / CAPEX
     // -----------------------------
     Route::prefix('investimentos')->name('investimentos.')->group(function () {
-        Route::view('capex', 'financeiro.placeholder')->name('capex');
+        Route::view('capex', 'financeiro.investimentos.capex')->name('capex');
         Route::view('convenios', 'financeiro.placeholder')->name('convenios');
         Route::view('cronograma', 'financeiro.placeholder')->name('cronograma');
         Route::view('contrapartidas', 'financeiro.placeholder')->name('contrapartidas');
