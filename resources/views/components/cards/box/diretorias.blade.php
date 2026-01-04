@@ -28,7 +28,7 @@
     ];
 
     // -------------------------------------------------------------------------
-    // DADOS: SAÚDE
+    // DADOS: SAÚDE (CORRIGIDO)
     // -------------------------------------------------------------------------
     $saude = [
         'kpis' => [
@@ -36,15 +36,25 @@
             ['label' => 'Espera', 'value' => $fmt(42, 0), 'suffix' => ' min', 'hint' => 'média porta', 'link' => route('saude.relatorios.espera'), 'icon' => 'hourglass-split', 'color' => 'text-orange-500'],
             ['label' => 'Vacinal', 'value' => $fmt(87.3), 'suffix' => '%', 'hint' => 'cobertura', 'link' => route('saude.imunizacao.cobertura'), 'icon' => 'shield-plus', 'color' => 'text-green-500'],
             ['label' => 'Medicamentos', 'value' => $fmt(92.1), 'suffix' => '%', 'hint' => 'disponibilidade', 'link' => route('saude.farmacia.disponibilidade'), 'icon' => 'capsule', 'color' => 'text-teal-500'],
-            ['label' => 'Fila Reg.', 'value' => $fmt(3840, 0), 'suffix' => '', 'hint' => 'cons+exames', 'link' => route('saude.regulacao.fila_consultas'), 'icon' => 'list-task', 'color' => 'text-purple-500'],
+            
+            // CORREÇÃO DO ERRO: fila_consultas -> fila-consultas
+            ['label' => 'Fila Reg.', 'value' => $fmt(3840, 0), 'suffix' => '', 'hint' => 'cons+exames', 'link' => route('saude.regulacao.fila-consultas'), 'icon' => 'list-task', 'color' => 'text-purple-500'],
         ],
         'modulos' => [
-            'Atenção Básica' => ['score' => 78, 'link' => route('saude.aps.unidades'), 'hint' => 'ESF: 62%', 'icon' => 'hospital', 'color' => 'text-blue-500'],
-            'Urgência' => ['score' => 71, 'link' => route('saude.urgencia.unidades'), 'hint' => 'Porta 28min', 'icon' => 'truck-front', 'color' => 'text-red-500'],
-            'Regulação' => ['score' => 66, 'link' => route('saude.regulacao.fila_consultas'), 'hint' => 'SLA 19 dias', 'icon' => 'signpost-split', 'color' => 'text-orange-500'],
+            // CORREÇÃO: saude.aps.unidades -> saude.atencao.ubs-unidades (para bater com web.php)
+            'Atenção Básica' => ['score' => 78, 'link' => route('saude.atencao.ubs-unidades'), 'hint' => 'ESF: 62%', 'icon' => 'hospital', 'color' => 'text-blue-500'],
+            
+            // CORREÇÃO: saude.urgencia.unidades -> saude.urgencia.unidades-upa (para bater com web.php)
+            'Urgência' => ['score' => 71, 'link' => route('saude.urgencia.unidades-upa'), 'hint' => 'Porta 28min', 'icon' => 'truck-front', 'color' => 'text-red-500'],
+            
+            // CORREÇÃO DO ERRO: fila_consultas -> fila-consultas
+            'Regulação' => ['score' => 66, 'link' => route('saude.regulacao.fila-consultas'), 'hint' => 'SLA 19 dias', 'icon' => 'signpost-split', 'color' => 'text-orange-500'],
+            
             'Imunização' => ['score' => 84, 'link' => route('saude.imunizacao.cobertura'), 'hint' => 'Cob. 87%', 'icon' => 'virus', 'color' => 'text-green-500'],
             'Farmácia' => ['score' => 73, 'link' => route('saude.farmacia.disponibilidade'), 'hint' => 'Rupturas: 4', 'icon' => 'box2-heart', 'color' => 'text-teal-600'],
-            'Vigilância' => ['score' => 76, 'link' => route('saude.vigilancia.indicadores'), 'hint' => 'Notif: 312', 'icon' => 'eye', 'color' => 'text-indigo-500'],
+            
+            // CORREÇÃO: saude.vigilancia.indicadores -> saude.vigilancia.indicadores-epidermico (para bater com web.php)
+            'Vigilância' => ['score' => 76, 'link' => route('saude.vigilancia.indicadores-epidermico'), 'hint' => 'Notif: 312', 'icon' => 'eye', 'color' => 'text-indigo-500'],
         ],
     ];
 
@@ -74,6 +84,7 @@
     $dados = match($id) {
         'saude' => $saude,
         'educacao' => $educacao,
+        'financeiro' => $financeiro, // caso precise explicitar o default
         default => $financeiro,
     };
 @endphp

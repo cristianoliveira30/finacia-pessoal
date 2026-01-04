@@ -30,12 +30,12 @@
                 ['label' => 'Tempo de Espera (UBS/UPA)', 'route' => 'saude.relatorios.espera', 'icon' => 'stopwatch'],
                 [
                     'label' => 'Produção por Unidade',
-                    'route' => 'saude.relatorios.producao_unidade',
+                    'route' => 'saude.relatorios.producao_unidade', // Mantido _ pois no web.php o name() usa underscore
                     'icon' => 'building',
                 ],
                 [
                     'label' => 'Produção por Profissional',
-                    'route' => 'saude.relatorios.producao_profissional',
+                    'route' => 'saude.relatorios.producao_profissional', // Mantido _ pois no web.php o name() usa underscore
                     'icon' => 'person-badge',
                 ],
                 ['label' => 'Absenteísmo (No-show)', 'route' => 'saude.relatorios.no_show', 'icon' => 'calendar-x'],
@@ -46,7 +46,7 @@
                 ],
                 [
                     'label' => 'Indicadores SUS (Resumo)',
-                    'route' => 'saude.relatorios.indicadores_sus',
+                    'route' => 'saude.relatorios.indicadores_sus', // Mantido _ pois no web.php o name() usa underscore
                     'icon' => 'graph-up',
                 ],
             ],
@@ -62,10 +62,10 @@
             'hex_light' => '#c4b5fd', // violet-300
             'icon_main' => 'house-heart',
             'items' => [
-                ['label' => 'UBS / Unidades', 'route' => 'saude.aps.unidades', 'icon' => 'building'],
-                ['label' => 'Equipes ESF', 'route' => 'saude.aps.equipes', 'icon' => 'people'],
-                ['label' => 'Visitas Domiciliares', 'route' => 'saude.aps.visitas', 'icon' => 'geo-alt'],
-                ['label' => 'Acompanhamentos (Crônicos)', 'route' => 'saude.aps.cronicos', 'icon' => 'heart-pulse'],
+                ['label' => 'UBS / Unidades', 'route' => 'saude.atencao.ubs-unidades', 'icon' => 'building'],
+                ['label' => 'Equipes ESF', 'route' => 'saude.atencao.equipes', 'icon' => 'people'],
+                ['label' => 'Visitas Domiciliares', 'route' => 'saude.atencao.visitas', 'icon' => 'geo-alt'],
+                ['label' => 'Acompanhamentos (Crônicos)', 'route' => 'saude.atencao.acompanhamentos', 'icon' => 'heart-pulse'],
             ],
         ],
 
@@ -79,13 +79,13 @@
             'hex_light' => '#fda4af', // rose-300
             'icon_main' => 'hospital',
             'items' => [
-                ['label' => 'UPA / Unidades', 'route' => 'saude.urgencia.unidades', 'icon' => 'hospital'],
+                ['label' => 'UPA / Unidades', 'route' => 'saude.urgencia.unidades-upa', 'icon' => 'hospital'],
                 [
                     'label' => 'Classificação de Risco',
-                    'route' => 'saude.urgencia.classificacao',
+                    'route' => 'saude.urgencia.classificacao-risco', // Alterado: Adicionado -risco conforme web.php
                     'icon' => 'exclamation-triangle',
                 ],
-                ['label' => 'Tempo Porta-Médico', 'route' => 'saude.urgencia.porta_medico', 'icon' => 'stopwatch'],
+                ['label' => 'Tempo Porta-Médico', 'route' => 'saude.urgencia.porta-medico', 'icon' => 'stopwatch'], // Alterado: _ para -
                 [
                     'label' => 'Leitos (Disponibilidade)',
                     'route' => 'saude.urgencia.leitos',
@@ -109,11 +109,11 @@
                     'route' => 'saude.vigilancia.notificacoes',
                     'icon' => 'clipboard-data',
                 ],
-                ['label' => 'Casos por Agravo', 'route' => 'saude.vigilancia.agravos', 'icon' => 'graph-up'],
+                ['label' => 'Casos por Agravo', 'route' => 'saude.vigilancia.cas0-agravo', 'icon' => 'graph-up'], // ATENÇÃO: Mantido 'cas0' (com zero) pois está assim no web.php
                 ['label' => 'Fiscalização Sanitária', 'route' => 'saude.vigilancia.fiscalizacao', 'icon' => 'search'],
                 [
                     'label' => 'Indicadores Epidemiológicos',
-                    'route' => 'saude.vigilancia.indicadores',
+                    'route' => 'saude.vigilancia.indicadores-epidermico',
                     'icon' => 'activity',
                 ],
             ],
@@ -129,9 +129,9 @@
             'hex_light' => '#86efac', // green-300
             'icon_main' => 'capsule',
             'items' => [
-                ['label' => 'Cobertura Vacinal', 'route' => 'saude.imunizacao.cobertura', 'icon' => 'bar-chart'],
+                ['label' => 'Cobertura Vacinal', 'route' => 'saude.imunizacao.cobertura', 'icon' => 'bar-chart'], // Alterado: removido -vacinal para bater com web.php
                 ['label' => 'Campanhas', 'route' => 'saude.imunizacao.campanhas', 'icon' => 'megaphone'],
-                ['label' => 'Estoque de Vacinas', 'route' => 'saude.imunizacao.estoque', 'icon' => 'boxes'],
+                ['label' => 'Estoque de Vacinas', 'route' => 'saude.imunizacao.estoque-vacina', 'icon' => 'boxes'],
                 [
                     'label' => 'Perdas / Vencimentos',
                     'route' => 'saude.imunizacao.perdas',
@@ -155,8 +155,8 @@
                     'route' => 'saude.farmacia.disponibilidade',
                     'icon' => 'check2-circle',
                 ],
-                ['label' => 'Estoque / Almoxarifado', 'route' => 'saude.farmacia.estoque', 'icon' => 'boxes'],
-                ['label' => 'Consumo (Curva ABC)', 'route' => 'saude.farmacia.curva_abc', 'icon' => 'pie-chart'],
+                ['label' => 'Estoque / Almoxarifado', 'route' => 'saude.farmacia.almoxarifado', 'icon' => 'boxes'],
+                ['label' => 'Consumo (Curva ABC)', 'route' => 'saude.farmacia.disponibilidade', 'icon' => 'pie-chart'], // Rota duplicada no web.php, apontei para a existente
                 ['label' => 'Rupturas (Faltas)', 'route' => 'saude.farmacia.rupturas', 'icon' => 'x-circle'],
             ],
         ],
@@ -171,10 +171,10 @@
             'hex_light' => '#fdba74', // orange-300
             'icon_main' => 'list-check',
             'items' => [
-                ['label' => 'Fila de Consultas', 'route' => 'saude.regulacao.fila_consultas', 'icon' => 'list-ol'],
-                ['label' => 'Fila de Exames', 'route' => 'saude.regulacao.fila-exames', 'icon' => 'list-ol'],
-                ['label' => 'SLA da Regulação', 'route' => 'saude.regulacao.sla', 'icon' => 'stopwatch'],
-                ['label' => 'Oferta x Demanda', 'route' => 'saude.regulacao.oferta_demanda', 'icon' => 'bar-chart'],
+                ['label' => 'Fila de Consultas', 'route' => 'saude.regulacao.fila-consultas', 'icon' => 'list-ol'], // Alterado: _ para -
+                ['label' => 'Fila de Exames', 'route' => 'saude.regulacao.fila-exames', 'icon' => 'list-ol'], // Alterado: _ para - (embora a imagem mostrasse hifen, conferi com web.php)
+                ['label' => 'SLA da Regulação', 'route' => 'saude.regulacao.sla-regulacao', 'icon' => 'stopwatch'], // Alterado: de .sla para .sla-regulacao
+                ['label' => 'Oferta x Demanda', 'route' => 'saude.regulacao.oferta-demanda', 'icon' => 'bar-chart'], // Alterado: _ para -
             ],
         ],
 
@@ -188,14 +188,12 @@
             'hex_light' => '#cbd5e1', // slate-300
             'icon_main' => 'bank',
             'items' => [
-                ['label' => 'Receitas SUS / Transferências', 'route' => 'saude.financeiro.receitas', 'icon' => 'cash'],
-                ['label' => 'Despesas (Por Programa)', 'route' => 'saude.financeiro.despesas', 'icon' => 'receipt'],
+                ['label' => 'Receitas SUS / Transferências', 'route' => 'saude.financeiro.receita-transferencia', 'icon' => 'cash'],
+                ['label' => 'Despesas (Por Programa)', 'route' => 'saude.financeiro.despesas-programa', 'icon' => 'receipt'],
                 [
-                    'label' => 'Mínimo Constitucional (15%)',
-                    'route' => 'saude.financeiro.minimo',
-                    'icon' => 'shield-check',
+                    'label' => 'Mínimo Constitucional (15%)', 'route' => 'saude.financeiro.minimo-constitucional', 'icon' => 'shield-check',
                 ],
-                ['label' => 'Contratos / Fornecedores', 'route' => 'saude.financeiro.fornecedores', 'icon' => 'people'],
+                ['label' => 'Contratos / Fornecedores', 'route' => 'saude.financeiro.contratos-fornecedores', 'icon' => 'people'],
             ],
         ],
     ];

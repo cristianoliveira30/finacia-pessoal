@@ -228,58 +228,58 @@ Route::prefix('saude')->name('saude.')->group(function () {
     // -----------------------------
     // ATENÇÃO BÁSICA (APS/UBS/ESF)
     // -----------------------------
-    Route::view('/aps/unidades', 'saude.placeholder')->name('aps.unidades');
-    Route::view('/aps/equipes', 'saude.placeholder')->name('aps.equipes');
-    Route::view('/aps/visitas', 'saude.placeholder')->name('aps.visitas');
-    Route::view('/aps/cronicos', 'saude.placeholder')->name('aps.cronicos');
+    Route::view('/atencao/ubs-unidades', 'saude.atencao.ubs-unidades')->name('atencao.ubs-unidades');
+    Route::view('/atencao/equipes', 'saude.atencao.equipes')->name('atencao.equipes');
+    Route::view('/atencao/visitas', 'saude.atencao.visitas')->name('atencao.visitas');
+    Route::view('/atencao/acompanhamentos', 'saude.atencao.acompanhamentos')->name('atencao.acompanhamentos');
 
     // -----------------------------
     // URGÊNCIA / EMERGÊNCIA
     // -----------------------------
-    Route::view('/urgencia/unidades', 'saude.placeholder')->name('urgencia.unidades');
-    Route::view('/urgencia/classificacao', 'saude.placeholder')->name('urgencia.classificacao');
-    Route::view('/urgencia/porta-medico', 'saude.placeholder')->name('urgencia.porta_medico');
-    Route::view('/urgencia/leitos', 'saude.placeholder')->name('urgencia.leitos');
+    Route::view('/urgencia/unidades', 'saude.urgencia.unidades-upa')->name('urgencia.unidades-upa');
+    Route::view('/urgencia/classificacao', 'saude.urgencia.clasificacao-risco')->name('urgencia.classificacao-risco');
+    Route::view('/urgencia/porta-medico', 'saude.urgencia.porta-medico')->name('urgencia.porta-medico');
+    Route::view('/urgencia/leitos', 'saude.urgencia.leitos')->name('urgencia.leitos');
 
     // -----------------------------
     // VIGILÂNCIA EM SAÚDE
     // -----------------------------
-    Route::view('/vigilancia/notificacoes', 'saude.placeholder')->name('vigilancia.notificacoes');
-    Route::view('/vigilancia/agravos', 'saude.placeholder')->name('vigilancia.agravos');
-    Route::view('/vigilancia/fiscalizacao', 'saude.placeholder')->name('vigilancia.fiscalizacao');
-    Route::view('/vigilancia/indicadores', 'saude.placeholder')->name('vigilancia.indicadores');
+    Route::view('/vigilancia/notificacoes', 'saude.vigilancia.notificacoes')->name('vigilancia.notificacoes');
+    Route::view('/vigilancia/agravos', 'saude.vigilancia.caso-agravo')->name('vigilancia.cas0-agravo');
+    Route::view('/vigilancia/fiscalizacao', 'saude.vigilancia.fiscalizacao')->name('vigilancia.fiscalizacao');
+    Route::view('/vigilancia/indicadores', 'saude.vigilancia.indicadores-epidermico')->name('vigilancia.indicadores-epidermico');
 
     // -----------------------------
     // IMUNIZAÇÃO
     // -----------------------------
     Route::view('/imunizacao/cobertura', 'saude.imunizacao.cobertura-vacinal')->name('imunizacao.cobertura');
-    Route::view('/imunizacao/campanhas', 'saude.placeholder')->name('imunizacao.campanhas');
-    Route::view('/imunizacao/estoque', 'saude.placeholder')->name('imunizacao.estoque');
-    Route::view('/imunizacao/perdas', 'saude.placeholder')->name('imunizacao.perdas');
+    Route::view('/imunizacao/campanhas', 'saude.imunizacao.campanhas')->name('imunizacao.campanhas');
+    Route::view('/imunizacao/estoque', 'saude.imunizacao.estoque-vacina')->name('imunizacao.estoque-vacina');
+    Route::view('/imunizacao/perdas', 'saude.imunizacao.perda')->name('imunizacao.perdas');
 
     // -----------------------------
     // FARMÁCIA / MEDICAMENTOS
     // -----------------------------
-    Route::view('/farmacia/disponibilidade', 'saude.placeholder')->name('farmacia.disponibilidade');
-    Route::view('/farmacia/estoque', 'saude.placeholder')->name('farmacia.estoque');
-    Route::view('/farmacia/curva-abc', 'saude.placeholder')->name('farmacia.curva_abc');
-    Route::view('/farmacia/rupturas', 'saude.placeholder')->name('farmacia.rupturas');
+    Route::view('/farmacia/disponibilidade', 'saude.farmacia.disponibilidade')->name('farmacia.disponibilidade');
+    Route::view('/farmacia/estoque', 'saude.farmacia.almoxarifado')->name('farmacia.almoxarifado');
+    Route::view('/farmacia/consumo', 'saude.farmacia.consumo')->name('farmacia.consumo'); //alguma coisa abc
+    Route::view('/farmacia/rupturas', 'saude.farmacia.rupturas')->name('farmacia.rupturas');
 
     // -----------------------------
     // REGULAÇÃO / FILAS
     // -----------------------------
-    Route::view('/regulacao/fila-consultas', 'saude.placeholder')->name('regulacao.fila_consultas');
+    Route::view('/regulacao/fila-consultas', 'saude.regulacao.fila-consultas')->name('regulacao.fila-consultas');
     Route::view('/regulacao/fila-exames', 'saude.regulacao.fila-exames')->name('regulacao.fila-exames');
-    Route::view('/regulacao/sla', 'saude.placeholder')->name('regulacao.sla');
-    Route::view('/regulacao/oferta-demanda', 'saude.placeholder')->name('regulacao.oferta_demanda');
+    Route::view('/regulacao/sla', 'saude.regulacao.sla-regulacao')->name('regulacao.sla-regulacao');
+    Route::view('/regulacao/oferta-demanda', 'saude.regulacao.oferta-demanda')->name('regulacao.oferta-demanda');
 
     // -----------------------------
     // FINANCEIRO DA SAÚDE
     // -----------------------------
-    Route::view('/financeiro/receitas', 'saude.placeholder')->name('financeiro.receitas');
-    Route::view('/financeiro/despesas', 'saude.placeholder')->name('financeiro.despesas');
-    Route::view('/financeiro/minimo', 'saude.placeholder')->name('financeiro.minimo');
-    Route::view('/financeiro/fornecedores', 'saude.placeholder')->name('financeiro.fornecedores');
+    Route::view('/financeiro/receitas', 'saude.financeiro.receita-transferencia')->name('financeiro.receita-transferencia');
+    Route::view('/financeiro/despesas', 'saude.financeiro.despesas-programa')->name('financeiro.despesas-programa');
+    Route::view('/financeiro/minimo', 'saude.financeiro.minimo-constitucional')->name('financeiro.minimo-constitucional');
+    Route::view('/financeiro/fornecedores', 'saude.financeiro.contratos-fornecedores')->name('financeiro.contratos-fornecedores');
 
     // -----------------------------
     // EXPORTAÇÕES / AUDITORIA
