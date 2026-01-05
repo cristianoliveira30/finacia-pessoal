@@ -52,33 +52,33 @@ Route::prefix('financeiro')->name('financeiro.')->group(function () {
     // ORÇAMENTO (PPA/LDO/LOA)
     // -----------------------------
     Route::prefix('orcamento')->name('orcamento.')->group(function () {
-        Route::view('loa', 'financeiro.placeholder')->name('loa');
-        Route::view('ppa', 'financeiro.placeholder')->name('ppa');
-        Route::view('ldo', 'financeiro.placeholder')->name('ldo');
-        Route::view('creditos-adicionais', 'financeiro.placeholder')->name('creditos');
-        Route::view('restos-a-pagar', 'financeiro.placeholder')->name('restos_pagar');
+        Route::view('loa', 'financeiro.orcamento.loa')->name('loa');
+        Route::view('ppa', 'financeiro.orcamento.ppa')->name('ppa');
+        Route::view('ldo', 'financeiro.orcamento.ldo')->name('ldo');
+        Route::view('creditos-adicionais', 'financeiro.orcamento.creditos')->name('creditos');
+        Route::view('restos-a-pagar', 'financeiro.orcamento.resto-pagar')->name('resto-pagar');
     });
 
     // -----------------------------
     // RECEITAS
     // -----------------------------
     Route::prefix('receitas')->name('receitas.')->group(function () {
-        Route::view('arrecadacao', 'financeiro.placeholder')->name('arrecadacao');
-        Route::view('fontes', 'financeiro.placeholder')->name('fontes');
-        Route::view('transferencias', 'financeiro.placeholder')->name('transferencias');
-        Route::view('divida-ativa', 'financeiro.placeholder')->name('divida_ativa');
-        Route::view('projecoes', 'financeiro.placeholder')->name('projecoes');
+        Route::view('arrecadacao', 'financeiro.receitas.arrecadacao')->name('arrecadacao');
+        Route::view('fontes', 'financeiro.receitas.fontes')->name('fontes');
+        Route::view('transferencias', 'financeiro.receitas.transferencias')->name('transferencias');
+        Route::view('divida-ativa', 'financeiro.receitas.divida-ativa')->name('divida-ativa');
+        Route::view('projecoes', 'financeiro.receitas.projecoes')->name('projecoes');
     });
 
     // -----------------------------
     // DESPESAS
     // -----------------------------
     Route::prefix('despesas')->name('despesas.')->group(function () {
-        Route::view('empenhos', 'financeiro.placeholder')->name('empenhos');
-        Route::view('liquidacoes', 'financeiro.placeholder')->name('liquidacoes');
-        Route::view('pagamentos', 'financeiro.placeholder')->name('pagamentos');
-        Route::view('elemento', 'financeiro.placeholder')->name('elemento');
-        Route::view('centros-custo', 'financeiro.placeholder')->name('centros_custo');
+        Route::view('empenhos', 'financeiro.despesas.empenhos')->name('empenhos');
+        Route::view('liquidacoes', 'financeiro.despesas.liquidacoes')->name('liquidacoes');
+        Route::view('pagamentos', 'financeiro.despesas.pagamentos')->name('pagamentos');
+        Route::view('elemento', 'financeiro.despesas.elemento')->name('elemento');
+        Route::view('centros-custo', 'financeiro.despesas.centro-custo')->name('centro-custo');
     });
 
     // -----------------------------
@@ -86,29 +86,29 @@ Route::prefix('financeiro')->name('financeiro.')->group(function () {
     // -----------------------------
     Route::prefix('investimentos')->name('investimentos.')->group(function () {
         Route::view('capex', 'financeiro.investimentos.capex')->name('capex');
-        Route::view('convenios', 'financeiro.placeholder')->name('convenios');
-        Route::view('cronograma', 'financeiro.placeholder')->name('cronograma');
-        Route::view('contrapartidas', 'financeiro.placeholder')->name('contrapartidas');
+        Route::view('convenios', 'financeiro.investimentos.convenios')->name('convenios');
+        Route::view('cronograma', 'financeiro.investimentos.cronograma')->name('cronograma');
+        Route::view('contrapartidas', 'financeiro.investimentos.contrapartidas')->name('contrapartidas');
     });
 
     // -----------------------------
     // TESOURARIA
     // -----------------------------
     Route::prefix('tesouraria')->name('tesouraria.')->group(function () {
-        Route::view('saldos', 'financeiro.placeholder')->name('saldos');
-        Route::view('fluxo', 'financeiro.placeholder')->name('fluxo');
-        Route::view('conciliacao', 'financeiro.placeholder')->name('conciliacao');
-        Route::view('aplicacoes', 'financeiro.placeholder')->name('aplicacoes');
+        Route::view('saldos', 'financeiro.tesouraria.saldos')->name('saldos');
+        Route::view('fluxo', 'financeiro.tesouraria.fluxo')->name('fluxo');
+        Route::view('conciliacao', 'financeiro.tesouraria.conciliacao')->name('conciliacao');
+        Route::view('aplicacoes', 'financeiro.tesouraria.aplicacoes')->name('aplicacoes');
     });
 
     // -----------------------------
     // LRF / COMPLIANCE
     // -----------------------------
-    Route::prefix('lrf')->name('lrf.')->group(function () {
-        Route::view('pessoal', 'financeiro.placeholder')->name('pessoal');
-        Route::view('saude', 'financeiro.placeholder')->name('saude');
-        Route::view('educacao', 'financeiro.placeholder')->name('educacao');
-        Route::view('divida', 'financeiro.placeholder')->name('divida');
+    Route::prefix('compliance')->name('compliance.')->group(function () {
+        Route::view('pessoal', 'financeiro.compliance.pessoal')->name('pessoal');
+        Route::view('saude', 'financeiro.compliance.saude')->name('saude');
+        Route::view('educacao', 'financeiro.compliance.educacao')->name('educacao');
+        Route::view('divida', 'financeiro.compliance.divida')->name('divida');
     });
 });
 
@@ -144,53 +144,53 @@ Route::prefix('educacao')->name('educacao.')->group(function () {
     // -----------------------------
     // REDE / ESCOLAS
     // -----------------------------
-    Route::view('/rede/escolas', 'educacao.placeholder')->name('rede.escolas');
-    Route::view('/rede/unidades', 'educacao.placeholder')->name('rede.unidades');
-    Route::view('/rede/mapa', 'educacao.placeholder')->name('rede.mapa');
+    Route::view('/rede/escolas', 'educacao.rede.escolas')->name('rede.escolas');
+    Route::view('/rede/unidades', 'educacao.rede.unidades')->name('rede.unidades');
+    Route::view('/rede/mapa', 'educacao.rede.mapa')->name('rede.mapa');
 
     // -----------------------------
     // ALUNOS / MATRÍCULAS
     // -----------------------------
-    Route::view('/alunos/cadastro', 'educacao.placeholder')->name('alunos.cadastro');
-    Route::view('/alunos/buscar', 'educacao.placeholder')->name('alunos.buscar');
-    Route::view('/matriculas/gestao', 'educacao.placeholder')->name('matriculas.gestao');
-    Route::view('/matriculas/fila-creche', 'educacao.placeholder')->name('matriculas.fila_creche');
+    Route::view('/alunos/cadastro', 'educacao.alunos.cadastro')->name('alunos.cadastro');
+    Route::view('/alunos/buscar', 'educacao.alunos.buscar')->name('alunos.buscar');
+    Route::view('/matriculas/gestao', 'educacao.alunos.gestao')->name('matriculas.gestao');
+    Route::view('/matriculas/fila-creche', 'educacao.alunos.fila-creche')->name('matriculas.fila-creche');
 
     // -----------------------------
     // PROFESSORES / RH EDUCAÇÃO
     // -----------------------------
-    Route::view('/rh/professores', 'educacao.placeholder')->name('rh.professores');
-    Route::view('/rh/lotacao', 'educacao.placeholder')->name('rh.lotacao');
-    Route::view('/rh/ausencias', 'educacao.placeholder')->name('rh.ausencias');
-    Route::view('/rh/formacao', 'educacao.placeholder')->name('rh.formacao');
+    Route::view('/rh/professores', 'educacao.rh.professores')->name('rh.professores');
+    Route::view('/rh/lotacao', 'educacao.rh.lotacao')->name('rh.lotacao');
+    Route::view('/rh/ausencias', 'educacao.rh.ausencias')->name('rh.ausencias');
+    Route::view('/rh/formacao', 'educacao.rh.formacao')->name('rh.formacao');
 
     // -----------------------------
     // TRANSPORTE ESCOLAR
     // -----------------------------
-    Route::view('/transporte/rotas', 'educacao.placeholder')->name('transporte.rotas');
-    Route::view('/transporte/frota', 'educacao.placeholder')->name('transporte.frota');
-    Route::view('/transporte/atrasos', 'educacao.placeholder')->name('transporte.atrasos');
+    Route::view('/transporte/rotas', 'educacao.transporte.rotas')->name('transporte.rotas');
+    Route::view('/transporte/frota', 'educacao.transporte.frotas')->name('transporte.frota');
+    Route::view('/transporte/atrasos', 'educacao.transporte.atrasos')->name('transporte.atrasos');
 
     // -----------------------------
     // MERENDA / ALIMENTAÇÃO ESCOLAR
     // -----------------------------
-    Route::view('/merenda/estoque', 'educacao.placeholder')->name('merenda.estoque');
-    Route::view('/merenda/cardapios', 'educacao.placeholder')->name('merenda.cardapios');
-    Route::view('/merenda/distribuicao', 'educacao.placeholder')->name('merenda.distribuicao');
+    Route::view('/merenda/estoque', 'educacao.merenda.estoque')->name('merenda.estoque');
+    Route::view('/merenda/cardapios', 'educacao.merenda.cardapios')->name('merenda.cardapios');
+    Route::view('/merenda/distribuicao', 'educacao.merenda.distribuicao')->name('merenda.distribuicao');
 
     // -----------------------------
     // FINANCEIRO DA EDUCAÇÃO / FUNDEB
     // -----------------------------
-    Route::view('/fundeb/receitas', 'educacao.placeholder')->name('fundeb.receitas');
-    Route::view('/fundeb/aplicacao', 'educacao.placeholder')->name('fundeb.aplicacao');
-    Route::view('/fundeb/indicadores', 'educacao.placeholder')->name('fundeb.indicadores');
+    Route::view('/fundeb/receitas', 'educacao.fundeb.receitas')->name('fundeb.receitas');
+    Route::view('/fundeb/aplicacao', 'educacao.fundeb.aplicacao')->name('fundeb.aplicacao');
+    Route::view('/fundeb/indicadores', 'educacao.fundeb.indicadores')->name('fundeb.indicadores');
 
     // -----------------------------
     // OBRAS / MANUTENÇÃO ESCOLAR
     // -----------------------------
-    Route::view('/obras/ordens-servico', 'educacao.placeholder')->name('obras.ordens_servico');
-    Route::view('/obras/cronograma', 'educacao.placeholder')->name('obras.cronograma');
-    Route::view('/obras/pendencias', 'educacao.placeholder')->name('obras.pendencias');
+    Route::view('/obras/ordens-servico', 'educacao.obras.ordens-servico')->name('obras.ordens-servico');
+    Route::view('/obras/cronograma', 'educacao.obras.cronograma')->name('obras.cronograma');
+    Route::view('/obras/pendencias', 'educacao.obras.pendencias')->name('obras.pendencias');
 
     // -----------------------------
     // EXPORTAÇÕES / AUDITORIA

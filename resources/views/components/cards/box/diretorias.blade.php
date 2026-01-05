@@ -15,7 +15,7 @@
             ['label' => 'Execução', 'value' => $fmt(76.4), 'suffix' => '%', 'hint' => 'realizado/previsto', 'link' => route('financeiro.orcamento.loa'), 'icon' => 'activity', 'color' => 'text-blue-500'],
             ['label' => 'Caixa', 'value' => $fmt(128.6), 'prefix' => 'R$ ', 'suffix' => ' mi', 'hint' => 'consolidado', 'link' => route('financeiro.tesouraria.saldos'), 'icon' => 'wallet2', 'color' => 'text-emerald-500'],
             ['label' => 'Resultado', 'value' => $fmt(24.9), 'prefix' => 'R$ ', 'suffix' => ' mi', 'hint' => 'superávit', 'link' => route('financeiro.relatorios.rx_d'), 'icon' => 'graph-up-arrow', 'color' => 'text-indigo-500'],
-            ['label' => 'Pessoal/RCL', 'value' => $fmt(49.2), 'suffix' => '%', 'hint' => 'limite 54%', 'link' => route('financeiro.lrf.pessoal'), 'icon' => 'people', 'color' => 'text-amber-500'],
+            ['label' => 'Pessoal/RCL', 'value' => $fmt(49.2), 'suffix' => '%', 'hint' => 'limite 54%', 'link' => route('financeiro.compliance.pessoal'), 'icon' => 'people', 'color' => 'text-amber-500'],
         ],
         'modulos' => [
             'Receitas' => ['score' => 81, 'link' => route('financeiro.receitas.arrecadacao'), 'hint' => 'Própria 32%', 'icon' => 'arrow-up-circle', 'color' => 'text-emerald-500'],
@@ -23,7 +23,7 @@
             'Tesouraria' => ['score' => 77, 'link' => route('financeiro.tesouraria.saldos'), 'hint' => 'Caixa D+90', 'icon' => 'bank', 'color' => 'text-cyan-600'],
             'Orçamento' => ['score' => 79, 'link' => route('financeiro.orcamento.loa'), 'hint' => 'Créd. adic. 6%', 'icon' => 'file-earmark-spreadsheet', 'color' => 'text-blue-600'],
             'Investimentos' => ['score' => 69, 'link' => route('financeiro.investimentos.capex'), 'hint' => 'CAPEX 41%', 'icon' => 'bricks', 'color' => 'text-orange-500'],
-            'Compliance' => ['score' => 80, 'link' => route('financeiro.lrf.pessoal'), 'hint' => 'Sem alertas', 'icon' => 'shield-check', 'color' => 'text-purple-500'],
+            'Compliance' => ['score' => 80, 'link' => route('financeiro.compliance.pessoal'), 'hint' => 'Sem alertas', 'icon' => 'shield-check', 'color' => 'text-purple-500'],
         ],
     ];
 
@@ -66,7 +66,7 @@
             ['label' => 'Matrículas', 'value' => $fmt(58420, 0), 'suffix' => '', 'hint' => 'ativas rede', 'link' => route('educacao.relatorios.matriculas'), 'icon' => 'backpack', 'color' => 'text-blue-500'],
             ['label' => 'Frequência', 'value' => $fmt(92.6), 'suffix' => '%', 'hint' => 'média geral', 'link' => route('educacao.relatorios.frequencia'), 'icon' => 'calendar-check', 'color' => 'text-emerald-500'],
             ['label' => 'Evasão', 'value' => $fmt(2.4), 'suffix' => '%', 'hint' => 'anual est.', 'link' => route('educacao.relatorios.evasao'), 'icon' => 'box-arrow-right', 'color' => 'text-red-500'],
-            ['label' => 'Fila Creche', 'value' => $fmt(1260, 0), 'suffix' => '', 'hint' => 'demanda', 'link' => route('educacao.matriculas.fila_creche'), 'icon' => 'person-plus', 'color' => 'text-orange-500'],
+            ['label' => 'Fila Creche', 'value' => $fmt(1260, 0), 'suffix' => '', 'hint' => 'demanda', 'link' => route('educacao.matriculas.fila-creche'), 'icon' => 'person-plus', 'color' => 'text-orange-500'],
             ['label' => 'Aprovação', 'value' => $fmt(89.1), 'suffix' => '%', 'hint' => 'média rede', 'link' => route('educacao.relatorios.aprendizagem'), 'icon' => 'award', 'color' => 'text-indigo-500'],
             ['label' => 'Aprendiz.', 'value' => $fmt(6.4), 'suffix' => '/10', 'hint' => 'índice sim.', 'link' => route('educacao.relatorios.aprendizagem'), 'icon' => '123', 'color' => 'text-purple-500'],
         ],
@@ -134,7 +134,7 @@
                                 <x-dynamic-component :component="'bi-' . $kpi['icon']" class="w-6 h-6" />
                             </div>
                             
-                            <a href="{{ $kpi['link'] }}" class="text-gray-300 hover:text-sky-500 transition-colors">
+                            <a href="{{ $kpi['link'] }} "target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-sky-500 transition-colors">
                                 <x-bi-arrow-right-short class="w-6 h-6" />
                             </a>
                         </div>
@@ -183,7 +183,7 @@
                                 <x-dynamic-component :component="'bi-' . $modulo['icon']" class="w-6 h-6" />
                             </div>
 
-                            <a href="{{ $modulo['link'] }}" class="text-gray-300 hover:text-sky-500 transition-colors">
+                            <a href="{{ $modulo['link'] }}" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-sky-500 transition-colors">
                                 <x-bi-arrow-right-short class="w-6 h-6" />
                             </a>
                         </div>

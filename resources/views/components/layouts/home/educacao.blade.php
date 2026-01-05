@@ -100,7 +100,7 @@
                     'route' => 'educacao.matriculas.gestao',
                     'icon' => 'file-earmark-text',
                 ],
-                ['label' => 'Fila de Creche', 'route' => 'educacao.matriculas.fila_creche', 'icon' => 'list-ol'],
+                ['label' => 'Fila de Creche', 'route' => 'educacao.matriculas.fila-creche', 'icon' => 'list-ol'],
             ],
         ],
 
@@ -189,7 +189,7 @@
             'items' => [
                 [
                     'label' => 'Ordens de Serviço',
-                    'route' => 'educacao.obras.ordens_servico',
+                    'route' => 'educacao.obras.ordens-servico',
                     'icon' => 'clipboard-check',
                 ],
                 ['label' => 'Cronograma', 'route' => 'educacao.obras.cronograma', 'icon' => 'calendar3'],

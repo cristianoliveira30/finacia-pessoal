@@ -72,7 +72,7 @@
                 ],
                 [
                     'label' => 'Restos a Pagar (Processados/Não)',
-                    'route' => 'financeiro.orcamento.restos_pagar',
+                    'route' => 'financeiro.orcamento.resto-pagar',
                     'icon' => 'exclamation-triangle',
                 ],
             ],
@@ -105,7 +105,7 @@
                 ],
                 [
                     'label' => 'Dívida Ativa / Recuperação',
-                    'route' => 'financeiro.receitas.divida_ativa',
+                    'route' => 'financeiro.receitas.divida-ativa',
                     'icon' => 'exclamation-triangle',
                 ],
                 ['label' => 'Projeções (Forecast)', 'route' => 'financeiro.receitas.projecoes', 'icon' => 'bar-chart'],
@@ -128,7 +128,7 @@
                 ['label' => 'Despesas por Elemento', 'route' => 'financeiro.despesas.elemento', 'icon' => 'bar-chart'],
                 [
                     'label' => 'Centros de Custo / Unidades',
-                    'route' => 'financeiro.despesas.centros_custo',
+                    'route' => 'financeiro.despesas.centro-custo',
                     'icon' => 'building',
                 ],
             ],
@@ -208,22 +208,22 @@
             'items' => [
                 [
                     'label' => 'Gasto com Pessoal (Limites)',
-                    'route' => 'financeiro.lrf.pessoal',
+                    'route' => 'financeiro.compliance.pessoal',
                     'icon' => 'exclamation-triangle',
                 ],
                 [
                     'label' => 'Saúde (Mínimo Constitucional)',
-                    'route' => 'financeiro.lrf.saude',
+                    'route' => 'financeiro.compliance.saude',
                     'icon' => 'exclamation-triangle',
                 ],
                 [
                     'label' => 'Educação/FUNDEB (Mínimos)',
-                    'route' => 'financeiro.lrf.educacao',
+                    'route' => 'financeiro.compliance.educacao',
                     'icon' => 'exclamation-triangle',
                 ],
                 [
                     'label' => 'Endividamento / Precatórios',
-                    'route' => 'financeiro.lrf.divida',
+                    'route' => 'financeiro.compliance.divida',
                     'icon' => 'file-earmark-text',
                 ],
             ],
