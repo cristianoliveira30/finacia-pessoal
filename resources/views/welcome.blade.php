@@ -54,13 +54,14 @@
                     dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder:text-gray-500" />
             </div>
 
-            <div>
-                <label for="password"
-                    class="block text-xs font-medium mb-1 text-gray-700 dark:text-gray-300">Senha</label>
-                <div class="relative">
-                    <input id="password" name="password" type="password" placeholder="Senha"
-                        value="{{ old('password') }}" required
-                        class="w-full px-3 py-2 rounded-md border text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500
+            <form action="{{ route('login.post') }}" method="post" class="space-y-5">
+                @csrf
+                <div>
+                    <label for="username"
+                        class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Login</label>
+
+                    <input id="username" name="username" type="text" placeholder="Seu usuário" required
+                        class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all
                         bg-white border-gray-300 text-gray-900 placeholder:text-gray-400
                         dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder:text-gray-500" />
 
@@ -77,21 +78,46 @@
                     </button>
                 </div>
 
-            <button type="submit"
-                class="w-full mt-1 py-2 rounded-md text-sm font-medium transition-colors
-                bg-neutral-900 text-white hover:bg-neutral-700
-                dark:bg-white dark:text-black dark:hover:bg-gray-200">
-                Entrar
-            </button>
-        </form>
+                <div>
+                    <label for="password"
+                        class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Senha</label>
+                    <div class="relative">
+                        <input id="password" name="password" type="password" placeholder="Senha" required
+                            class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all
+                            bg-white border-gray-300 text-gray-900 placeholder:text-gray-400
+                            dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder:text-gray-500" />
 
-        <div class="text-center mt-4">
-            <a href="#"
-                class="text-sm hover:underline transition-colors
-                text-sky-600 hover:text-sky-700
-                dark:text-sky-400 dark:hover:text-sky-300">
-                Esqueceu sua senha?
-            </a>
+                        <button type="button" id="toggle-pass"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 transition-colors
+                            text-gray-500 hover:text-gray-700
+                            dark:text-gray-400 dark:hover:text-gray-200"
+                            aria-label="Mostrar senha">
+                            <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5">
+                                <path fill="currentColor"
+                                    d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 12a5 5 0 110-10 5 5 0 010 10z" />
+                                <path fill="currentColor" d="M12 9a3 3 0 100 6 3 3 0 000-6z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MUDANÇA AQUI: Alterado de justify-end para justify-start (esquerda) -->
+                <div class="flex items-center justify-start">
+                    <a href="#"
+                        class="text-sm font-medium hover:underline transition-colors
+                        text-sky-600 hover:text-sky-700
+                        dark:text-sky-400 dark:hover:text-sky-300">
+                        Esqueceu sua senha?
+                    </a>
+                </div>
+
+                <button type="submit"
+                    class="w-full mt-2 py-3 rounded-lg text-sm font-semibold transition-colors
+                    bg-neutral-900 text-white hover:bg-neutral-700
+                    dark:bg-white dark:text-black dark:hover:bg-gray-200">
+                    Entrar
+                </button>
+            </form>
         </div>
     </div>
 
@@ -105,7 +131,7 @@
                 e.preventDefault();
                 shown = !shown;
                 input.type = shown ? 'text' : 'password';
-                // Lógica de toggle visual mantida e adaptada
+
                 if (shown) {
                     btn.classList.add('text-indigo-600', 'dark:text-white');
                     btn.classList.remove('text-gray-500', 'dark:text-gray-400');

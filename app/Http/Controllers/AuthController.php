@@ -15,12 +15,20 @@ class AuthController extends Controller
         ]);
 
         if (!Auth::attempt($request->only('username', 'password'))) {
-            return redirect()->route('login')->withErrors(['username' => 'Credenciais inválidas.']);
+            return redirect()->back()->withErrors([
+                'login' => 'Credenciais inválidas.',
+            ])->withInput();
         }
 
         $user = Auth::user();
         Auth::login($user);
 
         return redirect()->route('home');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->route('login');
     }
 }
