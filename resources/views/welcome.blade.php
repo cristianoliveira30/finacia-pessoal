@@ -13,7 +13,6 @@
 
     <script>
         tailwind.config = {
-            // Alterado de 'media' para 'class' para aceitar o controle manual
             darkMode: 'class',
         }
     </script>
@@ -35,32 +34,32 @@
     <div class="hidden lg:flex w-1/2 items-center justify-end p-12 pr-16 relative">
         <div class="text-center">
             <img src="assets/img/belem.png" alt="logo" class="mx-auto h-72 w-auto object-contain drop-shadow-2xl" />
-            
+
             <h1 class="mt-8 text-4xl font-semibold tracking-tight">Prefeitura Municipal</h1>
             <p class="mt-3 text-lg text-gray-500 dark:text-gray-400">Educação, Saúde e Finanças</p>
         </div>
     </div>
 
-        <form action="{{ route('api.login') }}" method="POST" class="space-y-3">
+    <!-- LADO DIREITO: Login e Senha -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center lg:justify-start p-6 lg:pl-16">
+        <div class="w-full max-w-sm">
 
-            <div>
-                <label for="username"
-                    class="block text-xs font-medium mb-1 text-gray-700 dark:text-gray-300">Login</label>
+            <div class="mb-10">
+                <!-- Mobile Logo -->
+                <div class="lg:hidden text-center mb-8">
+                    <img src="assets/img/belem.png" alt="logo" class="mx-auto h-24 w-auto" />
+                </div>
 
-                <input id="username" name="username" type="text" placeholder="Seu usuário"
-                    value="{{ old('username') }}" required
-                    class="w-full px-3 py-2 rounded-md border text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500
-                    bg-white border-gray-300 text-gray-900 placeholder:text-gray-400
-                    dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder:text-gray-500" />
+                <h2 class="text-3xl font-bold">Bem vindo</h2>
+                <p class="mt-2 text-gray-500 dark:text-gray-400">Entre com sua conta para continuar.</p>
             </div>
 
             <form action="{{ route('login.post') }}" method="post" class="space-y-5">
                 @csrf
                 <div>
-                    <label for="username"
-                        class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Login</label>
+                    <label for="login" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Login</label>
 
-                    <input id="username" name="username" type="text" placeholder="Seu usuário" required
+                    <input id="login" name="login" type="text" placeholder="Seu usuário" required
                         class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all
                         bg-white border-gray-300 text-gray-900 placeholder:text-gray-400
                         dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder:text-gray-500" />
@@ -87,8 +86,7 @@
                             bg-white border-gray-300 text-gray-900 placeholder:text-gray-400
                             dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder:text-gray-500" />
 
-                        <button type="button" id="toggle-pass"
-                            class="absolute right-3 top-1/2 -translate-y-1/2 transition-colors
+                        <button type="button" id="toggle-pass" class="absolute right-3 top-1/2 -translate-y-1/2 transition-colors
                             text-gray-500 hover:text-gray-700
                             dark:text-gray-400 dark:hover:text-gray-200"
                             aria-label="Mostrar senha">
@@ -111,8 +109,7 @@
                     </a>
                 </div>
 
-                <button type="submit"
-                    class="w-full mt-2 py-3 rounded-lg text-sm font-semibold transition-colors
+                <button class="w-full mt-2 py-3 rounded-lg text-sm font-semibold transition-colors
                     bg-neutral-900 text-white hover:bg-neutral-700
                     dark:bg-white dark:text-black dark:hover:bg-gray-200">
                     Entrar
@@ -132,9 +129,9 @@
                 shown = !shown;
                 input.type = shown ? 'text' : 'password';
 
-                if (shown) {
-                    btn.classList.add('text-indigo-600', 'dark:text-white');
-                    btn.classList.remove('text-gray-500', 'dark:text-gray-400');
+                if(shown) {
+                   btn.classList.add('text-indigo-600', 'dark:text-white');
+                   btn.classList.remove('text-gray-500', 'dark:text-gray-400');
                 } else {
                     btn.classList.remove('text-indigo-600', 'dark:text-white');
                     btn.classList.add('text-gray-500', 'dark:text-gray-400');
@@ -143,5 +140,4 @@
         })();
     </script>
 </body>
-
 </html>

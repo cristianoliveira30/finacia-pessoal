@@ -16,6 +16,72 @@
             
             // 4. NPS
             $nps = 48;
+
+            // ------------------------------------------------------
+            // CORREÇÃO: Preenchimento dos Arrays para os Gráficos
+            // ------------------------------------------------------
+
+            // (A) Linha/Área: Evolução do Índice Geral
+            $chartIndice = [
+                'x_label' => 'Mês',
+                'categories' => ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                'series' => [
+                    [
+                        'name' => 'Índice Geral (0-100)',
+                        'data' => [63, 65, 66, 68, 70, 72, 74, 73, 75, 76, 77, $indiceGeral],
+                    ],
+                ],
+            ];
+
+            // (B) Barras: Pendências por setor
+            // Nota: usamos array_keys($setoresDados) pois $setores não existe nesta branch
+            $chartPendencias = [
+                'categories' => array_keys($setoresDados),
+                'series' => [
+                    ['name' => 'Abertas', 'data' => [38, 52, 41, 29, 18, 33]],
+                    ['name' => 'Vencidas', 'data' => [12, 24, 15, 9, 6, 17]],
+                ],
+            ];
+
+            // (C) Pizza: Distribuição de Demandas
+            $chartDemandas = [
+                'x_label' => 'Setor',
+                'categories' => array_keys($setoresDados),
+                'series' => [['name' => 'Solicitações', 'data' => [18, 22, 26, 12, 9, 13]]],
+            ];
+
+            // (D) Colunas: Execução por setor
+            $chartExecucao = [
+                'x_label' => 'Setor',
+                'categories' => array_keys($setoresDados),
+                'series' => [
+                    ['name' => 'Previsto (R$ mi)', 'data' => [12, 25, 18, 14, 9, 6]],
+                    ['name' => 'Realizado (R$ mi)', 'data' => [10, 16, 14, 12, 7, 4]],
+                ],
+                'overlays' => [
+                    'movingAverage' => [
+                        'enabled' => true,
+                        'period' => 1,
+                        'seriesIndex' => 1, // 0=Previsto, 1=Realizado
+                        'name' => 'Média móvel',
+                    ],
+                    'trendline' => [
+                        'enabled' => true,
+                        'seriesIndex' => 1,
+                        'name' => 'Tendência',
+                    ],
+                ],
+            ];
+            // (E) Radial: Score por setor
+            $chartScoreSetor = [
+                'categories' => array_keys($setoresDados),
+                'series' => [
+                    [
+                        'name' => 'Score do Setor',
+                        'data' => array_map(fn($s) => $s['score'], array_values($setoresDados)),
+                    ],
+                ],
+            ];
         @endphp
 
         <div class="pt-01">
