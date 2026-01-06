@@ -290,7 +290,7 @@ Route::prefix('saude')->name('saude.')->group(function () {
 
 Route::post('/ai/analise', [AnalisesController::class, 'analise'])->name('ai.analise');
 
-// rota modo TV
+// Rota modo TV
 Route::prefix('tv')->name('tv')->group(function () {
-    Route::get('/tv', fn() => view('home-tv'))->name('tv');
+    Route::get('/', fn() => view('home-tv'))->name('.index'); 
 });
