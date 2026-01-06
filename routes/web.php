@@ -294,7 +294,10 @@ Route::prefix('saude')->name('saude.')->group(function () {
 
 Route::post('/ai/analise', [AnalisesController::class, 'analise'])->name('ai.analise');
 
-// rota modo TV
-Route::prefix('tv')->name('tv')->group(function () {
-    Route::get('/tv', fn() => view('home-tv'))->name('tv');
+Route::prefix('tv')->name('tv.')->group(function () {
+    Route::view('/', 'home-tv')->name('index');
+
+    Route::view('/financeiro', 'financeiro.tv-financeiro')->name('financeiro');
+    Route::view('/saude', 'saude.tv-saude')->name('saude');
+    Route::view('/educacao', 'educacao.tv-educacao')->name('educacao');
 });

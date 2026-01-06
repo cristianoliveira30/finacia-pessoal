@@ -390,21 +390,22 @@
 
                     {{-- DASHBOARD --}}
                     <li>
-                        <a href="{{ route('home') }}"
-                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
-                            data-tooltip="Dashboard" target="_blank" rel="noopener noreferrer">
-                            {{-- ÍCONE DE TV (DASHBOARD) --}}
-                            <x-bi-house class="w-5 h-5" />
-                            <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/tv"
+                        <a href="{{ route('tv.financeiro') }}"
                             class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
                             data-tooltip="Modo Tv" target="_blank" rel="noopener noreferrer">
                             <x-bi-tv class="w-5 h-5" />
                             <span class="sidebar-label whitespace-nowrap font-semibold">Modo TV</span>
                         </a>
+
+                    </li>
+                    <li>
+                        <a href="{{ route('tv.financeiro') }}"
+                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
+                            data-tooltip="Modo Tv" target="_blank" rel="noopener noreferrer">
+                            <x-bi-tv class="w-5 h-5" />
+                            <span class="sidebar-label whitespace-nowrap font-semibold">Modo TV</span>
+                        </a>
+
                     </li>
 
                     {{-- LOOP PARA GERAR TODOS OS MENUS COM DROPDOWN --}}
@@ -417,7 +418,7 @@
                             <button type="button"
                                 class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5 {{ $menu['id'] === 'calendario' ? 'text-slate-200' : '' }}"
                                 data-submenu-toggle="submenu-{{ $menu['id'] }}"
-                                 data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right-start"
+                                data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right-start"
                                 data-popover-offset="8">
                                 <div class="flex items-center gap-3">
                                     {{-- ÍCONE PRINCIPAL DINÂMICO --}}

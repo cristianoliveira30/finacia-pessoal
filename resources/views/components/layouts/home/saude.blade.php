@@ -369,7 +369,7 @@
 
                     {{-- DASHBOARD --}}
                     <li>
-                        <a href="{{ route('home') }}"
+                        <a href="{{ route('tv.saude') }}"
                             class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
                             data-tooltip="Dashboard" target="_blank" rel="noopener noreferrer">
                             {{-- ÍCONE DE TV (DASHBOARD) --}}
@@ -378,7 +378,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/tv"
+                       <a href="{{ route('tv.saude') }}"
                             class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
                             data-tooltip="Modo Tv" target="_blank" rel="noopener noreferrer">
                             <x-bi-tv class="w-5 h-5" />
