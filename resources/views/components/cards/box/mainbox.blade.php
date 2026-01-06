@@ -13,7 +13,7 @@
             'link'    => '/dashboard/rh/pessoal',
             'icon'    => 'people', 
             'bg_class' => 'bg-sky-100 dark:bg-sky-900/20 text-sky-700 dark:text-sky-400',
-            // Texto Rico Restaurado
+            'status'   => 'warning', // <--- Exemplo: Alerta (Amarelo)
             'tooltip_html' => '
                 <div class="space-y-2 text-xs">
                     <p><strong>O que é:</strong> Percentual da RCL gasto com pessoal.</p>
@@ -37,7 +37,7 @@
             'link'    => '/dashboard/financas',
             'icon'    => 'currency-dollar',
             'bg_class' => 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400',
-            // Texto Rico Restaurado
+            'status'   => 'good', // <--- Exemplo: Bom (Verde)
             'tooltip_html' => '
                 <div class="space-y-2 text-xs">
                     <p><strong>Fórmula:</strong> Receita Total – Despesa Total</p>
@@ -60,7 +60,7 @@
             'link'    => '/dashboard/ouvidoria',
             'icon'    => 'shield-check',
             'bg_class' => 'bg-rose-100 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400',
-            // Texto Rico Restaurado
+            'status'   => 'critical', // <--- Exemplo: Crítico (Vermelho)
             'tooltip_html' => '
                 <div class="space-y-2 text-xs">
                     <p><strong>Meta:</strong> ✔ ≥ 90% das recomendações atendidas.</p>
@@ -76,11 +76,36 @@
             'link'    => '/dashboard/ouvidoria',
             'icon'    => 'emoji-smile',
             'bg_class' => 'bg-indigo-100 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400',
+            'status'   => 'neutral', // <--- Exemplo: Neutro (Azul/Cinza)
             'tooltip_html' => 'Métrica de lealdade e satisfação do cidadão baseada em pesquisas de avaliação de serviços públicos.'
         ],
     ];
 
     $card = $definitions[$id] ?? null;
+
+    // Lógica de Estilos Dinâmicos (Igual ao Minibox)
+    $status = $card['status'] ?? 'neutral';
+
+    $styles = [
+        'good' => [
+            'wrapper' => 'border-emerald-500 shadow-emerald-500/20 dark:border-emerald-500/50',
+            'blur'    => 'bg-emerald-500/10 group-hover:bg-emerald-500/20'
+        ],
+        'warning' => [
+            'wrapper' => 'border-amber-400 shadow-amber-500/20 dark:border-amber-500/50',
+            'blur'    => 'bg-amber-500/10 group-hover:bg-amber-500/20'
+        ],
+        'critical' => [
+            'wrapper' => 'border-red-500 shadow-red-500/20 dark:border-red-500/50',
+            'blur'    => 'bg-red-500/10 group-hover:bg-red-500/20'
+        ],
+        'neutral' => [
+            'wrapper' => 'border-slate-200 dark:border-slate-700 shadow-sm',
+            'blur'    => 'bg-slate-500/5 dark:bg-slate-500/10 group-hover:bg-slate-500/20' // Fallback se não usar a cor do ícone
+        ],
+    ];
+
+    $currentStyle = $styles[$status] ?? $styles['neutral'];
 @endphp
 
 @if($card)
@@ -88,14 +113,17 @@
         <div class="group relative w-full h-full">
 
             {{-- Card --}}
+            {{-- APLICAÇÃO DA CLASSE DE BORDA E SOMBRA DINÂMICA ($currentStyle['wrapper']) --}}
             <div class="relative w-full min-w-[260px] overflow-hidden h-full
                         bg-white dark:bg-slate-800
                         p-5 rounded-2xl
-                        border border-slate-200 dark:border-slate-700
-                        shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                        border transition-all duration-300 hover:-translate-y-1
+                        {{ $currentStyle['wrapper'] }}">
 
-                {{-- Glow --}}
-                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full blur-2xl transition-all pointer-events-none opacity-20 group-hover:opacity-40 {{ str_replace('text-', 'bg-', $card['bg_class']) }}"></div>
+                {{-- APLICAÇÃO DA CLASSE DE BLUR DINÂMICA ($currentStyle['blur']) --}}
+                {{-- Nota: Se for 'neutral', usa a cor específica do card (bg_class) para manter a identidade, senão usa a cor do status --}}
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full blur-2xl transition-all pointer-events-none opacity-20 
+                            {{ $status === 'neutral' ? str_replace('text-', 'bg-', $card['bg_class']) : $currentStyle['blur'] }}"></div>
 
                 <div class="relative z-10 flex justify-between h-full">
                     <div class="flex flex-col justify-between">
@@ -122,7 +150,7 @@
                             <x-dynamic-component :component="'bi-'.$card['icon']" class="w-6 h-6" />
                         </div>
                         
-                        {{-- Link com Tooltip Específico ("ir para relatorios") --}}
+                        {{-- Link com Tooltip Específico --}}
                         <a href="{{ $card['link'] }}" 
                            class="group/link relative p-1.5 rounded-lg text-slate-400 hover:text-sky-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
                             
