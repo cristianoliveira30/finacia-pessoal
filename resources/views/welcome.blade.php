@@ -109,7 +109,8 @@
                     </a>
                 </div>
 
-                <button class="w-full mt-2 py-3 rounded-lg text-sm font-semibold transition-colors
+                <button type="submit"
+                    class="w-full mt-2 py-3 rounded-lg text-sm font-semibold transition-colors
                     bg-neutral-900 text-white hover:bg-neutral-700
                     dark:bg-white dark:text-black dark:hover:bg-gray-200">
                     Entrar
@@ -129,9 +130,9 @@
                 shown = !shown;
                 input.type = shown ? 'text' : 'password';
 
-                if(shown) {
-                   btn.classList.add('text-indigo-600', 'dark:text-white');
-                   btn.classList.remove('text-gray-500', 'dark:text-gray-400');
+                if (shown) {
+                    btn.classList.add('text-indigo-600', 'dark:text-white');
+                    btn.classList.remove('text-gray-500', 'dark:text-gray-400');
                 } else {
                     btn.classList.remove('text-indigo-600', 'dark:text-white');
                     btn.classList.add('text-gray-500', 'dark:text-gray-400');
