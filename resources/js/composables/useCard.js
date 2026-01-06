@@ -96,13 +96,6 @@ export const bindCardAI = (id) => {
         el.style.overflowY = "hidden";
     };
 
-    const autoGrowTextarea = (el) => {
-        if (!el) return;
-        el.style.overflowY = "hidden";
-        el.style.height = "auto";
-        el.style.height = `${el.scrollHeight}px`;
-    };
-
     const setLoading = (loading) => {
         if (submitBtn) {
             submitBtn.toggleAttribute("disabled", !!loading);
