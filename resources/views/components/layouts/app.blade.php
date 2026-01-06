@@ -75,7 +75,7 @@
     </style>
 </head>
 
-<body class="min-h-screen antialiased">
+<body class="min-h-screen antialiased sidebar-collapsed">
     <div class="min-h-dvh flex flex-col bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
         {{-- HEADER SEMPRE NO TOPO --}}
         @include('components.layouts.app.header')
