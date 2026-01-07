@@ -38,9 +38,7 @@
             {{-- Botões (Alinhados à direita no mobile e desktop) --}}
             <div class="flex items-center justify-end gap-2 w-full md:w-auto">
                 {{-- Toggle Gráfico/Tabela --}}
-                <div
-                    class="inline-flex rounded-xl m-0 border border-slate-300 bg-slate-100 overflow-hidden dark:border-slate-700 dark:bg-slate-900/60">
-                    {{-- SUAVIZADO: font-semibold -> font-medium | text-slate-700 -> text-slate-600 --}}
+                <div class="inline-flex rounded-xl m-0 border border-slate-300 bg-slate-100 overflow-hidden dark:border-slate-700 dark:bg-slate-900/60">
                     <button type="button" data-card-view-toggle="{{ $id }}" data-view="chart"
                         class="text-xs px-3 py-2 font-medium bg-white text-slate-600 hover:bg-slate-200 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
                         <x-bi-graph-up />
@@ -58,11 +56,9 @@
                 </button>
 
                 {{-- Botão Collapse --}}
-                <button type="button" data-accordion-target="#{{ $accordionBodyId }}" aria-expanded="false"
-                    aria-controls="{{ $accordionBodyId }}"
+                <button type="button" data-accordion-target="#{{ $accordionBodyId }}" aria-expanded="false" aria-controls="{{ $accordionBodyId }}"
                     class="text-xs px-3 py-2 font-medium bg-white text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:bg-slate-800/80 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
-                    <x-bi-caret-down-fill class="w-3 h-3 shrink-0 transition-transform duration-200"
-                        data-accordion-icon />
+                    <x-bi-caret-down-fill class="w-3 h-3 shrink-0 transition-transform duration-200" data-accordion-icon />
                 </button>
             </div>
         </div>
@@ -74,26 +70,11 @@
             <div>
                 <div data-card-section="chart">
                     @switch($chartType)
-                        @case('area')
-                            <x-cards.graph.area-chart :data="$chart" />
-                        @break
-
-                        @case('pie')
-                            <x-cards.graph.pie-chart :data="$chart" />
-                        @break
-
-                        @case('column')
-                            <x-cards.graph.column-chart :data="$chart" />
-                        @break
-
-                        @case('bar')
-                            <x-cards.graph.bar-chart :data="$chart" />
-                        @break
-
-                        @case('radial')
-                            <x-cards.graph.radial-chart :data="$chart" />
-                        @break
-
+                        @case('area') <x-cards.graph.area-chart :data="$chart" /> @break
+                        @case('pie') <x-cards.graph.pie-chart :data="$chart" /> @break
+                        @case('column') <x-cards.graph.column-chart :data="$chart" /> @break
+                        @case('bar') <x-cards.graph.bar-chart :data="$chart" /> @break
+                        @case('radial') <x-cards.graph.radial-chart :data="$chart" /> @break
                         @default
                     @endswitch
                 </div>
@@ -103,19 +84,19 @@
             </div>
 
             {{-- Footer --}}
-            <div
-                class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-3 border-t border-slate-200 dark:border-slate-700/80">
-                {{-- SUAVIZADO: text-slate-700 -> text-slate-500 --}}
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-3 border-t border-slate-200 dark:border-slate-700/80">
+                
                 <div class="text-xs md:text-sm text-slate-500 dark:text-slate-400">
                     <span class="font-medium text-slate-600 dark:text-slate-200">Atualizado em:</span>
                     {{ date('d/m/Y') }}
                 </div>
 
                 <div class="flex items-center gap-2">
-                    @php $tooltipId = $id . '-tooltip-recarregar'; @endphp
-                    <button type="button" id="{{ $id }}-btn-refresh"
-                        onclick="Refresh('{{ $id }}')" data-tooltip-target="{{ $tooltipId }}"
-                        data-tooltip-placement="top"
+                    
+                    {{-- 1. Botão RECARREGAR --}}
+                    @php $tooltipRefresh = $id . '-tooltip-recarregar'; @endphp
+                    <button type="button" id="{{ $id }}-btn-refresh" onclick="Refresh('{{ $id }}')"
+                        data-tooltip-target="{{ $tooltipRefresh }}" data-tooltip-placement="top"
                         class="text-xs px-3 py-2 font-medium bg-sky-600 text-white border border-sky-600 rounded-lg hover:bg-sky-700 hover:text-white shadow-md focus:outline-none focus:ring-2 focus:ring-sky-400 dark:bg-sky-800/80 dark:border-slate-600 dark:hover:bg-sky-700 dark:hover:text-white dark:focus:ring-sky-500/40">
                         <x-bi-arrow-clockwise />
                     </button>
@@ -125,15 +106,25 @@
                         Atualizar indicador <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
 
-                    {{-- Botões Toggle Sections --}}
-                    {{-- SUAVIZADO: font-semibold -> font-medium | text-slate-700 -> text-slate-600 --}}
-                    <button type="button" data-collapse-toggle="{{ $aiSectionId }}"
-                        aria-controls="{{ $aiSectionId }}" aria-expanded="false"
+
+                    {{-- 2. Botão IA --}}
+                    @php $tooltipAi = $id . '-tooltip-ai'; @endphp
+                    <button type="button" data-collapse-toggle="{{ $aiSectionId }}" aria-controls="{{ $aiSectionId }}" aria-expanded="false"
+                        data-tooltip-target="{{ $tooltipAi }}" data-tooltip-placement="top"
                         class="text-xs px-3 py-2 font-medium bg-white text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:bg-slate-800/80 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
                         <x-bi-openai />
                     </button>
-                    <button type="button" data-collapse-toggle="{{ $filterSectionId }}"
-                        aria-controls="{{ $filterSectionId }}" aria-expanded="false"
+                    {{-- Tooltip IA --}}
+                    <div id="{{ $tooltipAi }}" role="tooltip"
+                        class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Assistente IA <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+
+
+                    {{-- 3. Botão FILTRO --}}
+                    @php $tooltipFilter = $id . '-tooltip-filter'; @endphp
+                    <button type="button" data-collapse-toggle="{{ $filterSectionId }}" aria-controls="{{ $filterSectionId }}" aria-expanded="false"
+                        data-tooltip-target="{{ $tooltipFilter }}" data-tooltip-placement="top"
                         class="text-xs px-3 py-2 font-medium bg-white text-slate-600 border border-slate-300 rounded-lg hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:bg-slate-800/80 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40">
                         <x-bi-funnel-fill />
                     </button>
@@ -146,19 +137,21 @@
 
                     {{-- 4. Dropdown DOWNLOAD --}}
                     <div class="relative">
-                        <button id="{{ $downloadButtonId }}" data-dropdown-toggle="{{ $downloadDropId }}"
-                            type="button"
+                        <button id="{{ $downloadButtonId }}" data-dropdown-toggle="{{ $downloadDropId }}" type="button"
                             class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium rounded-lg border justify-center bg-white text-slate-600 border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40">
                             <x-bi-download class="w-4 h-4" />
                         </button>
                         
                         <div id="{{ $downloadDropId }}"
-                            class="z-20 hidden mt-2 bg-white divide-y divide-slate-100 rounded-lg shadow-2xl border border-slate-200 dark:bg-slate-800 dark:divide-slate-700 dark:border-slate-700">
-                            <ul class="py-2 text-sm text-slate-600 dark:text-slate-200"
-                                aria-labelledby="{{ $downloadButtonId }}">
+                            class="z-50 hidden mt-2 bg-white divide-y divide-slate-100 rounded-lg shadow-2xl border border-slate-200 dark:bg-slate-800 dark:divide-slate-700 dark:border-slate-700">
+                            <ul class="py-2 text-sm text-slate-600 dark:text-slate-200" aria-labelledby="{{ $downloadButtonId }}">
+                                
+                                {{-- PDF --}}
+                                @php $tooltipPdf = $id . '-tooltip-pdf'; @endphp
                                 <li>
-                                    <a href="#" id="{{ $id }}-btn-download-pdf"
-                                        class="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    <a href="#" id="{{ $id }}-btn-download-pdf" 
+                                       data-tooltip-target="{{ $tooltipPdf }}" data-tooltip-placement="left"
+                                       class="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700/70 dark:hover:text-white">
                                         <x-bi-filetype-pdf class="w-4 h-4 shrink-0" />
                                     </a>
                                 </li>
@@ -170,8 +163,9 @@
                                 {{-- XLSX --}}
                                 @php $tooltipXlsx = $id . '-tooltip-xlsx'; @endphp
                                 <li>
-                                    <a href="#" id="{{ $id }}-btn-download-xlsx"
-                                        class="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    <a href="#" id="{{ $id }}-btn-download-xlsx" 
+                                       data-tooltip-target="{{ $tooltipXlsx }}" data-tooltip-placement="left"
+                                       class="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700/70 dark:hover:text-white">
                                         <x-bi-filetype-xlsx class="w-4 h-4 shrink-0" />
                                     </a>
                                 </li>
@@ -183,8 +177,9 @@
                                 {{-- CSV --}}
                                 @php $tooltipCsv = $id . '-tooltip-csv'; @endphp
                                 <li>
-                                    <a href="#" id="{{ $id }}-btn-download-csv"
-                                        class="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    <a href="#" id="{{ $id }}-btn-download-csv" 
+                                       data-tooltip-target="{{ $tooltipCsv }}" data-tooltip-placement="left"
+                                       class="flex items-center gap-2 px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700/70 dark:hover:text-white">
                                         <x-bi-filetype-csv class="w-4 h-4 shrink-0" />
                                     </a>
                                 </li>
@@ -207,30 +202,24 @@
                         <div class="space-y-1">
                             <label class="block text-xs font-medium text-slate-600 dark:text-slate-400">De</label>
                             <div class="relative">
-                                <div
-                                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-slate-500 dark:text-slate-400">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-slate-500 dark:text-slate-400">
                                     <x-bi-calendar class="w-3.5 h-3.5" />
                                 </div>
-                                <input type="text" id="{{ $id }}-start-date" placeholder="dd / mm / aaaa"
-                                    class="bg-white border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full ps-10 p-2.5 dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
+                                <input type="text" id="{{ $id }}-start-date" placeholder="dd / mm / aaaa" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full ps-10 p-2.5 dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
                             </div>
                         </div>
                         <div class="space-y-1">
                             <label class="block text-xs font-medium text-slate-600 dark:text-slate-400">Até</label>
                             <div class="relative">
-                                <div
-                                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-slate-500 dark:text-slate-400">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-slate-500 dark:text-slate-400">
                                     <x-bi-calendar class="w-3.5 h-3.5" />
                                 </div>
-                                <input type="text" id="{{ $id }}-end-date" placeholder="dd / mm / aaaa"
-                                    class="bg-white border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full ps-10 p-2.5 dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
+                                <input type="text" id="{{ $id }}-end-date" placeholder="dd / mm / aaaa" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full ps-10 p-2.5 dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
                             </div>
                         </div>
                     </div>
                     <div class="flex justify-end">
-                        <button type="button"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Aplicar
-                            Filtros</button>
+                        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Aplicar Filtros</button>
                     </div>
                 </div>
             </div>
@@ -280,7 +269,6 @@
 
                 </form>
             </div>
-
         </div>
     </div>
 </div>
