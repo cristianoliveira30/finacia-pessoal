@@ -301,9 +301,9 @@
                         </label>
 
                         <div class="flex gap-2 items-start">
-                            <textarea id="{{ $id }}-ai-prompt" name="prompt" rows="1" required
+                            <div id="{{ $id }}-ai-prompt" name="prompt" rows="1" required
                                 class="flex-1 block p-2 text-sm text-slate-500 bg-white rounded-lg border border-slate-300 focus:ring-sky-600 focus:border-sky-600 resize-none dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500"
-                                placeholder="Digite sua pergunta aqui..."></textarea>
+                                placeholder="Digite sua pergunta aqui..."></div>
 
                             <button type="submit"
                                 class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2.5 inline-flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 h-full max-h-[42px] self-start mt-0.5"

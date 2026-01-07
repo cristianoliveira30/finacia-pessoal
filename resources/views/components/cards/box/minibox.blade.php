@@ -147,7 +147,7 @@
                     <a href="{{ $dados['link'] }}" class="group/link relative text-slate-300 hover:text-sky-500 transition-colors">
                         <x-bi-arrow-right-short class="w-5 h-5" />
                         <span class="absolute bottom-full right-0 mb-1 px-1.5 py-0.5 bg-slate-700 text-white text-[10px] font-medium rounded shadow-sm opacity-0 invisible group-hover/link:opacity-100 group-hover/link:visible transition-all duration-200 whitespace-nowrap z-20 pointer-events-none">
-                            Ver
+                            Ver Relatorios
                         </span>
                     </a>
                 </div>
