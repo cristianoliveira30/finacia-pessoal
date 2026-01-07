@@ -30,7 +30,6 @@
     bg-gray-50 text-gray-900
     dark:bg-[#0b0b0b] dark:text-white">
 
-    <!-- LADO ESQUERDO: Imagem -->
     <div class="hidden lg:flex w-1/2 items-center justify-end p-12 pr-16 relative">
         <div class="text-center">
             <img src="assets/img/belem.png" alt="logo" class="mx-auto h-72 w-auto object-contain drop-shadow-2xl" />
@@ -40,12 +39,10 @@
         </div>
     </div>
 
-    <!-- LADO DIREITO: Login e Senha -->
     <div class="w-full lg:w-1/2 flex items-center justify-center lg:justify-start p-6 lg:pl-16">
         <div class="w-full max-w-sm">
 
             <div class="mb-10">
-                <!-- Mobile Logo -->
                 <div class="lg:hidden text-center mb-8">
                     <img src="assets/img/belem.png" alt="logo" class="mx-auto h-24 w-auto" />
                 </div>
@@ -56,25 +53,29 @@
 
             <form action="{{ route('login.post') }}" method="post" class="space-y-5">
                 @csrf
+                
                 <div>
                     <label for="login" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Login</label>
 
-                    <input id="login" name="login" type="text" placeholder="Seu usuário" required
-                        class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all
-                        bg-white border-gray-300 text-gray-900 placeholder:text-gray-400
-                        dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder:text-gray-500" />
+                    <input id="username" name="username" type="text" placeholder="Seu usuário" required 
+                        value="{{ old('username') }}"
+                        class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 transition-all
+                        bg-white text-gray-900 placeholder:text-gray-400
+                        dark:bg-neutral-800 dark:text-white dark:placeholder:text-gray-500
+                        
+                        @if($errors->has('username') || $errors->has('login')) 
+                            border-red-500 focus:ring-red-500 dark:border-red-500
+                        @else 
+                            border-gray-300 focus:ring-indigo-500 dark:border-neutral-700 
+                        @endif" />
+                    
+                    @error('username')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                    @enderror
 
-                    <button type="button" id="toggle-pass"
-                        class="absolute right-2 top-1/2 -translate-y-1/2 transition-colors
-                        text-gray-500 hover:text-gray-700
-                        dark:text-gray-400 dark:hover:text-gray-200"
-                        aria-label="Mostrar senha">
-                        <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4">
-                            <path fill="currentColor"
-                                d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 12a5 5 0 110-10 5 5 0 010 10z" />
-                            <path fill="currentColor" d="M12 9a3 3 0 100 6 3 3 0 000-6z" />
-                        </svg>
-                    </button>
+                    @error('login')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
@@ -82,9 +83,15 @@
                         class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Senha</label>
                     <div class="relative">
                         <input id="password" name="password" type="password" placeholder="Senha" required
-                            class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all
-                            bg-white border-gray-300 text-gray-900 placeholder:text-gray-400
-                            dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:placeholder:text-gray-500" />
+                            class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 transition-all
+                            bg-white text-gray-900 placeholder:text-gray-400
+                            dark:bg-neutral-800 dark:text-white dark:placeholder:text-gray-500
+                            
+                            @if($errors->has('password') || $errors->has('login')) 
+                                border-red-500 focus:ring-red-500 dark:border-red-500
+                            @else 
+                                border-gray-300 focus:ring-indigo-500 dark:border-neutral-700 
+                            @endif" />
 
                         <button type="button" id="toggle-pass" class="absolute right-3 top-1/2 -translate-y-1/2 transition-colors
                             text-gray-500 hover:text-gray-700
@@ -97,9 +104,14 @@
                             </svg>
                         </button>
                     </div>
+                    
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-500">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </div>
 
-                <!-- MUDANÇA AQUI: Alterado de justify-end para justify-start (esquerda) -->
                 <div class="flex items-center justify-start">
                     <a href="#"
                         class="text-sm font-medium hover:underline transition-colors
