@@ -4,9 +4,9 @@
 
         @php
             // Dados Mockados Ajustados (Compatíveis com a imagem)
-            $dtpValor = 52.1; 
-            $resultadoFinanceiro = 24.9; 
-            $indiceControleInterno = 94; 
+            $dtpValor = 52.1;
+            $resultadoFinanceiro = 24.9;
+            $indiceControleInterno = 94;
             $nps = 48;
 
             // ------------------------------------------------------
@@ -79,19 +79,19 @@
         <div class="pt-01">
             {{-- 1) KPIs Macro --}}
             <div class="grid grid-cols-1 md:grid-cols-4 gap-2 m-3 ">
-                
+
                 <div class="md:col-span-1" id="wrapper-card-gestao">
                     <x-cards.box.mainbox id="gestao" :value="$dtpValor" />
                 </div>
-                
+
                 <div class="md:col-span-1" id="wrapper-card-financas">
                     <x-cards.box.mainbox id="financas" :value="$resultadoFinanceiro" />
                 </div>
-                
+
                 <div class="md:col-span-1" id="wrapper-card-pendencias">
                     <x-cards.box.mainbox id="pendencias" :value="$indiceControleInterno" />
                 </div>
-                
+
                 {{-- NPS agora irá renderizar corretamente --}}
                 <div class="md:col-span-1" id="wrapper-card-nps">
                     <x-cards.box.mainbox id="nps" :value="$nps" />
@@ -142,11 +142,24 @@
 
                      // Gráfico 4: Execução Orçamentária por Pasta (Coluna)
                      $chartOrcamento = [
-                         'categories' => ['Saúde', 'Educação', 'Infra'],
-                         'series' => [
-                             ['name' => 'Empenhado', 'data' => [12.5, 10.2, 8.5]],
-                             ['name' => 'Liquidado', 'data' => [10.1, 9.8, 4.2]]
-                         ]
+                        'categories' => ['Saúde', 'Educação', 'Infra'],
+                        'series' => [
+                            ['name' => 'Empenhado', 'data' => [12.5, 10.2, 8.5]],
+                            ['name' => 'Liquidado', 'data' => [10.1, 9.8, 4.2]]
+                        ],
+                        'overlays' => [
+                            'movingAverage' => [
+                                'enabled' => true,
+                                'period' => 1,
+                                'seriesIndex' => 1, // 0 = previsto, 1 = realizado
+                                'name' => 'Média Móvel'
+                            ],
+                            'trendline' => [
+                                'enabled' => true,
+                                'seriesIndex' => 1,
+                                'name' => 'Tendência'
+                            ]
+                        ]
                      ];
 
                      // Gráfico 5: Performance Setorial (Radar)
@@ -157,7 +170,7 @@
                         ]
                      ];
                 @endphp
-                
+
                 <x-cards.card id="central-indice" title="Evolução da Gestão Fiscal (R$ mi)" :chart="$chartGestaoFiscal" chart-type="area" />
                 <x-cards.card id="central-demandas" title="Demandas por Secretaria" :chart="$chartDemandas" chart-type="pie" />
                 <x-cards.card id="central-pendencias" title="Controle Interno (Conformidade %)" :chart="$chartPrazos" chart-type="bar" />
@@ -170,7 +183,10 @@
 
     @push('scripts')
         <script>
-             document.addEventListener('DOMContentLoaded', function() { window.CardAI?.init?.(); });
+             document.addEventListener('DOMContentLoaded', function() {
+                window.CardAI?.init?.();
+                window.Card?.bindAllOverlayToggles?.();
+             });
         </script>
     @endpush
 </x-layouts.app>

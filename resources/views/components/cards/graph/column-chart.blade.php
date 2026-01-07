@@ -1,19 +1,12 @@
 @props([
-    'chartId' => 'column-chart-' . uniqid(),
-    'data' => [],
+  'chartId' => null,
+  'data' => [],
 ])
 
 @php
-    // Espera o mesmo formato:
-    // [
-    //   'categories' => ['Seg', 'Ter', ...],
-    //   'series' => [
-    //       ['name' => 'Organic', 'data' => [10, 20, ...]],
-    //       ['name' => 'Social',  'data' => [5, 15, ...]],
-    //   ],
-    // ]
-    $categories = $data['categories'] ?? [];
-    $series = $data['series'] ?? [];
+  $chartId = $chartId ?: ('column-chart-' . uniqid());
+  $categories = $data['categories'] ?? [];
+  $series = $data['series'] ?? [];
 @endphp
 
 <div class="w-full bg-neutral-primary-soft dark:bg-slate-900">
@@ -46,15 +39,6 @@
                 return Number.isFinite(n) ? n : null;
             }
 
-            function formatBRL(v, decimals = 2) {
-                const n = Number(v);
-                if (!Number.isFinite(n)) return String(v ?? "-");
-                return "R$ " + n.toLocaleString("pt-BR", {
-                    minimumFractionDigits: decimals,
-                    maximumFractionDigits: decimals,
-                });
-            }
-
             function movingAverage(arr, period) {
                 const p = Math.max(1, Number(period) || 1);
                 const out = new Array(arr.length).fill(null);
@@ -76,7 +60,6 @@
                             count--;
                         }
                     }
-
                     if (i >= p - 1 && count > 0) out[i] = sum / count;
                 }
                 return out;
@@ -109,74 +92,96 @@
                 return arr.map((_, i) => a + b * i);
             }
 
-            function buildSeriesWithOverlays(baseSeries) {
+            function buildSeries(mode) {
+                const base = (rawSeries || []).map(s => ({
+                    ...s,
+                    type: "column"
+                }));
+
                 const cfgMA = overlays?.movingAverage || overlays?.moving_average;
                 const cfgTR = overlays?.trendline || overlays?.trend;
 
                 const maEnabled = !!cfgMA?.enabled;
                 const trEnabled = !!cfgTR?.enabled;
 
-                const out = baseSeries.map(s => ({
-                    ...s,
-                    type: "column"
-                }));
+                const pickIndex = (idx) => Math.max(0, Math.min((rawSeries?.length || 1) - 1, idx));
 
-                if (!maEnabled && !trEnabled) return out;
-
-                const pickIndex = (idx) => Math.max(0, Math.min(baseSeries.length - 1, idx));
-
-                if (maEnabled) {
+                if (mode === "movingAverage" && maEnabled) {
                     const idx = pickIndex(Number(cfgMA?.seriesIndex) ?? 0);
                     const period = Number(cfgMA?.period) || 3;
-                    const base = (baseSeries[idx]?.data || []).map(toNum);
-
-                    out.push({
+                    const baseData = (rawSeries[idx]?.data || []).map(toNum);
+                    base.push({
                         name: cfgMA?.name || `Média móvel (${period})`,
                         type: "line",
-                        data: movingAverage(base, period),
+                        data: movingAverage(baseData, period)
                     });
                 }
 
-                if (trEnabled) {
+                if (mode === "trendline" && trEnabled) {
                     const idx = pickIndex(Number(cfgTR?.seriesIndex) ?? 0);
-                    const base = (baseSeries[idx]?.data || []).map(toNum);
-
-                    out.push({
+                    const baseData = (rawSeries[idx]?.data || []).map(toNum);
+                    base.push({
                         name: cfgTR?.name || "Tendência",
                         type: "line",
-                        data: trendline(base),
+                        data: trendline(baseData)
                     });
                 }
 
-                return out;
+                return base;
             }
+
+            function buildColors(mode) {
+                const base = [brandColor, brandSecondaryColor];
+
+                const cfgMA = overlays?.movingAverage || overlays?.moving_average;
+                const cfgTR = overlays?.trendline || overlays?.trend;
+
+                const maColor = cfgMA?.color || "#0EA5E9";
+                const trColor = cfgTR?.color || "#64748B";
+
+                if (mode === "movingAverage" && cfgMA?.enabled) base.push(maColor);
+                if (mode === "trendline" && cfgTR?.enabled) base.push(trColor);
+
+                return base;
+            }
+
+            function strokeWidths(series) {
+                return series.map(s => (s.type === "column" ? 0 : 3));
+            }
+
+            function markerSizes(series) {
+                return series.map(s => (s.type === "column" ? 0 : 3));
+            }
+
+            function formatAxis(val) {
+                const n = Number(val);
+                if (!Number.isFinite(n)) return "";
+
+                const abs = Math.abs(n);
+                const fmt = (x) => x.toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+
+                if (abs >= 1e9) return `${fmt(n / 1e9)} bi`;
+                if (abs >= 1e6) return `${fmt(n / 1e6)} mi`;
+                if (abs >= 1e3) return `${fmt(n / 1e3)} mil`;
+                return fmt(n);
+            }
+
 
             function initChart() {
                 const el = document.getElementById(chartId);
                 if (!el || !window.ApexCharts) return;
 
-                const baseSeries = (rawSeries || []);
-                const series = buildSeriesWithOverlays(baseSeries);
+                // começa do jeito que o card mandar (o default lá)
+                let currentMode = "movingAverage";
 
-                const baseColors = [brandColor, brandSecondaryColor];
-                const maColor = (overlays?.movingAverage?.color || overlays?.moving_average?.color || "#0EA5E9");
-                const trColor = (overlays?.trendline?.color || overlays?.trend?.color || "#64748B");
-
-                // cores: 1a e 2a séries = colunas, extras = linhas
-                const colors = [
-                    ...baseColors,
-                    ...(overlays?.movingAverage?.enabled || overlays?.moving_average?.enabled ? [maColor] : []),
-                    ...(overlays?.trendline?.enabled || overlays?.trend?.enabled ? [trColor] : []),
-                ];
-
-                const strokeWidths = series.map(s => (s.type === "column" ? 0 : 3));
-                const markerSizes = series.map(s => (s.type === "column" ? 0 : 3));
+                const series = buildSeries(currentMode);
+                const colors = buildColors(currentMode);
 
                 const options = {
                     series,
                     colors,
                     chart: {
-                        type: "line", // <- habilita combo column + line
+                        type: "line", // combo
                         height: 290,
                         fontFamily: "Inter, sans-serif",
                         toolbar: {
@@ -193,47 +198,32 @@
                     },
                     stroke: {
                         show: true,
-                        width: strokeWidths,
-                        curve: "straight",
+                        width: strokeWidths(series),
+                        curve: "straight"
                     },
                     markers: {
-                        size: markerSizes,
+                        size: markerSizes(series)
                     },
                     dataLabels: {
                         enabled: false
                     },
                     grid: {
-                        show: false,
-                        strokeDashArray: 4,
-                        padding: {
-                            left: 2,
-                            right: 2,
-                            top: 0,
-                            bottom: 0
-                        },
+                        show: false
                     },
                     tooltip: {
                         shared: true,
                         intersect: false,
-                        style: {
-                            fontFamily: "Inter, sans-serif"
-                        },
-                        y: {
-                            formatter: (val) => {
-                                if (val == null || isNaN(val)) return "-";
-                                return formatBRL(val, 2);
-                            }
-                        }
+                        style: { fontFamily: "Inter, sans-serif" },
+                        y: { formatter: (v) => formatAxis(v) }
                     },
                     xaxis: {
                         categories,
-                        floating: false,
                         labels: {
                             show: true,
                             style: {
                                 fontFamily: "Inter, sans-serif",
                                 cssClass: 'text-xs font-normal fill-body'
-                            },
+                            }
                         },
                         axisBorder: {
                             show: false
@@ -244,22 +234,22 @@
                     },
                     yaxis: {
                         show: true,
+                        tickAmount: 5,
+                        decimalsInFloat: 1,
                         labels: {
                             show: true,
+                            formatter: formatAxis,
+                            offsetX: -6,
                             style: {
-                                fontFamily: "Inter, sans-serif",
-                                cssClass: 'text-xs font-normal fill-body'
+                            fontFamily: "Inter, sans-serif",
+                            cssClass: "text-xs font-normal fill-body",
                             },
-                            formatter: (val) => {
-                                if (val == null || isNaN(val)) return "-";
-                                return formatBRL(val, 0);
-                            }
                         },
                     },
                     legend: {
-                        show: series.length > 1,
+                        show: true,
                         position: "top",
-                        fontFamily: "Inter, sans-serif",
+                        fontFamily: "Inter, sans-serif"
                     },
                     fill: {
                         opacity: 1
@@ -270,12 +260,40 @@
                                 type: "darken",
                                 value: 0.95
                             }
-                        },
+                        }
                     },
                 };
 
                 const chart = new window.ApexCharts(el, options);
                 chart.render();
+
+                // expõe instância por id (opcional, mas útil)
+                window.__APEX_CHARTS__ = window.__APEX_CHARTS__ || {};
+                window.__APEX_CHARTS__[chartId] = chart;
+
+                // escuta o "emit"
+                window.addEventListener("chart:overlay", (e) => {
+                    const d = e?.detail || {};
+                    if (d.chartId !== chartId) return;
+
+                    const mode = d.mode || "none";
+                    currentMode = mode;
+
+                    const nextSeries = buildSeries(mode);
+                    const nextColors = buildColors(mode);
+
+                    chart.updateOptions({
+                        series: nextSeries,
+                        colors: nextColors,
+                        stroke: {
+                            width: strokeWidths(nextSeries),
+                            curve: "straight"
+                        },
+                        markers: {
+                            size: markerSizes(nextSeries)
+                        },
+                    }, true, true);
+                });
             }
 
             function waitForApex() {

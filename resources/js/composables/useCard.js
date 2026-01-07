@@ -166,7 +166,7 @@ export const bindCardAI = (id) => {
             const answer = data.answer ?? data.message ?? data.response ?? "";
 
             if (responseEl) {
-               responseEl.innerHTML = marked.parse(String(answer || "Sem resposta do servidor."));
+                responseEl.innerHTML = marked.parse(String(answer || "Sem resposta do servidor."));
             }
 
             Alerts?.close?.();
@@ -192,5 +192,76 @@ export const bindAllCardsAI = (root = document) => {
     root.querySelectorAll("[data-card-ai-form][data-card-id]").forEach((f) => {
         const id = f.getAttribute("data-card-id");
         if (id) bindCardAI(id);
+    });
+};
+
+export const bindOverlayToggle = (cardId) => {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+
+    const wrap = card.querySelector("[data-overlay-toggle]");
+    if (!wrap) return;
+
+    // evita bind duplicado
+    if (wrap.dataset.bound === "1") return;
+    wrap.dataset.bound = "1";
+
+    const chartId = wrap.getAttribute("data-chart-id");
+    const defaultMode = wrap.getAttribute("data-default-mode") || "none";
+    const buttons = Array.from(wrap.querySelectorAll("[data-overlay-mode]"));
+
+    const setActive = (mode) => {
+        buttons.forEach((btn) => {
+            const on = btn.getAttribute("data-overlay-mode") === mode;
+
+            // limpa estados (ativo/inativo)
+            btn.classList.remove(
+                // ativo
+                "bg-sky-600", "text-white", "hover:bg-sky-700",
+                "dark:bg-sky-500", "dark:hover:bg-sky-400",
+                // inativo
+                "bg-white", "text-slate-600", "hover:bg-slate-200", "hover:text-slate-900",
+                "dark:bg-slate-800/60", "dark:text-slate-200", "dark:hover:bg-slate-700", "dark:hover:text-white"
+            );
+
+            if (on) {
+                // ✅ ativo (claro + dark)
+                btn.classList.add("bg-sky-600", "text-white", "hover:bg-sky-700", "dark:bg-sky-500", "dark:hover:bg-sky-400");
+            } else {
+                // ✅ inativo (claro + dark)
+                btn.classList.add(
+                    "bg-white", "text-slate-600", "hover:bg-slate-200", "hover:text-slate-900",
+                    "dark:bg-slate-800/60", "dark:text-slate-200", "dark:hover:bg-slate-700", "dark:hover:text-white"
+                );
+            }
+        });
+    };
+
+
+    const emit = (mode) => {
+        window.dispatchEvent(
+            new CustomEvent("chart:overlay", { detail: { chartId, mode } })
+        );
+    };
+
+    // estado inicial
+    setActive(defaultMode);
+    emit(defaultMode);
+
+    buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const mode = btn.getAttribute("data-overlay-mode") || "none";
+            setActive(mode);
+            emit(mode);
+        });
+    });
+};
+
+export const bindAllOverlayToggles = (root = document) => {
+    root.querySelectorAll("[data-overlay-toggle]").forEach((wrap) => {
+        // acha o card pai
+        const card = wrap.closest("[id]");
+        if (!card?.id) return;
+        bindOverlayToggle(card.id);
     });
 };
