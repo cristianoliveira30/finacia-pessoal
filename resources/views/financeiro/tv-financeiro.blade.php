@@ -1,4 +1,4 @@
-<x-layouts.tv :title="__('TV Financeiro — Caixa, Gastos e Saldo')">
+<x-layouts.tv :title="__('Financeiro — Caixa, Gastos e Saldo')">
     @push('head')
         <meta http-equiv="refresh" content="30">
         <style>

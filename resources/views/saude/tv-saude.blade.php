@@ -1,4 +1,4 @@
-<x-layouts.tv :title="__('TV Saúde — Atendimentos, Espera e Regulação')">
+<x-layouts.tv :title="__('Saúde — Atendimentos, Espera e Regulação')">
     @push('head')
         <meta http-equiv="refresh" content="30">
         <style>

@@ -1,4 +1,4 @@
-<x-layouts.tv :title="__('Painel de Gestão Municipal — TV')">
+<x-layouts.tv :title="__('Prefeitura')">
     @push('head')
         <meta http-equiv="refresh" content="30">
         <style>

@@ -1,4 +1,4 @@
-<x-layouts.tv :title="__('TV Educação — Matrículas, Frequência e Desempenho')">
+<x-layouts.tv :title="__('Educação — Matrículas, Frequência e Desempenho')">
     @push('head')
         <meta http-equiv="refresh" content="30">
         <style>
