@@ -14,7 +14,7 @@
         'estavel' => [
             'wrapper' => 'border-emerald-500 shadow-emerald-500/20 dark:border-emerald-500/50 dark:shadow-emerald-500/10',
             'blur'    => 'bg-emerald-500/10 group-hover:bg-emerald-500/20',
-            'icon'    => 'text-emerald-500' // Opcional: forçar cor do ícone
+            'icon'    => 'text-emerald-500' 
         ],
         'instavel' => [
             'wrapper' => 'border-amber-400 shadow-amber-500/20 dark:border-amber-500/50 dark:shadow-amber-500/10',
@@ -37,32 +37,34 @@
     $getStyle = fn($status) => $statusStyles[$status] ?? $statusStyles['neutro'];
 
     // -------------------------------------------------------------------------
-    // DADOS: FINANCEIRO
+    // DADOS: FINANCEIRO (Rotas Originais Restauradas)
     // -------------------------------------------------------------------------
     $financeiro = [
         'kpis' => [
             ['label' => 'Execução', 'value' => $fmt(76.4), 'suffix' => '%', 'hint' => 'realizado/previsto', 'link' => route('financeiro.orcamento.loa'), 'icon' => 'activity', 'color' => 'text-blue-500', 'status' => 'estavel'],
+            // Restaurado "Caixa" no lugar de "Mín. Saúde/SIOPE"
             ['label' => 'Caixa', 'value' => $fmt(128.6), 'prefix' => 'R$ ', 'suffix' => ' mi', 'hint' => 'consolidado', 'link' => route('financeiro.tesouraria.saldos'), 'icon' => 'wallet2', 'color' => 'text-emerald-500', 'status' => 'estavel'],
             ['label' => 'Resultado', 'value' => $fmt(24.9), 'prefix' => 'R$ ', 'suffix' => ' mi', 'hint' => 'superávit', 'link' => route('financeiro.relatorios.rx_d'), 'icon' => 'graph-up-arrow', 'color' => 'text-indigo-500', 'status' => 'estavel'],
-            ['label' => 'Pessoal/RCL', 'value' => $fmt(52.2), 'suffix' => '%', 'hint' => 'limite 54%', 'link' => route('financeiro.compliance.pessoal'), 'icon' => 'people', 'color' => 'text-amber-500', 'status' => 'instavel'], // Perto do limite
+            ['label' => 'Pessoal/RCL', 'value' => $fmt(52.2), 'suffix' => '%', 'hint' => 'limite 54%', 'link' => route('financeiro.compliance.pessoal'), 'icon' => 'people', 'color' => 'text-amber-500', 'status' => 'instavel'],
         ],
         'modulos' => [
             'Receitas' => ['score' => 81, 'link' => route('financeiro.receitas.arrecadacao'), 'hint' => 'Própria 32%', 'icon' => 'arrow-up-circle', 'color' => 'text-emerald-500', 'status' => 'estavel'],
             'Despesas' => ['score' => 73, 'link' => route('financeiro.despesas.empenhos'), 'hint' => 'Empen. 68%', 'icon' => 'arrow-down-circle', 'color' => 'text-rose-500', 'status' => 'instavel'],
             'Tesouraria' => ['score' => 77, 'link' => route('financeiro.tesouraria.saldos'), 'hint' => 'Caixa D+90', 'icon' => 'bank', 'color' => 'text-cyan-600', 'status' => 'estavel'],
-            'Orçamento' => ['score' => 55, 'link' => route('financeiro.orcamento.loa'), 'hint' => 'Créd. adic. excessivo', 'icon' => 'file-earmark-spreadsheet', 'color' => 'text-blue-600', 'status' => 'critico'], // Exemplo ruim
+            'Orçamento' => ['score' => 55, 'link' => route('financeiro.orcamento.loa'), 'hint' => 'Créd. adic. excessivo', 'icon' => 'file-earmark-spreadsheet', 'color' => 'text-blue-600', 'status' => 'critico'],
             'Investimentos' => ['score' => 69, 'link' => route('financeiro.investimentos.capex'), 'hint' => 'CAPEX 41%', 'icon' => 'bricks', 'color' => 'text-orange-500', 'status' => 'instavel'],
+            // Restaurado hint original e removido status SIOPS
             'Compliance' => ['score' => 80, 'link' => route('financeiro.compliance.pessoal'), 'hint' => 'Sem alertas', 'icon' => 'shield-check', 'color' => 'text-purple-500', 'status' => 'estavel'],
         ],
     ];
 
     // -------------------------------------------------------------------------
-    // DADOS: SAÚDE
+    // DADOS: SAÚDE (Rotas Originais Restauradas)
     // -------------------------------------------------------------------------
     $saude = [
         'kpis' => [
             ['label' => 'Atendimentos', 'value' => $fmt(128450, 0), 'suffix' => '', 'hint' => 'APS + Urgência', 'link' => route('saude.relatorios.atendimentos'), 'icon' => 'heart-pulse', 'color' => 'text-rose-500', 'status' => 'estavel'],
-            ['label' => 'Espera', 'value' => $fmt(55, 0), 'suffix' => ' min', 'hint' => 'média porta', 'link' => route('saude.relatorios.espera'), 'icon' => 'hourglass-split', 'color' => 'text-orange-500', 'status' => 'critico'], // Demora muito
+            ['label' => 'Espera', 'value' => $fmt(55, 0), 'suffix' => ' min', 'hint' => 'média porta', 'link' => route('saude.relatorios.espera'), 'icon' => 'hourglass-split', 'color' => 'text-orange-500', 'status' => 'critico'],
             ['label' => 'Vacinal', 'value' => $fmt(87.3), 'suffix' => '%', 'hint' => 'cobertura', 'link' => route('saude.imunizacao.cobertura'), 'icon' => 'shield-plus', 'color' => 'text-green-500', 'status' => 'estavel'],
             ['label' => 'Medicamentos', 'value' => $fmt(92.1), 'suffix' => '%', 'hint' => 'disponibilidade', 'link' => route('saude.farmacia.disponibilidade'), 'icon' => 'capsule', 'color' => 'text-teal-500', 'status' => 'estavel'],
             ['label' => 'Fila Reg.', 'value' => $fmt(3840, 0), 'suffix' => '', 'hint' => 'cons+exames', 'link' => route('saude.regulacao.fila-consultas'), 'icon' => 'list-task', 'color' => 'text-purple-500', 'status' => 'instavel'],
@@ -78,13 +80,13 @@
     ];
 
     // -------------------------------------------------------------------------
-    // DADOS: EDUCAÇÃO
+    // DADOS: EDUCAÇÃO (Rotas Originais Restauradas)
     // -------------------------------------------------------------------------
     $educacao = [
         'kpis' => [
             ['label' => 'Matrículas', 'value' => $fmt(58420, 0), 'suffix' => '', 'hint' => 'ativas rede', 'link' => route('educacao.relatorios.matriculas'), 'icon' => 'backpack', 'color' => 'text-blue-500', 'status' => 'neutro'],
             ['label' => 'Frequência', 'value' => $fmt(92.6), 'suffix' => '%', 'hint' => 'média geral', 'link' => route('educacao.relatorios.frequencia'), 'icon' => 'calendar-check', 'color' => 'text-emerald-500', 'status' => 'estavel'],
-            ['label' => 'Evasão', 'value' => $fmt(5.4), 'suffix' => '%', 'hint' => 'anual est.', 'link' => route('educacao.relatorios.evasao'), 'icon' => 'box-arrow-right', 'color' => 'text-red-500', 'status' => 'critico'], // Evasão alta
+            ['label' => 'Evasão', 'value' => $fmt(5.4), 'suffix' => '%', 'hint' => 'anual est.', 'link' => route('educacao.relatorios.evasao'), 'icon' => 'box-arrow-right', 'color' => 'text-red-500', 'status' => 'critico'],
             ['label' => 'Fila Creche', 'value' => $fmt(1260, 0), 'suffix' => '', 'hint' => 'demanda', 'link' => route('educacao.matriculas.fila-creche'), 'icon' => 'person-plus', 'color' => 'text-orange-500', 'status' => 'instavel'],
             ['label' => 'Aprovação', 'value' => $fmt(89.1), 'suffix' => '%', 'hint' => 'média rede', 'link' => route('educacao.relatorios.aprendizagem'), 'icon' => 'award', 'color' => 'text-indigo-500', 'status' => 'estavel'],
             ['label' => 'Aprendiz.', 'value' => $fmt(6.4), 'suffix' => '/10', 'hint' => 'índice sim.', 'link' => route('educacao.relatorios.aprendizagem'), 'icon' => '123', 'color' => 'text-purple-500', 'status' => 'instavel'],

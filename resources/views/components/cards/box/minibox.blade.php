@@ -4,69 +4,56 @@
 
 @php
     $setores = [
-        // --- FINANÇAS: DESPESAS ---
+        // --- FINANÇAS ---
         'fin_exec' => [
             'label'  => 'Despesas Empenhadas',
             'value'  => '14,2',
             'prefix' => 'R$ ',
             'suffix' => 'mi',
-            'link'   => '/dashboard/financas', 
+            'link'   => route('financeiro.despesas.empenhos'),
             'hint'   => 'Monitoramento LRF',
             'icon_name' => 'bi-currency-dollar',
             'color'  => 'text-red-600',
             'status' => 'critical',
-            // Texto Rico Restaurado
-            'tooltip_html' => '
-                <div class="space-y-2 text-xs">
-                    <p><strong>Definição:</strong> Valor comprometido do orçamento para pagamento futuro.</p>
-                    <p class="text-red-200"><strong>Alerta:</strong> Despesa Total superior à Receita Total gera déficit e violação da LRF.</p>
-                </div>
-            '
+            'tooltip_html' => 'Valor empenhado acumulado no exercício.'
         ],
-        // --- FINANÇAS: RECEITAS ---
         'fin_arr' => [
             'label'  => 'Receita Arrecadada',
             'value'  => '22,8',
             'prefix' => 'R$ ',
             'suffix' => 'mi',
-            'link'   => '/dashboard/financas/receita', 
+            'link'   => route('financeiro.receitas.arrecadacao'),
             'hint'   => 'Superávit projetado',
             'icon_name' => 'bi-graph-up-arrow',
             'color'  => 'text-emerald-600',
             'status' => 'good',
-            // Texto Rico Restaurado
-            'tooltip_html' => '
-                <div class="space-y-2 text-xs">
-                    <p><strong>Definição:</strong> Recursos efetivamente entrados nos cofres públicos.</p>
-                    <p class="text-emerald-300"><strong>Objetivo:</strong> Manter arrecadação superior às despesas para garantir equilíbrio fiscal (Art. 1º LRF).</p>
-                </div>
-            '
+            'tooltip_html' => 'Receita total arrecadada até o momento.'
         ],
 
         // --- SAÚDE ---
         'saude_esp' => [
-            'label'  => 'Tempo Espera',
-            'value'  => '42',
+            'label'  => 'Fila Especialista',
+            'value'  => '45', 
             'prefix' => '',
-            'suffix' => 'min',
-            'link'   => '/dashboard/saude', 
-            'hint'   => 'Média atend. porta',
+            'suffix' => 'dias',
+            'link'   => route('saude.regulacao.fila-consultas'),
+            'hint'   => 'Média espera',
             'icon_name' => 'bi-hourglass-split',
-            'color'  => 'text-amber-500',
-            'status' => 'warning',
-            'tooltip_html' => 'Tempo médio de espera na fila de triagem da urgência e emergência.'
+            'color'  => 'text-orange-600',
+            'status' => 'critical',
+            'tooltip_html' => 'Tempo médio de espera para consultas especializadas.'
         ],
         'saude_med' => [
             'label'  => 'Farmácia',
             'value'  => '8',
             'prefix' => '',
             'suffix' => '%',
-            'link'   => '/dashboard/saude/farmacia', 
+            'link'   => route('saude.farmacia.rupturas'),
             'hint'   => 'Ruptura Estoque',
             'icon_name' => 'bi-capsule',
             'color'  => 'text-rose-600',
             'status' => 'neutral',
-            'tooltip_html' => 'Percentual de medicamentos da lista padronizada indisponíveis no estoque.'
+            'tooltip_html' => 'Índice de falta de medicamentos na rede.'
         ],
 
         // --- EDUCAÇÃO ---
@@ -75,36 +62,35 @@
             'value'  => '92',
             'prefix' => '',
             'suffix' => '%',
-            'link'   => '/dashboard/educacao', 
+            'link'   => route('educacao.relatorios.frequencia'),
             'hint'   => 'Rede Municipal',
             'icon_name' => 'bi-book',
             'color'  => 'text-blue-600',
             'status' => 'good',
-            'tooltip_html' => 'Média de presença dos alunos na rede municipal de ensino.'
+            'tooltip_html' => 'Frequência escolar média da rede.'
         ],
         'edu_vagas' => [
             'label'  => 'Fila Creche',
             'value'  => '340',
             'prefix' => '',
             'suffix' => '',
-            'link'   => '/dashboard/educacao/vagas', 
+            'link'   => route('educacao.matriculas.fila-creche'),
             'hint'   => 'Crianças aguardando',
             'icon_name' => 'bi-backpack',
-            'color'  => 'text-blue-600',
-            'status' => 'neutral',
-            'tooltip_html' => 'Número absoluto de solicitações de vagas em creches ainda não atendidas.'
+            'color'  => 'text-indigo-600',
+            'status' => 'warning',
+            'tooltip_html' => 'Solicitações de vagas em creches não atendidas.'
         ],
     ];
 
     $dados = $setores[$id] ?? null;
-
     $status = $dados['status'] ?? 'neutral';
 
     $styles = [
-        'good' => ['wrapper' => 'border-emerald-500 shadow-emerald-500/20 dark:border-emerald-500/50', 'blur' => 'bg-emerald-500/10'],
-        'warning' => ['wrapper' => 'border-amber-400 shadow-amber-500/20 dark:border-amber-500/50', 'blur' => 'bg-amber-500/10'],
-        'critical' => ['wrapper' => 'border-red-500 shadow-red-500/20 dark:border-red-500/50', 'blur' => 'bg-red-500/10'],
-        'neutral' => ['wrapper' => 'border-slate-200 dark:border-slate-700 shadow-sm', 'blur' => 'bg-slate-500/5 dark:bg-slate-500/10'],
+        'good' => ['wrapper' => 'border-emerald-500 shadow-lg shadow-emerald-500/30 dark:border-emerald-500/50', 'blur' => 'bg-emerald-500/10'],
+        'warning' => ['wrapper' => 'border-amber-400 shadow-lg shadow-amber-500/30 dark:border-amber-500/50', 'blur' => 'bg-amber-500/10'],
+        'critical' => ['wrapper' => 'border-red-500 shadow-lg shadow-red-500/30 dark:border-red-500/50', 'blur' => 'bg-red-500/10'],
+        'neutral' => ['wrapper' => 'border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-none', 'blur' => 'bg-slate-500/5 dark:bg-slate-500/10'],
     ];
 
     $currentStyle = $styles[$status] ?? $styles['neutral'];
@@ -138,37 +124,25 @@
                         <x-dynamic-component :component="$dados['icon_name']" class="w-4 h-4" />
                     </div>
                     
-                    {{-- Link com Tooltip Específico ("ir para relatorios") --}}
-                    <a href="{{ $dados['link'] }}" 
-                       class="group/link relative text-slate-300 hover:text-sky-500 transition-colors">
-                        
+                    {{-- Tooltip no Link Adicionado Aqui --}}
+                    <a href="{{ $dados['link'] }}" class="group/link relative text-slate-300 hover:text-sky-500 transition-colors">
                         <x-bi-arrow-right-short class="w-5 h-5" />
-
-                        {{-- Tooltip do Link --}}
-                        <div class="absolute right-full top-1/2 -translate-y-1/2 mr-2 w-max px-2 py-1
-                                    bg-slate-700 text-white text-[10px] font-bold rounded shadow-sm
-                                    opacity-0 invisible group-hover/link:opacity-100 group-hover/link:visible
-                                    transition-all duration-200 translate-x-2 group-hover/link:translate-x-0
-                                    pointer-events-none z-20">
-                            ir para relatorios
-                            <div class="absolute top-1/2 right-0 -mr-1 -mt-1 w-2 h-2 bg-slate-700 rotate-45"></div>
-                        </div>
+                        <span class="absolute bottom-full right-0 mb-1 px-1.5 py-0.5 bg-slate-700 text-white text-[10px] font-medium rounded shadow-sm opacity-0 invisible group-hover/link:opacity-100 group-hover/link:visible transition-all duration-200 whitespace-nowrap z-20 pointer-events-none">
+                            Abrir relatório
+                        </span>
                     </a>
                 </div>
             </div>
         </div>
-
-        {{-- TOOLTIP GRANDE (EXPLICAÇÃO) --}}
-        <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 px-4 py-3
-                    bg-slate-800 text-white text-xs font-medium rounded-xl shadow-2xl
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0
-                    z-[99] pointer-events-none whitespace-normal text-left border border-slate-700">
-            <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-8 border-transparent border-b-slate-800"></div>
-            {!! $dados['tooltip_html'] ?? ('Detalhes de ' . $dados['label']) !!}
+        
+        {{-- Tooltip Principal (Card) --}}
+        <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 px-4 py-3 bg-slate-800 text-white text-xs font-medium rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[99] pointer-events-none whitespace-normal text-left border border-slate-700">
+             <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-8 border-transparent border-b-slate-800"></div>
+            {!! $dados['tooltip_html'] ?? '' !!}
         </div>
-
     </div>
 @else
-    <div class="hidden"></div>
+    <div class="p-4 border border-dashed border-slate-300 rounded-xl flex items-center justify-center text-xs text-slate-400">
+        Box "{{ $id }}" não definido
+    </div>
 @endif
