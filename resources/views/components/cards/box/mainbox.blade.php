@@ -5,75 +5,87 @@
 
 @php
     $definitions = [
-        // 1. DTP
+        // 1. DTP (Definido como INSTÁVEL para exemplo)
         'gestao' => [
             'label'   => 'Despesa com Pessoal (DTP)',
             'suffix'  => '%',
             'text'    => '% da Receita Corrente Líquida',
             'link'    => route('financeiro.compliance.pessoal'),
             'icon'    => 'people', 
-            'bg_class' => 'bg-sky-100 dark:bg-sky-900/20 text-sky-700 dark:text-sky-400',
-            'status'   => 'warning',
-            'tooltip_html' => 'Limite Prudencial: 51,3% <br> Limite Máximo: 54%'
+            'bg_class' => 'bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400', // Ajustado para tom de alerta
+            'status'   => 'unstable', // Nível 1: Instável
+            'tooltip_html' => 'Limite Prudencial excedido (51,3%).'
         ],
-        // 2. Resultado
+        // 2. Resultado (Definido como OK - Sem cor de destaque, dados em Bilhões)
         'financas' => [
-            'label'   => 'Resultado Orçamentário',
-            'suffix'  => 'mi',
-            'text'    => 'Receita Arrec. - Despesa Emp.',
+            'label'   => 'Receita Corrente Líquida',
+            'suffix'  => 'bi', 
+            'text'    => 'Acumulado (12 meses)',
             'link'    => route('financeiro.relatorios.rx_d'),
-            'icon'    => 'currency-dollar',
-            'bg_class' => 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400',
-            'status'   => 'good',
-            'tooltip_html' => 'Superávit ou Déficit acumulado no período.'
+            'icon'    => 'bank',
+            'bg_class' => 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300', // Neutro
+            'status'   => 'ok', // Sem cor de status
+            'tooltip_html' => 'Receita orçamentária efetivamente arrecadada.'
         ],
-        // 3. Controle Interno
+        // 3. Controle Interno (Definido como CRÍTICO)
         'pendencias' => [
-            'label'   => 'Controle Interno',
-            'suffix'  => '%',
-            'text'    => 'Recomendações atendidas',
+            'label'   => 'Apontamentos TCE',
+            'suffix'  => 'uni',
+            'text'    => 'Irregularidades Graves',
             'link'    => route('financeiro.relatorios'),
-            'icon'    => 'shield-check',
-            'bg_class' => 'bg-rose-100 dark:bg-rose-900/20 text-rose-700 dark:text-rose-400',
-            'status'   => 'critical', 
-            'tooltip_html' => 'Percentual de apontamentos da controladoria resolvidos.'
+            'icon'    => 'shield-exclamation',
+            'bg_class' => 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400',
+            'status'   => 'critical', // Nível 2: Crítico
+            'tooltip_html' => 'Apontamentos que impedem a certidão negativa.'
         ],
-        // 4. NPS
+        // 4. NPS (Definido como OK - Sem cor branca, sem destaque)
         'nps' => [
-            'label'   => 'Satisfação (NPS)',
-            'suffix'  => '',
-            'text'    => 'Avaliação Cidadã',
+            'label'   => 'Investimentos Totais',
+            'suffix'  => 'mi',
+            'text'    => 'Liquidados no Exercício',
             'link'    => '#',
-            'icon'    => 'emoji-smile',
-            'bg_class' => 'bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400',
-            'status'   => 'neutral',
-            'tooltip_html' => 'Net Promoter Score aferido nos serviços públicos.'
+            'icon'    => 'graph-up',
+            'bg_class' => 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300', // Neutro
+            'status'   => 'ok', // Sem cor de status
+            'tooltip_html' => 'Total investido em obras e equipamentos.'
         ],
     ];
 
     $card = $definitions[$id] ?? null;
-    $status = $card['status'] ?? 'neutral';
+    $status = $card['status'] ?? 'ok';
 
+    // Definição dos Estilos conforme pedido: Apenas Critical e Unstable possuem cor. O resto é neutro.
     $styles = [
-        'good'     => ['wrapper' => 'border-emerald-500 shadow-xl shadow-emerald-500/30', 'blur' => 'bg-emerald-500/10'],
-        'warning'  => ['wrapper' => 'border-amber-400 shadow-xl shadow-amber-500/30',     'blur' => 'bg-amber-500/10'],
-        'critical' => ['wrapper' => 'border-red-500 shadow-xl shadow-red-500/30',         'blur' => 'bg-red-500/10'],
-        'neutral'  => ['wrapper' => 'border-slate-200 shadow-xl shadow-slate-200/60',     'blur' => 'bg-slate-500/5'],
+        'critical' => [
+            'wrapper' => 'border-red-500 shadow-xl shadow-red-500/20', 
+            'blur'    => 'bg-red-500/10'
+        ],
+        'unstable' => [
+            'wrapper' => 'border-amber-400 shadow-xl shadow-amber-500/20', 
+            'blur'    => 'bg-amber-500/10'
+        ],
+        // "Se estiver ok, não coloque cor"
+        'ok' => [
+            'wrapper' => 'border-slate-300 dark:border-slate-700 shadow-sm', 
+            'blur'    => 'hidden' // Remove o efeito de brilho colorido
+        ],
     ];
 
-    $currentStyle = $styles[$status] ?? $styles['neutral'];
+    $currentStyle = $styles[$status] ?? $styles['ok'];
 @endphp
 
 @if($card)
     <div class="group relative w-full h-full">
+        {{-- MUDANÇA: bg-white removido, alterado para bg-slate-50 --}}
         <div class="relative w-full min-w-[200px] overflow-hidden h-full
-                    bg-white dark:bg-slate-800
+                    bg-slate-50 dark:bg-slate-800
                     p-5 rounded-2xl
                     border transition-all duration-300 hover:-translate-y-1
                     {{ $currentStyle['wrapper'] }}">
 
+            {{-- Efeito Blur (Oculto se for OK) --}}
             <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full blur-2xl transition-all pointer-events-none opacity-20 
-                        {{ $status === 'neutral' ? str_replace('text-', 'bg-', $card['bg_class']) : $currentStyle['blur'] }}"></div>
+                        {{ $currentStyle['blur'] }}"></div>
 
             <div class="relative z-10 flex justify-between h-full">
                 <div class="flex flex-col justify-between">
@@ -83,6 +95,10 @@
                         </p>
                         <div>
                             <h3 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
+                                {{-- Adiciona R$ se for monetário (bi ou mi) --}}
+                                @if(in_array($card['suffix'], ['mi', 'bi']))
+                                    <span class="text-sm align-top text-slate-400 mr-0.5 mt-1 inline-block">R$</span>
+                                @endif
                                 {{ $value }}<span class="text-lg text-slate-400 font-medium ml-0.5">{{ $card['suffix'] }}</span>
                             </h3>
                         </div>
@@ -95,22 +111,19 @@
                 </div>
 
                 <div class="flex flex-col justify-between items-end pl-4">
-                    <div class="p-2.5 rounded-xl border shadow-sm {{ $card['bg_class'] }} border-slate-100 dark:border-slate-600">
+                    {{-- Ícone: se for OK, mantém slate neutro, senão usa a cor do alerta --}}
+                    <div class="p-2.5 rounded-xl border shadow-sm {{ $card['bg_class'] }} border-slate-200 dark:border-slate-600">
                         <x-dynamic-component :component="'bi-'.$card['icon']" class="w-6 h-6" />
                     </div>
                     
-                    {{-- Tooltip no Link Adicionado Aqui --}}
-                    <a href="{{ $card['link'] }}" class="group/link relative p-1.5 rounded-lg text-slate-400 hover:text-sky-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    <a href="{{ $card['link'] }}" class="group/link relative p-1.5 rounded-lg text-slate-400 hover:text-sky-600 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
                         <x-bi-arrow-right class="w-5 h-5" />
-                        <span class="absolute bottom-full right-0 mb-1 px-2 py-1 bg-slate-700 text-white text-[10px] font-medium rounded shadow-sm opacity-0 invisible group-hover/link:opacity-100 group-hover/link:visible transition-all duration-200 whitespace-nowrap z-20 pointer-events-none">
-                            Abrir relatório
-                        </span>
                     </a>
                 </div>
             </div>
         </div>
         
-        {{-- Tooltip Principal (Card) --}}
+        {{-- Tooltip --}}
         <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 px-4 py-3 bg-slate-800 text-white text-sm font-medium rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[99] pointer-events-none whitespace-normal text-left border border-slate-700">
              <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-8 border-transparent border-b-slate-800"></div>
             {!! $card['tooltip_html'] ?? '' !!}
