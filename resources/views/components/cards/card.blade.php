@@ -321,7 +321,11 @@
                     <div class="space-y-2">
                         <label class="block text-xs font-medium text-slate-600 dark:text-slate-400">Resposta da
                             IA</label>
-                        <div id="{{ $id }}-ai-response" class="block p-2.5 w-full text-sm text-slate-700 bg-slate-100 rounded-lg border border-slate-200 dark:bg-slate-900/50 dark:border-slate-700 dark:text-slate-200 whitespace-pre-wrap">Resposta da IA</div>
+                        <textarea id="{{ $id }}-ai-response" rows="4" readonly
+                            class="block p-2.5 w-full text-sm text-slate-600 bg-slate-100 rounded-lg border border-slate-300 cursor-not-allowed resize-none overflow-hidden min-h-[7rem]
+                            dark:bg-slate-900/50 dark:border-slate-700 dark:placeholder-slate-500 dark:text-slate-400 focus:ring-0 focus:border-slate-300"
+                            placeholder="A resposta aparecerá aqui...">
+                        </textarea>
                     </div>
 
                 </form>
