@@ -304,10 +304,10 @@
     </nav>
     </div>
 
-    {{-- POPOVERS --}}
+{{-- POPOVERS --}}
     @foreach ($menus as $menu)
         <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
-            class="popover-flowbite absolute z-50 invisible inline-block w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
+            class="popover-flowbite absolute z-50 hidden lg:inline-block invisible w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
             style="--menu-main: {{ $menu['hex_main'] }};">
             <div class="p-3">
                 <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
