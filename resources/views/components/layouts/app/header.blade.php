@@ -114,7 +114,8 @@
                             </li>
 
                             <li>
-                                <a href="#"
+                                {{-- APLICAÇÃO: Ícone + Gatilho da Modal --}}
+                                <a href="{{ route('configuracoes')}}"
                                     class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                                     role="menuitem">Configurações</a>
                             </li>

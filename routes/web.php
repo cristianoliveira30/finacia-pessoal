@@ -12,6 +12,9 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/home', fn() => view('home'))->name('home');
+
+// tela de configurações
+Route::get('/configuracoes', fn() => view('configuracoes'))->name('configuracoes');
 // rotas de usuario
 Route::get('/usuario/cadastro', fn() => view('usuario/cadastro'))->name('usuario/cadastro');
 Route::get('/usuario/buscar', fn() => view('usuario/buscar'))->name('usuario/buscar');

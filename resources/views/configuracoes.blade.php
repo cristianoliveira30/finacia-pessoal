@@ -7,10 +7,10 @@
         <div class="flex items-center justify-between pt-2">
             <div>
                 <h2 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
-                    Minha Conta
+                    Meu Perfil
                 </h2>
                 <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                    Gerencie suas informações pessoais e segurança de forma centralizada.
+                    Gerencie suas informações pessoais e segurança.
                 </p>
             </div>
         </div>
@@ -45,23 +45,6 @@
                                 <h3 class="text-xl font-bold text-slate-800 dark:text-white tracking-tight">
                                     {{ auth()->user()->name }}
                                 </h3>
-                                <p class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                    Web Developer
-                                </p>
-                            </div>
-
-                            <div class="mt-6 w-full">
-                                <div class="p-3 rounded-lg bg-slate-100 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-xs font-bold uppercase text-slate-500">Status</span>
-                                        <span class="text-xs font-bold text-emerald-500 flex items-center gap-1">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Ativo
-                                        </span>
-                                    </div>
-                                    <div class="text-xs text-slate-400 text-left">
-                                        Membro desde {{ auth()->user()->created_at->format('M, Y') }}
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
