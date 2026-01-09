@@ -71,8 +71,11 @@
                         <span class="sr-only">Open user menu</span>
 
                         <span class="relative inline-block leading-none">
+                            {{-- FOTO DE PERFIL DINÂMICA --}}
                             <img class="w-8 h-8 rounded-full object-cover block"
-                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                                src="{{ auth()->user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name='.urlencode(auth()->user()->name).'&background=E2E8F0&color=64748B' }}"
+                                alt="Foto de {{ Auth::user()->name }}">
+                                
                             <span id="notif-avatar-badge"
                                 class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-600 text-white text-[11px] flex items-center justify-center ring-2 ring-gray-800 dark:ring-gray-800">
                             </span>
@@ -135,7 +138,7 @@
     </div>
 </nav>
 
-{{-- Modal (Flowbite) --}}
+{{-- Modal (Flowbite) - O restante do arquivo permanece idêntico --}}
 <div id="notifications-modal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50
            justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -253,13 +256,13 @@
                                 <li>
                                     <button type="button"
                                         class="notif-item w-full text-left rounded-xl border border-slate-200 bg-white p-3
-                                                     hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800 transition"
+                                             hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800 transition"
                                         data-notif-id="{{ $n['id'] }}"
                                         data-unread-default="{{ $unread ? '1' : '0' }}"
                                         data-read-url="{{ $readUrl }}" data-url="{{ $url }}">
                                         <div class="flex items-start gap-3">
                                             <span data-notif-dot
-                                                class="mt-1.5 w-2 h-2 rounded-full bg-sky-500 {{ $unread ? '' : 'hidden' }}"></span>
+                                                class="mt-1.5 w-2 h-2 rounded-full bg-sky-50 {{ $unread ? '' : 'hidden' }}"></span>
 
                                             <div class="min-w-0 flex-1">
                                                 <div class="flex items-center gap-2">
@@ -312,8 +315,8 @@
                                             checked>
                                         <div
                                             class="rounded-xl border border-slate-200 bg-white p-3 hover:bg-slate-50 transition
-                                            dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                                            peer-checked:border-sky-500 peer-checked:ring-2 peer-checked:ring-sky-500/20">
+                                           dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                                           peer-checked:border-sky-500 peer-checked:ring-2 peer-checked:ring-sky-500/20">
                                             <div class="flex items-center gap-2">
                                                 <x-bi-people class="w-5 h-5" />
                                                 <div class="text-sm font-semibold text-slate-900 dark:text-slate-100">
@@ -327,7 +330,7 @@
                                         <input class="sr-only peer" type="radio" name="destino" value="setor">
                                         <div
                                             class="rounded-xl border border-slate-200 bg-white p-3  hover:bg-slate-50 transition dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                                                    peer-checked:border-sky-500 peer-checked:ring-2 peer-checked:ring-sky-500/20">
+                                                   peer-checked:border-sky-500 peer-checked:ring-2 peer-checked:ring-sky-500/20">
                                             <div class="flex items-center gap-2">
                                                 <x-bi-diagram-3 class="w-5 h-5" />
                                                 <div class="text-sm font-semibold text-slate-900 dark:text-slate-100">
@@ -406,8 +409,8 @@
                                                         {{-- SOMENTE A OPÇÃO COLORIDA --}}
                                                         <span
                                                             class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold select-none transition
-                                                                              {{ $setorColors[$s] ?? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200' }}
-                                                                               peer-checked:ring-2 peer-checked:ring-slate-900/15 dark:peer-checked:ring-white/20 peer-checked:scale-[1.02]">
+                                                                                          {{ $setorColors[$s] ?? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200' }}
+                                                                                           peer-checked:ring-2 peer-checked:ring-slate-900/15 dark:peer-checked:ring-white/20 peer-checked:scale-[1.02]">
                                                             {{ $s }}
                                                         </span>
                                                     </label>
@@ -443,7 +446,7 @@
                                     class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">Usuário</label>
                                 <input name="usuario" type="text" placeholder="ID, nome ou e-mail…"
                                     class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                                          dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                                              dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
                             </div>
 
                             {{-- Título + Flag (badge ao lado) --}}
@@ -455,7 +458,7 @@
                                     <input id="notif-title" name="title" type="text" maxlength="80"
                                         placeholder="Ex: Relatório publicado"
                                         class="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                                         dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                                     dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
 
                                     {{-- Badge da flag (aparece quando definir) --}}
                                     <span id="notif-flag-badge"
@@ -468,7 +471,7 @@
                             <div class="md:col-span-2">
                                 <button type="button" id="notif-flag-toggle"
                                     class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold border border-slate-200 text-slate-700 hover:bg-slate-50
-                                         dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                                             dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
                                     <x-bi-flag class="w-4 h-4" />
                                 </button>
 
@@ -510,7 +513,7 @@
                                                             value="{{ $c['v'] }}" @checked($loop->first)>
                                                         <span
                                                             class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold border border-slate-200 bg-white text-slate-700
-                                                                    dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 peer-checked:ring-2 peer-checked:ring-sky-500/25 peer-checked:border-sky-500">
+                                                                dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 peer-checked:ring-2 peer-checked:ring-sky-500/25 peer-checked:border-sky-500">
                                                             <span
                                                                 class="w-2.5 h-2.5 rounded-full {{ $c['dot'] }}"></span>
                                                             {{ $c['t'] }}
