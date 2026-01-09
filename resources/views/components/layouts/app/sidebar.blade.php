@@ -19,8 +19,12 @@
                     'icon' => 'file-text', 
                     'id_submenu' => 'fin-relatorios',
                     'submenu' => [
-                        ['label' => 'Execuções Orçamentárias', 'route' => 'financeiro.relatorios.execucao', 'icon' => 'file-earmark-text-fill'],
-                        ['label' => 'CAPEX (Obras/Equip)', 'route' => 'financeiro.investimentos.capex', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Receitas x Despesas (Séries)', 'route' => 'financeiro.relatorios.rx_d', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Execução Orçamentária (Mês/Ano)', 'route' => 'financeiro.relatorios.execucao', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Despesas por Função/Subfunção', 'route' => 'financeiro.relatorios.despesas_funcao', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Fornecedores (Top / Concentração)', 'route' => 'financeiro.relatorios.fornecedores', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Empenhos / Liquidações / Pagamentos', 'route' => 'financeiro.relatorios.elp', 'icon' => 'file-earmark-text-fill'],
+
                     ]
                 ],
 
