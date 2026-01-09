@@ -262,6 +262,7 @@
                             <div class="space-y-1 w-full">
                                 @foreach ($menu['items'] as $item)
                                     @if(isset($item['submenu']))
+                                        {{-- Exibe itens agrupados se sidebar aberta --}}
                                         <div class="pt-1">
                                             <div class="flex items-center gap-2 px-1 py-1 text-gray-500 font-bold uppercase" style="font-size: 0.65rem;">
                                                 <x-dynamic-component :component="'bi-' . $item['icon']" class="w-3 h-3" />
@@ -313,7 +314,7 @@
                     <li>
                         @if(isset($item['submenu']))
                             {{-- GATILHO: Item que abre o popover filho --}}
-                            {{-- MUDANÇA: Trigger = HOVER, Sem ícone de seta --}}
+                            {{-- ACIONADO POR HOVER (Mantido para fluidez) --}}
                             <div 
                                 data-popover-target="popover-child-{{ $item['id_submenu'] }}" 
                                 data-popover-placement="right-start"
@@ -380,7 +381,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- 1. CONFIGURAÇÃO BÁSICA DA SIDEBAR (TOGGLE/RESPONSIVIDADE) ---
+        // --- 1. CONFIGURAÇÃO BÁSICA DA SIDEBAR ---
         const sidebar = document.getElementById('top-bar-sidebar');
         const toggleBtn = document.getElementById('header-sidebar-toggle');
         const KEY = 'sidebarCollapsed';
@@ -425,7 +426,6 @@
                 }
             });
 
-            // Accordion mobile
             sidebar.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
                 btn.addEventListener('click', function(e) {
                     if (document.body.classList.contains('sidebar-collapsed')) return;
@@ -440,24 +440,20 @@
         window.addEventListener('resize', sync);
         sync();
 
-        // --- 2. GERENCIAMENTO DE POPOVERS (CASCATA PAI -> FILHO NO HOVER) ---
-        // Objeto para armazenar os timers de cada popover individualmente
+        // --- 2. GERENCIAMENTO DE POPOVERS (HOVER COM PERSISTÊNCIA) ---
         const timers = {};
 
-        // Helper para mostrar
         function show(el, trigger, placement = 'right-start') {
             if(!el) return;
             el.classList.remove('hidden', 'invisible', 'opacity-0');
             el.classList.add('block', 'opacity-100');
             
-            // Posicionamento
             const tRect = trigger.getBoundingClientRect();
             const pRect = el.getBoundingClientRect();
             
             let top = tRect.top;
-            let left = tRect.right + 8; // pequeno gap visual
+            let left = tRect.right + 8; 
 
-            // Ajuste se sair da tela (em baixo)
             if (top + pRect.height > window.innerHeight) {
                 top = window.innerHeight - pRect.height - 10;
             }
@@ -468,14 +464,12 @@
             el.style.zIndex = '9999';
         }
 
-        // Helper para esconder
         function hide(el) {
             if(!el) return;
             el.classList.add('hidden', 'invisible', 'opacity-0');
             el.classList.remove('block', 'opacity-100');
         }
 
-        // Helper para cancelar fechamento de um ID
         function clearClose(id) {
             if(timers[id]) {
                 clearTimeout(timers[id]);
@@ -483,17 +477,13 @@
             }
         }
 
-        // Helper para agendar fechamento
         function scheduleClose(el, id, delay = 250) {
             clearClose(id);
             timers[id] = setTimeout(() => {
                 hide(el);
-                // Se este for um pai, verifica se ele tem filhos abertos e fecha também? 
-                // A lógica de hover cuidará disso, pois se o mouse não está no pai nem no filho, ambos fecham.
             }, delay);
         }
 
-        // Selecionar todos os gatilhos (sidebar icons E itens internos de relatório)
         const triggers = document.querySelectorAll('[data-popover-target]');
 
         triggers.forEach(trigger => {
@@ -502,51 +492,40 @@
             
             if(!popoverEl) return;
 
-            // --- MOUSE ENTER NO GATILHO ---
+            // MOUSE ENTER NO GATILHO
             trigger.addEventListener('mouseenter', () => {
-                // 1. Cancela fechamento do próprio popover alvo
                 clearClose(targetId);
 
-                // 2. Se for um gatilho FILHO (dentro de um pai), precisamos manter o PAI aberto
+                // Se for um gatilho FILHO, mantem o PAI aberto
                 const parentPopover = trigger.closest('.popover-flowbite');
                 if(parentPopover) {
                     clearClose(parentPopover.id);
                 } else {
-                    // Se for um gatilho PAI (sidebar), fecha outros pais para evitar colisão
+                    // Se for PAI, fecha outros pais
                     document.querySelectorAll('.popover-flowbite[id^="popover-"]').forEach(p => {
                         if(p.id !== targetId && !p.hasAttribute('data-parent-ref')) {
                             hide(p);
                         }
                     });
                 }
-
                 show(popoverEl, trigger);
             });
 
-            // --- MOUSE LEAVE NO GATILHO ---
+            // MOUSE LEAVE NO GATILHO
             trigger.addEventListener('mouseleave', () => {
-                // Agenda fechamento. Só vai fechar se o mouse não entrar no popover alvo a tempo.
                 scheduleClose(popoverEl, targetId);
             });
 
-            // --- MOUSE ENTER NO PRÓPRIO POPOVER ---
+            // MOUSE ENTER NO PRÓPRIO POPOVER
             popoverEl.addEventListener('mouseenter', () => {
-                // O mouse entrou no popover, então cancela seu fechamento
                 clearClose(targetId);
-
-                // Se este for um popover FILHO, precisamos descobrir quem é o PAI e cancelar o fechamento dele também
                 const parentIdRef = popoverEl.getAttribute('data-parent-ref');
-                if(parentIdRef) {
-                    clearClose(parentIdRef);
-                }
+                if(parentIdRef) clearClose(parentIdRef);
             });
 
-            // --- MOUSE LEAVE NO PRÓPRIO POPOVER ---
+            // MOUSE LEAVE NO PRÓPRIO POPOVER
             popoverEl.addEventListener('mouseleave', () => {
-                // O mouse saiu do popover, agenda fechamento
                 scheduleClose(popoverEl, targetId);
-
-                // Se for filho, agenda fechamento do pai também (para efeito cascata reverso suave)
                 const parentIdRef = popoverEl.getAttribute('data-parent-ref');
                 if(parentIdRef) {
                     const parentEl = document.getElementById(parentIdRef);
