@@ -61,7 +61,7 @@
             'items' => [
                 // OBS: Troquei 'route' para 'home' temporariamente para corrigir o erro 500.
                 // Quando criar a rota no web.php, mude de volta para 'mensagens.create'
-                ['label' => 'Enviar Mensagem',  'route' => 'home', 'icon' => 'plus-circle' ],
+                ['label' => 'Enviar Mensagem',  'route' => 'mensagens.envio', 'icon' => 'plus-circle' ],
             ],
         ],
     ];
@@ -314,7 +314,7 @@
         </nav>
     </div>
 
-    {{-- POPOVERS (Gerados automaticamente pelo loop para TODOS os menus) --}}
+    {{-- POPOVERS  --}}
     @foreach ($menus as $menu)
         <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
             class="popover-flowbite absolute z-50 hidden lg:inline-block invisible w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"

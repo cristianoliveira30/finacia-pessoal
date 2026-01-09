@@ -299,6 +299,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/ai/analise', [AnalisesController::class, 'analise'])->name('ai.analise');
 
+            // -----------------------------
+        // MODO TV
+        // -----------------------------
+
     Route::prefix('tv')->name('tv.')->group(function () {
         Route::view('/', 'home-tv')->name('index');
 
@@ -306,4 +310,9 @@ Route::middleware('auth')->group(function () {
         Route::view('/saude', 'saude.tv-saude')->name('saude');
         Route::view('/educacao', 'educacao.tv-educacao')->name('educacao');
     });
+
+            // -----------------------------
+        // MESSAGE
+        // -----------------------------
+        Route::view('/mensagens/envio', 'message.envio')->name('mensagens.envio');
 });
