@@ -660,8 +660,6 @@
                     tabBtns.forEach(b => b.addEventListener('click', () => activateTab(b.dataset.notifTab)));
                     activateTab('inbox');
 
-                    /* ===== 2)
-        RECEBIDAS (lidas + backend-ready) ===== */
                     const avatarBadge = D.querySelector('#notif-avatar-badge');
                     const menuBadge = D.querySelector('#notif-menu-badge');
                     const list = $('#notifications-list');
@@ -756,14 +754,14 @@
 
                         if (setoresChps) {
                             setoresChps.innerHTML = sel.map(v => `
-                <button type="button"
-                  class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold
-                         bg-slate-100 text-slate-800 hover:bg-slate-200
-                         dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-                  data-chip-setor="${v}">
-                  <span>${v}</span><span class="opacity-70">✕</span>
-                </button>
-              `).join('');
+                                <button type="button"
+                                class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold
+                                        bg-slate-100 text-slate-800 hover:bg-slate-200
+                                        dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+                                data-chip-setor="${v}">
+                                <span>${v}</span><span class="opacity-70">✕</span>
+                                </button>
+                            `).join('');
                         }
                     };
 
@@ -906,6 +904,55 @@
                     });
                 });
             })();
+        </script>
+
+        {{-- tipotempo --}}
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const STORAGE_KEY = "tipotempo";
+                const DEFAULT = "hoje";
+
+                const btn = document.getElementById("btn-tipotempo");
+                const labelEl = document.getElementById("tipotempo-label"); // AGORA EXISTE
+                const dropdown = document.getElementById("dropdown-tipotempo");
+
+                if (!btn || !labelEl || !dropdown) return;
+
+                const items = Array.from(dropdown.querySelectorAll("a[data-tempo]"));
+
+                function closeDropdown() {
+                    dropdown.classList.add("hidden");
+                    btn.setAttribute("aria-expanded", "false");
+                }
+
+                function pushTempoToUrl(tempo) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("tempo", tempo);
+                    history.pushState({}, "", url);
+                }
+
+                function applyTempo(tempo, label) {
+                    localStorage.setItem(STORAGE_KEY, tempo);
+                    labelEl.textContent = label ?? tempo;
+                    pushTempoToUrl(tempo);
+                }
+
+                // boot
+                const saved = localStorage.getItem(STORAGE_KEY) || DEFAULT;
+                const savedItem = items.find(a => a.dataset.tempo === saved);
+
+                if (savedItem) applyTempo(savedItem.dataset.tempo, savedItem.textContent.trim());
+                else applyTempo(DEFAULT, "Hoje");
+
+                // click
+                items.forEach((a) => {
+                    a.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        applyTempo(a.dataset.tempo, a.textContent.trim());
+                        closeDropdown();
+                    });
+                });
+            });
         </script>
     @endpush
 @endonce
