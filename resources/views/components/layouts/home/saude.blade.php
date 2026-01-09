@@ -26,8 +26,12 @@
             'hex_light' => '#6ee7b7', // emerald-300
             'icon_main' => 'bar-chart',
             'items' => [
-                ['label' => 'Atendimentos (Volume)', 'route' => 'saude.relatorios.atendimentos', 'icon' => 'activity'],
-                ['label' => 'Tempo de Espera (UBS/UPA)', 'route' => 'saude.relatorios.espera', 'icon' => 'stopwatch'],
+                [
+                    'label' => 'Atendimentos (Volume)', 'route' => 'saude.relatorios.atendimentos', 'icon' => 'activity'
+                ],
+                [
+                    'label' => 'Tempo de Espera (UBS/UPA)', 'route' => 'saude.relatorios.espera', 'icon' => 'stopwatch'
+                ],
                 [
                     'label' => 'Produção por Unidade',
                     'route' => 'saude.relatorios.producao_unidade', // Mantido _ pois no web.php o name() usa underscore
@@ -38,7 +42,9 @@
                     'route' => 'saude.relatorios.producao_profissional', // Mantido _ pois no web.php o name() usa underscore
                     'icon' => 'person-badge',
                 ],
-                ['label' => 'Absenteísmo (No-show)', 'route' => 'saude.relatorios.no_show', 'icon' => 'calendar-x'],
+                [
+                    'label' => 'Absenteísmo (No-show)', 'route' => 'saude.relatorios.no_show', 'icon' => 'calendar-x'
+                ],
                 [
                     'label' => 'Encaminhamentos / Regulação',
                     'route' => 'saude.relatorios.regulacao',

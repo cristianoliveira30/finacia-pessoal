@@ -53,7 +53,7 @@
 
                         ['label' => 'Evasão / Abandono', 'route' => 'educacao.relatorios.evasao', 'icon' => 'file-earmark-text-fill'],
 
-                        ['label' => 'Aprendizagem (Indicadores', 'route' => 'educacao.relatorios.aprendizagem', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Aprendizagem (Indicadores)', 'route' => 'educacao.relatorios.aprendizagem', 'icon' => 'file-earmark-text-fill'],
 
                         ['label' => 'Matrículas (Evolução)', 'route' => 'educacao.relatorios.matriculas', 'icon' => 'file-earmark-text-fill'],
 
@@ -92,8 +92,20 @@
                     'icon' => 'file-text',
                     'id_submenu' => 'saude-relatorios',
                     'submenu' => [
-                        ['label' => 'Cobertura Vacinal', 'route' => 'saude.imunizacao.cobertura', 'icon' => 'file-earmark-text-fill'],
-                        ['label' => 'Fila de Exames', 'route' => 'saude.regulacao.fila-exames', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Atendimentos (Volume)', 'route' => 'saude.relatorios.atendimentos', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Tempo de Espera (UBS/UPA)', 'route' => 'saude.relatorios.espera', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Produção por Unidade', 'route' => 'saude.relatorios.producao_unidade', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Produção por Profissional', 'route' => 'saude.relatorios.producao_profissional', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Absenteísmo (No-show)', 'route' => 'saude.relatorios.no_show', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Encaminhamentos / Regulação', 'route' => 'saude.relatorios.regulacao', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Indicadores SUS (Resumo)', 'route' => 'saude.relatorios.indicadores_sus', 'icon' => 'file-earmark-text-fill'],
+
                     ]
                 ],
 
