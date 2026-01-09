@@ -49,8 +49,25 @@
                     'icon' => 'file-text',
                     'id_submenu' => 'edu-relatorios',
                     'submenu' => [
-                        ['label' => 'Merendas Servidas', 'route' => 'educacao.relatorios.merenda', 'icon' => 'file-earmark-text-fill'],
                         ['label' => 'Frequência Escolar', 'route' => 'educacao.relatorios.frequencia', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Evasão / Abandono', 'route' => 'educacao.relatorios.evasao', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Aprendizagem (Indicadores', 'route' => 'educacao.relatorios.aprendizagem', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Matrículas (Evolução)', 'route' => 'educacao.relatorios.matriculas', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Turmas / Lotação', 'route' => 'educacao.relatorios.turmas', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Transferências', 'route' => 'educacao.relatorios.transferencias', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Infraestrutura (Escolas)', 'route' => 'educacao.relatorios.infraestrutura', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Merenda (Resumo', 'route' => 'educacao.relatorios.merenda', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Transporte (Resumo)', 'route' => 'educacao.relatorios.transporte', 'icon' => 'file-earmark-text-fill'],
+
+                        ['label' => 'Inclusão / AEE', 'route' => 'educacao.relatorios.inclusao', 'icon' => 'file-earmark-text-fill'],
                     ]
                 ],
 

@@ -50,7 +50,8 @@
                     'route' => 'educacao.relatorios.matriculas',
                     'icon' => 'person-plus',
                 ],
-                ['label' => 'Turmas / Lotação', 'route' => 'educacao.relatorios.turmas', 'icon' => 'people'],
+                [
+                    'label' => 'Turmas / Lotação', 'route' => 'educacao.relatorios.turmas', 'icon' => 'people'],
                 [
                     'label' => 'Transferências',
                     'route' => 'educacao.relatorios.transferencias',
@@ -61,9 +62,16 @@
                     'route' => 'educacao.relatorios.infraestrutura',
                     'icon' => 'building',
                 ],
-                ['label' => 'Merenda (Resumo)', 'route' => 'educacao.relatorios.merenda', 'icon' => 'cup-hot'],
-                ['label' => 'Transporte (Resumo)', 'route' => 'educacao.relatorios.transporte', 'icon' => 'bus-front'],
-                ['label' => 'Inclusão / AEE', 'route' => 'educacao.relatorios.inclusao', 'icon' => 'universal-access'],
+                [
+                    'label' => 'Merenda (Resumo)', 'route' => 'educacao.relatorios.merenda', 'icon' => 'cup-hot'
+                ],
+
+                [
+                    'label' => 'Transporte (Resumo)', 'route' => 'educacao.relatorios.transporte', 'icon' => 'bus-front'
+                ],
+                [
+                    'label' => 'Inclusão / AEE', 'route' => 'educacao.relatorios.inclusao', 'icon' => 'universal-access'
+                ],
             ],
         ],
 
