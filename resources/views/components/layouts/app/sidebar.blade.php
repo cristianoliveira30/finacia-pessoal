@@ -35,8 +35,16 @@
             'icon_main' => 'journal-bookmark',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'educacao.home', 'icon' => 'list'],
-                ['label' => 'Merendas Servidas', 'route' => 'educacao.relatorios.merenda', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Frequência Escolar', 'route' => 'educacao.relatorios.frequencia', 'icon' => 'file-earmark-text-fill'],
+                [
+                    'label' => 'Merendas Servidas',
+                    'route' => 'educacao.relatorios.merenda',
+                    'icon' => 'file-earmark-text-fill',
+                ],
+                [
+                    'label' => 'Frequência Escolar',
+                    'route' => 'educacao.relatorios.frequencia',
+                    'icon' => 'file-earmark-text-fill',
+                ],
                 ['label' => 'Lançamentos', 'route' => 'educacao.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'educacao.contas', 'icon' => 'coin'],
             ],
@@ -51,8 +59,16 @@
             'icon_main' => 'plus-circle',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'saude.home', 'icon' => 'list'],
-                ['label' => 'Cobertura Vacinal', 'route' => 'saude.imunizacao.cobertura', 'icon' => 'file-earmark-text-fill'],
-                ['label' => 'Fila de Exames', 'route' => 'saude.regulacao.fila-exames', 'icon' => 'file-earmark-text-fill'],
+                [
+                    'label' => 'Cobertura Vacinal',
+                    'route' => 'saude.imunizacao.cobertura',
+                    'icon' => 'file-earmark-text-fill',
+                ],
+                [
+                    'label' => 'Fila de Exames',
+                    'route' => 'saude.regulacao.fila-exames',
+                    'icon' => 'file-earmark-text-fill',
+                ],
                 ['label' => 'Lançamentos', 'route' => 'saude.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin'],
             ],
@@ -235,9 +251,8 @@
 </style>
 
 <aside id="top-bar-sidebar"
-  class="fixed top-16 bottom-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0
-         border-e transition-transform duration-300 bg-white dark:bg-gray-800"
-  aria-label="Sidebar">
+    class="fixed top-16 bottom-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 border-e transition-transform duration-300 bg-white dark:bg-gray-800"
+    aria-label="Sidebar">
 
     <div
         class="h-full flex flex-col pt-5 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
@@ -252,7 +267,7 @@
                 </a>
             </li>
 
-            {{-- MODO TV (apenas 1x) --}}
+            {{-- MODO TV --}}
             <li>
                 <a href="/tv" class="{{ $linkBase }}" data-tooltip="Modo TV" target="_blank"
                     rel="noopener noreferrer">
@@ -261,13 +276,25 @@
                 </a>
             </li>
 
-            {{-- MENUS --}}
+            {{--    BOTÃO ENVIAR MENSAGEM (Agora no final)  --}}
+            <li class="menu-group ">
+
+                <div class="menu-highlight -z-10"></div>
+
+                <a href="#" {{-- ROTA AQUI: {{ route('mensagens.create') }} --}} class="{{ $linkBase }} relative w-full"
+                    data-tooltip="Enviar Mensagem" target="_blank" rel="noopener noreferrer">
+                    <x-bi-chat-dots class="w-5 h-5" />
+                    <span class="sidebar-label whitespace-nowrap font-semibold">Enviar Mensagens</span>
+                </a>
+            </li>
+
+            {{-- MENUS (Financeiro, Educação, Saúde) --}}
             @foreach ($menus as $menu)
                 <li class="menu-group" data-open="false"
                     style="--menu-main: {{ $menu['hex_main'] }}; --menu-hover-bg: {{ $menu['hex_hover_bg'] }}; --menu-light: {{ $menu['hex_light'] }};">
                     <div class="menu-highlight -z-10"></div>
 
-                    {{-- botão (somente 1x) --}}
+                    {{-- botão toggle --}}
                     <button type="button"
                         class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
                         data-submenu-toggle="submenu-{{ $menu['id'] }}"
@@ -275,38 +302,38 @@
                         data-popover-placement="right-start"
                         data-popover-trigger="hover"
                         data-popover-offset="8">
-                         <div class="flex items-center gap-3">
-                        <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
-                        <span class="menu-bar inline-flex h-6 w-1 rounded-full"></span>
-                        <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
-    </div>
-    <x-bi-chevron-right class="chevron-icon w-3 h-3" />
-    </button>
+                        <div class="flex items-center gap-3">
+                            <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
+                            <span class="menu-bar inline-flex h-6 w-1 rounded-full"></span>
+                            <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
+                        </div>
+                        <x-bi-chevron-right class="chevron-icon w-3 h-3" />
+                    </button>
 
-    {{-- submenu (somente 1x) --}}
-    <div id="submenu-{{ $menu['id'] }}" class="submenu mt-1 pl-9 pr-3 p-1 text-xs">
-        <div class="flex gap-3">
-            <span class="w-px bg-slate-300/80 dark:bg-slate-700 ml-2"></span>
-            <div class="space-y-1">
-                @foreach ($menu['items'] as $item)
-                    <a href="{{ route($item['route']) }}"
-                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
-                        target="_blank" rel="noopener noreferrer">
-                        <span class="menu-bar inline-flex h-4 w-1 rounded-full"></span>
-                        <span>{{ $item['label'] }}</span>
-                    </a>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    </li>
-    @endforeach
+                    {{-- submenu --}}
+                    <div id="submenu-{{ $menu['id'] }}" class="submenu mt-1 pl-9 pr-3 p-1 text-xs">
+                        <div class="flex gap-3">
+                            <span class="w-px bg-slate-300/80 dark:bg-slate-700 ml-2"></span>
+                            <div class="space-y-1">
+                                @foreach ($menu['items'] as $item)
+                                    <a href="{{ route($item['route']) }}"
+                                        class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
+                                        target="_blank" rel="noopener noreferrer">
+                                        <span class="menu-bar inline-flex h-4 w-1 rounded-full"></span>
+                                        <span>{{ $item['label'] }}</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
 
-    </ul>
-    </nav>
+            </ul>
+        </nav>
     </div>
 
-{{-- POPOVERS --}}
+    {{-- POPOVERS --}}
     @foreach ($menus as $menu)
         <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
             class="popover-flowbite absolute z-50 hidden lg:inline-block invisible w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
@@ -334,7 +361,6 @@
         </div>
     @endforeach
 </aside>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -397,7 +423,7 @@
                 e.stopPropagation();
                 const group = this.closest('.menu-group');
                 if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' :
-                'true';
+                    'true';
             });
 
             document.addEventListener('click', (e) => {
