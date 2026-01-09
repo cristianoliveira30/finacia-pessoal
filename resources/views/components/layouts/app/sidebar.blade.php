@@ -11,16 +11,8 @@
             'icon_main' => 'bank',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
-                [
-                    'label' => 'Execuções Orçamentárias',
-                    'route' => 'financeiro.relatorios.execucao',
-                    'icon' => 'file-earmark-text-fill',
-                ],
-                [
-                    'label' => 'CAPEX (Obras/Equipamentos)',
-                    'route' => 'financeiro.investimentos.capex',
-                    'icon' => 'file-earmark-text-fill',
-                ],
+                ['label' => 'Execuções Orçamentárias', 'route' => 'financeiro.relatorios.execucao', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'CAPEX (Obras/Equipamentos)', 'route' => 'financeiro.investimentos.capex', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
             ],
@@ -35,16 +27,8 @@
             'icon_main' => 'journal-bookmark',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'educacao.home', 'icon' => 'list'],
-                [
-                    'label' => 'Merendas Servidas',
-                    'route' => 'educacao.relatorios.merenda',
-                    'icon' => 'file-earmark-text-fill',
-                ],
-                [
-                    'label' => 'Frequência Escolar',
-                    'route' => 'educacao.relatorios.frequencia',
-                    'icon' => 'file-earmark-text-fill',
-                ],
+                ['label' => 'Merendas Servidas', 'route' => 'educacao.relatorios.merenda', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'Frequência Escolar', 'route' => 'educacao.relatorios.frequencia', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'educacao.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'educacao.contas', 'icon' => 'coin'],
             ],
@@ -59,18 +43,25 @@
             'icon_main' => 'plus-circle',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'saude.home', 'icon' => 'list'],
-                [
-                    'label' => 'Cobertura Vacinal',
-                    'route' => 'saude.imunizacao.cobertura',
-                    'icon' => 'file-earmark-text-fill',
-                ],
-                [
-                    'label' => 'Fila de Exames',
-                    'route' => 'saude.regulacao.fila-exames',
-                    'icon' => 'file-earmark-text-fill',
-                ],
+                ['label' => 'Cobertura Vacinal', 'route' => 'saude.imunizacao.cobertura', 'icon' => 'file-earmark-text-fill'],
+                ['label' => 'Fila de Exames', 'route' => 'saude.regulacao.fila-exames', 'icon' => 'file-earmark-text-fill'],
                 ['label' => 'Lançamentos', 'route' => 'saude.lancamentos', 'icon' => 'rocket-takeoff'],
                 ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin'],
+            ],
+        ],
+        // --- GRUPO MENSAGENS (Apenas "Enviar") ---
+        [
+            'id' => 'mensagens',
+            'label' => 'Mensagens',      
+            'popover_title' => 'Mensagens', 
+            'hex_main' => '#3b82f6',     
+            'hex_hover_bg' => 'rgba(59, 130, 246, 0.4)',
+            'hex_light' => '#60a5fa',
+            'icon_main' => 'send',       
+            'items' => [
+                // OBS: Troquei 'route' para 'home' temporariamente para corrigir o erro 500.
+                // Quando criar a rota no web.php, mude de volta para 'mensagens.create'
+                ['label' => 'Enviar Mensagem',  'route' => 'home', 'icon' => 'plus-circle' ],
             ],
         ],
     ];
@@ -276,25 +267,16 @@
                 </a>
             </li>
 
-            {{--    BOTÃO ENVIAR MENSAGEM (Agora no final)  --}}
-            <li class="menu-group ">
-
-                <div class="menu-highlight -z-10"></div>
-
-                <a href="#" {{-- ROTA AQUI: {{ route('mensagens.create') }} --}} class="{{ $linkBase }} relative w-full"
-                    data-tooltip="Enviar Mensagem" target="_blank" rel="noopener noreferrer">
-                    <x-bi-chat-dots class="w-5 h-5" />
-                    <span class="sidebar-label whitespace-nowrap font-semibold">Enviar Mensagens</span>
-                </a>
-            </li>
-
-            {{-- MENUS (Financeiro, Educação, Saúde) --}}
+            {{-- 
+                LOOP AUTOMÁTICO 
+                (Gera Financeiro, Educação, Saúde e MENSAGENS com a mesma lógica)
+            --}}
             @foreach ($menus as $menu)
                 <li class="menu-group" data-open="false"
                     style="--menu-main: {{ $menu['hex_main'] }}; --menu-hover-bg: {{ $menu['hex_hover_bg'] }}; --menu-light: {{ $menu['hex_light'] }};">
                     <div class="menu-highlight -z-10"></div>
 
-                    {{-- botão toggle --}}
+                    {{-- Botão Principal --}}
                     <button type="button"
                         class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
                         data-submenu-toggle="submenu-{{ $menu['id'] }}"
@@ -310,7 +292,7 @@
                         <x-bi-chevron-right class="chevron-icon w-3 h-3" />
                     </button>
 
-                    {{-- submenu --}}
+                    {{-- Submenu --}}
                     <div id="submenu-{{ $menu['id'] }}" class="submenu mt-1 pl-9 pr-3 p-1 text-xs">
                         <div class="flex gap-3">
                             <span class="w-px bg-slate-300/80 dark:bg-slate-700 ml-2"></span>
@@ -329,11 +311,10 @@
                 </li>
             @endforeach
 
-            </ul>
         </nav>
     </div>
 
-    {{-- POPOVERS --}}
+    {{-- POPOVERS (Gerados automaticamente pelo loop para TODOS os menus) --}}
     @foreach ($menus as $menu)
         <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
             class="popover-flowbite absolute z-50 hidden lg:inline-block invisible w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
