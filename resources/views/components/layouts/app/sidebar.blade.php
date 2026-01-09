@@ -240,10 +240,12 @@
                     <div class="menu-highlight -z-10"></div>
 
                     {{-- Botão Principal --}}
+                    {{-- GATILHO PRINCIPAL (HOVER) --}}
                     <button type="button"
                         class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
                         data-submenu-toggle="submenu-{{ $menu['id'] }}"
                         data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right-start"
+                        data-popover-trigger="hover"
                         data-popover-offset="8">
                         <div class="flex items-center gap-3">
                             <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
@@ -260,7 +262,6 @@
                             <div class="space-y-1 w-full">
                                 @foreach ($menu['items'] as $item)
                                     @if(isset($item['submenu']))
-                                        {{-- Exibe itens agrupados se sidebar aberta --}}
                                         <div class="pt-1">
                                             <div class="flex items-center gap-2 px-1 py-1 text-gray-500 font-bold uppercase" style="font-size: 0.65rem;">
                                                 <x-dynamic-component :component="'bi-' . $item['icon']" class="w-3 h-3" />
@@ -297,6 +298,8 @@
 {{-- POPOVERS (PRIMEIRO NÍVEL - PASTA PRINCIPAL) --}}
 @foreach ($menus as $menu)
     <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
+        {{-- ID Auxiliar para vinculo Pai-Filho no JS --}}
+        data-parent-id="parent-group-{{ $menu['id'] }}"
         class="popover-flowbite absolute z-50 hidden lg:inline-block invisible w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
         style="--menu-main: {{ $menu['hex_main'] }};">
         <div class="p-3">
@@ -310,18 +313,17 @@
                     <li>
                         @if(isset($item['submenu']))
                             {{-- GATILHO: Item que abre o popover filho --}}
-                            {{-- MUDANÇA: Trigger = click, Sem ícone de seta --}}
-                            <button type="button"
+                            {{-- MUDANÇA: Trigger = HOVER, Sem ícone de seta --}}
+                            <div 
                                 data-popover-target="popover-child-{{ $item['id_submenu'] }}" 
                                 data-popover-placement="right-start"
-                                data-popover-trigger="click" 
+                                data-popover-trigger="hover" 
                                 class="flex w-full items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer text-left">
                                 <div class="flex items-center gap-2">
                                     <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
                                     <span>{{ $item['label'] }}</span>
                                 </div>
-                                {{-- Ícone de seta removido conforme solicitado --}}
-                            </button>
+                            </div>
                         @else
                             {{-- Item Normal (Link direto) --}}
                             <a href="{{ route($item['route']) }}"
@@ -344,6 +346,8 @@
     @foreach ($menu['items'] as $item)
         @if(isset($item['submenu']))
             <div data-popover id="popover-child-{{ $item['id_submenu'] }}" role="tooltip"
+                 {{-- Atributo personalizado para saber quem é o pai deste filho --}}
+                 data-parent-ref="popover-{{ $menu['id'] }}"
                  class="popover-flowbite absolute z-50 hidden invisible w-56 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
                  style="--menu-main: {{ $menu['hex_main'] }};">
                 
@@ -376,16 +380,17 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. CONFIGURAÇÃO BÁSICA DA SIDEBAR (TOGGLE/RESPONSIVIDADE) ---
         const sidebar = document.getElementById('top-bar-sidebar');
         const toggleBtn = document.getElementById('header-sidebar-toggle');
-        if (!sidebar || !toggleBtn) return;
-
         const KEY = 'sidebarCollapsed';
         const mq = window.matchMedia('(min-width: 1024px)');
         const isDesktop = () => mq.matches;
-        const setAria = (expanded) => toggleBtn.setAttribute('aria-expanded', String(expanded));
+        
+        const setAria = (expanded) => toggleBtn && toggleBtn.setAttribute('aria-expanded', String(expanded));
 
         const sync = () => {
+            if(!sidebar) return;
             if (isDesktop()) {
                 const collapsed = localStorage.getItem(KEY) === 'true';
                 sidebar.classList.remove('-translate-x-full');
@@ -398,41 +403,156 @@
             }
         };
 
-        toggleBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (isDesktop()) {
-                const collapsed = document.body.classList.toggle('sidebar-collapsed');
-                localStorage.setItem(KEY, collapsed);
-                setAria(!collapsed);
-                return;
-            }
-            const willOpen = sidebar.classList.contains('-translate-x-full');
-            sidebar.classList.toggle('-translate-x-full');
-            setAria(willOpen);
-        });
-
-        document.addEventListener('click', (e) => {
-            if (isDesktop()) return;
-            if (sidebar.contains(e.target) || toggleBtn.contains(e.target)) return;
-            if (!sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.add('-translate-x-full');
-                setAria(false);
-            }
-        });
-
-        sidebar.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
-            btn.addEventListener('click', function(e) {
-                if (document.body.classList.contains('sidebar-collapsed')) return;
-                e.preventDefault();
-                e.stopPropagation();
-                const group = this.closest('.menu-group');
-                if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
+        if(toggleBtn && sidebar) {
+            toggleBtn.addEventListener('click', (e) => {
+                e.preventDefault(); e.stopPropagation();
+                if (isDesktop()) {
+                    const collapsed = document.body.classList.toggle('sidebar-collapsed');
+                    localStorage.setItem(KEY, collapsed);
+                    setAria(!collapsed);
+                } else {
+                    sidebar.classList.toggle('-translate-x-full');
+                    setAria(!sidebar.classList.contains('-translate-x-full'));
+                }
             });
-        });
 
+            document.addEventListener('click', (e) => {
+                if (isDesktop()) return;
+                if (sidebar.contains(e.target) || toggleBtn.contains(e.target)) return;
+                if (!sidebar.classList.contains('-translate-x-full')) {
+                    sidebar.classList.add('-translate-x-full');
+                    setAria(false);
+                }
+            });
+
+            // Accordion mobile
+            sidebar.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
+                btn.addEventListener('click', function(e) {
+                    if (document.body.classList.contains('sidebar-collapsed')) return;
+                    e.preventDefault(); e.stopPropagation();
+                    const group = this.closest('.menu-group');
+                    if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
+                });
+            });
+        }
+        
         if (mq.addEventListener) mq.addEventListener('change', sync);
         window.addEventListener('resize', sync);
         sync();
+
+        // --- 2. GERENCIAMENTO DE POPOVERS (CASCATA PAI -> FILHO NO HOVER) ---
+        // Objeto para armazenar os timers de cada popover individualmente
+        const timers = {};
+
+        // Helper para mostrar
+        function show(el, trigger, placement = 'right-start') {
+            if(!el) return;
+            el.classList.remove('hidden', 'invisible', 'opacity-0');
+            el.classList.add('block', 'opacity-100');
+            
+            // Posicionamento
+            const tRect = trigger.getBoundingClientRect();
+            const pRect = el.getBoundingClientRect();
+            
+            let top = tRect.top;
+            let left = tRect.right + 8; // pequeno gap visual
+
+            // Ajuste se sair da tela (em baixo)
+            if (top + pRect.height > window.innerHeight) {
+                top = window.innerHeight - pRect.height - 10;
+            }
+            
+            el.style.position = 'fixed';
+            el.style.top = `${top}px`;
+            el.style.left = `${left}px`;
+            el.style.zIndex = '9999';
+        }
+
+        // Helper para esconder
+        function hide(el) {
+            if(!el) return;
+            el.classList.add('hidden', 'invisible', 'opacity-0');
+            el.classList.remove('block', 'opacity-100');
+        }
+
+        // Helper para cancelar fechamento de um ID
+        function clearClose(id) {
+            if(timers[id]) {
+                clearTimeout(timers[id]);
+                timers[id] = null;
+            }
+        }
+
+        // Helper para agendar fechamento
+        function scheduleClose(el, id, delay = 250) {
+            clearClose(id);
+            timers[id] = setTimeout(() => {
+                hide(el);
+                // Se este for um pai, verifica se ele tem filhos abertos e fecha também? 
+                // A lógica de hover cuidará disso, pois se o mouse não está no pai nem no filho, ambos fecham.
+            }, delay);
+        }
+
+        // Selecionar todos os gatilhos (sidebar icons E itens internos de relatório)
+        const triggers = document.querySelectorAll('[data-popover-target]');
+
+        triggers.forEach(trigger => {
+            const targetId = trigger.getAttribute('data-popover-target');
+            const popoverEl = document.getElementById(targetId);
+            
+            if(!popoverEl) return;
+
+            // --- MOUSE ENTER NO GATILHO ---
+            trigger.addEventListener('mouseenter', () => {
+                // 1. Cancela fechamento do próprio popover alvo
+                clearClose(targetId);
+
+                // 2. Se for um gatilho FILHO (dentro de um pai), precisamos manter o PAI aberto
+                const parentPopover = trigger.closest('.popover-flowbite');
+                if(parentPopover) {
+                    clearClose(parentPopover.id);
+                } else {
+                    // Se for um gatilho PAI (sidebar), fecha outros pais para evitar colisão
+                    document.querySelectorAll('.popover-flowbite[id^="popover-"]').forEach(p => {
+                        if(p.id !== targetId && !p.hasAttribute('data-parent-ref')) {
+                            hide(p);
+                        }
+                    });
+                }
+
+                show(popoverEl, trigger);
+            });
+
+            // --- MOUSE LEAVE NO GATILHO ---
+            trigger.addEventListener('mouseleave', () => {
+                // Agenda fechamento. Só vai fechar se o mouse não entrar no popover alvo a tempo.
+                scheduleClose(popoverEl, targetId);
+            });
+
+            // --- MOUSE ENTER NO PRÓPRIO POPOVER ---
+            popoverEl.addEventListener('mouseenter', () => {
+                // O mouse entrou no popover, então cancela seu fechamento
+                clearClose(targetId);
+
+                // Se este for um popover FILHO, precisamos descobrir quem é o PAI e cancelar o fechamento dele também
+                const parentIdRef = popoverEl.getAttribute('data-parent-ref');
+                if(parentIdRef) {
+                    clearClose(parentIdRef);
+                }
+            });
+
+            // --- MOUSE LEAVE NO PRÓPRIO POPOVER ---
+            popoverEl.addEventListener('mouseleave', () => {
+                // O mouse saiu do popover, agenda fechamento
+                scheduleClose(popoverEl, targetId);
+
+                // Se for filho, agenda fechamento do pai também (para efeito cascata reverso suave)
+                const parentIdRef = popoverEl.getAttribute('data-parent-ref');
+                if(parentIdRef) {
+                    const parentEl = document.getElementById(parentIdRef);
+                    scheduleClose(parentEl, parentIdRef);
+                }
+            });
+        });
     });
 </script>
