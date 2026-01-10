@@ -1,7 +1,37 @@
-{{-- sidebar.blade.php --}}
+
 {{-- CONFIGURAÇÃO DOS MENUS (DADOS) --}}
 @php
     $menus = [
+        // --- PREFEITURA  ---
+        [
+            'id' => 'prefeitura',
+            'label' => 'Prefeitura',
+            'popover_title' => 'Prefeitura',
+            'hex_main' => '#6366f1', // Indigo-500
+            'hex_hover_bg' => 'rgba(79, 70, 229, 0.4)',
+            'hex_light' => '#818cf8',
+            'icon_main' => 'building', // Ícone de prédio governamental
+            'items' => [
+                ['label' => 'Dashboard Geral', 'route' => 'home', 'icon' => 'speedometer2'],
+                
+                // GRUPO: PREFEITO
+                [
+                    'label' => 'Prefeito',
+                    'icon' => 'person-badge', 
+                    'id_submenu' => 'pref-gabinete',
+                    'submenu' => [
+                        ['label' => 'Gabinete (Visão Geral)', 'route' => 'home', 'icon' => 'pie-chart-fill'],
+                        ['label' => 'Agenda Oficial', 'route' => 'home', 'icon' => 'calendar-event-fill'],
+                        ['label' => 'Documentos / Decretos', 'route' => 'home', 'icon' => 'file-earmark-text-fill'],
+                    ]
+                ],
+
+                ['label' => 'Secretarias', 'route' => 'home', 'icon' => 'diagram-3'],
+                ['label' => 'Configurações', 'route' => 'home', 'icon' => 'gear'],
+            ],
+        ],
+
+        // --- FINANCEIRO ---
         [
             'id' => 'financeiro',
             'label' => 'Financeiro',
@@ -31,6 +61,8 @@
                 ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
             ],
         ],
+
+        // --- EDUCAÇÃO ---
         [
             'id' => 'educacao',
             'label' => 'Educação',
@@ -65,6 +97,8 @@
                 ['label' => 'Contas', 'route' => 'educacao.contas', 'icon' => 'coin'],
             ],
         ],
+
+        // --- SAÚDE ---
         [
             'id' => 'saude',
             'label' => 'Saúde',
@@ -96,7 +130,8 @@
                 ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin'],
             ],
         ],
-                // --- GRUPO MENSAGENS (Apenas "Enviar") ---
+
+        // --- MENSAGENS / NOTIFICAÇÕES ---
         [
             'id' => 'mensagens',
             'label' => 'Notificações',      
@@ -106,8 +141,6 @@
             'hex_light' => '#60a5fa',
             'icon_main' => 'send',       
             'items' => [
-                // OBS: Troquei 'route' para 'home' temporariamente para corrigir o erro 500.
-                // Quando criar a rota no web.php, mude de volta para 'mensagens.create'
                 ['label' => 'Enviar Notificações',  'route' => 'mensagens.envio', 'icon' => 'plus-circle' ],
             ],
         ],
@@ -115,7 +148,6 @@
 
     $linkBase = 'sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5';
 @endphp
-
 <style>
     :root {
         --sidebar-bg: #f1f5f9;
