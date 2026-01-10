@@ -51,7 +51,7 @@
 
                         {{-- SECTION: DESTINO --}}
                         <section>
-                            <div class="flex items-center gap-2 mb-3">
+                            <div class="flex items-center gap-2 mb-3">q
                                 <x-bi-people class="w-4 h-4 text-slate-600 dark:text-slate-300" />
                                 <h2 class="text-sm font-bold text-slate-900 dark:text-slate-100">
                                     Destino
