@@ -71,11 +71,8 @@
                         <span class="sr-only">Open user menu</span>
 
                         <span class="relative inline-block leading-none">
-                            {{-- FOTO DE PERFIL DINÂMICA --}}
                             <img class="w-8 h-8 rounded-full object-cover block"
-                                src="{{ auth()->user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name='.urlencode(auth()->user()->name).'&background=E2E8F0&color=64748B' }}"
-                                alt="Foto de {{ Auth::user()->name }}">
-                                
+                                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
                             <span id="notif-avatar-badge"
                                 class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-600 text-white text-[11px] flex items-center justify-center ring-2 ring-gray-800 dark:ring-gray-800">
                             </span>
@@ -138,7 +135,7 @@
     </div>
 </nav>
 
-{{-- Modal (Flowbite) - O restante do arquivo permanece idêntico --}}
+{{-- Modal (Flowbite) --}}
 <div id="notifications-modal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50
            justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -238,13 +235,13 @@
                                 <li>
                                     <button type="button"
                                         class="notif-item w-full text-left rounded-xl border border-slate-200 bg-white p-3
-                                             hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800 transition"
+                                                     hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800 transition"
                                         data-notif-id="{{ $n['id'] }}"
                                         data-unread-default="{{ $unread ? '1' : '0' }}"
                                         data-read-url="{{ $readUrl }}" data-url="{{ $url }}">
                                         <div class="flex items-start gap-3">
                                             <span data-notif-dot
-                                                class="mt-1.5 w-2 h-2 rounded-full bg-sky-50 {{ $unread ? '' : 'hidden' }}"></span>
+                                                class="mt-1.5 w-2 h-2 rounded-full bg-sky-500 {{ $unread ? '' : 'hidden' }}"></span>
 
                                             <div class="min-w-0 flex-1">
                                                 <div class="flex items-center gap-2">

@@ -280,9 +280,7 @@
                     <button type="button"
                         class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
                         data-submenu-toggle="submenu-{{ $menu['id'] }}"
-                        data-popover-target="popover-{{ $menu['id'] }}" 
-                        data-popover-placement="right-start"
-                        data-popover-trigger="hover"
+                        data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right-start"
                         data-popover-offset="8">
                         <div class="flex items-center gap-3">
                             <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
@@ -345,19 +343,16 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // =================================================================
-        // 1. CONFIGURAÇÃO DA SIDEBAR
-        // =================================================================
         const sidebar = document.getElementById('top-bar-sidebar');
         const toggleBtn = document.getElementById('header-sidebar-toggle');
+        if (!sidebar || !toggleBtn) return;
+
         const KEY = 'sidebarCollapsed';
         const mq = window.matchMedia('(min-width: 1024px)');
         const isDesktop = () => mq.matches;
-        
-        const setAria = (expanded) => toggleBtn && toggleBtn.setAttribute('aria-expanded', String(expanded));
+        const setAria = (expanded) => toggleBtn.setAttribute('aria-expanded', String(expanded));
 
         const sync = () => {
-            if(!sidebar) return;
             if (isDesktop()) {
                 const collapsed = localStorage.getItem(KEY) === 'true';
                 sidebar.classList.remove('-translate-x-full');
@@ -406,231 +401,11 @@
                 if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' :
                     'true';
             });
+        });
 
-            document.addEventListener('click', (e) => {
-                if (isDesktop()) return;
-                if (sidebar.contains(e.target) || toggleBtn.contains(e.target)) return;
-                if (!sidebar.classList.contains('-translate-x-full')) {
-                    sidebar.classList.add('-translate-x-full');
-                    setAria(false);
-                }
-            });
-
-            sidebar.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
-                btn.addEventListener('click', function(e) {
-                    if (document.body.classList.contains('sidebar-collapsed')) return;
-                    e.preventDefault(); e.stopPropagation();
-                    const group = this.closest('.menu-group');
-                    if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
-                });
-            });
-        }
-        
         if (mq.addEventListener) mq.addEventListener('change', sync);
         window.addEventListener('resize', sync);
 
         sync();
-
-        // =================================================================
-        // 2. SISTEMA DE POPOVER ROBUSTO (TRAVAMENTO DE CLICK)
-        // =================================================================
-        
-        const closeTimers = {};
-
-        // Função Recursiva: Marca a árvore genealógica como "Em uso"
-        function cancelCloseTree(popoverId) {
-            if (!popoverId) return;
-            
-            // Cancela timer deste elemento
-            if (closeTimers[popoverId]) {
-                clearTimeout(closeTimers[popoverId]);
-                closeTimers[popoverId] = null;
-            }
-
-            const el = document.getElementById(popoverId);
-            if (el) {
-                el.classList.remove('hidden', 'invisible', 'opacity-0');
-                el.classList.add('block', 'opacity-100');
-
-                // Chama para o pai
-                const parentId = el.getAttribute('data-parent-ref');
-                if (parentId) cancelCloseTree(parentId);
-            }
-        }
-
-        function showPopover(el, trigger) {
-            if (!el) return;
-
-            // Fecha outros que não sejam ancestrais
-            document.querySelectorAll('.popover-flowbite').forEach(other => {
-                if (other.id !== el.id && !isAncestor(el, other)) {
-                    // SE o "other" estiver aberto via click (fixo), ou mouse em cima, não fecha agora
-                    if (!other.matches(':hover') && !isClickOpened(other) && !hasActiveChild(other)) {
-                        hidePopoverImmediate(other);
-                    }
-                }
-            });
-
-            cancelCloseTree(el.id);
-            
-            // --- POSICIONAMENTO ---
-            const tRect = trigger.getBoundingClientRect();
-            const pRect = el.getBoundingClientRect();
-            
-            let top = tRect.top;
-            let left = 0;
-
-            const parentContainer = trigger.closest('.popover-flowbite');
-            if (parentContainer) {
-                // Alinha EXATAMENTE ao lado do pai (sem overlay, sem gap)
-                // Usamos o getBoundingClientRect do container pai
-                const parentRect = parentContainer.getBoundingClientRect();
-                left = parentRect.right; 
-            } else {
-                // Primeiro nível: ao lado do botão
-                left = tRect.right + 10;
-            }
-
-            if (top + pRect.height > window.innerHeight) {
-                top = window.innerHeight - pRect.height - 10;
-            }
-
-            el.style.position = 'fixed';
-            el.style.top = `${top}px`;
-            el.style.left = `${left}px`;
-            el.style.zIndex = '9999';
-        }
-
-        function hidePopoverImmediate(el) {
-            if(!el) return;
-            el.classList.add('hidden', 'invisible', 'opacity-0');
-            el.classList.remove('block', 'opacity-100');
-            el.removeAttribute('data-click-opened');
-            
-            // Limpa flag no pai indicando que filho fechou
-            const parentId = el.getAttribute('data-parent-ref');
-            if(parentId) {
-                const parent = document.getElementById(parentId);
-                if(parent) parent.removeAttribute('data-has-active-child');
-            }
-        }
-
-        function isAncestor(child, potentialParent) {
-            let curr = child;
-            while(curr) {
-                const pid = curr.getAttribute('data-parent-ref');
-                if(!pid) return false;
-                if(pid === potentialParent.id) return true;
-                curr = document.getElementById(pid);
-            }
-            return false;
-        }
-
-        // Verifica se o elemento foi aberto via click (Fixo)
-        function isClickOpened(el) {
-            return el.hasAttribute('data-click-opened');
-        }
-
-        // Verifica se o elemento tem um filho aberto (Travamento do Pai)
-        function hasActiveChild(el) {
-            return el.hasAttribute('data-has-active-child');
-        }
-
-        function scheduleClose(elId) {
-            if (closeTimers[elId]) clearTimeout(closeTimers[elId]);
-
-            closeTimers[elId] = setTimeout(() => {
-                const el = document.getElementById(elId);
-                if (!el) return;
-
-                // --- REGRAS DE OURO PARA NÃO FECHAR ---
-                // 1. Se foi clicado (fixo), não fecha via timer.
-                if (isClickOpened(el)) return;
-                // 2. Se tem um filho aberto (fixo ou hover), o pai não pode fechar.
-                if (hasActiveChild(el)) return;
-                // 3. Se o mouse está em cima.
-                if (el.matches(':hover')) return; 
-                // 4. Se o mouse está num input/botão dentro dele.
-                if (el.querySelector(':hover')) return;
-
-                // Se falhou em tudo, pode fechar
-                hidePopoverImmediate(el);
-
-                // E verifica se o pai deve fechar (recursão)
-                const parentId = el.getAttribute('data-parent-ref');
-                if (parentId) scheduleClose(parentId);
-
-            }, 200);
-        }
-
-        // FECHAR AO CLICAR FORA (Global)
-        document.addEventListener('click', (e) => {
-            const target = e.target;
-            if (target.closest('.popover-flowbite') || target.closest('[data-popover-target]')) return;
-            
-            // Fecha tudo
-            document.querySelectorAll('.popover-flowbite').forEach(p => hidePopoverImmediate(p));
-        });
-
-        // --- ATRIBUIÇÃO DE EVENTOS ---
-        const triggers = document.querySelectorAll('[data-popover-target]');
-
-        triggers.forEach(trigger => {
-            const targetId = trigger.getAttribute('data-popover-target');
-            const triggerType = trigger.getAttribute('data-popover-trigger') || 'hover';
-            const popoverEl = document.getElementById(targetId);
-
-            if (!popoverEl) return;
-
-            if (triggerType === 'click') {
-                // --- CLICK (Submenus) ---
-                trigger.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-
-                    const isVisible = popoverEl.classList.contains('block');
-                    
-                    if (isVisible) {
-                        hidePopoverImmediate(popoverEl);
-                    } else {
-                        // 1. Marca como aberto por Click
-                        popoverEl.setAttribute('data-click-opened', 'true');
-                        
-                        // 2. AVISA O PAI QUE ELE TEM UM FILHO ATIVO (TRAVA O PAI)
-                        const parentPopover = trigger.closest('.popover-flowbite');
-                        if(parentPopover) {
-                            parentPopover.setAttribute('data-has-active-child', 'true');
-                            cancelCloseTree(parentPopover.id);
-                        }
-
-                        showPopover(popoverEl, trigger);
-                    }
-                });
-            } else {
-                // --- HOVER (Menu Principal) ---
-                trigger.addEventListener('mouseenter', () => {
-                    const parentPopover = trigger.closest('.popover-flowbite');
-                    if(parentPopover) cancelCloseTree(parentPopover.id);
-                    showPopover(popoverEl, trigger);
-                });
-
-                trigger.addEventListener('mouseleave', () => {
-                    scheduleClose(targetId);
-                });
-            }
-        });
-        
-        // Eventos no Popover para manter aberto
-        document.querySelectorAll('.popover-flowbite').forEach(popover => {
-            popover.addEventListener('mouseenter', () => {
-                cancelCloseTree(popover.id);
-            });
-            popover.addEventListener('mouseleave', () => {
-                // Se não for fixo por click e não tiver filho aberto, agenda fechamento
-                if(!isClickOpened(popover) && !hasActiveChild(popover)) {
-                    scheduleClose(popover.id);
-                }
-            });
-        });
     });
 </script>
