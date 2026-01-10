@@ -52,8 +52,8 @@
         // --- GRUPO MENSAGENS (Apenas "Enviar") ---
         [
             'id' => 'mensagens',
-            'label' => 'Mensagens',      
-            'popover_title' => 'Mensagens', 
+            'label' => 'Notificações',      
+            'popover_title' => 'Notificações', 
             'hex_main' => '#3b82f6',     
             'hex_hover_bg' => 'rgba(59, 130, 246, 0.4)',
             'hex_light' => '#60a5fa',
@@ -61,7 +61,7 @@
             'items' => [
                 // OBS: Troquei 'route' para 'home' temporariamente para corrigir o erro 500.
                 // Quando criar a rota no web.php, mude de volta para 'mensagens.create'
-                ['label' => 'Enviar Mensagem',  'route' => 'mensagens.envio', 'icon' => 'plus-circle' ],
+                ['label' => 'Enviar Notificações',  'route' => 'mensagens.envio', 'icon' => 'plus-circle' ],
             ],
         ],
     ];
