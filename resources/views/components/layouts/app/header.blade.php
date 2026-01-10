@@ -150,14 +150,6 @@
                     <x-bi-bell class="w-5 h-5 text-slate-700 dark:text-slate-200" />
                     <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Central de Notificações</h3>
                 </div>
-                
-                <nav class="flex-1 overflow-y-auto p-4 space-y-1">
-                    {{-- Botões da Sidebar (Lógica via JS 'switchTab') --}}
-                    
-                    <button onclick="switchTab('general')" id="nav-general" class="sidebar-tab-btn active flex items-center w-full px-3 py-2.5 text-sm font-medium rounded-lg transition-colors group">
-                        <x-bi-person class="w-5 h-5 mr-3 text-gray-400 group-[.active]:text-indigo-500" />
-                        <span class="text-gray-700 dark:text-gray-300 group-[.active]:text-indigo-600 dark:group-[.active]:text-white">Geral</span>
-                    </button>
 
                 <button type="button"
                     class="text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg text-sm w-9 h-9 inline-flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
