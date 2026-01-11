@@ -138,6 +138,17 @@
         --sidebar-tooltip-bg: #4b5563;
     }
 
+    /* TEMA BLACK (ZINC) */
+    html.black {
+        --sidebar-bg: #18181b; /* zinc-900 */
+        --sidebar-border: #27272a; /* zinc-800 */
+        --sidebar-text: #e4e4e7; /* zinc-200 */
+        --sidebar-hover-bg: #27272a; /* zinc-800 (Hover suave) */
+        --sidebar-submenu-bg: #18181b; /* zinc-900 (Mesmo do bg para flat look) */
+        --sidebar-submenu-border: #3f3f46; /* zinc-700 */
+        --sidebar-tooltip-bg: #27272a; /* zinc-800 */
+    }
+
     @media (min-width: 1024px) {
         body.sidebar-collapsed #top-bar-sidebar {
             width: 4.5rem;
@@ -174,18 +185,19 @@
     #top-bar-sidebar .sidebar-link:hover {
         background-color: var(--sidebar-hover-bg);
     }
-    html:not(.dark) #top-bar-sidebar {
+    /* Sombra e bordas apenas no modo Light */
+    html:not(.dark):not(.black) #top-bar-sidebar {
         box-shadow: 0 12px 30px rgba(2, 6, 23, .10);
     }
-    html:not(.dark) #top-bar-sidebar .sidebar-link {
+    html:not(.dark):not(.black) #top-bar-sidebar .sidebar-link {
         background: var(--sidebar-item-bg);
         border: 1px solid rgba(203, 213, 225, .65);
     }
-    html:not(.dark) #top-bar-sidebar .sidebar-link:hover {
+    html:not(.dark):not(.black) #top-bar-sidebar .sidebar-link:hover {
         background: var(--sidebar-hover-bg) !important;
         border-color: rgba(148, 163, 184, .75);
     }
-    html:not(.dark) #top-bar-sidebar .submenu a:hover {
+    html:not(.dark):not(.black) #top-bar-sidebar .submenu a:hover {
         background: #ffffff !important;
     }
     .menu-group { position: relative; }
@@ -240,9 +252,10 @@
     .popover-title { color: var(--menu-main); }
 </style>
 
+{{-- CONTAINER SIDEBAR: black:bg-zinc-900 | black:border-zinc-800 --}}
 <aside id="top-bar-sidebar"
     class="fixed top-16 bottom-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0
-         border-e transition-transform duration-300 bg-white dark:bg-gray-800"
+         border-e transition-transform duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 black:border-zinc-800"
     aria-label="Sidebar">
 
     <div class="h-full flex flex-col pt-5 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
@@ -289,19 +302,19 @@
                     {{-- Submenu (Acordeon - Apenas para sidebar expandida) --}}
                     <div id="submenu-{{ $menu['id'] }}" class="submenu mt-1 pl-9 pr-3 p-1 text-xs">
                         <div class="flex gap-3">
-                            <span class="w-px bg-slate-300/80 dark:bg-slate-700 ml-2"></span>
+                            <span class="w-px bg-slate-300/80 dark:bg-slate-700 black:bg-zinc-700 ml-2"></span>
                             <div class="space-y-1 w-full">
                                 @foreach ($menu['items'] as $item)
                                     @if(isset($item['submenu']))
                                         {{-- Exibe itens agrupados se sidebar aberta --}}
                                         <div class="pt-1">
-                                            <div class="flex items-center gap-2 px-1 py-1 text-gray-500 font-bold uppercase" style="font-size: 0.65rem;">
+                                            <div class="flex items-center gap-2 px-1 py-1 text-gray-500 black:text-zinc-500 font-bold uppercase" style="font-size: 0.65rem;">
                                                 <x-dynamic-component :component="'bi-' . $item['icon']" class="w-3 h-3" />
                                                 {{ $item['label'] }}
                                             </div>
                                             @foreach($item['submenu'] as $sub)
                                                  <a href="{{ route($sub['route']) }}"
-                                                    class="flex items-center gap-2 rounded-md pl-4 pr-1 py-1 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
+                                                    class="flex items-center gap-2 rounded-md pl-4 pr-1 py-1 hover:bg-slate-200/60 dark:hover:bg-slate-800 black:hover:bg-zinc-800 transition-colors"
                                                     target="_blank" rel="noopener noreferrer">
                                                     <span class="menu-bar inline-flex h-3 w-1 rounded-full opacity-50"></span>
                                                     <span>{{ $sub['label'] }}</span>
@@ -310,7 +323,7 @@
                                         </div>
                                     @else
                                         <a href="{{ route($item['route']) }}"
-                                            class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
+                                            class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-200/60 dark:hover:bg-slate-800 black:hover:bg-zinc-800 transition-colors"
                                             target="_blank" rel="noopener noreferrer">
                                             <span class="menu-bar inline-flex h-4 w-1 rounded-full"></span>
                                             <span>{{ $item['label'] }}</span>
@@ -332,10 +345,10 @@
     <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
         {{-- ID Auxiliar para vinculo Pai-Filho no JS --}}
         data-parent-id="parent-group-{{ $menu['id'] }}"
-        class="popover-flowbite absolute z-50 hidden lg:inline-block invisible w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
+        class="popover-flowbite absolute z-50 hidden lg:inline-block invisible w-48 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0"
         style="--menu-main: {{ $menu['hex_main'] }};">
         <div class="p-3">
-            <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
                 <span class="popover-accent h-4 w-1 rounded-full"></span>
                 <span class="popover-title font-semibold">{{ $menu['popover_title'] }}</span>
             </div>
@@ -349,7 +362,7 @@
                                 data-popover-target="popover-child-{{ $item['id_submenu'] }}" 
                                 data-popover-placement="right-start"
                                 data-popover-trigger="click" 
-                                class="flex w-full items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer text-left">
+                                class="flex w-full items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors cursor-pointer text-left">
                                 <div class="flex items-center gap-2">
                                     <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
                                     <span>{{ $item['label'] }}</span>
@@ -359,7 +372,7 @@
                         @else
                             {{-- Item Normal (Link direto) --}}
                             <a href="{{ route($item['route']) }}"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
                                 target="_blank" rel="noopener noreferrer">
                                 <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
                                 <span>{{ $item['label'] }}</span>
@@ -380,22 +393,22 @@
             <div data-popover id="popover-child-{{ $item['id_submenu'] }}" role="tooltip"
                  {{-- Atributo personalizado para saber quem é o pai deste filho --}}
                  data-parent-ref="popover-{{ $menu['id'] }}"
-                 class="popover-flowbite absolute z-50 hidden invisible w-56 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
+                 class="popover-flowbite absolute z-50 hidden invisible w-56 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0"
                  style="--menu-main: {{ $menu['hex_main'] }};">
                 
                 <div class="p-3">
-                     <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
+                     <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
                         <span class="popover-accent h-3 w-1 rounded-full opacity-70"></span>
-                        <span class="font-semibold text-xs uppercase text-gray-500 dark:text-gray-400">{{ $item['label'] }}</span>
+                        <span class="font-semibold text-xs uppercase text-gray-500 dark:text-gray-400 black:text-zinc-400">{{ $item['label'] }}</span>
                     </div>
 
                     <ul class="space-y-1">
                         @foreach ($item['submenu'] as $subItem)
                             <li>
                                 <a href="{{ route($subItem['route']) }}"
-                                   class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                   class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
                                    target="_blank" rel="noopener noreferrer">
-                                    <x-dynamic-component :component="'bi-' . $subItem['icon']" class="w-4 h-4 shrink-0 text-gray-400" />
+                                    <x-dynamic-component :component="'bi-' . $subItem['icon']" class="w-4 h-4 shrink-0 text-gray-400 black:text-zinc-500" />
                                     <span>{{ $subItem['label'] }}</span>
                                 </a>
                             </li>

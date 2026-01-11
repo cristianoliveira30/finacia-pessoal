@@ -76,7 +76,7 @@
 </head>
 
 <body class="min-h-screen antialiased sidebar-collapsed">
-    <div class="min-h-dvh flex flex-col bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+    <div class="min-h-dvh flex flex-col bg-gray-200 text-gray-900 black:bg-zinc-950 dark:bg-gray-900 dark:text-gray-50">
         {{-- HEADER SEMPRE NO TOPO --}}
         @include('components.layouts.app.header')
 
@@ -116,40 +116,49 @@
     </div>
     @stack('scripts')
     <script>
-        // Seleciona todos os inputs do toggle (Mobile e Desktop)
-        const themeToggles = document.querySelectorAll('.theme-toggle-input');
+        // 1. Função principal de troca de tema
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            
+            // Remove classes anteriores para evitar conflitos
+            html.classList.remove('dark', 'black');
 
-        function applyTheme(isDark) {
-            if (isDark) {
-                // Ativar MODO ESCURO
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('color-theme', 'dark');
-                // Checkbox Marcado (Lua/Azul)
-                themeToggles.forEach(el => el.checked = true);
-            } else {
-                // Ativar MODO CLARO (Branco)
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('color-theme', 'light');
-                // Checkbox Desmarcado (Sol/Cinza)
-                themeToggles.forEach(el => el.checked = false);
+            // Lógica de aplicação
+            if (theme === 'dark') {
+                html.classList.add('dark'); // Tema Neon
+            } else if (theme === 'black') {
+                html.classList.add('black'); // Tema Black
+                // Opcional: Se componentes do Flowbite quebrarem no black, descomente a linha abaixo:
+                // html.classList.add('dark'); 
+            }
+            
+            // Salva a preferência
+            localStorage.setItem('color-theme', theme);
+            
+            // Atualiza visualmente o texto do botão (opcional, para feedback imediato)
+            updateDropdownLabel(theme);
+        }
+
+        // Função auxiliar para atualizar o label do botão (se existir)
+        function updateDropdownLabel(theme) {
+            const label = document.getElementById('current-theme-label');
+            if (label) {
+                const names = { 'light': 'Claro', 'dark': 'Neon', 'black': 'Escuro' };
+                label.textContent = names[theme] || 'Tema';
             }
         }
 
-        // 1. Inicialização:
-        // Se o usuário já escolheu 'light' antes, respeita.
-        // Caso contrário (primeira visita ou 'dark'), força o tema ESCURO.
-        if (localStorage.getItem('color-theme') === 'light') {
-            applyTheme(false);
-        } else {
-            applyTheme(true); // Padrão Dark
-        }
+        // 2. Inicialização ao carregar a página
+        const savedTheme = localStorage.getItem('color-theme') || 'light';
+        applyTheme(savedTheme);
 
-        // 2. Evento de Clique
-        themeToggles.forEach(toggle => {
-            toggle.addEventListener('change', (e) => {
-                // Se marcou -> Dark. Se desmarcou -> Light.
-                applyTheme(e.target.checked);
-            });
+        // 3. Listener para os botões do Dropdown (Adicionaremos as classes .set-theme-btn no HTML)
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.set-theme-btn');
+            if (btn) {
+                const selectedTheme = btn.getAttribute('data-theme');
+                applyTheme(selectedTheme);
+            }
         });
     </script>
 </body>

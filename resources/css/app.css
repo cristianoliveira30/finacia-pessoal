@@ -2,6 +2,7 @@
 
 /* 1. OBRIGATÓRIO PARA TAILWIND v4: Força o modo escuro a funcionar via classe (.dark) */
 @variant dark (&:where(.dark, .dark *));
+@variant black (&:where(.black, .black *));
 
 /* Variáveis de tema do Flowbite */
 @import "flowbite/src/themes/default";
