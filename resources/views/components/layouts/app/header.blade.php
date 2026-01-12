@@ -94,19 +94,6 @@
                         </div>
                         <ul class="p-2 text-sm text-body font-medium" role="none">
                             <li>
-                                <div
-                                    class="flex items-center px-4 py-2 hover:bg-neutral-tertiary-medium rounded cursor-pointer">
-                                    <label class="ui-switch mr-3">
-                                        <input type="checkbox" class="theme-toggle-input">
-                                        <div class="slider">
-                                            <div class="circle"></div>
-                                        </div>
-                                    </label>
-                                    <span class="text-sm black:text-zinc-300 font-medium text-heading select-none">Trocar tema</span>
-                                </div>
-                            </li>
-
-                            <li>
                                 <button type="button"
                                     class="inline-flex items-center w-full p-2 rounded hover:bg-neutral-tertiary-medium hover:text-heading"
                                     data-modal-target="notifications-modal" data-modal-toggle="notifications-modal"
