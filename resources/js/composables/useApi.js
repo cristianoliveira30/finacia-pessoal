@@ -3,6 +3,8 @@ import axios from "axios";
 
 export const api = axios.create({
   withCredentials: true,
+  xsrfCookieName: "XSRF-TOKEN",
+  xsrfHeaderName: "X-XSRF-TOKEN",
   headers: {
     "X-Requested-With": "XMLHttpRequest",
     Accept: "application/json",
@@ -13,12 +15,12 @@ export const api = axios.create({
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    // abort/cancel
-    if (axios.isCancel?.(err) || err?.code === "ERR_CANCELED") {
-      return Promise.reject(err);
+    if (axios.isCancel?.(err) || err?.code === "ERR_CANCELED") return Promise.reject(err);
+
+    if (err?.response?.status === 419) {
+      window.location.reload(); // ou: window.location.href = "/";
     }
 
-    // você pode padronizar aqui (401/419 etc.)
     return Promise.reject(err);
   }
 );

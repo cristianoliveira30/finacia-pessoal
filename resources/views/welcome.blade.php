@@ -53,28 +53,28 @@
 
             <form action="{{ route('login.post') }}" method="post" class="space-y-5">
                 @csrf
-                
+
                 <div>
                     <label for="login" class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Login</label>
 
-                    <input id="username" name="username" type="text" placeholder="Seu usuário" required 
+                    <input id="username" name="username" type="text" placeholder="Seu usuário" required
                         value="{{ old('username') }}"
                         class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 transition-all
                         bg-white text-gray-900 placeholder:text-gray-400
                         dark:bg-neutral-800 dark:text-white dark:placeholder:text-gray-500
-                        
-                        @if($errors->has('username') || $errors->has('login')) 
+
+                        @if($errors->has('username') || $errors->has('login'))
                             border-red-500 focus:ring-red-500 dark:border-red-500
-                        @else 
-                            border-gray-300 focus:ring-indigo-500 dark:border-neutral-700 
+                        @else
+                            border-gray-300 focus:ring-indigo-500 dark:border-neutral-700
                         @endif" />
-                    
+
                     @error('username')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                     @enderror
 
                 </div>
-                
+
                 <div>
                     <label for="password"
                     class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Senha</label>
@@ -83,13 +83,13 @@
                             class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 transition-all
                             bg-white text-gray-900 placeholder:text-gray-400
                             dark:bg-neutral-800 dark:text-white dark:placeholder:text-gray-500
-                            
-                            @if($errors->has('password') || $errors->has('login')) 
+
+                            @if($errors->has('password') || $errors->has('login'))
                                 border-red-500 focus:ring-red-500 dark:border-red-500
-                                @else 
-                                border-gray-300 focus:ring-indigo-500 dark:border-neutral-700 
+                                @else
+                                border-gray-300 focus:ring-indigo-500 dark:border-neutral-700
                                 @endif" />
-                                
+
                                 <button type="button" id="toggle-pass"
                                 class="absolute right-3 top-1/2 -translate-y-1/2 transition-colors
                                 text-gray-500 hover:text-gray-700
@@ -102,7 +102,7 @@
                             </svg>
                         </button>
                     </div>
-                    
+
                     @error('password')
                     <p class="mt-1 text-sm text-red-600 dark:text-red-500">
                             {{ $message }}
@@ -112,7 +112,7 @@
                             <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
-                    
+
                     <div class="flex items-center justify-start">
                         <a href="#"
                         class="text-sm font-medium hover:underline transition-colors
@@ -134,6 +134,10 @@
 
     <script>
         (function() {
+            window.addEventListener('pageshow', (e) => {
+                if (e.persisted) window.location.reload();
+            });
+
             const btn = document.getElementById('toggle-pass');
             const input = document.getElementById('password');
             if (!btn || !input) return;

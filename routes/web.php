@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\AnalisesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Middleware\NoStoreHtml;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('login');
+Route::middleware([NoStoreHtml::class])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('login');
+});
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
