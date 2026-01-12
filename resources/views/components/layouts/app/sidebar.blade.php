@@ -12,6 +12,7 @@
             'icon_main' => 'bank', // Ícone de prédio governamental
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'home', 'icon' => 'speedometer2'],
+                ['label' => 'Modo TV', 'route' => 'tv.index', 'icon' => 'tv'],
 
                 // GRUPO: PREFEITO
                 [
@@ -24,7 +25,6 @@
                         ['label' => 'Documentos / Decretos', 'route' => 'home', 'icon' => 'file-earmark-text-fill'],
                     ],
                 ],
-                ['label' => 'Modo TV', 'route' => 'tv.index', 'icon' => 'tv'],
             ],
         ],
 
@@ -46,31 +46,11 @@
                     'icon' => 'file-text',
                     'id_submenu' => 'fin-relatorios',
                     'submenu' => [
-                        [
-                            'label' => 'Receitas x Despesas (Séries)',
-                            'route' => 'financeiro.relatorios.rx_d',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Execução Orçamentária (Mês/Ano)',
-                            'route' => 'financeiro.relatorios.execucao',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Despesas por Função/Subfunção',
-                            'route' => 'financeiro.relatorios.despesas_funcao',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Fornecedores (Top / Concentração)',
-                            'route' => 'financeiro.relatorios.fornecedores',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Empenhos / Liquidações / Pagamentos',
-                            'route' => 'financeiro.relatorios.elp',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
+                        ['label' => 'Receitas x Despesas (Séries)',       'route' => 'financeiro.relatorios.rx_d',            'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Execução Orçamentária (Mês/Ano)',    'route' => 'financeiro.relatorios.execucao',        'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Despesas por Função/Subfunção',      'route' => 'financeiro.relatorios.despesas_funcao', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Fornecedores (Top / Concentração)',  'route' => 'financeiro.relatorios.fornecedores',    'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Empenhos / Liq. / Pagamentos',       'route' => 'financeiro.relatorios.elp',             'icon' => 'file-earmark-text-fill'],
                         ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
                         ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
                     ],
