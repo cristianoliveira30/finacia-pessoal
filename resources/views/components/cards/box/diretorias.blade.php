@@ -13,21 +13,27 @@
     $statusStyles = [
         // CRITICO: Vermelho com Blur
         'critico' => [
-            'wrapper' => 'border-red-500 shadow-xl shadow-red-500/20 dark:border-red-500/50',
+            // black:border-red-500/50 para manter o alerta visível no tema black
+            'wrapper' => 'border-red-500 shadow-xl shadow-red-500/20 dark:border-red-500/50 black:border-red-500/50',
             'blur'    => 'bg-red-500/10',
-            'icon_bg' => 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+            // black:bg-red-900/30 black:text-red-400
+            'icon_bg' => 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 black:bg-red-900/30 black:text-red-400'
         ],
         // INSTAVEL: Amarelo com Blur
         'instavel' => [
-            'wrapper' => 'border-amber-400 shadow-xl shadow-amber-500/20 dark:border-amber-500/50',
+            // black:border-amber-500/50
+            'wrapper' => 'border-amber-400 shadow-xl shadow-amber-500/20 dark:border-amber-500/50 black:border-amber-500/50',
             'blur'    => 'bg-amber-500/10',
-            'icon_bg' => 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+            // black:bg-amber-900/30 black:text-amber-400
+            'icon_bg' => 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 black:bg-amber-900/30 black:text-amber-400'
         ],
-        // OK: Neutro (Slate), SEM Blur, SEM Destaque de cor
+        // OK: Neutro (Slate/Zinc), SEM Blur, SEM Destaque de cor
         'ok' => [
-            'wrapper' => 'border-slate-300 dark:border-slate-700 shadow-sm',
+            // black:border-zinc-800
+            'wrapper' => 'border-slate-300 dark:border-slate-700 black:border-zinc-800 shadow-sm',
             'blur'    => 'hidden', // Remove o brilho
-            'icon_bg' => 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
+            // black:bg-zinc-800 black:text-zinc-300
+            'icon_bg' => 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300 black:bg-zinc-800 black:text-zinc-300'
         ],
     ];
 
@@ -117,7 +123,7 @@
         'saude' => $saude,
         'educacao' => $educacao,
         'financeiro' => $financeiro,
-        default => $financeiro,
+        'default' => $financeiro,
     };
 @endphp
 
@@ -125,7 +131,8 @@
 
     {{-- SEÇÃO 1: VISÃO GERAL (KPIs) --}}
     <div>
-        <h2 class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-3 px-1 flex items-center gap-2 capitalize">
+        {{-- Título: black:text-zinc-100 --}}
+        <h2 class="text-lg font-bold text-gray-700 dark:text-gray-300 black:text-zinc-100 mb-3 px-1 flex items-center gap-2 capitalize">
             <x-bi-speedometer2 class="w-5 h-5"/> Visão Geral: {{ $id }}
         </h2>
         
@@ -138,9 +145,9 @@
                 @endphp
 
                 <div class="group relative w-full h-full">
-                    {{-- ALTERADO: bg-white removido, usado bg-slate-50 --}}
+                    {{-- Wrapper Card: black:bg-zinc-900 --}}
                     <div class="relative w-full h-full overflow-hidden
-                                bg-slate-50 dark:bg-gray-800
+                                bg-slate-50 dark:bg-gray-800 black:bg-zinc-900
                                 p-5 rounded-xl
                                 border transition-all duration-300 hover:-translate-y-1
                                 {{ $style['wrapper'] }}">
@@ -151,43 +158,51 @@
 
                         <div class="relative z-10 flex justify-between items-start h-full gap-2">
                             <div class="flex flex-col justify-between h-full">
-                                <p class="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider truncate">
+                                {{-- Label: black:text-zinc-400 --}}
+                                <p class="text-gray-500 dark:text-gray-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider truncate">
                                     {{ $kpi['label'] }}
                                 </p>
                                 <div class="mt-1">
-                                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white tracking-tight leading-none whitespace-nowrap">
-                                        <span class="text-xs text-gray-400 font-normal mr-px align-middle">{{ $kpi['prefix'] ?? '' }}</span>{{ $kpi['value'] }}<span class="text-xs text-gray-400 font-normal ml-px align-baseline">{{ $kpi['suffix'] ?? '' }}</span>
+                                    {{-- Value: black:text-zinc-100 --}}
+                                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white black:text-zinc-100 tracking-tight leading-none whitespace-nowrap">
+                                        {{-- Prefix/Suffix: black:text-zinc-500 --}}
+                                        <span class="text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 font-normal mr-px align-middle">{{ $kpi['prefix'] ?? '' }}</span>{{ $kpi['value'] }}<span class="text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 font-normal ml-px align-baseline">{{ $kpi['suffix'] ?? '' }}</span>
                                     </h3>
                                 </div>
                                 <div class="mt-1">
-                                    <span class="text-xs text-gray-400 dark:text-gray-500 truncate block">
+                                    {{-- Hint: black:text-zinc-500 --}}
+                                    <span class="text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 truncate block">
                                         {{ $kpi['hint'] }}
                                     </span>
                                 </div>
                             </div>
 
                             <div class="flex flex-col justify-between items-end h-full space-y-2">
-                                {{-- ÍCONE com BG dinâmico (Cinza se OK, Colorido se Crítico/Instável) --}}
-                                <div class="p-2 rounded-lg border shadow-sm transition-colors border-gray-100 dark:border-gray-600 {{ $style['icon_bg'] }}">
+                                {{-- ÍCONE com BG dinâmico + border black:border-zinc-700 --}}
+                                <div class="p-2 rounded-lg border shadow-sm transition-colors border-gray-100 dark:border-gray-600 black:border-zinc-700 {{ $style['icon_bg'] }}">
                                     <x-dynamic-component :component="'bi-' . $kpi['icon']" class="w-6 h-6" />
                                 </div>
                                 
+                                {{-- Link Arrow: black:text-zinc-600 --}}
                                 <a href="{{ $kpi['link'] }}" target="_blank" 
-                                   class="group/link relative text-gray-300 hover:text-sky-500 transition-colors">
+                                   class="group/link relative text-gray-300 dark:text-gray-500 black:text-zinc-600 hover:text-sky-500 transition-colors">
                                     <x-bi-arrow-right-short class="w-6 h-6" />
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    {{-- Tooltip Simples --}}
+                    {{-- Tooltip: black:bg-zinc-950 black:text-zinc-300 black:border-zinc-800 --}}
                     @if($currentStatus !== 'ok')
                     <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-max px-3 py-1.5
-                                bg-slate-800 text-white text-xs font-medium rounded-lg shadow-xl
+                                bg-slate-800 dark:bg-slate-800 black:bg-zinc-950
+                                text-white dark:text-white black:text-zinc-300
+                                border border-transparent black:border-zinc-800
+                                text-xs font-medium rounded-lg shadow-xl
                                 opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                                 transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0
                                 z-[99] pointer-events-none">
-                        <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-slate-800"></div>
+                        <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-slate-800 black:border-b-zinc-950"></div>
                         Atenção: {{ ucfirst($currentStatus) }}
                     </div>
                     @endif
@@ -198,7 +213,8 @@
 
     {{-- SEÇÃO 2: ÁREAS DE GESTÃO (Módulos) --}}
     <div>
-        <h2 class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-3 px-1 flex items-center gap-2">
+        {{-- Título: black:text-zinc-100 --}}
+        <h2 class="text-lg font-bold text-gray-700 dark:text-gray-300 black:text-zinc-100 mb-3 px-1 flex items-center gap-2">
             <x-bi-grid-fill class="w-5 h-5"/> Áreas de Gestão
         </h2>
 
@@ -211,9 +227,9 @@
                 @endphp
 
                 <div class="group relative w-full h-full">
-                    {{-- ALTERADO: bg-white removido, usado bg-slate-50 --}}
+                    {{-- Wrapper Card: black:bg-zinc-900 --}}
                     <div class="relative w-full h-full overflow-hidden
-                                bg-slate-50 dark:bg-gray-800
+                                bg-slate-50 dark:bg-gray-800 black:bg-zinc-900
                                 p-5 rounded-xl
                                 border transition-all duration-300 hover:-translate-y-1
                                 {{ $style['wrapper'] }}">
@@ -223,28 +239,31 @@
 
                         <div class="relative z-10 flex justify-between items-start h-full gap-2">
                             <div class="flex flex-col justify-between h-full">
-                                <p class="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider truncate" title="{{ $nome }}">
+                                {{-- Nome Modulo: black:text-zinc-400 --}}
+                                <p class="text-gray-500 dark:text-gray-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider truncate" title="{{ $nome }}">
                                     {{ Str::limit($nome, 13) }}
                                 </p>
                                 <div class="mt-1">
-                                    <h3 class="text-3xl font-bold text-gray-800 dark:text-white tracking-tight leading-none">
-                                        {{ $modulo['score'] }}<span class="text-xs text-gray-400 font-normal ml-0.5">/100</span>
+                                    {{-- Score: black:text-zinc-100 --}}
+                                    <h3 class="text-3xl font-bold text-gray-800 dark:text-white black:text-zinc-100 tracking-tight leading-none">
+                                        {{ $modulo['score'] }}<span class="text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 font-normal ml-0.5">/100</span>
                                     </h3>
                                 </div>
                                 <div class="mt-1">
-                                    <span class="text-xs text-gray-400 dark:text-gray-500 truncate block">
+                                    {{-- Hint: black:text-zinc-500 --}}
+                                    <span class="text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 truncate block">
                                         {{ $modulo['hint'] }}
                                     </span>
                                 </div>
                             </div>
 
                             <div class="flex flex-col justify-between items-end h-full space-y-2">
-                                <div class="p-2 rounded-lg border shadow-sm transition-colors border-gray-100 dark:border-gray-600 {{ $style['icon_bg'] }}">
+                                <div class="p-2 rounded-lg border shadow-sm transition-colors border-gray-100 dark:border-gray-600 black:border-zinc-700 {{ $style['icon_bg'] }}">
                                     <x-dynamic-component :component="'bi-' . $modulo['icon']" class="w-6 h-6" />
                                 </div>
 
                                 <a href="{{ $modulo['link'] }}" target="_blank" 
-                                   class="group/link relative text-gray-300 hover:text-sky-500 transition-colors">
+                                   class="group/link relative text-gray-300 dark:text-gray-500 black:text-zinc-600 hover:text-sky-500 transition-colors">
                                     <x-bi-arrow-right-short class="w-6 h-6" />
                                 </a>
                             </div>

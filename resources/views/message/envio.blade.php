@@ -1,27 +1,32 @@
 {{-- resources/views/message/envio.blade.php --}}
 <x-layouts.app :title="__('Enviar Notificação')">
 
-    <div class="min-h-[calc(100vh-4rem)] pt-20 bg-slate-50 dark:bg-slate-900">
+    {{-- BG PAGE: black:bg-zinc-950 --}}
+    <div class="min-h-[calc(100vh-4rem)] pt-20 bg-slate-50 dark:bg-slate-900 black:bg-zinc-950">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
 
             {{-- PAGE HEADER (sem botões de voltar/cancelar) --}}
             <header class="mb-6">
-                <h1 class="-mt-10 text-2xl font-bold text-slate-900 dark:text-slate-100">
+                {{-- TITLE: black:text-zinc-100 --}}
+                <h1 class="-mt-10 text-2xl font-bold text-slate-900 dark:text-slate-100 black:text-zinc-100">
                     Enviar notificações
                 </h1>
 
-                <p class=" text-sm text-slate-600 dark:text-slate-300">
+                {{-- SUBTITLE: black:text-zinc-400 --}}
+                <p class=" text-sm text-slate-600 dark:text-slate-300 black:text-zinc-400">
                     Envie um aviso para todos, por setor, ou para um usuário específico.
                 </p>
             </header>
 
-            {{-- CONTENT --}}
+            {{-- CONTENT CARD: black:bg-zinc-900 black:border-zinc-800 --}}
             <div id="notifications-send-page"
-                class="bg-white dark:bg-slate-900 rounded-2xl shadow border border-slate-200 dark:border-slate-700 overflow-hidden">
+                class="bg-white dark:bg-slate-900 black:bg-zinc-900 rounded-2xl shadow border border-slate-200 dark:border-slate-700 black:border-zinc-800 overflow-hidden">
 
                 @php
                     $setores = ['Finanças', 'Educação', 'Saúde', 'Obras', 'Ouvidoria', 'Assistência'];
 
+                    // Cores de setor já suportam dark mode, adicionar black se necessário, mas o padrão dark funciona bem.
+                    // Para consistência total, poderíamos ajustar, mas o padrão 'dark:bg-COLOR-900/30' já se adapta bem ao fundo preto.
                     $setorColors = [
                         'Finanças' => 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200',
                         'Educação' => 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-200',
@@ -57,14 +62,16 @@
                                         <label class="cursor-pointer">
                                             <input class="sr-only peer" type="radio" name="destino" value="todos"
                                                 checked>
+                                            {{-- RADIO CARD: black:bg-zinc-900 black:border-zinc-700 black:hover:bg-zinc-800 --}}
                                             <div
                                                 class="rounded-xl border border-slate-200 bg-white p-3 hover:bg-slate-50 transition
                                                        dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                                                       black:bg-zinc-900 black:border-zinc-700 black:hover:bg-zinc-800
                                                        peer-checked:border-sky-500 peer-checked:ring-2 peer-checked:ring-sky-500/20">
                                                 <div class="flex items-center gap-2">
                                                     <x-bi-people class="w-5 h-5" />
                                                     <div
-                                                        class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                                                        class="text-sm font-semibold text-slate-900 dark:text-slate-100 black:text-zinc-100">
                                                         Todos
                                                     </div>
                                                 </div>
@@ -76,11 +83,12 @@
                                             <div
                                                 class="rounded-xl border border-slate-200 bg-white p-3 hover:bg-slate-50 transition
                                                        dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                                                       black:bg-zinc-900 black:border-zinc-700 black:hover:bg-zinc-800
                                                        peer-checked:border-sky-500 peer-checked:ring-2 peer-checked:ring-sky-500/20">
                                                 <div class="flex items-center gap-2">
                                                     <x-bi-diagram-3 class="w-5 h-5" />
                                                     <div
-                                                        class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                                                        class="text-sm font-semibold text-slate-900 dark:text-slate-100 black:text-zinc-100">
                                                         Secretaria
                                                     </div>
                                                 </div>
@@ -92,11 +100,12 @@
                                             <div
                                                 class="rounded-xl border border-slate-200 bg-white p-3 hover:bg-slate-50 transition
                                                        dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                                                       black:bg-zinc-900 black:border-zinc-700 black:hover:bg-zinc-800
                                                        peer-checked:border-sky-500 peer-checked:ring-2 peer-checked:ring-sky-500/20">
                                                 <div class="flex items-center gap-2">
                                                     <x-bi-person class="w-5 h-5" />
                                                     <div
-                                                        class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                                                        class="text-sm font-semibold text-slate-900 dark:text-slate-100 black:text-zinc-100">
                                                         Usuário
                                                     </div>
                                                 </div>
@@ -108,23 +117,27 @@
 
                                 {{-- Setores (só quando destino=setor) --}}
                                 <div id="notif-setores-wrap" class="hidden md:col-span-2">
-                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                                    {{-- LABEL: black:text-zinc-200 --}}
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 black:text-zinc-200 mb-1">
                                         Setores (destino)
                                     </label>
 
                                     <div class="relative">
+                                        {{-- SELECT BTN: black:bg-zinc-900 black:border-zinc-700 black:text-zinc-100 black:hover:bg-zinc-800 --}}
                                         <button type="button" id="notif-setores-btn"
                                             class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700
                                                    dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100
-                                                   flex items-center justify-between gap-2 hover:bg-slate-50 dark:hover:bg-slate-800">
+                                                   black:bg-zinc-900 black:border-zinc-700 black:text-zinc-100
+                                                   flex items-center justify-between gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 black:hover:bg-zinc-800">
                                             <span id="notif-setores-label" class="truncate">Selecione uma ou mais
                                                 setores…</span>
                                             <x-bi-chevron-down class="w-4 h-4" />
                                         </button>
 
+                                        {{-- DROPDOWN: black:bg-zinc-900 black:border-zinc-700 --}}
                                         <div id="notif-setores-menu"
-                                            class="hidden absolute left-0 mt-2 w-full z-[70] bg-white dark:bg-slate-900
-                                                   border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl overflow-hidden">
+                                            class="hidden absolute left-0 mt-2 w-full z-[70] bg-white dark:bg-slate-900 black:bg-zinc-900
+                                                   border border-slate-200 dark:border-slate-700 black:border-zinc-700 rounded-lg shadow-xl overflow-hidden">
                                             <div class="max-h-56 overflow-y-auto p-2 scrollbar-hide">
                                                 <div class="flex flex-wrap gap-2">
                                                     @foreach ($setores as $s)
@@ -132,9 +145,10 @@
                                                             <input type="checkbox"
                                                                 class="sr-only peer notif-setor-checkbox"
                                                                 name="setores[]" value="{{ $s }}">
+                                                            {{-- CHIP: black:bg-zinc-800 black:text-zinc-200 --}}
                                                             <span
                                                                 class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold select-none transition
-                                                                       {{ $setorColors[$s] ?? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200' }}
+                                                                       {{ $setorColors[$s] ?? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200 black:bg-zinc-800 black:text-zinc-200' }}
                                                                        peer-checked:ring-2 peer-checked:ring-slate-900/15 dark:peer-checked:ring-white/20 peer-checked:scale-[1.02]">
                                                                 {{ $s }}
                                                             </span>
@@ -144,10 +158,12 @@
                                             </div>
 
                                             <div
-                                                class="flex items-center justify-between gap-2 p-2 border-t border-slate-200 dark:border-slate-700">
+                                                class="flex items-center justify-between gap-2 p-2 border-t border-slate-200 dark:border-slate-700 black:border-zinc-800">
+                                                {{-- BTN LIMPAR: black:border-zinc-700 black:text-zinc-200 black:hover:bg-zinc-800 --}}
                                                 <button type="button" id="notif-setores-clear"
                                                     class="px-3 py-2 text-sm font-semibold rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50
-                                                           dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                                                           dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800
+                                                           black:border-zinc-700 black:text-zinc-200 black:hover:bg-zinc-800">
                                                     Limpar
                                                 </button>
                                                 <button type="button" id="notif-setores-close"
@@ -164,17 +180,20 @@
 
                                 {{-- Usuário (só quando destino=usuario) --}}
                                 <div id="notif-por-usuario" class="hidden md:col-span-2">
-                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 black:text-zinc-200 mb-1">
                                         Usuário
                                     </label>
+                                    {{-- INPUT: black:bg-zinc-900 black:border-zinc-700 black:text-zinc-100 --}}
                                     <input name="usuario" type="text" placeholder="ID, nome ou e-mail…"
                                         class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                                               dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                                               dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100
+                                               black:bg-zinc-900 black:border-zinc-700 black:text-zinc-100" />
                                 </div>
                             </div>
                         </section>
 
-                        <div class="h-px bg-slate-200 dark:bg-slate-800"></div>
+                        {{-- DIVISOR: black:bg-zinc-800 --}}
+                        <div class="h-px bg-slate-200 dark:bg-slate-800 black:bg-zinc-800"></div>
 
                         {{-- SECTION: CONTEÚDO --}}
                         <section>
@@ -182,15 +201,17 @@
 
                                 {{-- Título + badge --}}
                                 <div class="md:col-span-2">
-                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 black:text-zinc-200 mb-1">
                                         Título
                                     </label>
 
                                     <div class="flex items-center gap-2">
+                                        {{-- INPUT: black:bg-zinc-900 black:border-zinc-700 black:text-zinc-100 --}}
                                         <input id="notif-title" name="title" type="text" maxlength="80"
                                             placeholder="Ex: Relatório publicado"
                                             class="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                                                   dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                                                   dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100
+                                                   black:bg-zinc-900 black:border-zinc-700 black:text-zinc-100" />
 
                                         <span id="notif-flag-badge"
                                             class="hidden shrink-0 inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold">
@@ -200,33 +221,39 @@
 
                                 {{-- Flag --}}
                                 <div class="md:col-span-2">
+                                    {{-- BTN FLAG: black:border-zinc-700 black:text-zinc-200 black:hover:bg-zinc-800 --}}
                                     <button type="button" id="notif-flag-toggle"
                                         class="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold
                                                border border-slate-200 text-slate-700 hover:bg-slate-50
-                                               dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                                               dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800
+                                               black:border-zinc-700 black:text-zinc-200 black:hover:bg-zinc-800">
                                         <x-bi-flag class="w-4 h-4" />
                                     </button>
 
+                                    {{-- FLAG EDITOR: black:bg-zinc-900 black:border-zinc-700 --}}
                                     <div id="notif-flag-editor"
-                                        class="hidden mt-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-2">
+                                        class="hidden mt-2 rounded-lg border border-slate-200 dark:border-slate-700 black:border-zinc-700
+                                               bg-white dark:bg-slate-900 black:bg-zinc-900 p-2">
                                         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
 
                                             <div class="md:col-span-2">
                                                 <label
-                                                    class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                                                    class="block text-xs font-semibold text-slate-700 dark:text-slate-200 black:text-zinc-200 mb-1">
                                                     Texto da flag
                                                     <span
-                                                        class="text-[11px] font-normal text-slate-500 dark:text-slate-400">(opcional)</span>
+                                                        class="text-[11px] font-normal text-slate-500 dark:text-slate-400 black:text-zinc-400">(opcional)</span>
                                                 </label>
+                                                {{-- INPUT FLAG: black:bg-zinc-950 black:border-zinc-700 --}}
                                                 <input id="notif-flag-text" name="flag_text" type="text"
                                                     maxlength="24" placeholder="Ex: Urgente, Atenção…"
                                                     class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                                                           dark:bg-slate-950 dark:border-slate-700 dark:text-slate-100" />
+                                                           dark:bg-slate-950 dark:border-slate-700 dark:text-slate-100
+                                                           black:bg-zinc-950 black:border-zinc-700 black:text-zinc-100" />
                                             </div>
 
                                             <div>
                                                 <label
-                                                    class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                                                    class="block text-xs font-semibold text-slate-700 dark:text-slate-200 black:text-zinc-200 mb-1">
                                                     Cor
                                                 </label>
 
@@ -236,10 +263,12 @@
                                                             <input class="sr-only peer" type="radio"
                                                                 name="flag_color" value="{{ $c['v'] }}"
                                                                 @checked($loop->first)>
+                                                            {{-- COLOR OPTION: black:bg-zinc-950 black:border-zinc-700 black:text-zinc-200 --}}
                                                             <span
                                                                 class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-semibold
                                                                        border border-slate-200 bg-white text-slate-700
                                                                        dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200
+                                                                       black:border-zinc-700 black:bg-zinc-950 black:text-zinc-200
                                                                        peer-checked:ring-2 peer-checked:ring-sky-500/25 peer-checked:border-sky-500">
                                                                 <span
                                                                     class="w-2.5 h-2.5 rounded-full {{ $c['dot'] }}"></span>
@@ -251,9 +280,11 @@
                                         </div>
 
                                         <div class="mt-3 flex items-center justify-end gap-2">
+                                            {{-- BTN REMOVER: black:border-zinc-700 black:text-zinc-200 black:hover:bg-zinc-800 --}}
                                             <button type="button" id="notif-flag-clear"
                                                 class="px-3 py-2 rounded-lg text-sm font-semibold border border-slate-200 text-slate-700 hover:bg-slate-50
-                                                       dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                                                       dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800
+                                                       black:border-zinc-700 black:text-zinc-200 black:hover:bg-zinc-800">
                                                 Remover
                                             </button>
 
@@ -267,22 +298,26 @@
 
                                 {{-- Mensagem --}}
                                 <div class="md:col-span-2">
-                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 black:text-zinc-200 mb-1">
                                         Mensagem
                                     </label>
+                                    {{-- TEXTAREA: black:bg-zinc-900 black:border-zinc-700 --}}
                                     <textarea name="message" rows="5" maxlength="300" placeholder="Escreva a notificação…"
                                         class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                                               dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100"></textarea>
+                                               dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100
+                                               black:bg-zinc-900 black:border-zinc-700 black:text-zinc-100"></textarea>
                                 </div>
 
                                 {{-- Link --}}
                                 <div class="md:col-span-2">
-                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-200 black:text-zinc-200 mb-1">
                                         Link (opcional)
                                     </label>
+                                    {{-- INPUT: black:bg-zinc-900 black:border-zinc-700 --}}
                                     <input name="url" type="text" placeholder="/financeiro/relatorios"
                                         class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm
-                                               dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100" />
+                                               dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100
+                                               black:bg-zinc-900 black:border-zinc-700 black:text-zinc-100" />
                                 </div>
 
                             </div>
@@ -291,9 +326,10 @@
                     </div>
 
                     {{-- ACTION BAR (apenas Enviar) --}}
+                    {{-- FOOTER BAR: black:bg-zinc-900/95 black:border-zinc-800 --}}
                     <div
-                        class="sticky bottom-0 z-10 border-t border-slate-200 dark:border-slate-800
-                                bg-white/95 dark:bg-slate-900/95 backdrop-blur">
+                        class="sticky bottom-0 z-10 border-t border-slate-200 dark:border-slate-800 black:border-zinc-800
+                               bg-white/95 dark:bg-slate-900/95 black:bg-zinc-900/95 backdrop-blur">
                         <div class="px-6 sm:px-8 py-4 flex items-center justify-end">
                             <button type="submit"
                                 class="px-4 py-2 rounded-lg text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700">
@@ -348,11 +384,13 @@
                         }
 
                         if (setoresChps) {
+                            // Chip HTML: black:bg-zinc-800 black:text-zinc-100 black:hover:bg-zinc-700
                             setoresChps.innerHTML = sel.map(v => `
                                 <button type="button"
                                     class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold
                                            bg-slate-100 text-slate-800 hover:bg-slate-200
-                                           dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+                                           dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700
+                                           black:bg-zinc-800 black:text-zinc-100 black:hover:bg-zinc-700"
                                     data-chip-setor="${v}">
                                     <span>${v}</span><span class="opacity-70">✕</span>
                                 </button>
