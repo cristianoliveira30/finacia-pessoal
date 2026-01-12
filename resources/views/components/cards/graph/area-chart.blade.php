@@ -38,10 +38,8 @@
                 } else if (html.classList.contains('dark')) {
                     return ["#F472B6", "#818CF8"]; 
                 } else {
-                    const computedStyle = getComputedStyle(document.documentElement);
-                    const brand = computedStyle.getPropertyValue('--color-fg-brand').trim() || "#1447E6";
-                    const secondary = computedStyle.getPropertyValue('--color-fg-brand-subtle').trim() || "#A5B4FC";
-                    return [brand, secondary];
+                    // TEMA BRANCO (Melhorado)
+                    return ["#1E40AF", "#60A5FA"];
                 }
             }
 
