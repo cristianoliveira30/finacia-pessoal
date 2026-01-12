@@ -4,9 +4,10 @@
         <div class="h-full flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
                 <button id="header-sidebar-toggle" type="button" aria-expanded="false"
-                    class="text-heading bg-neutral-200 box-border border border-transparent
-           hover:bg-slate-300 dark:focus:outline-2 dark:focus:outline-offset-2 dark:focus:ring-neutral-tertiary
-           font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
+                    class="text-white box-border border border-transparent hover:bg-neutral-secondary-medium
+                           dark:focus:outline-2 dark:focus:outline-offset-2 black:hover:bg-zinc-700
+                           dark:focus:ring-neutral-tertiary
+                           font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
                     <span class="sr-only">Alternar sidebar</span>
                     {{-- Já estava como componente, mantido --}}
                     <x-bi-justify-left class="w-6 h-6"/>
@@ -66,7 +67,7 @@
             <div class="flex items-center">
                 <div class="relative ms-3">
                     <button type="button"
-                        class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        class="flex text-sm bg-gray-800 rounded-full focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
                         aria-expanded="false" data-dropdown-toggle="dropdown-user" data-dropdown-placement="bottom-end">
                         <span class="sr-only">Open user menu</span>
 
@@ -81,10 +82,12 @@
 
                     <div id="dropdown-user"
                         class="absolute right-0 mt-2 z-50 hidden w-56
-                               bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg">
+                                bg-white border border-slate-200 rounded-lg shadow-xl
+                                dark:bg-slate-800 dark:border-slate-700
+                                black:bg-zinc-900 black:border-zinc-800">
                         <div class="px-4 py-3 border-b border-default-medium" role="none">
-                            <p class="text-sm font-medium text-heading" role="none">{{ Auth::user()->name }}</p>
-                            <p class="text-sm text-body truncate" role="none">{{ Auth::user()->email }}</p>
+                            <p class="black:text-zinc-300 text-sm font-medium text-heading" role="none">{{ Auth::user()->name }}</p>
+                            <p class="black:text-zinc-300 text-sm text-body truncate" role="none">{{ Auth::user()->email }}</p>
                         </div>
                         <ul class="p-2 text-sm text-body font-medium" role="none">
                             <li>

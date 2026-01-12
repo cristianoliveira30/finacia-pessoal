@@ -75,12 +75,22 @@
     </style>
 </head>
 
-<body class="h-dvh overflow-hidden antialiased bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
-    <div class="h-dvh flex overflow-hidden">
-        <div class="flex-1 min-w-0 flex flex-col overflow-hidden">
-            @include('components.layouts.tv.header')
+{{-- BODY: black:bg-zinc-950 black:text-zinc-50 --}}
+<body class="h-dvh overflow-hidden antialiased bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 black:bg-zinc-950 black:text-zinc-50">
+    <div class="h-dvh flex overflow-hidden flex-col p-10">
+        
+        {{-- Header original --}}
+        @include('components.layouts.tv.header')
 
-            <main class="flex-1 min-w-0 p-6 overflow-hidden">
+        {{-- 
+            MAIN: O Palco
+            Centraliza o conteúdo na tela disponível
+            black:bg-zinc-950
+        --}}
+        <main id="tv-stage" class="flex-1 min-w-0 overflow-hidden relative flex items-center justify-center bg-gray-100 dark:bg-gray-900 black:bg-zinc-950">
+            
+            {{-- WRAPPER: O Ator (que recebe o zoom) --}}
+            <div id="tv-content">
                 {{ $slot ?? '' }}
                 @yield('content')
             </main>
@@ -88,25 +98,50 @@
     </div>
 
     @stack('scripts')
+    
+    {{-- Scripts de Tema (Atualizado para suportar Black) --}}
     <script>
         // Seleciona todos os inputs do toggle (Mobile e Desktop)
         const themeToggles = document.querySelectorAll('.theme-toggle-input');
 
-        function applyTheme(isDark) {
-            if (isDark) {
-                // Ativar MODO ESCURO
+        function applyTheme(theme) {
+            // Remove temas anteriores
+            document.documentElement.classList.remove('dark', 'black');
+
+            let themeName = theme;
+            // Compatibilidade com toggle booleano
+            if (theme === true) themeName = 'dark';
+            if (theme === false) themeName = 'light';
+
+            if (themeName === 'black') {
+                document.documentElement.classList.add('black');
+                localStorage.setItem('color-theme', 'black');
+                themeToggles.forEach(el => el.checked = true);
+            } else if (themeName === 'dark') {
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('color-theme', 'dark');
                 // Checkbox Marcado (Lua/Azul)
                 themeToggles.forEach(el => el.checked = true);
             } else {
-                // Ativar MODO CLARO (Branco)
-                document.documentElement.classList.remove('dark');
                 localStorage.setItem('color-theme', 'light');
                 // Checkbox Desmarcado (Sol/Cinza)
                 themeToggles.forEach(el => el.checked = false);
             }
         }
+
+        // Inicialização
+        const storedTheme = localStorage.getItem('color-theme');
+        if (storedTheme) {
+            applyTheme(storedTheme);
+        } else {
+            // Default TV geralmente é Dark se não houver pref, mas seguimos a lógica padrão
+            applyTheme('light'); 
+        }
+
+        themeToggles.forEach(toggle => {
+            toggle.addEventListener('change', (e) => applyTheme(e.target.checked ? 'dark' : 'light'));
+        });
+    </script>
 
         // 1. Inicialização:
         // Se o usuário já escolheu 'light' antes, respeita.

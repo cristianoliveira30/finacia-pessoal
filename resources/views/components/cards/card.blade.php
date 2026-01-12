@@ -293,7 +293,7 @@
                     </div>
                     <div class="flex justify-end">
                         <button type="button"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 black:bg-zinc-800 black:hover:bg-zinc-700 black:border black:border-zinc-700">Aplicar
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 black:bg-zinc-800 black:hover:bg-zinc-700 black:border black:border-zinc-700">Aplicar
                             Filtros</button>
                     </div>
                 </div>
@@ -322,7 +322,7 @@
                                 placeholder="Digite sua pergunta aqui..."></div>
 
                             <button type="submit"
-                                class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2.5 inline-flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 black:bg-zinc-800 black:hover:bg-zinc-700 black:border black:border-zinc-700 h-full max-h-[42px] self-start mt-0.5"
+                                class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2.5 inline-flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 black:bg-zinc-800 black:hover:bg-zinc-700 black:border black:border-zinc-700 h-full max-h-[42px] self-start mt-0.5"
                                 data-ai-submit>
                                 <span data-ai-btn-text class="inline-flex items-center">
                                     <x-bi-stars class="w-3 h-3" /> <x-bi-send-fill

@@ -26,18 +26,21 @@
 @endphp
 
 {{-- Adicionado data-accordion="collapse" para inicializar o comportamento do Flowbite neste container --}}
+{{-- Container: black:bg-zinc-900 black:border-zinc-800 --}}
 <div id="{{ $id }}" data-accordion="collapse"
     class="relative w-full overflow-hidden h-fit transition-all duration-100 ease-in-out
            rounded-2xl border border-slate-200 bg-blue-50 shadow-sm
            dark:border-slate-700
-           dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-sky-900">
+           dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-sky-900
+           black:bg-zinc-900 black:border-zinc-800">
 
     <div class="relative z-10">
 
         {{-- Topo --}}
         <div class="flex justify-between items-center gap-4 p-3">
             <div class="space-y-2">
-                <h5 class="text-lg md:text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-50">
+                {{-- Título: black:text-zinc-100 --}}
+                <h5 class="text-lg md:text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-50 black:text-zinc-100">
                     {{ $title }}
                 </h5>
             </div>
