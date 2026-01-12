@@ -6,9 +6,9 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
 
             {{-- PAGE HEADER (sem botões de voltar/cancelar) --}}
-            <header class="mb-6">
+            <header class="mb-1">
                 {{-- TITLE: black:text-zinc-100 --}}
-                <h1 class="-mt-10 text-2xl font-bold text-slate-900 dark:text-slate-100 black:text-zinc-100">
+                <h1 class="-mt-8 text-2xl font-bold text-slate-900 dark:text-slate-100 black:text-zinc-100">
                     Enviar notificações
                 </h1>
 
@@ -20,7 +20,7 @@
 
             {{-- CONTENT CARD: black:bg-zinc-900 black:border-zinc-800 --}}
             <div id="notifications-send-page"
-                class="bg-white dark:bg-slate-900 black:bg-zinc-900 rounded-2xl shadow border border-slate-200 dark:border-slate-700 black:border-zinc-800 overflow-hidden">
+                class="bg-white dark:bg-slate-900 overflow-hidden">
 
                 @php
                     $setores = ['Finanças', 'Educação', 'Saúde', 'Obras', 'Ouvidoria', 'Assistência'];
@@ -324,16 +324,11 @@
                         </section>
 
                     </div>
-
                     {{-- ACTION BAR (apenas Enviar) --}}
-                    {{-- FOOTER BAR: black:bg-zinc-900/95 black:border-zinc-800 --}}
-                    <div
-                        class="sticky bottom-0 z-10 border-t border-slate-200 dark:border-slate-800 black:border-zinc-800
-                               bg-white/95 dark:bg-slate-900/95 black:bg-zinc-900/95 backdrop-blur">
                         <div class="px-6 sm:px-8 py-4 flex items-center justify-end">
                             <button type="submit"
                                 class="px-4 py-2 rounded-lg text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700">
-                                <x-bi-send-fill class="w-5 h-5 transform rotate-45" />
+                                <x-bi-send-fill class="w-7 h-7 transform rotate-45" />
                             </button>
                         </div>
                     </div>
