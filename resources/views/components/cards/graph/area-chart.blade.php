@@ -7,8 +7,8 @@
     $categories = $data['categories'] ?? [];
     $series = $data['series'] ?? [];
 @endphp
-
-<div class="w-full bg-neutral-primary-soft dark:bg-slate-900">
+{{-- bg-neutral-primary-soft dark:bg-slate-900 --}}
+<div class="w-full bg-transparent">
     <div id="{{ $chartId }}"></div>
 </div>
 
