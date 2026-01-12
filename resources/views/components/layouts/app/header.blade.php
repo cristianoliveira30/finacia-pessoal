@@ -56,9 +56,12 @@
                             <li><a href="#" data-tempo="mes-passado"
                                     class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Mês
                                     Passado</a></li>
-                            <li><a href="#" data-tempo="periodo"
-                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">Período
-                                    Personalizado</a></li>
+                            <li><a href="#"
+                                    onclick="document.getElementById('modalPeriodo').classList.remove('hidden'); return false;"
+                                    data-tempo="periodo"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 dark:hover:text-white">
+                                    Período Personalizado
+                            </li></a>
                         </ul>
                     </div>
                 </div>
@@ -118,7 +121,7 @@
 
                             <li>
                                 {{-- APLICAÇÃO: Ícone + Gatilho da Modal --}}
-                                <a href="{{ route('configuracoes')}}"
+                                <a href="{{ route('configuracoes') }}"
                                     class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                                     role="menuitem">Configurações</a>
                             </li>
@@ -138,7 +141,7 @@
     </div>
 </nav>
 
-{{-- Modal (Flowbite) --}}
+{{-- Modal (notificaçoes) --}}
 <div id="notifications-modal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50
            justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -323,8 +326,53 @@
         </div>
     </div>
 </div>
+
+{{-- Modal (periodo personalizado) --}}
+<div id="modalPeriodo" class="hidden fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-md mx-4 overflow-hidden border border-slate-200 dark:border-slate-700">
+        
+        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-slate-800 dark:text-white">Selecionar Período</h3>
+            <button type="button" onclick="document.getElementById('modalPeriodo').classList.add('hidden')" class="text-slate-400 hover:text-slate-500 dark:hover:text-slate-300">
+                <span class="sr-only">Fechar</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <form action="" method="GET" class="p-6 space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="data_inicio" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Data Início</label>
+                    <input type="date" name="data_inicio" id="data_inicio" required
+                        class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2">
+                </div>
+
+                <div>
+                    <label for="data_fim" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Data Final</label>
+                    <input type="date" name="data_fim" id="data_fim" required
+                        class="w-full rounded-md border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 mt-6">
+                <button type="button" onclick="document.getElementById('modalPeriodo').classList.add('hidden')" 
+                    class="px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md hover:bg-slate-50 dark:hover:bg-slate-600">
+                    Cancelar
+                </button>
+                <button type="submit" 
+                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Filtrar Dados
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 @once
-@push('scripts')
+    @push('scripts')
         <script>
             (() => {
                 const D = document;
@@ -397,7 +445,8 @@
 
                     renderNotifs();
                 });
-            })();
+            })
+            ();
         </script>
     @endpush
 @endonce
@@ -499,7 +548,8 @@
 
                     renderNotifs();
 
-                    /* ===== 3) ENVIAR (destino + multi-setores) ===== */
+                    /* ===== 3)
+        ENVIAR (destino + multi-setores) ===== */
                     const destinoSelect = $('#notif-destino'); // fallback se existir
                     const getDestino = () =>
                         (modal.querySelector('input[name="destino"]:checked')?.value) ||

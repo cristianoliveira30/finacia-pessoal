@@ -10,7 +10,7 @@
             'hex_main' => '#6366f1', // Indigo-500
             'hex_hover_bg' => 'rgba(79, 70, 229, 0.4)',
             'hex_light' => '#818cf8',
-            'icon_main' => 'building', // Ícone de prédio governamental
+            'icon_main' => 'bank', // Ícone de prédio governamental
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'home', 'icon' => 'speedometer2'],
                 
@@ -27,7 +27,7 @@
                 ],
 
                 ['label' => 'Secretarias', 'route' => 'home', 'icon' => 'diagram-3'],
-                ['label' => 'Modo TV', 'route' => 'tv.index', 'icon' => 'gear'],
+                ['label' => 'Modo TV', 'route' => 'tv.index', 'icon' => 'tv'],
             ],
         ],
 
@@ -39,7 +39,7 @@
             'hex_main' => '#fbbf24',
             'hex_hover_bg' => 'rgba(120, 53, 15, 0.4)',
             'hex_light' => '#fcd34d',
-            'icon_main' => 'bank',
+            'icon_main' => 'cash-coin',
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
                 
@@ -54,11 +54,11 @@
                         ['label' => 'Despesas por Função/Subfunção', 'route' => 'financeiro.relatorios.despesas_funcao', 'icon' => 'file-earmark-text-fill'],
                         ['label' => 'Fornecedores (Top / Concentração)', 'route' => 'financeiro.relatorios.fornecedores', 'icon' => 'file-earmark-text-fill'],
                         ['label' => 'Empenhos / Liquidações / Pagamentos', 'route' => 'financeiro.relatorios.elp', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
+                        ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
                     ]
                 ],
 
-                ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
-                ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
             ],
         ],
 
@@ -90,11 +90,11 @@
                         ['label' => 'Merenda (Resumo', 'route' => 'educacao.relatorios.merenda', 'icon' => 'file-earmark-text-fill'],
                         ['label' => 'Transporte (Resumo)', 'route' => 'educacao.relatorios.transporte', 'icon' => 'file-earmark-text-fill'],
                         ['label' => 'Inclusão / AEE', 'route' => 'educacao.relatorios.inclusao', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Lançamentos', 'route' => 'educacao.lancamentos', 'icon' => 'rocket-takeoff'],
+                        ['label' => 'Contas', 'route' => 'educacao.contas', 'icon' => 'coin'],
                     ]
                 ],
 
-                ['label' => 'Lançamentos', 'route' => 'educacao.lancamentos', 'icon' => 'rocket-takeoff'],
-                ['label' => 'Contas', 'route' => 'educacao.contas', 'icon' => 'coin'],
             ],
         ],
 
@@ -123,11 +123,11 @@
                         ['label' => 'Absenteísmo (No-show)', 'route' => 'saude.relatorios.no_show', 'icon' => 'file-earmark-text-fill'],
                         ['label' => 'Encaminhamentos / Regulação', 'route' => 'saude.relatorios.regulacao', 'icon' => 'file-earmark-text-fill'],
                         ['label' => 'Indicadores SUS (Resumo)', 'route' => 'saude.relatorios.indicadores_sus', 'icon' => 'file-earmark-text-fill'],
+                        ['label' => 'Lançamentos', 'route' => 'saude.lancamentos', 'icon' => 'rocket-takeoff'],
+                        ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin'],
                     ]
                 ],
 
-                ['label' => 'Lançamentos', 'route' => 'saude.lancamentos', 'icon' => 'rocket-takeoff'],
-                ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin'],
             ],
         ],
 
@@ -292,14 +292,6 @@
 
     <div class="h-full flex flex-col pt-5 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
         <nav class="flex-1 px-2 pb-4 text-sm font-medium">
-
-            {{-- DASHBOARD --}}
-            <li>
-                <a href="{{ route('home') }}" class="{{ $linkBase }}" data-tooltip="Dashboard" target="_blank" rel="noopener noreferrer">
-                    <x-bi-house class="w-5 h-5" />
-                    <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
-                </a>
-            </li>
 
             {{-- MENUS PRINCIPAIS --}}
             @foreach ($menus as $menu)
