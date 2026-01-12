@@ -13,18 +13,9 @@
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'home', 'icon' => 'speedometer2'],
                 ['label' => 'Modo TV', 'route' => 'tv.index', 'icon' => 'tv'],
+                ['label' => 'Gabinete do Prefeito', 'route' => 'prefeito.gabinete', 'icon' => 'pie-chart-fill'],
+                ['label' => 'Agenda Oficial', 'route' => 'calendario/calendario-pessoal', 'icon' => 'calendar-event-fill'],
 
-                // GRUPO: PREFEITO
-                [
-                    'label' => 'Prefeito',
-                    'icon' => 'person-badge',
-                    'id_submenu' => 'pref-gabinete',
-                    'submenu' => [
-                        ['label' => 'Gabinete (Visão Geral)', 'route' => 'home', 'icon' => 'pie-chart-fill'],
-                        ['label' => 'Agenda Oficial', 'route' => 'home', 'icon' => 'calendar-event-fill'],
-                        ['label' => 'Documentos / Decretos', 'route' => 'home', 'icon' => 'file-earmark-text-fill'],
-                    ],
-                ],
             ],
         ],
 

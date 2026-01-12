@@ -297,9 +297,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/ai/analise', [AnalisesController::class, 'analise'])->name('ai.analise');
 
-            // -----------------------------
-        // MODO TV
-        // -----------------------------
+    // -----------------------------
+    // MODO TV
+    // -----------------------------
 
     Route::prefix('tv')->name('tv.')->group(function () {
         Route::view('/', 'home-tv')->name('index');
@@ -309,8 +309,15 @@ Route::middleware('auth')->group(function () {
         Route::view('/educacao', 'educacao.tv-educacao')->name('educacao');
     });
 
-            // -----------------------------
-        // MESSAGE
-        // -----------------------------
-        Route::view('/mensagens/envio', 'message.envio')->name('mensagens.envio');
+    // -----------------------------
+    // MESSAGE
+    // -----------------------------
+    Route::view('/mensagens/envio', 'message.envio')->name('mensagens.envio');
+
+    // -----------------------------
+    // prefeitura
+    // -----------------------------
+    Route::prefix('prefeito')->name('prefeito.')->group(function () {
+        Route::view('/gabinete', 'prefeito.gabinete.secretaria')->name('gabinete');
+    });
 });

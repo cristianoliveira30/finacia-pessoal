@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Calendario Pessoal')">
+<x-layouts.app :title="__('Calendario Prefeito')">
     <div class="min-h-screen bg-gray-900 text-white font-sans p-6">
 
         <div class="max-w-6xl mx-auto w-full">
