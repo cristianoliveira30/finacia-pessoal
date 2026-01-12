@@ -147,7 +147,7 @@
      MODAL DE NOTIFICAÇÕES
      ========================================== --}}
 <div id="notifications-modal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[60] justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full backdrop-blur-sm bg-slate-900/50">
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[60] justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full backdrop-blur-sm bg-slate-900/50">
 
     <div class="relative p-4 w-full max-w-3xl max-h-full">
         <div class="relative bg-white dark:bg-slate-900 black:bg-zinc-900 rounded-lg shadow-2xl border border-slate-200 dark:border-slate-700 black:border-zinc-800 overflow-hidden">
