@@ -12,7 +12,7 @@
             'hex_light' => '#818cf8',
             'icon_main' => 'building', // Ícone de prédio governamental
             'items' => [
-                ['label' => 'Dashboard Geral', 'route' => 'home', 'icon' => 'speedometer2'],
+                ['label' => 'Dashboard', 'route' => 'home', 'icon' => 'speedometer2'],
                 
                 // GRUPO: PREFEITO
                 [
@@ -27,7 +27,7 @@
                 ],
 
                 ['label' => 'Secretarias', 'route' => 'home', 'icon' => 'diagram-3'],
-                ['label' => 'Configurações', 'route' => 'home', 'icon' => 'gear'],
+                ['label' => 'Modo TV', 'route' => 'tv.index', 'icon' => 'gear'],
             ],
         ],
 
@@ -298,14 +298,6 @@
                 <a href="{{ route('home') }}" class="{{ $linkBase }}" data-tooltip="Dashboard" target="_blank" rel="noopener noreferrer">
                     <x-bi-house class="w-5 h-5" />
                     <span class="sidebar-label whitespace-nowrap font-semibold">Dashboard</span>
-                </a>
-            </li>
-
-            {{-- MODO TV --}}
-            <li>
-                <a href="/tv" class="{{ $linkBase }}" data-tooltip="Modo TV" target="_blank" rel="noopener noreferrer">
-                    <x-bi-tv class="w-5 h-5" />
-                    <span class="sidebar-label whitespace-nowrap font-semibold">Modo TV</span>
                 </a>
             </li>
 
