@@ -1,3 +1,4 @@
+{{-- financeiro.blade.php --}}
 {{-- CONFIGURAÇÃO DOS MENUS (DADOS) --}}
 @php
     $menus = [
@@ -246,19 +247,24 @@
     }
 
     html.dark {
-        --sidebar-bg: #020617;
-        /* bg-slate-950 */
-        --sidebar-border: #1e293b;
-        /* border-slate-800 */
-        --sidebar-text: #e5e7eb;
-        /* text-slate-200 */
-        --sidebar-hover-bg: #111827;
-        /* bg-slate-900 */
-        --sidebar-submenu-bg: #374151;
-        /* bg-slate-700 */
+        --sidebar-bg: #020617; /* bg-slate-950 */
+        --sidebar-border: #1e293b; /* border-slate-800 */
+        --sidebar-text: #e5e7eb; /* text-slate-200 */
+        --sidebar-hover-bg: #111827; /* bg-slate-900 */
+        --sidebar-submenu-bg: #374151; /* bg-slate-700 */
         --sidebar-submenu-border: #4b5563;
-        --sidebar-tooltip-bg: #4b5563;
-        /* bg-slate-600 */
+        --sidebar-tooltip-bg: #4b5563; /* bg-slate-600 */
+    }
+
+    /* TEMA BLACK (ZINC) */
+    html.black {
+        --sidebar-bg: #18181b; /* zinc-900 */
+        --sidebar-border: #27272a; /* zinc-800 */
+        --sidebar-text: #e4e4e7; /* zinc-200 */
+        --sidebar-hover-bg: #27272a; /* zinc-800 (Hover suave) */
+        --sidebar-submenu-bg: #18181b; /* zinc-900 */
+        --sidebar-submenu-border: #3f3f46; /* zinc-700 */
+        --sidebar-tooltip-bg: #27272a; /* zinc-800 */
     }
 
     /* =================== LAYOUT / ESTILOS =================== */
@@ -379,9 +385,10 @@
     }
 </style>
 
+{{-- Container Sidebar: black:bg-zinc-900 black:border-zinc-800 --}}
 <aside id="top-bar-sidebar"
     class="fixed top-16 bottom-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0
-         border-e transition-transform duration-300 bg-white dark:bg-gray-800"
+         border-e transition-transform duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 black:border-zinc-800"
     aria-label="Sidebar">
     <div class="h-full flex flex-col">
         <div class="h-full flex flex-col">
@@ -390,8 +397,9 @@
 
                     {{-- DASHBOARD --}}
                     <li>
+                        {{-- Dashboard Link: black:hover:bg-zinc-800 black:text-zinc-200 --}}
                         <a href="{{ route('tv.financeiro') }}"
-                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800"
+                            class="sidebar-link flex items-center gap-3 rounded-lg px-3 py-2.5 text-slate-100 hover:bg-slate-800 black:text-zinc-200 black:hover:bg-zinc-800"
                             data-tooltip="Modo Tv" target="_blank" rel="noopener noreferrer">
                             <x-bi-tv class="w-5 h-5" />
                             <span class="sidebar-label whitespace-nowrap font-semibold">Modo TV</span>
@@ -402,7 +410,6 @@
                     {{-- LOOP PARA GERAR TODOS OS MENUS COM DROPDOWN --}}
                     @foreach ($menus as $menu)
                         <li class="menu-group" data-open="false">
-                            {{-- CORREÇÃO: Usando style inline para o background do hover --}}
                             <div class="menu-highlight -z-10" style="background-color: {{ $menu['hex_hover_bg'] }}">
                             </div>
 
@@ -412,16 +419,13 @@
                                 data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right-start"
                                 data-popover-offset="8">
                                 <div class="flex items-center gap-3">
-                                    {{-- ÍCONE PRINCIPAL DINÂMICO --}}
                                     <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
 
-                                    {{-- CORREÇÃO: Barra lateral colorida usando style inline --}}
                                     <span class="inline-flex h-6 w-1 rounded-full"
                                         style="background-color: {{ $menu['hex_main'] }}"></span>
                                     <span class="sidebar-label whitespace-nowrap">{{ $menu['label'] }}</span>
                                 </div>
 
-                                {{-- CHEVRON (SETA) - CORREÇÃO DE COR --}}
                                 <x-bi-chevron-right class="chevron-icon w-3 h-3"
                                     style="color: {{ $menu['hex_light'] }}" />
                             </button>
@@ -437,13 +441,12 @@
                                                 $href =
                                                     $r && \Illuminate\Support\Facades\Route::has($r) ? route($r) : '#';
                                             @endphp
+                                            {{-- Submenu Link: black:hover:bg-zinc-800 --}}
                                             <a href="{{ $href }}"
-                                                class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 transition-colors"
-                                                {{-- Pequeno script inline para hover no texto do submenu, já que não temos classes --}}
+                                                class="flex items-center gap-2 rounded-md px-1 py-1 hover:bg-slate-800 black:hover:bg-zinc-800 transition-colors"
                                                 onmouseover="this.style.color='{{ $menu['hex_light'] }}'"
                                                 onmouseout="this.style.color=''" target="_blank"
                                                 rel="noopener noreferrer">
-                                                {{-- CORREÇÃO: Bolinha do submenu --}}
                                                 <span class="inline-flex h-4 w-1 rounded-full"
                                                     style="background-color: {{ $menu['hex_main'] }}"></span>
                                                 <span>{{ $item['label'] }}</span>
@@ -462,13 +465,12 @@
 
     {{-- LOOP PARA GERAR OS POPOVERS (FORA DO NAV) --}}
     @foreach ($menus as $menu)
+        {{-- Popover Container: black:bg-zinc-900 black:border-zinc-800 --}}
         <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
-            class="popover-flowbite absolute z-50 invisible inline-block w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0">
+            class="popover-flowbite absolute z-50 invisible inline-block w-48 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0">
             <div class="p-3">
-                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
-                    {{-- CORREÇÃO: Barra colorida do popover --}}
+                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
                     <span class="h-4 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
-                    {{-- CORREÇÃO: Título colorido do popover --}}
                     <span class="font-semibold"
                         style="color: {{ $menu['hex_main'] }}">{{ $menu['popover_title'] }}</span>
                 </div>
@@ -476,9 +478,8 @@
                     @foreach ($menu['items'] as $item)
                         <li>
                             <a href="{{ route($item['route']) }}"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
                                 target="_blank" rel="noopener noreferrer">
-                                {{-- ÍCONE INTERNO DO POPOVER --}}
                                 <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4" />
                                 <span>{{ $item['label'] }}</span>
                             </a>

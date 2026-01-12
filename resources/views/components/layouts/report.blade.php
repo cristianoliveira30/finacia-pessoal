@@ -35,6 +35,12 @@
             background-color: #030712; /* gray-950 (Dark Mode) */
         }
 
+        /* --- IMPLEMENTAÇÃO TEMA BLACK --- */
+        /* Suporte a Black Mode no Loader (baseado na classe .black no html) */
+        html.black #page-loader {
+            background-color: #09090b; /* zinc-950 (Black Mode) */
+        }
+
         /* Spinner Animado */
         .loader-spinner {
             width: 48px;
@@ -116,14 +122,16 @@
     <div id="page-loader">
         <div class="flex flex-col items-center gap-4">
             <span class="loader-spinner"></span>
-            <span class="text-sm font-semibold text-slate-700 dark:text-slate-300 animate-pulse">
+            {{-- ADICIONADO: black:text-zinc-300 --}}
+            <span class="text-sm font-semibold text-slate-700 dark:text-slate-300 black:text-zinc-300 animate-pulse">
                 Carregando dados...
             </span>
         </div>
     </div>
 
     {{-- Conteúdo Principal --}}
-    <div class="min-h-dvh lg:flex bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+    {{-- ADICIONADO: black:bg-zinc-950 black:text-zinc-50 --}}
+    <div class="min-h-dvh lg:flex bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50 black:bg-zinc-950 black:text-zinc-50">
         @include('components.layouts.report.sidebar')
 
         <div class="flex-1 min-w-0 flex flex-col">
@@ -152,30 +160,59 @@
             }, 500);
         });
 
-        // --- LÓGICA DO TEMA ---
+        // --- LÓGICA DO TEMA (ATUALIZADA PARA SUPORTAR BLACK) ---
         const themeToggles = document.querySelectorAll('.theme-toggle-input');
 
-        function applyTheme(isDark) {
-            if (isDark) {
+        function applyTheme(theme) {
+            // Limpa classes anteriores
+            document.documentElement.classList.remove('dark', 'black');
+            
+            // Lógica para Boolean (compatibilidade com toggle antigo) ou String
+            let themeName = theme;
+            
+            // Se vier do Toggle Switch (true/false), converte para dark/light
+            if (theme === true) themeName = 'dark';
+            if (theme === false) themeName = 'light';
+
+            if (themeName === 'black') {
+                document.documentElement.classList.add('black');
+                localStorage.setItem('color-theme', 'black');
+                // Checkbox pode ficar marcado ou indefinido, dependendo da UX desejada
+                themeToggles.forEach(el => el.checked = true); 
+            } else if (themeName === 'dark') {
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('color-theme', 'dark');
                 themeToggles.forEach(el => el.checked = true);
             } else {
-                document.documentElement.classList.remove('dark');
+                // Light
                 localStorage.setItem('color-theme', 'light');
                 themeToggles.forEach(el => el.checked = false);
             }
         }
 
-        if (localStorage.getItem('color-theme') === 'light') {
-            applyTheme(false);
+        // Inicialização: Verifica localStorage
+        const storedTheme = localStorage.getItem('color-theme');
+        if (storedTheme) {
+            applyTheme(storedTheme);
         } else {
-            applyTheme(true);
+            // Fallback padrão se nada estiver salvo (Light)
+            applyTheme('light');
         }
 
+        // Event Listeners dos Toggles existentes (Apenas Light/Dark)
         themeToggles.forEach(toggle => {
             toggle.addEventListener('change', (e) => {
-                applyTheme(e.target.checked);
+                // Se o usuário usar o switch, alterna entre Dark e Light apenas
+                applyTheme(e.target.checked ? 'dark' : 'light');
+            });
+        });
+        
+        // Listener para Botões personalizados de tema (caso existam na sidebar)
+        const setThemeBtns = document.querySelectorAll('.set-theme-btn');
+        setThemeBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const theme = btn.getAttribute('data-theme');
+                applyTheme(theme);
             });
         });
     </script>
