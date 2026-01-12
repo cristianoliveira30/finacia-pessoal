@@ -146,9 +146,10 @@
 
                 <div class="group relative w-full h-full">
                     {{-- Wrapper Card: black:bg-zinc-900 --}}
+                    {{-- RESPONSIVIDADE: p-4 mobile, sm:p-5 desktop --}}
                     <div class="relative w-full h-full overflow-hidden
                                 bg-slate-50 dark:bg-gray-800 black:bg-zinc-900
-                                p-5 rounded-xl
+                                p-4 sm:p-5 rounded-xl
                                 border transition-all duration-300 hover:-translate-y-1
                                 {{ $style['wrapper'] }}">
                         
@@ -157,16 +158,20 @@
                                     {{ $style['blur'] }}"></div>
 
                         <div class="relative z-10 flex justify-between items-start h-full gap-2">
-                            <div class="flex flex-col justify-between h-full">
+                            {{-- Container de Texto: Adicionado overflow-hidden para truncate funcionar bem --}}
+                            <div class="flex flex-col justify-between h-full overflow-hidden">
                                 {{-- Label: black:text-zinc-400 --}}
-                                <p class="text-gray-500 dark:text-gray-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider truncate">
+                                {{-- RESPONSIVIDADE: text-[10px] mobile, sm:text-xs desktop --}}
+                                <p class="text-gray-500 dark:text-gray-400 black:text-zinc-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider truncate">
                                     {{ $kpi['label'] }}
                                 </p>
                                 <div class="mt-1">
                                     {{-- Value: black:text-zinc-100 --}}
-                                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white black:text-zinc-100 tracking-tight leading-none whitespace-nowrap">
+                                    {{-- RESPONSIVIDADE: text-xl mobile, sm:text-2xl desktop --}}
+                                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white black:text-zinc-100 tracking-tight leading-none whitespace-nowrap">
                                         {{-- Prefix/Suffix: black:text-zinc-500 --}}
-                                        <span class="text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 font-normal mr-px align-middle">{{ $kpi['prefix'] ?? '' }}</span>{{ $kpi['value'] }}<span class="text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 font-normal ml-px align-baseline">{{ $kpi['suffix'] ?? '' }}</span>
+                                        {{-- RESPONSIVIDADE: text-[10px] mobile, sm:text-xs desktop --}}
+                                        <span class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 font-normal mr-px align-middle">{{ $kpi['prefix'] ?? '' }}</span>{{ $kpi['value'] }}<span class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 font-normal ml-px align-baseline">{{ $kpi['suffix'] ?? '' }}</span>
                                     </h3>
                                 </div>
                                 <div class="mt-1">
@@ -179,14 +184,16 @@
 
                             <div class="flex flex-col justify-between items-end h-full space-y-2">
                                 {{-- ÍCONE com BG dinâmico + border black:border-zinc-700 --}}
-                                <div class="p-2 rounded-lg border shadow-sm transition-colors border-gray-100 dark:border-gray-600 black:border-zinc-700 {{ $style['icon_bg'] }}">
-                                    <x-dynamic-component :component="'bi-' . $kpi['icon']" class="w-6 h-6" />
+                                {{-- RESPONSIVIDADE: Ícone w-5 h-5 mobile, w-6 h-6 desktop --}}
+                                <div class="p-1.5 sm:p-2 rounded-lg border shadow-sm transition-colors border-gray-100 dark:border-gray-600 black:border-zinc-700 {{ $style['icon_bg'] }}">
+                                    <x-dynamic-component :component="'bi-' . $kpi['icon']" class="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
                                 
                                 {{-- Link Arrow: black:text-zinc-600 --}}
+                                {{-- RESPONSIVIDADE: Arrow w-5 h-5 mobile, w-6 h-6 desktop --}}
                                 <a href="{{ $kpi['link'] }}" target="_blank" 
                                    class="group/link relative text-gray-300 dark:text-gray-500 black:text-zinc-600 hover:text-sky-500 transition-colors">
-                                    <x-bi-arrow-right-short class="w-6 h-6" />
+                                    <x-bi-arrow-right-short class="w-5 h-5 sm:w-6 sm:h-6" />
                                 </a>
                             </div>
                         </div>
@@ -195,13 +202,13 @@
                     {{-- Tooltip: black:bg-zinc-950 black:text-zinc-300 black:border-zinc-800 --}}
                     @if($currentStatus !== 'ok')
                     <div class="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-max px-3 py-1.5
-                                bg-slate-800 dark:bg-slate-800 black:bg-zinc-950
-                                text-white dark:text-white black:text-zinc-300
-                                border border-transparent black:border-zinc-800
-                                text-xs font-medium rounded-lg shadow-xl
-                                opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                                transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0
-                                z-[99] pointer-events-none">
+                                    bg-slate-800 dark:bg-slate-800 black:bg-zinc-950
+                                    text-white dark:text-white black:text-zinc-300
+                                    border border-transparent black:border-zinc-800
+                                    text-xs font-medium rounded-lg shadow-xl
+                                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                                    transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0
+                                    z-[99] pointer-events-none">
                         <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-slate-800 black:border-b-zinc-950"></div>
                         Atenção: {{ ucfirst($currentStatus) }}
                     </div>
@@ -228,9 +235,10 @@
 
                 <div class="group relative w-full h-full">
                     {{-- Wrapper Card: black:bg-zinc-900 --}}
+                    {{-- RESPONSIVIDADE: p-4 mobile, sm:p-5 desktop --}}
                     <div class="relative w-full h-full overflow-hidden
                                 bg-slate-50 dark:bg-gray-800 black:bg-zinc-900
-                                p-5 rounded-xl
+                                p-4 sm:p-5 rounded-xl
                                 border transition-all duration-300 hover:-translate-y-1
                                 {{ $style['wrapper'] }}">
 
@@ -238,15 +246,19 @@
                                     {{ $style['blur'] }}"></div>
 
                         <div class="relative z-10 flex justify-between items-start h-full gap-2">
-                            <div class="flex flex-col justify-between h-full">
+                            {{-- Adicionado overflow-hidden --}}
+                            <div class="flex flex-col justify-between h-full overflow-hidden">
                                 {{-- Nome Modulo: black:text-zinc-400 --}}
-                                <p class="text-gray-500 dark:text-gray-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider truncate" title="{{ $nome }}">
+                                {{-- RESPONSIVIDADE: text-[10px] mobile, sm:text-xs desktop --}}
+                                <p class="text-gray-500 dark:text-gray-400 black:text-zinc-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider truncate" title="{{ $nome }}">
                                     {{ Str::limit($nome, 13) }}
                                 </p>
                                 <div class="mt-1">
                                     {{-- Score: black:text-zinc-100 --}}
-                                    <h3 class="text-3xl font-bold text-gray-800 dark:text-white black:text-zinc-100 tracking-tight leading-none">
-                                        {{ $modulo['score'] }}<span class="text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 font-normal ml-0.5">/100</span>
+                                    {{-- RESPONSIVIDADE: text-2xl mobile, sm:text-3xl desktop --}}
+                                    <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white black:text-zinc-100 tracking-tight leading-none">
+                                        {{-- Suffix Score: text-[10px] mobile --}}
+                                        {{ $modulo['score'] }}<span class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 black:text-zinc-500 font-normal ml-0.5">/100</span>
                                     </h3>
                                 </div>
                                 <div class="mt-1">
@@ -258,13 +270,15 @@
                             </div>
 
                             <div class="flex flex-col justify-between items-end h-full space-y-2">
-                                <div class="p-2 rounded-lg border shadow-sm transition-colors border-gray-100 dark:border-gray-600 black:border-zinc-700 {{ $style['icon_bg'] }}">
-                                    <x-dynamic-component :component="'bi-' . $modulo['icon']" class="w-6 h-6" />
+                                {{-- RESPONSIVIDADE: Ícone --}}
+                                <div class="p-1.5 sm:p-2 rounded-lg border shadow-sm transition-colors border-gray-100 dark:border-gray-600 black:border-zinc-700 {{ $style['icon_bg'] }}">
+                                    <x-dynamic-component :component="'bi-' . $modulo['icon']" class="w-5 h-5 sm:w-6 sm:h-6" />
                                 </div>
 
+                                {{-- RESPONSIVIDADE: Arrow --}}
                                 <a href="{{ $modulo['link'] }}" target="_blank" 
                                    class="group/link relative text-gray-300 dark:text-gray-500 black:text-zinc-600 hover:text-sky-500 transition-colors">
-                                    <x-bi-arrow-right-short class="w-6 h-6" />
+                                    <x-bi-arrow-right-short class="w-5 h-5 sm:w-6 sm:h-6" />
                                 </a>
                             </div>
                         </div>

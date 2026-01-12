@@ -84,9 +84,10 @@
 @if($card)
     <div class="group relative w-full h-full">
         {{-- MUDANÇA: Adicionado black:bg-zinc-900 (Surface Cards) --}}
+        {{-- RESPONSIVIDADE: p-4 para mobile, sm:p-5 para telas maiores --}}
         <div class="relative w-full min-w-[200px] overflow-hidden h-full
                     bg-slate-50 dark:bg-slate-800 black:bg-zinc-900
-                    p-5 rounded-2xl
+                    p-4 sm:p-5 rounded-2xl
                     border transition-all duration-300 hover:-translate-y-1
                     {{ $currentStyle['wrapper'] }}">
 
@@ -95,36 +96,39 @@
                         {{ $currentStyle['blur'] }}"></div>
 
             <div class="relative z-10 flex justify-between h-full">
-                <div class="flex flex-col justify-between">
-                    <div class="mb-4">
+                <div class="flex flex-col justify-between overflow-hidden"> {{-- overflow-hidden garante que texto não vaze --}}
+                    <div class="mb-2 sm:mb-4">
                         {{-- Label: black:text-zinc-400 --}}
-                        <p class="text-slate-500 dark:text-slate-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider mb-1">
+                        <p class="text-slate-500 dark:text-slate-400 black:text-zinc-400 text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1 truncate">
                             {{ $card['label'] }}
                         </p>
                         <div>
                             {{-- Valor: black:text-zinc-100 --}}
-                            <h3 class="text-3xl font-bold text-slate-800 dark:text-white black:text-zinc-100 tracking-tight">
+                            {{-- RESPONSIVIDADE: text-2xl em mobile, lg:text-3xl em telas grandes --}}
+                            <h3 class="text-2xl lg:text-3xl font-bold text-slate-800 dark:text-white black:text-zinc-100 tracking-tight truncate">
                                 {{-- Adiciona R$ se for monetário (bi ou mi) --}}
                                 @if(in_array($card['suffix'], ['mi', 'bi']))
                                     {{-- Prefixo R$: black:text-zinc-500 --}}
-                                    <span class="text-sm align-top text-slate-400 black:text-zinc-500 mr-0.5 mt-1 inline-block">R$</span>
+                                    <span class="text-xs sm:text-sm align-top text-slate-400 black:text-zinc-500 mr-0.5 mt-1 inline-block">R$</span>
                                 @endif
-                                {{ $value }}<span class="text-lg text-slate-400 black:text-zinc-500 font-medium ml-0.5">{{ $card['suffix'] }}</span>
+                                {{ $value }}<span class="text-base sm:text-lg text-slate-400 black:text-zinc-500 font-medium ml-0.5">{{ $card['suffix'] }}</span>
                             </h3>
                         </div>
                     </div>
-                    <div class="flex items-center text-sm">
+                    <div class="flex items-center text-xs sm:text-sm w-full">
                         {{-- Texto de apoio: black:text-zinc-500 --}}
-                        <span class="text-slate-500 dark:text-slate-500 black:text-zinc-500 font-medium truncate">
+                        <span class="text-slate-500 dark:text-slate-500 black:text-zinc-500 font-medium truncate w-full block">
                             {{ $card['text'] }}
                         </span>
                     </div>
                 </div>
 
-                <div class="flex flex-col justify-between items-end pl-4">
+                <div class="flex flex-col justify-between items-end pl-2 sm:pl-4">
                     {{-- Ícone: border black:border-zinc-700 --}}
-                    <div class="p-2.5 rounded-xl border shadow-sm {{ $card['bg_class'] }} border-slate-200 dark:border-slate-600 black:border-zinc-700">
-                        <x-dynamic-component :component="'bi-'.$card['icon']" class="w-6 h-6" />
+                    {{-- RESPONSIVIDADE: p-2 para mobile, sm:p-2.5 para desktop --}}
+                    <div class="p-2 sm:p-2.5 rounded-xl border shadow-sm {{ $card['bg_class'] }} border-slate-200 dark:border-slate-600 black:border-zinc-700">
+                        {{-- RESPONSIVIDADE: Ícone w-5 h-5 mobile, w-6 h-6 desktop --}}
+                        <x-dynamic-component :component="'bi-'.$card['icon']" class="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
                     
                     {{-- Link: hover:bg-zinc-800 --}}
