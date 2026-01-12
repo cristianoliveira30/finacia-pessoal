@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="mt-4">
                                 {{-- Botão Dropdown: Surface Highlight Zinc-800 ou 900 --}}
-                                <button id="themeDropdownButton" data-dropdown-toggle="themeDropdown" class="text-slate-700 dark:text-slate-200 black:text-zinc-200 bg-white dark:bg-slate-700 black:bg-zinc-800 hover:bg-slate-50 dark:hover:bg-slate-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center shadow-sm border border-slate-200 dark:border-slate-600 black:border-zinc-700 transition-colors" type="button">
+                                <button id="themeDropdownButton" data-dropdown-toggle="themeDropdown" class="text-slate-700 dark:text-slate-200 black:text-zinc-200 bg-white dark:bg-slate-700 black:bg-zinc-800 black:hover:bg-zinc-700 hover:bg-slate-50 dark:hover:bg-slate-600 focus:ring-2 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center shadow-sm border border-slate-200 dark:border-slate-600 black:border-zinc-700 transition-colors" type="button">
                                     <x-bi-palette class="w-4 h-4 mr-2"/> 
                                     Tema: <span id="current-theme-label" class="ml-1 font-bold">Selecionar</span>
                                     <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -59,7 +59,7 @@
                                 </button>
 
                                 {{-- Menu Dropdown: Surface Zinc-900 --}}
-                                <div id="themeDropdown" class="z-10 hidden bg-white divide-y divide-slate-100 rounded-lg shadow w-44 dark:bg-slate-700 black:bg-zinc-900 border border-slate-100 dark:border-slate-600 black:border-zinc-800">
+                                <div id="themeDropdown" class="z-10 hidden bg-white divide-y divide-slate-100 rounded-lg shadow w-44 dark:bg-slate-700 black:bg-zinc-900 border  border-slate-100 dark:border-slate-600 black:border-zinc-800">
                                     {{-- Texto de apoio no menu: Zinc-300  --}}
                                     <ul class="py-2 text-sm text-slate-700 dark:text-slate-200 black:text-zinc-300" aria-labelledby="themeDropdownButton">
                                         
@@ -80,7 +80,7 @@
                                         <li>
                                             <button type="button" data-theme="black" class="set-theme-btn w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 black:hover:bg-zinc-800 flex items-center gap-2">
                                                 <div class="w-4 h-4 bg-slate-900 black:bg-zinc-950 border border-slate-600 black:border-zinc-700 rounded-full"></div>
-                                                Escuro (Black)
+                                                Escuro
                                             </button>
                                         </li>
                                     </ul>
