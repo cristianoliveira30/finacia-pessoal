@@ -99,7 +99,7 @@
                                             <div class="circle"></div>
                                         </div>
                                     </label>
-                                    <span class="text-sm font-medium text-heading select-none">Trocar tema</span>
+                                    <span class="text-sm black:text-zinc-300 font-medium text-heading select-none">Trocar tema</span>
                                 </div>
                             </li>
 
@@ -144,18 +144,21 @@
            justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
 
     <div class="relative p-4 w-full max-w-3xl max-h-full">
+        {{-- MODAL CONTAINER: black:bg-zinc-900 black:border-zinc-800 --}}
         <div
-            class="relative bg-white dark:bg-slate-900 rounded-lg shadow border border-slate-200 dark:border-slate-700 overflow-hidden">
+            class="relative bg-white dark:bg-slate-900 black:bg-zinc-900 rounded-lg shadow border border-slate-200 dark:border-slate-700 black:border-zinc-800 overflow-hidden">
 
-            {{-- HEADER --}}
-            <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700">
+            {{-- HEADER: black:border-zinc-800 --}}
+            <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700 black:border-zinc-800">
                 <div class="flex items-center gap-2">
-                    <x-bi-bell class="w-5 h-5 text-slate-700 dark:text-slate-200" />
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Central de Notificações</h3>
+                    {{-- ICON: black:text-zinc-200 --}}
+                    <x-bi-bell class="w-5 h-5 text-slate-700 dark:text-slate-200 black:text-zinc-200" />
+                    {{-- TITLE: black:text-zinc-100 --}}
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 black:text-zinc-100">Central de Notificações</h3>
                 </div>
 
                 <button type="button"
-                    class="text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg text-sm w-9 h-9 inline-flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
+                    class="text-slate-400 hover:text-slate-900 dark:hover:text-white black:hover:text-white rounded-lg text-sm w-9 h-9 inline-flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 black:hover:bg-zinc-800"
                     data-modal-hide="notifications-modal" aria-label="Fechar">
                     <x-bi-x-lg class="w-4 h-4" />
                 </button>
@@ -207,14 +210,12 @@
                                 ];
 
                                 $flagClass = [
-                                    'sky' => 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-200',
-                                    'emerald' =>
-                                        'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200',
-                                    'amber' => 'bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-200',
-                                    'rose' => 'bg-rose-100 text-rose-900 dark:bg-rose-900/30 dark:text-rose-200',
-                                    'violet' =>
-                                        'bg-violet-100 text-violet-900 dark:bg-violet-900/30 dark:text-violet-200',
-                                    'slate' => 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100',
+                                    'sky' => 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-200 black:bg-sky-900/30 black:text-sky-200',
+                                    'emerald' => 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200 black:bg-emerald-900/30 black:text-emerald-200',
+                                    'amber' => 'bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-200 black:bg-amber-900/30 black:text-amber-200',
+                                    'rose' => 'bg-rose-100 text-rose-900 dark:bg-rose-900/30 dark:text-rose-200 black:bg-rose-900/30 black:text-rose-200',
+                                    'violet' => 'bg-violet-100 text-violet-900 dark:bg-violet-900/30 dark:text-violet-200 black:bg-violet-900/30 black:text-violet-200',
+                                    'slate' => 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100 black:bg-zinc-800 black:text-zinc-200',
                                 ];
                             @endphp
 
@@ -228,9 +229,11 @@
                                 @endphp
 
                                 <li>
+                                    {{-- ITEM: black:bg-zinc-900 black:border-zinc-800 black:hover:bg-zinc-800 --}}
                                     <button type="button"
                                         class="notif-item w-full text-left rounded-xl border border-slate-200 bg-white p-3
-                                                     hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800 transition"
+                                               hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                                               black:bg-zinc-900 black:border-zinc-800 black:hover:bg-zinc-800 transition"
                                         data-notif-id="{{ $n['id'] }}"
                                         data-unread-default="{{ $unread ? '1' : '0' }}"
                                         data-read-url="{{ $readUrl }}" data-url="{{ $url }}">
@@ -240,8 +243,9 @@
 
                                             <div class="min-w-0 flex-1">
                                                 <div class="flex items-center gap-2">
+                                                    {{-- TITLE ITEM: black:text-zinc-100 --}}
                                                     <div
-                                                        class="font-semibold text-slate-900 dark:text-slate-100 truncate">
+                                                        class="font-semibold text-slate-900 dark:text-slate-100 black:text-zinc-100 truncate">
                                                         {{ $n['title'] ?? '' }}
                                                     </div>
 
@@ -253,12 +257,14 @@
                                                         </span>
                                                     @endif
 
-                                                    <div class="ml-auto text-xs text-slate-500 dark:text-slate-400">
+                                                    {{-- TIME: black:text-zinc-500 --}}
+                                                    <div class="ml-auto text-xs text-slate-500 dark:text-slate-400 black:text-zinc-500">
                                                         {{ $n['time'] ?? '' }}
                                                     </div>
                                                 </div>
 
-                                                <div class="mt-1 text-sm text-slate-600 dark:text-slate-200">
+                                                {{-- MESSAGE: black:text-zinc-300 --}}
+                                                <div class="mt-1 text-sm text-slate-600 dark:text-slate-200 black:text-zinc-300">
                                                     {{ $n['message'] ?? '' }}
                                                 </div>
                                             </div>
@@ -317,7 +323,6 @@
         </div>
     </div>
 </div>
-
 @once
 @push('scripts')
         <script>
