@@ -3,38 +3,55 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ops! Algo deu errado</title>
+
+    {{-- Script de Tema Crítico (Executado antes do render para evitar piscada) --}}
     <script>
         (function () {
             try {
                 const stored = localStorage.getItem('color-theme');
+                const html = document.documentElement;
 
-                if (
-                    stored === 'dark' ||
-                    (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)
-                ) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
+                // 1. Limpa todas as classes de tema primeiro para garantir o reset
+                html.classList.remove('dark', 'black');
+
+                // 2. Aplica a classe correta baseada no storage
+                if (stored === 'black') {
+                    html.classList.add('black');
+                } else if (stored === 'dark') {
+                    html.classList.add('dark');
+                } else if (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    // Fallback para preferência do sistema se não houver nada salvo
+                    html.classList.add('dark');
                 }
-            } catch (e) { }
+                // Se for 'light', as classes já foram removidas no passo 1.
+            } catch (e) {
+                console.error('Erro ao aplicar tema:', e);
+            }
         })();
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
+{{--
+Classes aplicadas diretamente aqui para garantir independência do layout.
+O CSS do Tailwind (app.css) precisa estar compilado corretamente com as variantes.
+--}}
+
 <body class="min-h-screen h-full flex items-center justify-center px-4
              bg-slate-50 text-slate-900
              dark:bg-slate-950 dark:text-slate-50
              black:bg-zinc-950 black:text-zinc-50
-             text-base md:text-lg">
+             text-base md:text-lg antialiased">
 
     <div class="max-w-xl w-full
                 bg-white/90 dark:bg-slate-900/70 black:bg-zinc-900/70
                 border border-slate-200/80 dark:border-slate-700/70 black:border-zinc-800/70
-                rounded-2xl shadow-xl p-10 md:p-12 text-center backdrop-blur">
+                rounded-2xl shadow-xl p-10 md:p-12 text-center backdrop-blur-sm">
 
+        {{-- Ícone --}}
         <div class="inline-flex items-center justify-center
                    w-20 h-20 rounded-full
                    bg-red-100 dark:bg-red-900/30 black:bg-red-900/30
@@ -62,6 +79,7 @@
             Você pode tentar voltar para a página anterior.
         </p>
 
+        {{-- Botão Voltar --}}
         <button type="button" onclick="window.history.back()" class="inline-flex items-center justify-center gap-3 px-7 py-3.5
                    rounded-2xl text-base md:text-lg font-medium
                    text-white
@@ -71,8 +89,7 @@
                    focus:ring-offset-2 focus:ring-offset-slate-50
                    dark:focus:ring-offset-slate-950
                    black:focus:ring-offset-zinc-950
-                   transition
-                   btn btn-primary">
+                   transition transform active:scale-95">
             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor" stroke-width="1.8">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
