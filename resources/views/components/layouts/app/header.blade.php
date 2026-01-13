@@ -115,7 +115,7 @@
                         </div>
                         <ul class="p-2 text-sm text-body font-medium dark:text-slate-300 black:text-zinc-300" role="none">
                             <li>
-                                <button type="button" class="inline-flex items-center w-full p-2 rounded hover:bg-neutral-tertiary-medium hover:text-heading dark:hover:bg-slate-700 black:hover:bg-zinc-800"
+                                <button type="button" class="inline-flex items-center w-full p-2 rounded hover:bg-neutral-tertiary-medium hover:text-heading dark:hover:bg-slate-700 black:hover:bg-zinc-400"
                                     data-modal-target="notifications-modal" data-modal-toggle="notifications-modal">
                                     <x-bi-bell class="w-4 h-4 mr-2" />
                                     <span>Notificações</span>
@@ -125,7 +125,7 @@
                             </li>
                             <li>
                                 {{-- AQUI: Alterado de <a> para <button> acionando o modal de configurações --}}
-                                <button type="button" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded dark:hover:bg-slate-700 black:hover:bg-zinc-800" 
+                                <button type="button" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded dark:hover:bg-slate-700 black:hover:bg-zinc-400" 
                                     data-modal-target="settings-modal" data-modal-toggle="settings-modal">
                                     <x-bi-gear class="w-4 h-4 mr-2" /> Configurações
                                 </button>
