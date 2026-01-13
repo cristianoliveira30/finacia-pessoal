@@ -16,10 +16,10 @@
             </div>
 
             <div class="text-right">
-                <h2 class="text-3xl text-slate-950 dark:text-slate-100">
+                <h2 class="text-3xl text-slate-950 dark:text-slate-100 black:text-zinc-200">
                     <b>Relógio: </b><span id="realtime-clock"></span>
                 </h2>
-                <span class="text-md text-slate-700 black:text-zinc-50 dark:text-slate-300 black:text-zinc-400">
+                <span class="text-md text-slate-700 black:text-zinc-50 dark:text-slate-300 black:text-zinc-200">
                     Dados atualizados a cada 30 segundos
                 </span>
             </div>
