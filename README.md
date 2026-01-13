@@ -24,6 +24,7 @@
 
 - Para usar Laravel Sail (recomendado):
   - Docker e Docker Compose instalados
+  - WSL ou ambiente linux
 - Para rodar sem Sail:
   - PHP >= 8.3, Composer
   - Node.js (recomendado >= 16) e npm
