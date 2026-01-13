@@ -213,23 +213,23 @@
 
                             <div class="space-y-4 mb-8">
                                 <div class="p-3 rounded bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500">
-                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-zinc-200">Limite Prudencial
+                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-zinc-700">Limite Prudencial
                                     </p>
-                                    <p class="text-xs text-slate-500 black:text-zinc-400 mt-1">Folha atingiu 51% da RCL.
+                                    <p class="text-xs text-slate-500 black:text-zinc-600 mt-1">Folha atingiu 51% da RCL.
                                     </p>
                                 </div>
 
                                 <div class="p-3 rounded bg-rose-50 dark:bg-rose-900/20 border-l-4 border-rose-500">
-                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-zinc-200">Ambulâncias Paradas
+                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-zinc-700">Ambulâncias Paradas
                                     </p>
-                                    <p class="text-xs text-slate-500 black:text-zinc-400 mt-1">2 veículos em manutenção.
+                                    <p class="text-xs text-slate-500 black:text-zinc-600 mt-1">2 veículos em manutenção.
                                     </p>
                                 </div>
 
                                 <div class="p-3 rounded bg-red-50 dark:bg-red-900/20 border-l-4 border-red-600">
-                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-zinc-200">Licitações
+                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-zinc-700">Licitações
                                         Atrasadas</p>
-                                    <p class="text-xs text-slate-500 black:text-zinc-400 mt-1">Pregão 042/2025 necessita
+                                    <p class="text-xs text-slate-500 black:text-zinc-600 mt-1">Pregão 042/2025 necessita
                                         homologação.</p>
                                 </div>
                             </div>
