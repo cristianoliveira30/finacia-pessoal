@@ -275,21 +275,19 @@
         background-color: var(--sidebar-hover-bg);
     }
 
-    html:not(.dark) #top-bar-sidebar {
+    /* Sombra e bordas apenas no modo Light */
+    html:not(.dark):not(.black) #top-bar-sidebar {
         box-shadow: 0 12px 30px rgba(2, 6, 23, .10);
     }
-
-    html:not(.dark) #top-bar-sidebar .sidebar-link {
+    html:not(.dark):not(.black) #top-bar-sidebar .sidebar-link {
         background: var(--sidebar-item-bg);
         border: 1px solid rgba(203, 213, 225, .65);
     }
-
-    html:not(.dark) #top-bar-sidebar .sidebar-link:hover {
+    html:not(.dark):not(.black) #top-bar-sidebar .sidebar-link:hover {
         background: var(--sidebar-hover-bg) !important;
         border-color: rgba(148, 163, 184, .75);
     }
-
-    html:not(.dark) #top-bar-sidebar .submenu a:hover {
+    html:not(.dark):not(.black) #top-bar-sidebar .submenu a:hover {
         background: #ffffff !important;
     }
 
@@ -466,27 +464,63 @@
                     <span class="popover-title font-semibold">{{ $menu['popover_title'] }}</span>
                 </div>
 
-                <ul class="space-y-1">
-                    @foreach ($menu['items'] as $item)
-                        <li>
-                            @if (isset($item['submenu']))
-                                {{-- GATILHO CLICK: Abre o popover filho --}}
-                                <button type="button" data-popover-target="popover-child-{{ $item['id_submenu'] }}"
-                                    data-popover-placement="right-start" data-popover-trigger="click"
-                                    class="flex w-full items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer text-left">
-                                    <div class="flex items-center gap-2">
-                                        <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
-                                        <span>{{ $item['label'] }}</span>
-                                    </div>
-                                    <x-bi-chevron-right class="w-3 h-3 opacity-50" />
-                                </button>
-                            @else
-                                {{-- Item Normal (Link direto) --}}
-                                <a href="{{ route($item['route']) }}"
-                                    class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
-                                    target="_blank" rel="noopener noreferrer">
+            <ul class="space-y-1">
+                @foreach ($menu['items'] as $item)
+                    <li>
+                        @if(isset($item['submenu']))
+                            {{-- GATILHO CLICK: Abre o popover filho --}}
+                            <button type="button" 
+                                data-popover-target="popover-child-{{ $item['id_submenu'] }}" 
+                                data-popover-placement="right-start"
+                                data-popover-trigger="click" 
+                                class="flex w-full items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors cursor-pointer text-left">
+                                <div class="flex items-center gap-2">
                                     <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
                                     <span>{{ $item['label'] }}</span>
+                                </div>
+                                <x-bi-chevron-right class="w-3 h-3 opacity-50" />
+                            </button>
+                        @else
+                            {{-- Item Normal (Link direto) --}}
+                            <a href="{{ route($item['route']) }}"
+                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
+                                target="_blank" rel="noopener noreferrer">
+                                <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
+                                <span>{{ $item['label'] }}</span>
+                            </a>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        <div data-popper-arrow></div>
+    </div>
+@endforeach
+
+{{-- POPOVERS (SEGUNDO NÍVEL - CONTEÚDO DA "PASTA") --}}
+@foreach ($menus as $menu)
+    @foreach ($menu['items'] as $item)
+        @if(isset($item['submenu']))
+            <div data-popover id="popover-child-{{ $item['id_submenu'] }}" role="tooltip"
+                 {{-- Atributo personalizado para saber quem é o pai deste filho --}}
+                 data-parent-ref="popover-{{ $menu['id'] }}"
+                 class="popover-flowbite absolute z-50 hidden invisible w-56 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0"
+                 style="--menu-main: {{ $menu['hex_main'] }};">
+                
+                <div class="p-3">
+                     <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
+                        <span class="popover-accent h-3 w-1 rounded-full opacity-70"></span>
+                        <span class="font-semibold text-xs uppercase text-gray-500 dark:text-gray-400 black:text-zinc-400">{{ $item['label'] }}</span>
+                    </div>
+
+                    <ul class="space-y-1">
+                        @foreach ($item['submenu'] as $subItem)
+                            <li>
+                                <a href="{{ route($subItem['route']) }}"
+                                   class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
+                                   target="_blank" rel="noopener noreferrer">
+                                    <x-dynamic-component :component="'bi-' . $subItem['icon']" class="w-4 h-4 shrink-0 text-gray-400 black:text-zinc-500" />
+                                    <span>{{ $subItem['label'] }}</span>
                                 </a>
                             @endif
                         </li>
