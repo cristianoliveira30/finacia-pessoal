@@ -1,45 +1,25 @@
 <x-layouts.app :title="__('Prefeito')">
-    {{--
-    WRAPPER "DARK":
-    Adicionei a classe "dark" aqui para forçar a aplicação do tema Black (Zinc).
-    Também defini o fundo base como zinc-950 e o texto padrão como zinc-100.
-    --}}
-    <div class="dark bg-zinc-950 text-zinc-100 min-h-screen">
-
-        <div class="p-6 space-y-10">
-
-            {{-- CABEÇALHO --}}
-            <div class="flex p-5 mx-5 flex-col md:flex-row justify-between items-start md:items-center">
-                <div>
-                    {{-- Título: zinc-100 --}}
-                    <h1 class="text-2xl font-bold text-slate-800 dark:text-zinc-100 flex items-center gap-3">
-                        <x-bi-bank2 class="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
-                        Gabinete do Prefeito
-                    </h1>
-                    {{-- Subtítulo: zinc-400 --}}
-                    <p class="text-slate-500 dark:text-zinc-400 mt-1">Visão geral consolidada do município.</p>
-                </div>
+    <div class="p-6 space-y-10">
+        {{-- CABEÇALHO (Mantido) --}}
+        <div class="flex p-5 mx-10 flex-col md:flex-row justify-between items-start md:items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-3">
+                    <x-bi-bank2 class="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+                    Gabinete do Prefeito
+                </h1>
+                <p class="text-slate-500 dark:text-slate-400 mt-1">Visão geral consolidada do município.</p>
             </div>
 
             <div class="py-5 -mt-10">
                 <div class="max-w-8xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
-                    {{-- 1. SEUS CARDS (KPIs) --}}
-                    {{-- Nota: Se estes componentes não ficarem escuros, precisaremos editar o arquivo deles
-                    individualmente (x-cards.box.mainbox) --}}
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div id="wrapper-card-gestao">
-                            <x-cards.box.mainbox id="gestao" :value="'17%'" />
-                        </div>
-                        <div id="wrapper-card-financas">
-                            <x-cards.box.mainbox id="financas" :value="'1,79'" />
-                        </div>
-                        <div id="wrapper-card-nps">
-                            <x-cards.box.mainbox id="nps" :value="'900.79'" />
-                        </div>
-                        <div id="wrapper-card-pendencias">
-                            <x-cards.box.mainbox id="pendencias" :value="'14'" />
-                        </div>
+        <div class="py-1  -mt-8">
+            <div class="w-full min-h-screen pt-2 px-4 sm:px-4 lg:pl-16 space-y-4">
+
+                {{-- 1. SEUS CARDS (KPIs) (Mantido) --}}
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div id="wrapper-card-gestao">
+                        <x-cards.box.mainbox id="gestao" :value="'17%'" />
                     </div>
 
                     {{-- LAYOUT PRINCIPAL --}}

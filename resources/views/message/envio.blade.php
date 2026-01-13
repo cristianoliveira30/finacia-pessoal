@@ -1,4 +1,3 @@
-{{-- resources/views/message/envio.blade.php --}}
 <x-layouts.app :title="__('Enviar Notificação')">
 
     {{-- BG PAGE: black:bg-zinc-950 --}}
@@ -8,7 +7,7 @@
             {{-- PAGE HEADER --}}
             <header class="mb-6">
                 {{-- TITLE: black:text-zinc-100 --}}
-                <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 black:text-zinc-100">
+                <h1 class="text-4xl -mt-6 font-bold text-slate-900 dark:text-slate-100 black:text-zinc-100">
                     Enviar notificações
                 </h1>
 
