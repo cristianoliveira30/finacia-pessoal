@@ -351,3 +351,68 @@
         </div>
     </div>
 </div>
+@once
+    @push('scripts')
+        <script>
+            // Função visual das abas
+            window.initReportCard = function (cId) {
+                const card = document.getElementById(cId);
+                if (!card) return;
+
+                const sections = card.querySelectorAll('[data-card-section]');
+                const setView = (view) => {
+                    sections.forEach((section) => {
+                        section.classList.toggle('hidden', section.getAttribute('data-card-section') !== view);
+                    });
+                };
+                card.querySelectorAll('[data-card-view-toggle]').forEach((btn) => {
+                    btn.addEventListener('click', () => setView(btn.getAttribute('data-view')));
+                });
+            };
+
+            // Função unificada e OTIMIZADA para downloads
+            window.setupCardDownloads = function (cardId, data) {
+                // Lista de ações suportadas
+                const actions = [{
+                    id: 'pdf',
+                    fn: window.baixarPDF
+                },
+                {
+                    id: 'csv',
+                    fn: window.baixarCSV
+                },
+                {
+                    id: 'xlsx',
+                    fn: window.baixarXLSX
+                }
+                ];
+
+                actions.forEach(action => {
+                    const btn = document.getElementById(`${cardId}-btn-download-${action.id}`);
+                    if (btn) {
+                        const newBtn = btn.cloneNode(true);
+                        btn.parentNode.replaceChild(newBtn, btn);
+
+                        newBtn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            action.fn(data);
+                        });
+                    }
+                });
+            };
+        </script>
+    @endpush
+@endonce
+
+{{-- Script de Inicialização por Instância --}}
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                if (window.initReportCard) window.initReportCard('{{ $id }}');
+
+                // Passa os dados para o JS
+                if (window.setupCardDownloads) window.setupCardDownloads('{{ $id }}',
+                    @json($chart));
+            });
+        </script>
+@endpush
