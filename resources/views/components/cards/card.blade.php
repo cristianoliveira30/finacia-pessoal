@@ -18,9 +18,9 @@
     $resolvedChartId = $chartId ?: $id . '-chart';
 @endphp
 
-{{-- 
+{{--
   CONTAINER PRINCIPAL
-  Surface: Zinc-900 (black:bg-zinc-900) 
+  Surface: Zinc-900 (black:bg-zinc-900)
   Border: Zinc-800 (black:border-zinc-800)
 --}}
 <div id="{{ $id }}" data-accordion="collapse"
@@ -48,7 +48,7 @@
                 {{-- Toggle Gráfico/Tabela --}}
                 <div
                     class="inline-flex rounded-xl m-0 border border-slate-300 bg-slate-100 overflow-hidden dark:border-slate-700 dark:bg-slate-900/60 black:border-zinc-800 black:bg-zinc-950/50">
-                    
+
                     {{-- Botões de Toggle: black:hover:bg-zinc-800, black:text-zinc-400 -> black:hover:text-zinc-100 --}}
                     <button type="button" data-card-view-toggle="{{ $id }}" data-view="chart"
                         class="text-xs px-3 py-2 font-medium bg-white text-slate-600 hover:bg-slate-200 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white dark:focus:ring-sky-500/40 black:bg-zinc-900 black:text-zinc-400 black:hover:bg-zinc-800 black:hover:text-zinc-100 black:focus:ring-zinc-600">
@@ -237,7 +237,7 @@
                         <h6 class="text-sm font-semibold text-slate-800 dark:text-slate-200 black:text-zinc-200">Linhas no gráfico</h6>
 
                         <div class="inline-flex rounded-xl border border-slate-300 bg-slate-100 overflow-hidden
-                                    dark:border-slate-700 dark:bg-slate-900/60 
+                                    dark:border-slate-700 dark:bg-slate-900/60
                                     black:border-zinc-800 black:bg-zinc-950/50 mt-2"
                             data-overlay-toggle
                             data-chart-id="{{ $resolvedChartId }}"
@@ -317,9 +317,9 @@
 
                         <div class="flex gap-2 items-start">
                             {{-- Input Prompt: black:bg-zinc-950, black:border-zinc-700 --}}
-                            <div id="{{ $id }}-ai-prompt" name="prompt" rows="1" required
+                            <textarea id="{{ $id }}-ai-prompt" name="prompt" rows="1" required
                                 class="flex-1 block p-2 text-sm text-slate-500 bg-white rounded-lg border border-slate-300 focus:ring-sky-600 focus:border-sky-600 resize-none dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500 black:bg-zinc-950 black:border-zinc-700 black:placeholder-zinc-500 black:text-zinc-100 black:focus:ring-zinc-600"
-                                placeholder="Digite sua pergunta aqui..."></div>
+                                placeholder="Digite sua pergunta aqui..."></textarea>
 
                             <button type="submit"
                                 class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2.5 inline-flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 black:bg-zinc-800 black:hover:bg-zinc-700 black:border black:border-zinc-700 h-full max-h-[42px] self-start mt-0.5"
