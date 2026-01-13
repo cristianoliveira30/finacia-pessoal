@@ -2,7 +2,7 @@
     // Título dinâmico vindo do <x-layouts.tv :title="...">
     $tvTitle = $title ?? $attributes['title'] ?? 'Dashboard TV';
 @endphp
-
+    
 <nav class="relative top-0 z-50 w-full bg-slate-100 black:bg-zinc-900 dark:bg-slate-900 border-b p-2">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">

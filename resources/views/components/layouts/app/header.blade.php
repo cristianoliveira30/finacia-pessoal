@@ -158,7 +158,7 @@ black:text-violet-200',
                             role="none">
                             <li>
                                 <button type="button"
-                                    class="inline-flex items-center w-full p-2 rounded hover:bg-neutral-tertiary-medium hover:text-heading dark:hover:bg-slate-700 black:hover:bg-zinc-400"
+                                    class="inline-flex items-center w-full p-2 rounded hover:bg-neutral-tertiary-medium hover:text-heading dark:hover:bg-slate-700 black:hover:bg-zinc-200"
                                     data-modal-target="notifications-modal" data-modal-toggle="notifications-modal">
                                     <x-bi-bell class="w-4 h-4 mr-2" />
                                     <span>Notificações</span>
@@ -168,14 +168,14 @@ black:text-violet-200',
                             </li>
                             <li>
                                 <button type="button"
-                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded dark:hover:bg-slate-700 black:hover:bg-zinc-400"
+                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded dark:hover:bg-slate-700 black:hover:bg-zinc-200"
                                     data-modal-target="settings-modal" data-modal-toggle="settings-modal">
                                     <x-bi-gear class="w-4 h-4 mr-2" /> Configurações
                                 </button>
                             </li>
                             <li>
                                 <a href="{{ route('logout') }}"
-                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded dark:hover:bg-slate-700 black:hover:bg-zinc-800 text-red-500 hover:text-red-600"
+                                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded dark:hover:bg-slate-700 black:hover:bg-zinc-200 text-red-500 hover:text-red-600"
                                     role="menuitem">
                                     <x-bi-box-arrow-right class="w-4 h-4 mr-2" /> Log out
                                 </a>
