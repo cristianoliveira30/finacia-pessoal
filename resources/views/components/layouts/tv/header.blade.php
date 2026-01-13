@@ -3,14 +3,14 @@
     $tvTitle = $title ?? $attributes['title'] ?? 'Dashboard TV';
 @endphp
 
-<nav class="relative top-0 z-50 w-full bg-slate-100 dark:bg-slate-900 border-b p-2">
+<nav class="relative top-0 z-50 w-full bg-slate-100 black:bg-zinc-900 dark:bg-slate-900 border-b p-2">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-4xl font-bold text-slate-950 dark:text-slate-100">
+                <h1 class="text-4xl font-bold text-slate-950 dark:text-slate-100 black:text-zinc-50">
                     {{ $tvTitle }}
                 </h1>
-                <span class="text-md text-slate-700 dark:text-slate-300">
+                <span class="text-md text-slate-700 dark:text-slate-300 black:text-zinc-400">
                     Última atualização dos dados: {{ date('d/m/Y H:i') }}
                 </span>
             </div>
@@ -19,7 +19,7 @@
                 <h2 class="text-3xl text-slate-950 dark:text-slate-100">
                     <b>Relógio: </b><span id="realtime-clock"></span>
                 </h2>
-                <span class="text-md text-slate-700 dark:text-slate-300">
+                <span class="text-md text-slate-700 black:text-zinc-50 dark:text-slate-300 black:text-zinc-400">
                     Dados atualizados a cada 30 segundos
                 </span>
             </div>

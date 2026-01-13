@@ -83,18 +83,28 @@ black:text-violet-200',
                         class="z-20 hidden mt-2 bg-white divide-y divide-slate-100 rounded-lg shadow-lg w-44 border border-slate-100 dark:bg-slate-800 dark:divide-slate-700 dark:border-slate-700 black:bg-zinc-900 black:border-zinc-800 black:divide-zinc-800">
                         <ul class="py-2 text-sm text-slate-700 dark:text-slate-200 black:text-zinc-300"
                             aria-labelledby="btn-tipotempo">
-                            <li><a href="#" data-tempo="hoje"
-                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 black:hover:bg-zinc-800">Hoje</a>
+                            <li>
+                                <a href="#" data-tempo="hoje"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 black:hover:bg-zinc-800">Hoje
+                                </a>
                             </li>
-                            <li><a href="#" data-tempo="ontem"
-                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 black:hover:bg-zinc-800">Ontem</a>
+                            <li>
+                                <a href="#" data-tempo="ontem"
+                                    class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 black:hover:bg-zinc-800">Ontem
+                                </a>
                             </li>
-                            <li><a href="#" data-tempo="semana-atual"
+                            <li>
+                                <a href="#" data-tempo="semana-atual"
                                     class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 black:hover:bg-zinc-800">Semana
-                                    Atual</a></li>
-                            <li><a href="#" data-tempo="mes-atual"
+                                    Atual
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-tempo="mes-atual"
                                     class="block px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/70 black:hover:bg-zinc-800">Mês
-                                    Atual</a></li>
+                                    Atual
+                                </a>
+                            </li>
                             <li>
                                 <a href="#"
                                     onclick="document.getElementById('modalPeriodo').classList.remove('hidden'); return false;"
@@ -267,7 +277,7 @@ MODAL DE NOTIFICAÇÕES
 MODAL DE CONFIGURAÇÕES (ATUALIZADO)
 ========================================== --}}
 <div id="settings-modal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[60] justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full backdrop-blur-sm bg-slate-900/50">
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[60] justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full backdrop-blur-sm bg-zing-900/50">
 
     <div class="relative p-4 w-full max-w-5xl max-h-full">
         <div
