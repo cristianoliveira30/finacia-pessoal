@@ -7,9 +7,8 @@ use App\Http\Middleware\NoStoreHtml;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([NoStoreHtml::class])->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('login');
+    Route::view('/', 'welcome')->name('login');
+    Route::get('/login', fn () => redirect()->route('login'));
 });
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
