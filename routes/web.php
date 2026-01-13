@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnalisesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\NoStoreHtml;
@@ -14,6 +15,8 @@ Route::middleware([NoStoreHtml::class])->group(function () {
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Rota da troca de perfil
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::middleware('auth')->group(function () {
 
