@@ -73,7 +73,7 @@
                 {{-- Filtro de Tempo (Dropdown) --}}
                 <div class="relative hidden md:block">
                     <button id="btn-tipotempo" data-dropdown-toggle="dropdown-tipotempo" type="button"
-                        class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium rounded-md border  bg-neutral-200 text-slate-600 border-slate-200  hover:bg-slate-200 hover:text-slate-900  focus:outline-none focus:ring-2 focus:ring-slate-300 
+                        class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium rounded-md border  bg-neutral-200 text-stone-950 border-slate-200  hover:bg-slate-200 hover:text-slate-900  focus:outline-none focus:ring-2 focus:ring-slate-300 
                                dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600  dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40 
                                black:bg-zinc-900 black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800 black:hover:text-zinc-100">
                         <span id="tipotempo-label" class="whitespace-nowrap">Hoje</span>
@@ -318,7 +318,7 @@
             </div>
 
             {{-- Conteúdo (Scrollable) --}}
-            <div class="p-6 overflow-y-auto">
+            <div class="p-6  overflow-y-auto">
 
                 <form action="#" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -329,7 +329,7 @@
                         {{-- COLUNA 1: Card de Perfil --}}
                         <div class="lg:col-span-1">
                             <div
-                                class="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-800 black:bg-zinc-900 p-6 rounded-xl border border-slate-200 dark:border-slate-700 black:border-zinc-800 shadow-sm">
+                                class="relative w-full overflow-hidden bg-gray-200dark:bg-slate-800 black:bg-zinc-900 p-6 rounded-xl border border-slate-200 dark:border-slate-700 black:border-zinc-800 shadow-sm">
 
                                 <div
                                     class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 rounded-full blur-2xl transition-all pointer-events-none bg-slate-500/5 dark:bg-slate-500/10 black:bg-zinc-500/10">
@@ -410,7 +410,7 @@
                         {{-- COLUNA 2: Formulário de Edição --}}
                         <div class="lg:col-span-2">
                             <div
-                                class="relative w-full overflow-hidden bg-slate-50 dark:bg-slate-800 black:bg-zinc-900 p-6 rounded-xl border border-slate-200 dark:border-slate-700 black:border-zinc-800 shadow-sm h-full">
+                                class="relative w-full overflow-hidden bg-gray-200 dark:bg-slate-800 black:bg-zinc-900 p-6 rounded-xl border border-slate-200 dark:border-slate-700 black:border-zinc-800 shadow-sm h-full">
 
                                 <div
                                     class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 rounded-full blur-3xl transition-all pointer-events-none bg-sky-500/5">
@@ -652,7 +652,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div
-                    class="group border border-cyan-200 rounded-lg p-1 hover:border-cyan-400 transition-colors bg-cyan-50/30
+                    class="group border border-cyan-200 rounded-lg p-1 hover:border-cyan-400 transition-colors bg-gray-200
                             dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-cyan-500
                             black:border-zinc-700 black:bg-zinc-900/50 black:hover:border-zinc-600">
                     <div
@@ -680,7 +680,7 @@
                 </div>
 
                 <div
-                    class="group border border-cyan-200 rounded-lg p-1 hover:border-cyan-400 transition-colors bg-cyan-50/30
+                    class="group border border-cyan-200 rounded-lg p-1 hover:border-cyan-400 transition-colors bg-gray-200
                             dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-cyan-500
                             black:border-zinc-700 black:bg-zinc-900/50 black:hover:border-zinc-600">
                     <div
