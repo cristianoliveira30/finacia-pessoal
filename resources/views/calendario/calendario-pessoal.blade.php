@@ -33,7 +33,7 @@
 
                     <button id="btn-new-commitment" type="button"
                         class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-bold transition-colors flex items-center gap-2">
-                        <x-bi-plus-lg /> Novo 
+                        <x-bi-plus-lg /> Novo
                     </button>
 
                 </div>
@@ -815,7 +815,6 @@
 
             {{-- MODAL: Novo Compromisso --}}
             <div id="modal-new-commitment" class="hidden fixed inset-0 z-50">
-                {{-- Fundo Escuro --}}
                 <div data-close-modal class="absolute inset-0 bg-black/40 dark:bg-black/70 backdrop-blur-sm"></div>
 
                 {{-- Janela do Modal --}}
@@ -824,10 +823,10 @@
 
                     {{-- Cabeçalho --}}
                     <div class="flex items-center justify-between mb-5">
-                        <h3 class="font-bold text-lg text-slate-800 dark:text-white black:text-zinc-100">Novo
+                        <h3 class="font-bold text-lg text-slate-800 dark:text-white black:text-white">Novo
                             Compromisso</h3>
                         <button type="button" data-close-modal
-                            class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+                            class="text-slate-400 hover:text-slate-600 dark:hover:text-white black:text-white black:hover:text-slate-200 transition-colors">
                             <x-bi-x-lg class="w-5 h-5" />
                         </button>
                     </div>
@@ -836,9 +835,10 @@
 
                         {{-- 1. Título --}}
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Título</label>
+                            <label
+                                class="block text-xs font-bold text-slate-500 black:text-white uppercase mb-1">Título</label>
                             <input type="text" name="title"
-                                class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-slate-50 dark:bg-slate-700/50 black:bg-zinc-950 px-3 py-2 text-sm text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500/50"
+                                class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-slate-50 dark:bg-slate-700/50 black:bg-zinc-950 px-3 py-2 text-sm text-slate-800 dark:text-white black:text-white outline-none focus:ring-2 focus:ring-indigo-500/50"
                                 placeholder="Ex: Reunião Geral">
                         </div>
 
@@ -846,54 +846,58 @@
                         <div class="grid grid-cols-2 gap-3">
                             {{-- Coluna Início --}}
                             <div class="flex flex-col gap-2">
-                                <label class="block text-xs font-bold text-slate-500 uppercase">Início</label>
+                                <label
+                                    class="block text-xs font-bold text-slate-500 black:text-white uppercase">Início</label>
 
                                 <input type="date" name="start_date"
-                                    class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-2 py-2 text-xs text-slate-600 dark:text-slate-200">
+                                    class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-2 py-2 text-xs text-slate-600 dark:text-slate-200 black:text-white">
 
                                 <input type="time" name="start_time"
-                                    class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-2 py-2 text-xs text-slate-600 dark:text-slate-200">
+                                    class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-2 py-2 text-xs text-slate-600 dark:text-slate-200 black:text-white">
                             </div>
 
                             {{-- Coluna Fim --}}
                             <div class="flex flex-col gap-2">
-                                <label class="block text-xs font-bold text-slate-500 uppercase">Fim</label>
+                                <label
+                                    class="block text-xs font-bold text-slate-500 black:text-white uppercase">Fim</label>
 
                                 <input type="date" name="end_date"
-                                    class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-2 py-2 text-xs text-slate-600 dark:text-slate-200">
+                                    class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-2 py-2 text-xs text-slate-600 dark:text-slate-200 black:text-white">
 
                                 <input type="time" name="end_time"
-                                    class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-2 py-2 text-xs text-slate-600 dark:text-slate-200">
+                                    class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-2 py-2 text-xs text-slate-600 dark:text-slate-200 black:text-white">
                             </div>
                         </div>
 
                         {{-- 3. Local (Simples) --}}
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Local</label>
+                            <label
+                                class="block text-xs font-bold text-slate-500 black:text-white uppercase mb-1">Local</label>
                             <input type="text" name="location"
-                                class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-3 py-2 text-sm text-slate-800 dark:text-white"
+                                class="w-full rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-3 py-2 text-sm text-slate-800 dark:text-white black:text-white"
                                 placeholder="Opcional">
                         </div>
 
                         <hr class="border-slate-100 dark:border-slate-700 black:border-zinc-800">
 
-                        {{-- 4. A FLAG SIMPLES (Cores corrigidas) --}}
+                        {{-- 4. A FLAG SIMPLES --}}
                         <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Adicionar Flag</label>
+                            <label
+                                class="block text-xs font-bold text-slate-500 black:text-white uppercase mb-2">Adicionar
+                                Flag</label>
 
                             <div class="flex gap-2 items-center">
                                 <input type="text" name="flag_text" placeholder="Nome da etiqueta..."
-                                    class="flex-1 rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-3 py-2 text-sm text-slate-800 dark:text-white">
+                                    class="flex-1 rounded-lg border-slate-200 dark:border-slate-600 black:border-zinc-800 bg-white dark:bg-slate-700 black:bg-zinc-950 px-3 py-2 text-sm text-slate-800 dark:text-white black:text-white">
 
                                 <div
                                     class="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 black:bg-zinc-950 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 black:border-zinc-800">
-                                    {{-- Loop corrigido para o Tailwind detectar as classes --}}
+                                    {{-- Loop --}}
                                     @foreach ($flags as $flag)
                                         <label class="cursor-pointer relative" title="{{ ucfirst($flag['val']) }}">
                                             <input type="radio" name="flag_color" value="{{ $flag['val'] }}"
                                                 class="peer sr-only">
 
-                                            {{-- Usa a classe completa vinda do array PHP --}}
                                             <div
                                                 class="w-5 h-5 rounded-full {{ $flag['class'] }} hover:opacity-80 transition-all 
                                         peer-checked:ring-2 peer-checked:ring-offset-1 peer-checked:ring-slate-400 dark:peer-checked:ring-offset-slate-900">
@@ -907,7 +911,7 @@
                         {{-- Botões --}}
                         <div class="flex justify-end gap-2 pt-2">
                             <button type="button" data-close-modal
-                                class="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg dark:text-slate-300 dark:hover:bg-slate-700">Cancelar</button>
+                                class="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg dark:text-slate-300 dark:hover:bg-slate-700 black:text-white black:hover:bg-zinc-800">Cancelar</button>
                             <button type="submit"
                                 class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm">Salvar</button>
                         </div>
