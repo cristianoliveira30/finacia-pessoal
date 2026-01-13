@@ -45,7 +45,7 @@
     ];
 @endphp
 
-<nav id="app-header" class="fixed top-0 inset-x-0 z-50 h-16 w-full bg-neutral-900 dark:bg-neutral-900 border-b border-default-medium">
+<nav id="app-header" class="fixed top-0 inset-x-0 z-50 h-16 w-full bg-neutral-900 dark:bg-neutral-900 ">
     <div class="h-full px-3 lg:px-5 lg:pl-3">
         <div class="h-full flex items-center justify-between">
             
