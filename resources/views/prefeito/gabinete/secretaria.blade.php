@@ -4,7 +4,7 @@
     Adicionei a classe "dark" aqui para forçar a aplicação do tema Black (Zinc).
     Também defini o fundo base como zinc-950 e o texto padrão como zinc-100.
     --}}
-    <div class="dark bg-zinc-950 text-zinc-100 min-h-screen">
+    <div class="black:bg-zinc-950 dark:bg-slate-900 h-full">
 
         <div class="p-6 space-y-10">
 
