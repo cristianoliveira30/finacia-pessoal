@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; // <--- Importante para deletar arquivos da pasta public
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
@@ -18,28 +18,42 @@ class ProfileController extends Controller
         $request->validate([
             'name'  => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'photo' => ['nullable', 'image', 'max:2048'], // Máx 2MB
+            'photo' => ['nullable', 'image', 'max:5120'], // 5MB
             'current_password' => ['nullable', 'required_with:password', 'current_password'],
             'password' => ['nullable', 'confirmed', 'min:8'],
         ]);
 
-        // 2. Atualizar dados básicos
+        // Atualiza dados básicos
         $user->name = $request->name;
         $user->email = $request->email;
 
-        // 3. Lógica da Foto de Perfil
+        // 2. Lógica da Foto (Salvando em public/images)
         if ($request->hasFile('photo')) {
-            // Se o usuário já tiver uma foto (e não for uma URL externa), deleta a antiga
-            if ($user->profile_photo_path && Storage::disk('public')->exists($user->profile_photo_path)) {
-                Storage::disk('public')->delete($user->profile_photo_path);
+            // Caminho físico: projeto/public/images
+            $destinationPath = public_path('images');
+
+            // Cria a pasta se não existir
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
             }
 
-            // Salva a nova foto na pasta 'profile-photos' no disco 'public'
-            $path = $request->file('photo')->store('profile-photos', 'public');
-            $user->profile_photo_path = $path;
+            // Deleta a antiga da pasta public/images se existir
+            if ($user->profile_photo_path && File::exists(public_path('images/' . $user->profile_photo_path))) {
+                File::delete(public_path('images/' . $user->profile_photo_path));
+            }
+
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension();
+
+            // --- GERA O HASH (NOME + EMAIL) ---
+            $filename = hash('sha256', $user->name . $user->email) . '.' . $extension;
+
+            // Move para a pasta public e salva apenas o nome no banco
+            $file->move($destinationPath, $filename);
+            $user->profile_photo_path = $filename;
         }
 
-        // 4. Lógica de Alteração de Senha
+        // 3. Alteração de Senha
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
