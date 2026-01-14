@@ -123,7 +123,7 @@ final class DeepSeekModel
             CURLOPT_CONNECTTIMEOUT => $this->connectTimeout,
             CURLOPT_TIMEOUT        => $this->timeout,
             CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CAINFO         => $_ENV['SSL_CERT_PATH'] ?: null,
+            // CURLOPT_CAINFO         => $_ENV['SSL_CERT_PATH'] ?: null,
         ]);
 
         $raw = curl_exec($ch);
