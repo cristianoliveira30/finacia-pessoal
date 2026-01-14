@@ -351,11 +351,13 @@
         </div>
     </div>
 </div>
+
+{{-- Scripts e Integração JS/Blade --}}
 @once
     @push('scripts')
         <script>
             // Função visual das abas
-            window.initReportCard = function (cId) {
+            window.initReportCard = function(cId) {
                 const card = document.getElementById(cId);
                 if (!card) return;
 
@@ -371,20 +373,20 @@
             };
 
             // Função unificada e OTIMIZADA para downloads
-            window.setupCardDownloads = function (cardId, data) {
+            window.setupCardDownloads = function(cardId, data) {
                 // Lista de ações suportadas
                 const actions = [{
-                    id: 'pdf',
-                    fn: window.baixarPDF
-                },
-                {
-                    id: 'csv',
-                    fn: window.baixarCSV
-                },
-                {
-                    id: 'xlsx',
-                    fn: window.baixarXLSX
-                }
+                        id: 'pdf',
+                        fn: window.baixarPDF
+                    },
+                    {
+                        id: 'csv',
+                        fn: window.baixarCSV
+                    },
+                    {
+                        id: 'xlsx',
+                        fn: window.baixarXLSX
+                    }
                 ];
 
                 actions.forEach(action => {
@@ -405,14 +407,15 @@
 @endonce
 
 {{-- Script de Inicialização por Instância --}}
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                if (window.initReportCard) window.initReportCard('{{ $id }}');
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.initReportCard) window.initReportCard('{{ $id }}');
 
-                // Passa os dados para o JS
-                if (window.setupCardDownloads) window.setupCardDownloads('{{ $id }}',
-                    @json($chart));
-            });
-        </script>
+            // Passa os dados para o JS
+            if (window.setupCardDownloads) window.setupCardDownloads('{{ $id }}',
+                @json($chart));
+        });
+    </script>
 @endpush
+
