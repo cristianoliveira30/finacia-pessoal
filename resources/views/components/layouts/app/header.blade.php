@@ -58,7 +58,7 @@
 
                 {{-- Toggle Sidebar --}}
                 <button id="header-sidebar-toggle" type="button" aria-expanded="false"
-                    class="text-white box-border border border-transparent hover:bg-gray-200/10 dark:focus:outline-2 dark:focus:outline-offset-2 black:hover:bg-zinc-700 dark:focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
+                    class="text-white box-border border border-transparent hover:bg-zinc-700 dark:focus:outline-2 dark:focus:outline-offset-2 black:hover:bg-zinc-700 dark:focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
                     <span class="sr-only">Alternar sidebar</span>
                     <x-bi-justify-left class="w-6 h-6" />
                 </button>
@@ -1116,3 +1116,4 @@ MODAL DE PERÍODO PERSONALIZADO
         });
     </script>
 @endpush
+ 
