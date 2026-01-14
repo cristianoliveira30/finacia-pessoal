@@ -14,8 +14,11 @@
                 ['label' => 'Dashboard', 'route' => 'home', 'icon' => 'speedometer2'],
                 ['label' => 'Modo TV', 'route' => 'tv.index', 'icon' => 'tv'],
                 ['label' => 'Gabinete do Prefeito', 'route' => 'prefeito.gabinete', 'icon' => 'pie-chart-fill'],
-                ['label' => 'Agenda Oficial', 'route' => 'calendario/calendario-pessoal', 'icon' => 'calendar-event-fill'],
-
+                [
+                    'label' => 'Agenda Oficial',
+                    'route' => 'calendario/calendario-pessoal',
+                    'icon' => 'calendar-event-fill',
+                ],
             ],
         ],
 
@@ -37,11 +40,31 @@
                     'icon' => 'file-text',
                     'id_submenu' => 'fin-relatorios',
                     'submenu' => [
-                        ['label' => 'Receitas x Despesas (Séries)',       'route' => 'financeiro.relatorios.rx_d',            'icon' => 'file-earmark-text-fill'],
-                        ['label' => 'Execução Orçamentária (Mês/Ano)',    'route' => 'financeiro.relatorios.execucao',        'icon' => 'file-earmark-text-fill'],
-                        ['label' => 'Despesas por Função/Subfunção',      'route' => 'financeiro.relatorios.despesas_funcao', 'icon' => 'file-earmark-text-fill'],
-                        ['label' => 'Fornecedores (Top / Concentração)',  'route' => 'financeiro.relatorios.fornecedores',    'icon' => 'file-earmark-text-fill'],
-                        ['label' => 'Empenhos / Liq. / Pagamentos',       'route' => 'financeiro.relatorios.elp',             'icon' => 'file-earmark-text-fill'],
+                        [
+                            'label' => 'Receitas x Despesas (Séries)',
+                            'route' => 'financeiro.relatorios.rx_d',
+                            'icon' => 'file-earmark-text-fill',
+                        ],
+                        [
+                            'label' => 'Execução Orçamentária (Mês/Ano)',
+                            'route' => 'financeiro.relatorios.execucao',
+                            'icon' => 'file-earmark-text-fill',
+                        ],
+                        [
+                            'label' => 'Despesas por Função/Subfunção',
+                            'route' => 'financeiro.relatorios.despesas_funcao',
+                            'icon' => 'file-earmark-text-fill',
+                        ],
+                        [
+                            'label' => 'Fornecedores (Top / Concentração)',
+                            'route' => 'financeiro.relatorios.fornecedores',
+                            'icon' => 'file-earmark-text-fill',
+                        ],
+                        [
+                            'label' => 'Empenhos / Liq. / Pagamentos',
+                            'route' => 'financeiro.relatorios.elp',
+                            'icon' => 'file-earmark-text-fill',
+                        ],
                         ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
                         ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
                     ],
@@ -223,13 +246,20 @@
 
     /* TEMA BLACK (ZINC) */
     html.black {
-        --sidebar-bg: #18181b; /* zinc-900 */
-        --sidebar-border: #27272a; /* zinc-800 */
-        --sidebar-text: #e4e4e7; /* zinc-200 */
-        --sidebar-hover-bg: #27272a; /* zinc-800 (Hover suave) */
-        --sidebar-submenu-bg: #18181b; /* zinc-900 (Mesmo do bg para flat look) */
-        --sidebar-submenu-border: #3f3f46; /* zinc-700 */
-        --sidebar-tooltip-bg: #27272a; /* zinc-800 */
+        --sidebar-bg: #18181b;
+        /* zinc-900 */
+        --sidebar-border: #27272a;
+        /* zinc-800 */
+        --sidebar-text: #e4e4e7;
+        /* zinc-200 */
+        --sidebar-hover-bg: #27272a;
+        /* zinc-800 (Hover suave) */
+        --sidebar-submenu-bg: #18181b;
+        /* zinc-900 (Mesmo do bg para flat look) */
+        --sidebar-submenu-border: #3f3f46;
+        /* zinc-700 */
+        --sidebar-tooltip-bg: #27272a;
+        /* zinc-800 */
     }
 
     @media (min-width: 1024px) {
@@ -279,14 +309,17 @@
     html:not(.dark):not(.black) #top-bar-sidebar {
         box-shadow: 0 12px 30px rgba(2, 6, 23, .10);
     }
+
     html:not(.dark):not(.black) #top-bar-sidebar .sidebar-link {
         background: var(--sidebar-item-bg);
         border: 1px solid rgba(203, 213, 225, .65);
     }
+
     html:not(.dark):not(.black) #top-bar-sidebar .sidebar-link:hover {
         background: var(--sidebar-hover-bg) !important;
         border-color: rgba(148, 163, 184, .75);
     }
+
     html:not(.dark):not(.black) #top-bar-sidebar .submenu a:hover {
         background: #ffffff !important;
     }
@@ -399,8 +432,8 @@
                     <button type="button"
                         class="sidebar-link flex w-full items-center justify-between rounded-lg px-3 py-2.5"
                         data-submenu-toggle="submenu-{{ $menu['id'] }}"
-                        data-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right-start"
-                        data-popover-trigger="hover" data-popover-offset="8">
+                        data-sb-popover-target="popover-{{ $menu['id'] }}" data-popover-placement="right-start"
+                        data-sb-popover-trigger="hover" data-popover-offset="8">
                         <div class="flex items-center gap-3">
                             <x-dynamic-component :component="'bi-' . $menu['icon_main']" class="w-5 h-5" />
                             <span class="menu-bar inline-flex h-6 w-1 rounded-full"></span>
@@ -418,14 +451,15 @@
                                     @if (isset($item['submenu']))
                                         {{-- Exibe itens agrupados se sidebar aberta --}}
                                         <div class="pt-1">
-                                            <div class="flex items-center gap-2 px-1 py-1 text-gray-500 font-bold uppercase"
+                                            {{-- AQUI FOI FEITA A ALTERAÇÃO: text-gray-500 -> text-zinc-700 para fundo branco --}}
+                                            <div class="flex items-center gap-2 px-1 py-1 text-zinc-700 black:text-zinc-500 font-bold uppercase"
                                                 style="font-size: 0.65rem;">
                                                 <x-dynamic-component :component="'bi-' . $item['icon']" class="w-3 h-3" />
                                                 {{ $item['label'] }}
                                             </div>
                                             @foreach ($item['submenu'] as $sub)
                                                 <a href="{{ route($sub['route']) }}"
-                                                    class="flex items-center gap-2 rounded-md pl-4 pr-1 py-1 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
+                                                    class="flex items-center gap-2 rounded-md pl-4 pr-1 py-1 hover:bg-slate-200/60 dark:hover:bg-slate-800 black:hover:bg-zinc-800 transition-colors"
                                                     target="_blank" rel="noopener noreferrer">
                                                     <span
                                                         class="menu-bar inline-flex h-3 w-1 rounded-full opacity-50"></span>
@@ -454,73 +488,38 @@
 
     {{-- POPOVERS (PRIMEIRO NÍVEL - PASTA PRINCIPAL) --}}
     @foreach ($menus as $menu)
-        <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip" {{-- ID Auxiliar para vinculo Pai-Filho no JS --}}
+        <div data-sb-popover id="popover-{{ $menu['id'] }}" role="tooltip" {{-- ID Auxiliar para vinculo Pai-Filho no JS --}}
             data-parent-id="parent-group-{{ $menu['id'] }}"
-            class="popover-flowbite absolute z-50 hidden lg:inline-block invisible w-48 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
+            class="popover-flowbite absolute z-50 hidden lg:inline-block invisible w-48 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0"
             style="--menu-main: {{ $menu['hex_main'] }};">
             <div class="p-3">
-                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
+                <div
+                    class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
                     <span class="popover-accent h-4 w-1 rounded-full"></span>
                     <span class="popover-title font-semibold">{{ $menu['popover_title'] }}</span>
                 </div>
 
-            <ul class="space-y-1">
-                @foreach ($menu['items'] as $item)
-                    <li>
-                        @if(isset($item['submenu']))
-                            {{-- GATILHO CLICK: Abre o popover filho --}}
-                            <button type="button" 
-                                data-popover-target="popover-child-{{ $item['id_submenu'] }}" 
-                                data-popover-placement="right-start"
-                                data-popover-trigger="click" 
-                                class="flex w-full items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors cursor-pointer text-left">
-                                <div class="flex items-center gap-2">
+                <ul class="space-y-1">
+                    @foreach ($menu['items'] as $item)
+                        <li>
+                            @if (isset($item['submenu']))
+                                {{-- GATILHO CLICK: Abre o popover filho --}}
+                                <button type="button" data-sb-popover-target="popover-child-{{ $item['id_submenu'] }}"
+                                    data-sb-popover-placement="right-start" data-sb-popover-trigger="click"
+                                    class="flex w-full items-center justify-between px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors cursor-pointer text-left">
+                                    <div class="flex items-center gap-2">
+                                        <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
+                                        <span>{{ $item['label'] }}</span>
+                                    </div>
+                                    <x-bi-chevron-right class="w-3 h-3 opacity-50" />
+                                </button>
+                            @else
+                                {{-- Item Normal (Link direto) --}}
+                                <a href="{{ route($item['route']) }}"
+                                    class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
+                                    target="_blank" rel="noopener noreferrer">
                                     <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
                                     <span>{{ $item['label'] }}</span>
-                                </div>
-                                <x-bi-chevron-right class="w-3 h-3 opacity-50" />
-                            </button>
-                        @else
-                            {{-- Item Normal (Link direto) --}}
-                            <a href="{{ route($item['route']) }}"
-                                class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
-                                target="_blank" rel="noopener noreferrer">
-                                <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4 shrink-0" />
-                                <span>{{ $item['label'] }}</span>
-                            </a>
-                        @endif
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-        <div data-popper-arrow></div>
-    </div>
-@endforeach
-
-{{-- POPOVERS (SEGUNDO NÍVEL - CONTEÚDO DA "PASTA") --}}
-@foreach ($menus as $menu)
-    @foreach ($menu['items'] as $item)
-        @if(isset($item['submenu']))
-            <div data-popover id="popover-child-{{ $item['id_submenu'] }}" role="tooltip"
-                 {{-- Atributo personalizado para saber quem é o pai deste filho --}}
-                 data-parent-ref="popover-{{ $menu['id'] }}"
-                 class="popover-flowbite absolute z-50 hidden invisible w-56 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0"
-                 style="--menu-main: {{ $menu['hex_main'] }};">
-                
-                <div class="p-3">
-                     <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
-                        <span class="popover-accent h-3 w-1 rounded-full opacity-70"></span>
-                        <span class="font-semibold text-xs uppercase text-gray-500 dark:text-gray-400 black:text-zinc-400">{{ $item['label'] }}</span>
-                    </div>
-
-                    <ul class="space-y-1">
-                        @foreach ($item['submenu'] as $subItem)
-                            <li>
-                                <a href="{{ route($subItem['route']) }}"
-                                   class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
-                                   target="_blank" rel="noopener noreferrer">
-                                    <x-dynamic-component :component="'bi-' . $subItem['icon']" class="w-4 h-4 shrink-0 text-gray-400 black:text-zinc-500" />
-                                    <span>{{ $subItem['label'] }}</span>
                                 </a>
                             @endif
                         </li>
@@ -535,25 +534,27 @@
     @foreach ($menus as $menu)
         @foreach ($menu['items'] as $item)
             @if (isset($item['submenu']))
-                <div data-popover id="popover-child-{{ $item['id_submenu'] }}" role="tooltip" {{-- Atributo personalizado para saber quem é o pai deste filho --}}
+                <div data-sb-popover id="popover-child-{{ $item['id_submenu'] }}" role="tooltip" {{-- Atributo personalizado para saber quem é o pai deste filho --}}
                     data-parent-ref="popover-{{ $menu['id'] }}"
-                    class="popover-flowbite absolute z-50 hidden invisible w-56 text-sm text-gray-900 dark:text-gray-200 transition-opacity duration-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl opacity-0"
+                    class="popover-flowbite absolute z-50 hidden invisible w-56 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0"
                     style="--menu-main: {{ $menu['hex_main'] }};">
 
                     <div class="p-3">
-                        <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
+                        <div
+                            class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
                             <span class="popover-accent h-3 w-1 rounded-full opacity-70"></span>
                             <span
-                                class="font-semibold text-xs uppercase text-gray-500 dark:text-gray-400">{{ $item['label'] }}</span>
+                                class="font-semibold text-xs uppercase text-gray-500 dark:text-gray-400 black:text-zinc-400">{{ $item['label'] }}</span>
                         </div>
 
                         <ul class="space-y-1">
                             @foreach ($item['submenu'] as $subItem)
                                 <li>
                                     <a href="{{ route($subItem['route']) }}"
-                                        class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                        class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
                                         target="_blank" rel="noopener noreferrer">
-                                        <x-dynamic-component :component="'bi-' . $subItem['icon']" class="w-4 h-4 shrink-0 text-gray-400" />
+                                        <x-dynamic-component :component="'bi-' . $subItem['icon']"
+                                            class="w-4 h-4 shrink-0 text-gray-400 black:text-zinc-500" />
                                         <span>{{ $subItem['label'] }}</span>
                                     </a>
                                 </li>
@@ -577,23 +578,178 @@
         const toggleBtn = document.getElementById('header-sidebar-toggle');
         const KEY = 'sidebarCollapsed';
         const mq = window.matchMedia('(min-width: 1024px)');
-        
-        // Verifica se é Desktop
-        const isDesktop = () => mq.matches;
 
+        const isDesktop = () => mq.matches;
         const setAria = (expanded) => toggleBtn && toggleBtn.setAttribute('aria-expanded', String(expanded));
 
+        // =================================================================
+        // 2. POPOVER SYSTEM (SEM FLOWBITE)
+        // =================================================================
+        const closeTimers = Object.create(null);
+
+        function showEl(el) {
+            if (!el) return;
+            el.classList.remove('hidden', 'invisible', 'opacity-0');
+            el.classList.add('block', 'opacity-100');
+        }
+
+        function hidePopoverImmediate(el) {
+            if (!el) return;
+            el.classList.add('hidden', 'invisible', 'opacity-0');
+            el.classList.remove('block', 'opacity-100');
+            el.removeAttribute('data-click-opened');
+
+            // solta travas do pai se não tiver outro filho aberto
+            const parentId = el.getAttribute('data-parent-ref');
+            if (parentId) {
+                const parent = document.getElementById(parentId);
+                if (parent) {
+                    const anyChildOpen = Array.from(
+                        document.querySelectorAll('.popover-flowbite[data-parent-ref="' + parentId + '"]')
+                    ).some((ch) => ch.classList.contains('block') && !ch.classList.contains('hidden'));
+
+                    if (!anyChildOpen) parent.removeAttribute('data-has-active-child');
+                }
+            }
+        }
+
+        function clearTimer(id) {
+            if (!id) return;
+            if (closeTimers[id]) {
+                clearTimeout(closeTimers[id]);
+                closeTimers[id] = null;
+            }
+        }
+
+        // ✅ fecha tudo SEM regras (mesmo se tiver "filho ativo")
+        function closeAllPopovers() {
+            document.querySelectorAll('.popover-flowbite').forEach((p) => {
+                clearTimer(p.id);
+                hidePopoverImmediate(p);
+                p.removeAttribute('data-has-active-child');
+            });
+        }
+
+        function cancelCloseTree(popoverId) {
+            if (!popoverId) return;
+
+            clearTimer(popoverId);
+
+            const el = document.getElementById(popoverId);
+            if (!el) return;
+
+            showEl(el);
+
+            // mantém pai aberto também
+            const parentId = el.getAttribute('data-parent-ref');
+            if (parentId) {
+                const parent = document.getElementById(parentId);
+                if (parent) parent.setAttribute('data-has-active-child', 'true');
+                cancelCloseTree(parentId);
+            }
+        }
+
+        // ✅ IMPORTANTE: aqui NÃO travamos por "click-opened"
+        // Queremos fechar quando o mouse sair mesmo.
+        function scheduleClose(elId) {
+            clearTimer(elId);
+
+            closeTimers[elId] = setTimeout(() => {
+                const el = document.getElementById(elId);
+                if (!el) return;
+
+                // ainda está com mouse em cima -> não fecha
+                if (el.matches(':hover')) return;
+                if (el.querySelector(':hover')) return;
+
+                // se tem filho ativo, pai não fecha
+                if (el.hasAttribute('data-has-active-child')) return;
+
+                hidePopoverImmediate(el);
+
+                const parentId = el.getAttribute('data-parent-ref');
+                if (parentId) scheduleClose(parentId);
+            }, 180);
+        }
+
+        // =================================================================
+        // 3. POSICIONAMENTO (SEU showPopover "perfeito")
+        // =================================================================
+        function showPopover(el, trigger) {
+            if (!isDesktop()) return;
+            if (!el || !trigger) return;
+
+            const GAP_ROOT = 10; // distância do MENU PRINCIPAL -> POPOVER PAI (hover)
+            const GAP_CHILD = 0; // <<< distância do POPOVER PAI -> POPOVER FILHO (click)  <<< MUDA AQUI
+            // ============================================================
+
+            const MARGIN = 10; // margem da viewport (não deixa colar na borda da tela)
+            const ROOT_TOP_FIX = -60; // ajuste fino do topo do PAI
+
+            showEl(el);
+
+            requestAnimationFrame(() => {
+                const tRect = trigger.getBoundingClientRect();
+                const parentPopover = trigger.closest('.popover-flowbite');
+                const parentRect = parentPopover ? parentPopover.getBoundingClientRect() : null;
+
+                // ✅ mata interferência de Popper/Flowbite
+                el.style.transform = 'none';
+                el.style.inset = 'auto';
+                el.style.margin = '0';
+
+                const isRoot = !parentRect;
+                let top = (isRoot ? tRect.top : parentRect.top) + (isRoot ? ROOT_TOP_FIX : 20);
+
+                const gapX = parentRect ? GAP_CHILD : GAP_ROOT;
+                let left = (parentRect ? parentRect.right : tRect.right) + gapX;
+
+                // reset de altura/scroll antes de medir
+                el.style.maxHeight = '';
+                el.style.overflowY = '';
+
+                let pRect = el.getBoundingClientRect();
+
+                const maxLeft = window.innerWidth - pRect.width - MARGIN;
+                left = Math.max(MARGIN, Math.min(left, maxLeft));
+
+                top = Math.max(MARGIN, top);
+
+                const availableH = window.innerHeight - top - MARGIN;
+                if (pRect.height > availableH) {
+                    el.style.maxHeight = `${Math.max(160, availableH)}px`;
+                    el.style.overflowY = 'auto';
+                    pRect = el.getBoundingClientRect();
+                }
+
+                el.style.position = 'fixed';
+                el.style.top = `${Math.round(top)}px`;
+                el.style.left = `${Math.round(left)}px`;
+                el.style.zIndex = '9999';
+            });
+        }
+
+        // =================================================================
+        // 4. SYNC / TOGGLE (agora fecha popovers quando abre/expande sidebar)
+        // =================================================================
         const sync = () => {
             if (!sidebar) return;
+
             if (isDesktop()) {
                 const collapsed = localStorage.getItem(KEY) === 'true';
                 sidebar.classList.remove('-translate-x-full');
                 document.body.classList.toggle('sidebar-collapsed', collapsed);
                 setAria(!collapsed);
+
+                // ✅ se EXPANDIU (sidebar aberta), popover não faz sentido -> fecha tudo
+                if (!collapsed) closeAllPopovers();
             } else {
                 sidebar.classList.add('-translate-x-full');
                 document.body.classList.remove('sidebar-collapsed');
                 setAria(false);
+
+                // ✅ mobile -> fecha popovers sempre
+                closeAllPopovers();
             }
         };
 
@@ -601,13 +757,18 @@
             toggleBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
+
                 if (isDesktop()) {
                     const collapsed = document.body.classList.toggle('sidebar-collapsed');
                     localStorage.setItem(KEY, collapsed);
                     setAria(!collapsed);
+
+                    // ✅ se clicou para EXPANDIR (collapsed=false), fecha popovers
+                    if (!collapsed) closeAllPopovers();
                 } else {
                     sidebar.classList.toggle('-translate-x-full');
                     setAria(!sidebar.classList.contains('-translate-x-full'));
+                    closeAllPopovers(); // ✅ abriu/fechou mobile -> fecha popovers
                 }
             });
 
@@ -617,18 +778,21 @@
                 if (!sidebar.classList.contains('-translate-x-full')) {
                     sidebar.classList.add('-translate-x-full');
                     setAria(false);
+                    closeAllPopovers();
                 }
             });
 
             sidebar.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
                 btn.addEventListener('click', function(e) {
                     if (document.body.classList.contains('sidebar-collapsed')) return;
-                    // No mobile, permitimos o accordion funcionar normalmente
                     e.preventDefault();
                     e.stopPropagation();
                     const group = this.closest('.menu-group');
                     if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' :
                         'true';
+
+                    // expandiu accordion -> popovers não precisam ficar abertos
+                    closeAllPopovers();
                 });
             });
         }
@@ -638,219 +802,93 @@
         sync();
 
         // =================================================================
-        // 2. SISTEMA DE POPOVER ROBUSTO (TRAVAMENTO DE CLICK)
+        // 5. FECHAR AO CLICAR FORA
         // =================================================================
-
-        const closeTimers = {};
-
-        // Função Recursiva: Marca a árvore genealógica como "Em uso"
-        function cancelCloseTree(popoverId) {
-            if (!popoverId) return;
-
-            // Cancela timer deste elemento
-            if (closeTimers[popoverId]) {
-                clearTimeout(closeTimers[popoverId]);
-                closeTimers[popoverId] = null;
-            }
-
-            const el = document.getElementById(popoverId);
-            if (el) {
-                el.classList.remove('hidden', 'invisible', 'opacity-0');
-                el.classList.add('block', 'opacity-100');
-
-                // Chama para o pai
-                const parentId = el.getAttribute('data-parent-ref');
-                if (parentId) cancelCloseTree(parentId);
-            }
-        }
-
-        function showPopover(el, trigger) {
-            // SEGURANÇA EXTRA: Se não for desktop, não faz nada (garantia dupla)
-            if (!isDesktop()) return; 
-
-            if (!el) return;
-
-            // Fecha outros que não sejam ancestrais
-            document.querySelectorAll('.popover-flowbite').forEach(other => {
-                if (other.id !== el.id && !isAncestor(el, other)) {
-                    // SE o "other" estiver aberto via click (fixo), ou mouse em cima, não fecha agora
-                    if (!other.matches(':hover') && !isClickOpened(other) && !hasActiveChild(other)) {
-                        hidePopoverImmediate(other);
-                    }
-                }
-            });
-
-            cancelCloseTree(el.id);
-
-            // --- POSICIONAMENTO ---
-            const tRect = trigger.getBoundingClientRect();
-            const pRect = el.getBoundingClientRect();
-
-            let top = tRect.top;
-            let left = 0;
-
-            const parentContainer = trigger.closest('.popover-flowbite');
-            if (parentContainer) {
-                // Alinha EXATAMENTE ao lado do pai (sem overlay, sem gap)
-                // Usamos o getBoundingClientRect do container pai
-                const parentRect = parentContainer.getBoundingClientRect();
-                left = parentRect.right;
-            } else {
-                // Primeiro nível: ao lado do botão
-                left = tRect.right + 10;
-            }
-
-            if (top + pRect.height > window.innerHeight) {
-                top = window.innerHeight - pRect.height - 10;
-            }
-
-            el.style.position = 'fixed';
-            el.style.top = `${top}px`;
-            el.style.left = `${left}px`;
-            el.style.zIndex = '9999';
-        }
-
-        function hidePopoverImmediate(el) {
-            if (!el) return;
-            el.classList.add('hidden', 'invisible', 'opacity-0');
-            el.classList.remove('block', 'opacity-100');
-            el.removeAttribute('data-click-opened');
-
-            // Limpa flag no pai indicando que filho fechou
-            const parentId = el.getAttribute('data-parent-ref');
-            if (parentId) {
-                const parent = document.getElementById(parentId);
-                if (parent) parent.removeAttribute('data-has-active-child');
-            }
-        }
-
-        function isAncestor(child, potentialParent) {
-            let curr = child;
-            while (curr) {
-                const pid = curr.getAttribute('data-parent-ref');
-                if (!pid) return false;
-                if (pid === potentialParent.id) return true;
-                curr = document.getElementById(pid);
-            }
-            return false;
-        }
-
-        // Verifica se o elemento foi aberto via click (Fixo)
-        function isClickOpened(el) {
-            return el.hasAttribute('data-click-opened');
-        }
-
-        // Verifica se o elemento tem um filho aberto (Travamento do Pai)
-        function hasActiveChild(el) {
-            return el.hasAttribute('data-has-active-child');
-        }
-
-        function scheduleClose(elId) {
-            if (closeTimers[elId]) clearTimeout(closeTimers[elId]);
-
-            closeTimers[elId] = setTimeout(() => {
-                const el = document.getElementById(elId);
-                if (!el) return;
-
-                // --- REGRAS DE OURO PARA NÃO FECHAR ---
-                // 1. Se foi clicado (fixo), não fecha via timer.
-                if (isClickOpened(el)) return;
-                // 2. Se tem um filho aberto (fixo ou hover), o pai não pode fechar.
-                if (hasActiveChild(el)) return;
-                // 3. Se o mouse está em cima.
-                if (el.matches(':hover')) return;
-                // 4. Se o mouse está num input/botão dentro dele.
-                if (el.querySelector(':hover')) return;
-
-                // Se falhou em tudo, pode fechar
-                hidePopoverImmediate(el);
-
-                // E verifica se o pai deve fechar (recursão)
-                const parentId = el.getAttribute('data-parent-ref');
-                if (parentId) scheduleClose(parentId);
-
-            }, 200);
-        }
-
-        // FECHAR AO CLICAR FORA (Global)
         document.addEventListener('click', (e) => {
             const target = e.target;
-            if (target.closest('.popover-flowbite') || target.closest('[data-popover-target]')) return;
-
-            // Fecha tudo
-            document.querySelectorAll('.popover-flowbite').forEach(p => hidePopoverImmediate(p));
+            if (target.closest('.popover-flowbite') || target.closest('[data-sb-popover-target]'))
+                return;
+            closeAllPopovers();
         });
 
-        // --- ATRIBUIÇÃO DE EVENTOS ---
-        const triggers = document.querySelectorAll('[data-popover-target]');
+        // =================================================================
+        // 6. TRIGGERS
+        // =================================================================
+        const triggers = document.querySelectorAll('[data-sb-popover-target]');
 
-        triggers.forEach(trigger => {
-            const targetId = trigger.getAttribute('data-popover-target');
-            const triggerType = trigger.getAttribute('data-popover-trigger') || 'hover';
+        triggers.forEach((trigger) => {
+            const targetId = trigger.getAttribute('data-sb-popover-target');
+            const triggerType = trigger.getAttribute('data-sb-popover-trigger') || 'hover';
             const popoverEl = document.getElementById(targetId);
-
             if (!popoverEl) return;
 
+            const isRootTrigger = !trigger.closest('.popover-flowbite'); // menu principal
+
             if (triggerType === 'click') {
-                // --- CLICK (Submenus) ---
+                // --- CLICK (filho) ---
                 trigger.addEventListener('click', (e) => {
-                    // *** AQUI: Se não for Desktop, sai imediatamente ***
-                    // Isso permite que o click continue propagando (se necessário) ou simplesmente não abra o popover
                     if (!isDesktop()) return;
-
-                    e.stopPropagation();
                     e.preventDefault();
+                    e.stopPropagation();
 
-                    const isVisible = popoverEl.classList.contains('block');
-
+                    const isVisible = popoverEl.classList.contains('block') && !popoverEl
+                        .classList.contains('hidden');
                     if (isVisible) {
                         hidePopoverImmediate(popoverEl);
-                    } else {
-                        // 1. Marca como aberto por Click
-                        popoverEl.setAttribute('data-click-opened', 'true');
-
-                        // 2. AVISA O PAI QUE ELE TEM UM FILHO ATIVO (TRAVA O PAI)
-                        const parentPopover = trigger.closest('.popover-flowbite');
-                        if (parentPopover) {
-                            parentPopover.setAttribute('data-has-active-child', 'true');
-                            cancelCloseTree(parentPopover.id);
-                        }
-
-                        showPopover(popoverEl, trigger);
+                        scheduleClose(popoverEl.getAttribute(
+                        'data-parent-ref')); // tenta fechar pai depois
+                        return;
                     }
+
+                    // fecha irmãos (outros filhos do mesmo pai) pra não acumular
+                    const parentPopover = trigger.closest('.popover-flowbite');
+                    if (parentPopover) {
+                        document
+                            .querySelectorAll('.popover-flowbite[data-parent-ref="' +
+                                parentPopover.id + '"]')
+                            .forEach((ch) => {
+                                if (ch.id !== targetId) hidePopoverImmediate(ch);
+                            });
+
+                        parentPopover.setAttribute('data-has-active-child', 'true');
+                        cancelCloseTree(parentPopover.id);
+                    }
+
+                    popoverEl.setAttribute('data-click-opened', 'true');
+                    cancelCloseTree(targetId);
+                    showPopover(popoverEl, trigger);
                 });
             } else {
-                // --- HOVER (Menu Principal) ---
+                // --- HOVER (pai) ---
                 trigger.addEventListener('mouseenter', () => {
-                    // *** AQUI: Se não for Desktop, sai imediatamente ***
                     if (!isDesktop()) return;
 
-                    const parentPopover = trigger.closest('.popover-flowbite');
-                    if (parentPopover) cancelCloseTree(parentPopover.id);
+                    // ✅ quando entra em OUTRO MENU PRINCIPAL, fecha o anterior SEM depender de flags
+                    if (isRootTrigger) closeAllPopovers();
+
+                    cancelCloseTree(targetId);
                     showPopover(popoverEl, trigger);
                 });
 
                 trigger.addEventListener('mouseleave', () => {
-                    // *** AQUI: Se não for Desktop, sai imediatamente ***
                     if (!isDesktop()) return;
-
                     scheduleClose(targetId);
                 });
             }
         });
 
-        // Eventos no Popover para manter aberto
-        document.querySelectorAll('.popover-flowbite').forEach(popover => {
+        // =================================================================
+        // 7. POPOVER HOVER (fecha ao sair)
+        // =================================================================
+        document.querySelectorAll('.popover-flowbite').forEach((popover) => {
             popover.addEventListener('mouseenter', () => {
-                if (!isDesktop()) return; // Bloqueia também aqui
+                if (!isDesktop()) return;
                 cancelCloseTree(popover.id);
             });
+
             popover.addEventListener('mouseleave', () => {
-                if (!isDesktop()) return; // Bloqueia também aqui
-                // Se não for fixo por click e não tiver filho aberto, agenda fechamento
-                if (!isClickOpened(popover) && !hasActiveChild(popover)) {
-                    scheduleClose(popover.id);
-                }
+                if (!isDesktop()) return;
+                scheduleClose(popover.id);
             });
         });
     });
