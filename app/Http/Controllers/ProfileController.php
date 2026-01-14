@@ -46,7 +46,8 @@ class ProfileController extends Controller
             $extension = $file->getClientOriginalExtension();
 
             // --- GERA O HASH (NOME + EMAIL) ---
-            $filename = hash('sha256', $user->name . $user->email) . '.' . $extension;
+            // Adicionamos o microtime() para que o nome do arquivo mude a cada upload
+            $filename = hash('sha256', $user->name . $user->email . microtime()) . '.' . $extension;
 
             // Move para a pasta public e salva apenas o nome no banco
             $file->move($destinationPath, $filename);

@@ -1,49 +1,52 @@
     @php
-    // --- MOCK DATA PARA NOTIFICAÇÕES (Simulando o Backend) ---
-    $notifications = $notifications ?? [
-    [
-    'id' => 1,
-    'title' => 'Relatório Financeiro',
-    'message' => 'O fechamento mensal foi concluído.',
-    'time' => '10 min atrás',
-    'unread' => true,
-    'flag_text' => 'Importante',
-    'flag_color' => 'rose',
-    'read_url' => '#',
-    ],
-    [
-    'id' => 2,
-    'title' => 'Novo Usuário',
-    'message' => 'Roberto Silva solicitou acesso ao sistema.',
-    'time' => '1h atrás',
-    'unread' => true,
-    'flag_text' => 'Cadastro',
-    'flag_color' => 'sky',
-    'read_url' => '#',
-    ],
-    [
-    'id' => 3,
-    'title' => 'Manutenção',
-    'message' => 'Servidor instável na região norte.',
-    'time' => 'Ontem',
-    'unread' => false,
-    'flag_text' => 'TI',
-    'flag_color' => 'amber',
-    'read_url' => '#',
-    ],
-    ];
+        // --- MOCK DATA PARA NOTIFICAÇÕES (Simulando o Backend) ---
+        $notifications = $notifications ?? [
+            [
+                'id' => 1,
+                'title' => 'Relatório Financeiro',
+                'message' => 'O fechamento mensal foi concluído.',
+                'time' => '10 min atrás',
+                'unread' => true,
+                'flag_text' => 'Importante',
+                'flag_color' => 'rose',
+                'read_url' => '#',
+            ],
+            [
+                'id' => 2,
+                'title' => 'Novo Usuário',
+                'message' => 'Roberto Silva solicitou acesso ao sistema.',
+                'time' => '1h atrás',
+                'unread' => true,
+                'flag_text' => 'Cadastro',
+                'flag_color' => 'sky',
+                'read_url' => '#',
+            ],
+            [
+                'id' => 3,
+                'title' => 'Manutenção',
+                'message' => 'Servidor instável na região norte.',
+                'time' => 'Ontem',
+                'unread' => false,
+                'flag_text' => 'TI',
+                'flag_color' => 'amber',
+                'read_url' => '#',
+            ],
+        ];
 
-    $flagClass = [
-    'sky' => 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-200 black:bg-sky-900/30 black:text-sky-200',
-    'emerald' => 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200 black:bg-emerald-900/30
+        $flagClass = [
+            'sky' =>
+                'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-200 black:bg-sky-900/30 black:text-sky-200',
+            'emerald' => 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-200 black:bg-emerald-900/30
     black:text-emerald-200',
-    'amber' => 'bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-200 black:bg-amber-900/30
+            'amber' => 'bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-200 black:bg-amber-900/30
     black:text-amber-200',
-    'rose' => 'bg-rose-100 text-rose-900 dark:bg-rose-900/30 dark:text-rose-200 black:bg-rose-900/30 black:text-rose-200',
-    'violet' => 'bg-violet-100 text-violet-900 dark:bg-violet-900/30 dark:text-violet-200 black:bg-violet-900/30
+            'rose' =>
+                'bg-rose-100 text-rose-900 dark:bg-rose-900/30 dark:text-rose-200 black:bg-rose-900/30 black:text-rose-200',
+            'violet' => 'bg-violet-100 text-violet-900 dark:bg-violet-900/30 dark:text-violet-200 black:bg-violet-900/30
     black:text-violet-200',
-    'slate' => 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100 black:bg-zinc-800 black:text-zinc-200',
-    ];
+            'slate' =>
+                'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-100 black:bg-zinc-800 black:text-zinc-200',
+        ];
     @endphp
 
     <nav id="app-header" class="fixed top-0 inset-x-0 z-50 h-16 w-full bg-neutral-900 dark:bg-neutral-900 ">
@@ -72,9 +75,10 @@
                         <button id="btn-tipotempo" data-dropdown-toggle="dropdown-tipotempo" type="button"
                             class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium rounded-md border bg-neutral-200 text-slate-600 border-slate-200 hover:bg-slate-200 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-300 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40 black:bg-zinc-900 black:border-zinc-700 black:text-zinc-300">
                             <span id="tipotempo-label" class="whitespace-nowrap">Hoje</span>
-                            <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="m1 1 4 4 4-4" />
+                            <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 4 4 4-4" />
                             </svg>
                         </button>
 
@@ -124,15 +128,17 @@
                         {{-- Botão Avatar --}}
                         <button type="button"
                             class="flex text-sm bg-gray-800 rounded-full focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600"
-                            aria-expanded="false" data-dropdown-toggle="dropdown-user" data-dropdown-placement="bottom-end">
+                            aria-expanded="false" data-dropdown-toggle="dropdown-user"
+                            data-dropdown-placement="bottom-end">
                             <span class="sr-only">Menu Usuário</span>
                             <span class="relative inline-block leading-none">
                                 {{-- LOGICA DE EXIBIÇÃO DA FOTO NO HEADER --}}
                                 @php
-                                $profilePhotoUrl = Auth::user()->profile_photo_path
-                                ? asset('images/' . Auth::user()->profile_photo_path) . '?v=' . time()
-                                :
-                                'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=E2E8F0&color=64748B';
+                                    $profilePhotoUrl = Auth::user()->profile_photo_path
+                                        ? asset('images/' . Auth::user()->profile_photo_path) . '?v=' . time()
+                                        : 'https://ui-avatars.com/api/?name=' .
+                                            urlencode(Auth::user()->name) .
+                                            '&background=E2E8F0&color=64748B';
                                 @endphp
                                 <img class="w-8 h-8 rounded-full object-cover block" src="{{ $profilePhotoUrl }}"
                                     alt="user photo">
@@ -148,10 +154,11 @@
                             class="absolute right-0 mt-2 z-50 hidden w-56 bg-white border border-slate-200 rounded-lg shadow-xl dark:bg-slate-800 dark:border-slate-700 black:bg-zinc-900 black:border-zinc-800">
                             <div class="px-4 py-3 border-b border-default-medium dark:border-slate-700 black:border-zinc-800"
                                 role="none">
-                                <p class="text-sm font-medium text-heading dark:text-white black:text-zinc-100" role="none">
+                                <p class="text-sm font-medium text-heading dark:text-white black:text-zinc-100"
+                                    role="none">
                                     {{ Auth::user()->name }}</p>
-                                <p class="text-sm text-body truncate dark:text-slate-400 black:text-zinc-400" role="none">{{
-                                    Auth::user()->email }}</p>
+                                <p class="text-sm text-body truncate dark:text-slate-400 black:text-zinc-400"
+                                    role="none">{{ Auth::user()->email }}</p>
                             </div>
                             <ul class="p-2 text-sm text-body font-medium dark:text-slate-300 black:text-zinc-300"
                                 role="none">
@@ -202,7 +209,8 @@
                     class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700 black:border-zinc-800">
                     <div class="flex items-center gap-2">
                         <x-bi-bell class="w-5 h-5 text-slate-700 dark:text-slate-200 black:text-zinc-200" />
-                        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 black:text-zinc-100">Central de
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 black:text-zinc-100">
+                            Central de
                             Notificações</h3>
                     </div>
                     <button type="button"
@@ -217,53 +225,54 @@
                     <div class="max-h-[60vh] overflow-y-auto scrollbar-hide">
                         <ul class="space-y-2" id="notifications-list">
                             @forelse ($notifications as $n)
-                            @php
-                            $unread = !empty($n['unread']);
-                            $flag = $n['flag_color'] ?? 'slate';
-                            @endphp
-                            <li>
-                                <button type="button"
-                                    class="notif-item w-full text-left rounded-xl border border-slate-200 bg-white p-3 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800 black:bg-zinc-900 black:border-zinc-800 black:hover:bg-zinc-800 transition-all group"
-                                    data-notif-id="{{ $n['id'] }}" data-unread-default="{{ $unread ? '1' : '0' }}">
+                                @php
+                                    $unread = !empty($n['unread']);
+                                    $flag = $n['flag_color'] ?? 'slate';
+                                @endphp
+                                <li>
+                                    <button type="button"
+                                        class="notif-item w-full text-left rounded-xl border border-slate-200 bg-white p-3 hover:bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800 black:bg-zinc-900 black:border-zinc-800 black:hover:bg-zinc-800 transition-all group"
+                                        data-notif-id="{{ $n['id'] }}"
+                                        data-unread-default="{{ $unread ? '1' : '0' }}">
 
-                                    <div class="flex items-start gap-3">
-                                        {{-- Bolinha de não lido --}}
-                                        <span data-notif-dot
-                                            class="mt-1.5 w-2.5 h-2.5 rounded-full bg-sky-500 shadow-sm shadow-sky-500/50 {{ $unread ? '' : 'hidden' }}"></span>
+                                        <div class="flex items-start gap-3">
+                                            {{-- Bolinha de não lido --}}
+                                            <span data-notif-dot
+                                                class="mt-1.5 w-2.5 h-2.5 rounded-full bg-sky-500 shadow-sm shadow-sky-500/50 {{ $unread ? '' : 'hidden' }}"></span>
 
-                                        <div class="min-w-0 flex-1">
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <div
-                                                    class="font-bold text-slate-900 dark:text-slate-100 black:text-zinc-100 truncate text-sm">
-                                                    {{ $n['title'] }}
+                                            <div class="min-w-0 flex-1">
+                                                <div class="flex items-center gap-2 mb-1">
+                                                    <div
+                                                        class="font-bold text-slate-900 dark:text-slate-100 black:text-zinc-100 truncate text-sm">
+                                                        {{ $n['title'] }}
+                                                    </div>
+
+                                                    @if (!empty($n['flag_text']))
+                                                        <span
+                                                            class="shrink-0 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] uppercase font-bold tracking-wide {{ $flagClass[$flag] ?? $flagClass['slate'] }}">
+                                                            {{ $n['flag_text'] }}
+                                                        </span>
+                                                    @endif
+
+                                                    <div
+                                                        class="ml-auto text-xs text-slate-500 dark:text-slate-400 black:text-zinc-500">
+                                                        {{ $n['time'] }}
+                                                    </div>
                                                 </div>
 
-                                                @if (!empty($n['flag_text']))
-                                                <span
-                                                    class="shrink-0 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] uppercase font-bold tracking-wide {{ $flagClass[$flag] ?? $flagClass['slate'] }}">
-                                                    {{ $n['flag_text'] }}
-                                                </span>
-                                                @endif
-
                                                 <div
-                                                    class="ml-auto text-xs text-slate-500 dark:text-slate-400 black:text-zinc-500">
-                                                    {{ $n['time'] }}
+                                                    class="text-sm text-slate-600 dark:text-slate-300 black:text-zinc-400 leading-snug">
+                                                    {{ $n['message'] }}
                                                 </div>
-                                            </div>
-
-                                            <div
-                                                class="text-sm text-slate-600 dark:text-slate-300 black:text-zinc-400 leading-snug">
-                                                {{ $n['message'] }}
                                             </div>
                                         </div>
-                                    </div>
-                                </button>
-                            </li>
+                                    </button>
+                                </li>
                             @empty
-                            <li class="py-8 text-center text-slate-500 dark:text-slate-400 black:text-zinc-500">
-                                <x-bi-inbox class="w-12 h-12 mx-auto mb-2 opacity-50" />
-                                <p>Nenhuma notificação encontrada.</p>
-                            </li>
+                                <li class="py-8 text-center text-slate-500 dark:text-slate-400 black:text-zinc-500">
+                                    <x-bi-inbox class="w-12 h-12 mx-auto mb-2 opacity-50" />
+                                    <p>Nenhuma notificação encontrada.</p>
+                                </li>
                             @endforelse
                         </ul>
                     </div>
@@ -327,20 +336,24 @@
                                             <div
                                                 class="w-32 h-32 rounded-full p-1 border-2 border-slate-200 dark:border-slate-600 black:border-zinc-700 bg-white dark:bg-slate-700 black:bg-zinc-800">
                                                 @php
-                                                $modalPhotoUrl = Auth::user()->profile_photo_path
-                                                ? asset('images/' . Auth::user()->profile_photo_path) . '?v=' . time()
-                                                :
-                                                'https://ui-avatars.com/api/?name='.urlencode(Auth::user()->name).'&background=E2E8F0&color=64748B';
+                                                    $modalPhotoUrl = Auth::user()->profile_photo_path
+                                                        ? asset('images/' . Auth::user()->profile_photo_path) .
+                                                            '?v=' .
+                                                            time()
+                                                        : 'https://ui-avatars.com/api/?name=' .
+                                                            urlencode(Auth::user()->name) .
+                                                            '&background=E2E8F0&color=64748B';
                                                 @endphp
                                                 {{-- ID adicionado para o Preview JS --}}
-                                                <img id="profile-image-preview" src="{{ $modalPhotoUrl }}" alt="Profile"
-                                                    class="w-full h-full rounded-full object-cover">
+                                                <img id="profile-image-preview" src="{{ $modalPhotoUrl }}"
+                                                    alt="Profile" class="w-full h-full rounded-full object-cover">
                                             </div>
                                             <label for="photo"
                                                 class="absolute bottom-0 right-0 bg-sky-500 text-white p-2 rounded-full cursor-pointer hover:bg-sky-600 transition-colors shadow-lg border-2 border-slate-50 dark:border-slate-800 black:border-zinc-800">
                                                 <x-bi-camera class="w-4 h-4" />
                                             </label>
-                                            <input type="file" id="photo" name="photo" class="hidden" accept="image/*">
+                                            <input type="file" id="photo" name="photo" class="hidden"
+                                                accept="image/*">
                                         </div>
 
                                         <div class="mt-4 space-y-1">
@@ -359,7 +372,8 @@
                                                 Tema: <span id="current-theme-label"
                                                     class="ml-1 font-bold">Selecionar</span>
                                                 <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 10 6">
                                                     <path stroke="currentColor" stroke-linecap="round"
                                                         stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
                                                 </svg>
@@ -430,8 +444,10 @@
                                                             class="w-full bg-white dark:bg-slate-900 black:bg-zinc-950 border border-slate-300 dark:border-slate-600 black:border-zinc-700 text-slate-700 dark:text-slate-200 black:text-zinc-100 text-sm rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent block p-2.5 transition-all shadow-sm placeholder-slate-400 black:placeholder-zinc-500"
                                                             placeholder="Seu nome">
                                                     </div>
-                                                    @error('name') <span class="text-red-500 text-xs font-medium">{{
-                                                        $message }}</span> @enderror
+                                                    @error('name')
+                                                        <span
+                                                            class="text-red-500 text-xs font-medium">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
 
                                                 <div class="space-y-1">
@@ -445,8 +461,10 @@
                                                             class="w-full bg-white dark:bg-slate-900 black:bg-zinc-950 border border-slate-300 dark:border-slate-600 black:border-zinc-700 text-slate-700 dark:text-slate-200 black:text-zinc-100 text-sm rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent block p-2.5 transition-all shadow-sm placeholder-slate-400 black:placeholder-zinc-500"
                                                             placeholder="nome@exemplo.com">
                                                     </div>
-                                                    @error('email') <span class="text-red-500 text-xs font-medium">{{
-                                                        $message }}</span> @enderror
+                                                    @error('email')
+                                                        <span
+                                                            class="text-red-500 text-xs font-medium">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -464,11 +482,13 @@
                                                         class="text-slate-500 dark:text-slate-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider">
                                                         Senha Atual
                                                     </label>
-                                                    <input type="password" name="current_password" id="current_password"
+                                                    <input type="password" name="current_password"
+                                                        id="current_password"
                                                         class="w-full bg-white dark:bg-slate-900 black:bg-zinc-950 border border-slate-300 dark:border-slate-600 black:border-zinc-700 text-slate-700 dark:text-slate-200 black:text-zinc-100 text-sm rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent block p-2.5 transition-all shadow-sm placeholder-slate-400 black:placeholder-zinc-500"
                                                         placeholder="••••••••">
-                                                    @error('current_password') <span
-                                                        class="text-red-500 text-xs font-medium">{{ $message }}</span>
+                                                    @error('current_password')
+                                                        <span
+                                                            class="text-red-500 text-xs font-medium">{{ $message }}</span>
                                                     @enderror
                                                 </div>
 
@@ -499,10 +519,20 @@
 
                                         {{-- Ações --}}
                                         <div class="flex justify-end pt-4">
-                                            <button type="submit"
-                                                class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all duration-200 bg-sky-600 rounded-lg hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-600 dark:focus:ring-offset-slate-900">
-                                                <span>Salvar Alterações</span>
-                                                <x-bi-check-lg
+                                            <button type="submit" id="btn-profile-submit"
+                                                class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all duration-200 bg-sky-600 rounded-lg hover:bg-sky-500">
+                                                <span id="btn-text">Salvar Alterações</span>
+                                                <svg id="btn-spinner"
+                                                    class="hidden animate-spin ml-2 h-4 w-4 text-white"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                        stroke="currentColor" stroke-width="4"></circle>
+                                                    <path class="opacity-75" fill="currentColor"
+                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                    </path>
+                                                </svg>
+                                                <x-bi-check-lg id="btn-icon"
                                                     class="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" />
                                             </button>
                                         </div>
@@ -529,7 +559,8 @@
 
             <div
                 class="px-6 py-4 border-b border-slate-100 dark:border-slate-700 black:border-zinc-800 flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-slate-800 dark:text-white black:text-zinc-100">Selecionar Período</h3>
+                <h3 class="text-lg font-semibold text-slate-800 dark:text-white black:text-zinc-100">Selecionar Período
+                </h3>
                 <button type="button" onclick="document.getElementById('modalPeriodo').classList.add('hidden')"
                     class="text-slate-400 hover:text-slate-500 dark:hover:text-slate-300 black:hover:text-zinc-200">
                     <x-bi-x-lg class="w-5 h-5" />
@@ -570,100 +601,121 @@
     </div>
 
     @push('scripts')
-    {{-- Script Unificado: Notificações + Badges + Filtro de Tempo + Preview de Imagem --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // === 1. LÓGICA DE NOTIFICAÇÕES E BADGES ===
-            const list = document.getElementById('notifications-list');
-            const avatarBadge = document.getElementById('notif-avatar-badge');
-            const menuBadge = document.getElementById('notif-menu-badge');
+        {{-- Script Unificado: Notificações + Badges + Filtro de Tempo + Preview de Imagem --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
 
-            function updateBadges() {
-                if (!list) return;
-                const unreadCount = list.querySelectorAll('.notif-item[data-unread-default="1"]').length;
+                // Localize o formulário de perfil dentro do modal
+                const profileForm = document.querySelector('#settings-modal form');
+                const btnSubmit = document.getElementById('btn-profile-submit');
+                const btnText = document.getElementById('btn-text');
+                const btnSpinner = document.getElementById('btn-spinner');
+                const btnIcon = document.getElementById('btn-icon');
 
-                if (avatarBadge) {
-                    avatarBadge.textContent = unreadCount > 0 ? (unreadCount > 9 ? '9+' : unreadCount) : '';
-                    avatarBadge.classList.toggle('hidden', unreadCount === 0);
-                }
-                if (menuBadge) {
-                    menuBadge.textContent = unreadCount > 0 ? unreadCount : '';
-                    menuBadge.classList.toggle('hidden', unreadCount === 0);
-                }
-            }
+                if (profileForm) {
+                    profileForm.addEventListener('submit', function() {
+                        // Desativa o botão para não enviar duas vezes
+                        btnSubmit.disabled = true;
+                        btnSubmit.classList.add('opacity-70', 'cursor-not-allowed');
 
-            if (list) {
-                list.addEventListener('click', (e) => {
-                    const button = e.target.closest('.notif-item');
-                    if (!button) return;
-
-                    if (button.dataset.unreadDefault === '1') {
-                        button.dataset.unreadDefault = '0';
-                        button.classList.add('opacity-60');
-                        const dot = button.querySelector('[data-notif-dot]');
-                        if (dot) dot.classList.add('hidden');
-                        updateBadges();
-                    }
-                });
-            }
-            updateBadges();
-
-            // === 2. LÓGICA DO FILTRO DE TEMPO ===
-            const STORAGE_KEY = "tipotempo";
-            const btnTempo = document.getElementById("btn-tipotempo");
-            const labelTempo = document.getElementById("tipotempo-label");
-            const dropdownTempo = document.getElementById("dropdown-tipotempo");
-
-            if (btnTempo && labelTempo && dropdownTempo) {
-                const items = dropdownTempo.querySelectorAll("a[data-tempo]");
-                const closeDropdown = () => dropdownTempo.classList.add('hidden');
-
-                const applyTempo = (tempo, label) => {
-                    labelTempo.textContent = label;
-                    localStorage.setItem(STORAGE_KEY, tempo);
-                    const url = new URL(window.location);
-                    url.searchParams.set("tempo", tempo);
-                    window.history.pushState({}, "", url);
-                };
-
-                const savedTempo = localStorage.getItem(STORAGE_KEY);
-                if (savedTempo) {
-                    const target = Array.from(items).find(i => i.dataset.tempo === savedTempo);
-                    if (target) labelTempo.textContent = target.textContent.trim();
-                }
-
-                items.forEach(item => {
-                    item.addEventListener("click", (e) => {
-                        const tempo = item.dataset.tempo;
-                        if (tempo === 'periodo') {
-                            closeDropdown();
-                            return;
-                        }
-                        e.preventDefault();
-                        applyTempo(tempo, item.textContent.trim());
-                        closeDropdown();
+                        // Mostra o spinner e muda o texto
+                        btnText.textContent = 'Enviando...';
+                        btnSpinner.classList.remove('hidden');
+                        btnIcon.classList.add('hidden');
                     });
-                });
-            }
+                }
 
-            // === 3. NOVO: PREVIEW DE IMAGEM DE PERFIL ===
-            const photoInput = document.getElementById('photo');
-            const photoPreview = document.getElementById('profile-image-preview');
+                // === 1. LÓGICA DE NOTIFICAÇÕES E BADGES ===
+                const list = document.getElementById('notifications-list');
+                const avatarBadge = document.getElementById('notif-avatar-badge');
+                const menuBadge = document.getElementById('notif-menu-badge');
 
-            if (photoInput && photoPreview) {
-                photoInput.addEventListener('change', function (e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
+                function updateBadges() {
+                    if (!list) return;
+                    const unreadCount = list.querySelectorAll('.notif-item[data-unread-default="1"]').length;
 
-                        reader.onload = function (e) {
-                            photoPreview.src = e.target.result;
-                        }
-
-                        reader.readAsDataURL(file);
+                    if (avatarBadge) {
+                        avatarBadge.textContent = unreadCount > 0 ? (unreadCount > 9 ? '9+' : unreadCount) : '';
+                        avatarBadge.classList.toggle('hidden', unreadCount === 0);
                     }
-                });
-            }
-        });
-    </script>
+                    if (menuBadge) {
+                        menuBadge.textContent = unreadCount > 0 ? unreadCount : '';
+                        menuBadge.classList.toggle('hidden', unreadCount === 0);
+                    }
+                }
+
+                if (list) {
+                    list.addEventListener('click', (e) => {
+                        const button = e.target.closest('.notif-item');
+                        if (!button) return;
+
+                        if (button.dataset.unreadDefault === '1') {
+                            button.dataset.unreadDefault = '0';
+                            button.classList.add('opacity-60');
+                            const dot = button.querySelector('[data-notif-dot]');
+                            if (dot) dot.classList.add('hidden');
+                            updateBadges();
+                        }
+                    });
+                }
+                updateBadges();
+
+                // === 2. LÓGICA DO FILTRO DE TEMPO ===
+                const STORAGE_KEY = "tipotempo";
+                const btnTempo = document.getElementById("btn-tipotempo");
+                const labelTempo = document.getElementById("tipotempo-label");
+                const dropdownTempo = document.getElementById("dropdown-tipotempo");
+
+                if (btnTempo && labelTempo && dropdownTempo) {
+                    const items = dropdownTempo.querySelectorAll("a[data-tempo]");
+                    const closeDropdown = () => dropdownTempo.classList.add('hidden');
+
+                    const applyTempo = (tempo, label) => {
+                        labelTempo.textContent = label;
+                        localStorage.setItem(STORAGE_KEY, tempo);
+                        const url = new URL(window.location);
+                        url.searchParams.set("tempo", tempo);
+                        window.history.pushState({}, "", url);
+                    };
+
+                    const savedTempo = localStorage.getItem(STORAGE_KEY);
+                    if (savedTempo) {
+                        const target = Array.from(items).find(i => i.dataset.tempo === savedTempo);
+                        if (target) labelTempo.textContent = target.textContent.trim();
+                    }
+
+                    items.forEach(item => {
+                        item.addEventListener("click", (e) => {
+                            const tempo = item.dataset.tempo;
+                            if (tempo === 'periodo') {
+                                closeDropdown();
+                                return;
+                            }
+                            e.preventDefault();
+                            applyTempo(tempo, item.textContent.trim());
+                            closeDropdown();
+                        });
+                    });
+                }
+
+                // === 3. NOVO: PREVIEW DE IMAGEM DE PERFIL ===
+                const photoInput = document.getElementById('photo');
+                const photoPreview = document.getElementById('profile-image-preview');
+
+                if (photoInput && photoPreview) {
+                    photoInput.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+
+                            reader.onload = function(e) {
+                                photoPreview.src = e.target.result;
+                            }
+
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
+            });
+        </script>
     @endpush
