@@ -577,6 +577,8 @@
         const toggleBtn = document.getElementById('header-sidebar-toggle');
         const KEY = 'sidebarCollapsed';
         const mq = window.matchMedia('(min-width: 1024px)');
+        
+        // Verifica se é Desktop
         const isDesktop = () => mq.matches;
 
         const setAria = (expanded) => toggleBtn && toggleBtn.setAttribute('aria-expanded', String(expanded));
@@ -621,6 +623,7 @@
             sidebar.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
                 btn.addEventListener('click', function(e) {
                     if (document.body.classList.contains('sidebar-collapsed')) return;
+                    // No mobile, permitimos o accordion funcionar normalmente
                     e.preventDefault();
                     e.stopPropagation();
                     const group = this.closest('.menu-group');
@@ -662,6 +665,9 @@
         }
 
         function showPopover(el, trigger) {
+            // SEGURANÇA EXTRA: Se não for desktop, não faz nada (garantia dupla)
+            if (!isDesktop()) return; 
+
             if (!el) return;
 
             // Fecha outros que não sejam ancestrais
@@ -788,6 +794,10 @@
             if (triggerType === 'click') {
                 // --- CLICK (Submenus) ---
                 trigger.addEventListener('click', (e) => {
+                    // *** AQUI: Se não for Desktop, sai imediatamente ***
+                    // Isso permite que o click continue propagando (se necessário) ou simplesmente não abra o popover
+                    if (!isDesktop()) return;
+
                     e.stopPropagation();
                     e.preventDefault();
 
@@ -812,12 +822,18 @@
             } else {
                 // --- HOVER (Menu Principal) ---
                 trigger.addEventListener('mouseenter', () => {
+                    // *** AQUI: Se não for Desktop, sai imediatamente ***
+                    if (!isDesktop()) return;
+
                     const parentPopover = trigger.closest('.popover-flowbite');
                     if (parentPopover) cancelCloseTree(parentPopover.id);
                     showPopover(popoverEl, trigger);
                 });
 
                 trigger.addEventListener('mouseleave', () => {
+                    // *** AQUI: Se não for Desktop, sai imediatamente ***
+                    if (!isDesktop()) return;
+
                     scheduleClose(targetId);
                 });
             }
@@ -826,9 +842,11 @@
         // Eventos no Popover para manter aberto
         document.querySelectorAll('.popover-flowbite').forEach(popover => {
             popover.addEventListener('mouseenter', () => {
+                if (!isDesktop()) return; // Bloqueia também aqui
                 cancelCloseTree(popover.id);
             });
             popover.addEventListener('mouseleave', () => {
+                if (!isDesktop()) return; // Bloqueia também aqui
                 // Se não for fixo por click e não tiver filho aberto, agenda fechamento
                 if (!isClickOpened(popover) && !hasActiveChild(popover)) {
                     scheduleClose(popover.id);

@@ -28,10 +28,14 @@
             'icon_main' => 'bar-chart',
             'items' => [
                 [
-                    'label' => 'Atendimentos (Volume)', 'route' => 'saude.relatorios.atendimentos', 'icon' => 'activity'
+                    'label' => 'Atendimentos (Volume)',
+                    'route' => 'saude.relatorios.atendimentos',
+                    'icon' => 'activity',
                 ],
                 [
-                    'label' => 'Tempo de Espera (UBS/UPA)', 'route' => 'saude.relatorios.espera', 'icon' => 'stopwatch'
+                    'label' => 'Tempo de Espera (UBS/UPA)',
+                    'route' => 'saude.relatorios.espera',
+                    'icon' => 'stopwatch',
                 ],
                 [
                     'label' => 'Produção por Unidade',
@@ -44,7 +48,9 @@
                     'icon' => 'person-badge',
                 ],
                 [
-                    'label' => 'Absenteísmo (No-show)', 'route' => 'saude.relatorios.no_show', 'icon' => 'calendar-x'
+                    'label' => 'Absenteísmo (No-show)',
+                    'route' => 'saude.relatorios.no_show',
+                    'icon' => 'calendar-x',
                 ],
                 [
                     'label' => 'Encaminhamentos / Regulação',
@@ -72,7 +78,11 @@
                 ['label' => 'UBS / Unidades', 'route' => 'saude.atencao.ubs-unidades', 'icon' => 'building'],
                 ['label' => 'Equipes ESF', 'route' => 'saude.atencao.equipes', 'icon' => 'people'],
                 ['label' => 'Visitas Domiciliares', 'route' => 'saude.atencao.visitas', 'icon' => 'geo-alt'],
-                ['label' => 'Acompanhamentos (Crônicos)', 'route' => 'saude.atencao.acompanhamentos', 'icon' => 'heart-pulse'],
+                [
+                    'label' => 'Acompanhamentos (Crônicos)',
+                    'route' => 'saude.atencao.acompanhamentos',
+                    'icon' => 'heart-pulse',
+                ],
             ],
         ],
 
@@ -195,12 +205,26 @@
             'hex_light' => '#cbd5e1', // slate-300
             'icon_main' => 'bank',
             'items' => [
-                ['label' => 'Receitas SUS / Transferências', 'route' => 'saude.financeiro.receita-transferencia', 'icon' => 'cash'],
-                ['label' => 'Despesas (Por Programa)', 'route' => 'saude.financeiro.despesas-programa', 'icon' => 'receipt'],
                 [
-                    'label' => 'Mínimo Constitucional (15%)', 'route' => 'saude.financeiro.minimo-constitucional', 'icon' => 'shield-check',
+                    'label' => 'Receitas SUS / Transferências',
+                    'route' => 'saude.financeiro.receita-transferencia',
+                    'icon' => 'cash',
                 ],
-                ['label' => 'Contratos / Fornecedores', 'route' => 'saude.financeiro.contratos-fornecedores', 'icon' => 'people'],
+                [
+                    'label' => 'Despesas (Por Programa)',
+                    'route' => 'saude.financeiro.despesas-programa',
+                    'icon' => 'receipt',
+                ],
+                [
+                    'label' => 'Mínimo Constitucional (15%)',
+                    'route' => 'saude.financeiro.minimo-constitucional',
+                    'icon' => 'shield-check',
+                ],
+                [
+                    'label' => 'Contratos / Fornecedores',
+                    'route' => 'saude.financeiro.contratos-fornecedores',
+                    'icon' => 'people',
+                ],
             ],
         ],
     ];
@@ -220,24 +244,37 @@
     }
 
     html.dark {
-        --sidebar-bg: #020617; /* bg-slate-950 */
-        --sidebar-border: #1e293b; /* border-slate-800 */
-        --sidebar-text: #e5e7eb; /* text-slate-200 */
-        --sidebar-hover-bg: #111827; /* bg-slate-900 */
-        --sidebar-submenu-bg: #374151; /* bg-slate-700 */
+        --sidebar-bg: #020617;
+        /* bg-slate-950 */
+        --sidebar-border: #1e293b;
+        /* border-slate-800 */
+        --sidebar-text: #e5e7eb;
+        /* text-slate-200 */
+        --sidebar-hover-bg: #111827;
+        /* bg-slate-900 */
+        --sidebar-submenu-bg: #374151;
+        /* bg-slate-700 */
         --sidebar-submenu-border: #4b5563;
-        --sidebar-tooltip-bg: #4b5563; /* bg-slate-600 */
+        --sidebar-tooltip-bg: #4b5563;
+        /* bg-slate-600 */
     }
 
     /* TEMA BLACK (ZINC) */
     html.black {
-        --sidebar-bg: #18181b; /* zinc-900 */
-        --sidebar-border: #27272a; /* zinc-800 */
-        --sidebar-text: #e4e4e7; /* zinc-200 */
-        --sidebar-hover-bg: #27272a; /* zinc-800 (Hover suave) */
-        --sidebar-submenu-bg: #18181b; /* zinc-900 */
-        --sidebar-submenu-border: #3f3f46; /* zinc-700 */
-        --sidebar-tooltip-bg: #27272a; /* zinc-800 */
+        --sidebar-bg: #18181b;
+        /* zinc-900 */
+        --sidebar-border: #27272a;
+        /* zinc-800 */
+        --sidebar-text: #e4e4e7;
+        /* zinc-200 */
+        --sidebar-hover-bg: #27272a;
+        /* zinc-800 (Hover suave) */
+        --sidebar-submenu-bg: #18181b;
+        /* zinc-900 */
+        --sidebar-submenu-border: #3f3f46;
+        /* zinc-700 */
+        --sidebar-tooltip-bg: #27272a;
+        /* zinc-800 */
     }
 
     /* =================== LAYOUT / ESTILOS =================== */
@@ -368,6 +405,15 @@
         width: 0;
         height: 0;
     }
+
+    @media (max-width: 1023px) {
+        .popover-flowbite {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+    }
 </style>
 
 {{-- Container Sidebar: black:bg-zinc-900 black:border-zinc-800 --}}
@@ -454,7 +500,8 @@
         <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
             class="popover-flowbite absolute z-50 invisible inline-block w-48 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0">
             <div class="p-3">
-                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
+                <div
+                    class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
                     <span class="h-4 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
                     <span class="font-semibold"
                         style="color: {{ $menu['hex_main'] }}">{{ $menu['popover_title'] }}</span>
@@ -465,11 +512,9 @@
                             {{-- Popover Item: black:hover:bg-zinc-800 black:hover:text-zinc-100 --}}
                             <a href="{{ route($item['route']) }}"
                                 class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 black:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white black:hover:text-zinc-100 transition-colors"
-                                target="_blank"
-                                rel="noopener noreferrer">
-                                <x-dynamic-component :component="'bi-'
-                                . $item['icon']" class="w-4 h-4" />
-                            <span>{{ $item['label'] }}</span>
+                                target="_blank" rel="noopener noreferrer">
+                                <x-dynamic-component :component="'bi-' . $item['icon']" class="w-4 h-4" />
+                                <span>{{ $item['label'] }}</span>
                             </a>
                         </li>
                     @endforeach
@@ -483,13 +528,17 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // =================================================================
+        // 1. CONFIGURAÇÃO DA SIDEBAR (SEU CÓDIGO ORIGINAL DO SAÚDE)
+        // =================================================================
         const sidebar = document.getElementById('top-bar-sidebar');
         const toggleBtn = document.getElementById('header-sidebar-toggle');
         const STORAGE_KEY = 'sidebarCollapsed';
 
-        if (!sidebar || !toggleBtn) return;
-
+        // Helper para saber se é PC
         const isDesktop = () => window.innerWidth >= 1024;
+
+        if (!sidebar || !toggleBtn) return;
 
         function applyInitialState() {
             if (isDesktop()) {
@@ -530,16 +579,103 @@
         });
 
         window.addEventListener('resize', applyInitialState);
-    });
 
-    // Lógica dos submenus (Accordion)
-    document.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
-        btn.addEventListener('click', function(e) {
-            if (document.body.classList.contains('sidebar-collapsed')) return;
-            e.preventDefault();
-            e.stopPropagation();
-            const group = this.closest('.menu-group');
-            if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
+        // =================================================================
+        // 2. LÓGICA DOS SUBMENUS (ACCORDION)
+        // =================================================================
+        // Agora está DENTRO do DOMContentLoaded para não falhar no carregamento
+        document.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
+            btn.addEventListener('click', function(e) {
+                // SÓ bloqueia se for Desktop E estiver recolhido (Sidebar fechada)
+                // Se for Celular, o 'isDesktop' dá falso e ele permite abrir o menu
+                if (isDesktop() && document.body.classList.contains('sidebar-collapsed')) {
+                    return;
+                }
+
+                e.preventDefault();
+                e.stopPropagation();
+                const group = this.closest('.menu-group');
+                if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' :
+                'true';
+            });
         });
+
+        // =================================================================
+        // 3. SISTEMA DE POPOVER (BLOQUEIO NO MOBILE)
+        // =================================================================
+        const triggers = document.querySelectorAll('[data-popover-target]');
+        let closeTimer = null;
+
+        function showPopover(trigger) {
+            // *** TRAVA: Se não for desktop, não mostra nada ***
+            if (!isDesktop()) return;
+
+            const targetId = trigger.getAttribute('data-popover-target');
+            const el = document.getElementById(targetId);
+            if (!el) return;
+
+            // Esconde outros popovers
+            document.querySelectorAll('.popover-flowbite').forEach(p => {
+                if (p.id !== targetId) p.style.display = 'none';
+            });
+
+            // Mostra o atual
+            el.style.display = 'block';
+            el.classList.remove('invisible', 'opacity-0');
+            el.classList.add('visible', 'opacity-100');
+
+            // Posicionamento
+            const rect = trigger.getBoundingClientRect();
+            const scrollY = window.scrollY || window.pageYOffset;
+
+            let top = rect.top + scrollY;
+            let left = rect.right + 10;
+
+            // Ajuste se bater no fundo da tela
+            const pHeight = el.offsetHeight;
+            if (rect.top + pHeight > window.innerHeight) {
+                top = (rect.bottom + scrollY) - pHeight;
+            }
+
+            el.style.position = 'fixed';
+            el.style.top = rect.top + 'px';
+            el.style.left = left + 'px';
+            el.style.zIndex = '9999';
+        }
+
+        function hideAllPopovers() {
+            document.querySelectorAll('.popover-flowbite').forEach(el => {
+                el.classList.add('invisible', 'opacity-0');
+                el.classList.remove('visible', 'opacity-100');
+                setTimeout(() => {
+                    if (el.classList.contains('invisible')) el.style.display = 'none';
+                }, 300);
+            });
+        }
+
+        triggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => {
+                if (!isDesktop()) return;
+                if (closeTimer) clearTimeout(closeTimer);
+                showPopover(trigger);
+            });
+
+            trigger.addEventListener('mouseleave', () => {
+                if (!isDesktop()) return;
+                closeTimer = setTimeout(hideAllPopovers, 100);
+            });
+        });
+
+        document.querySelectorAll('.popover-flowbite').forEach(popover => {
+            popover.addEventListener('mouseenter', () => {
+                if (!isDesktop()) return;
+                if (closeTimer) clearTimeout(closeTimer);
+            });
+            popover.addEventListener('mouseleave', () => {
+                if (!isDesktop()) return;
+                closeTimer = setTimeout(hideAllPopovers, 100);
+            });
+        });
+
     });
 </script>

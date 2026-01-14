@@ -383,6 +383,14 @@
     body.sidebar-collapsed .sidebar-link[data-tooltip]:hover::after {
         opacity: 1;
     }
+    @media (max-width: 1023px) {
+        .popover-flowbite {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+    }
 </style>
 
 {{-- Container Sidebar: black:bg-zinc-900 black:border-zinc-800 --}}
@@ -495,13 +503,17 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // =================================================================
+        // 1. CONFIGURAÇÃO DA SIDEBAR (SEU CÓDIGO ORIGINAL MELHORADO)
+        // =================================================================
         const sidebar = document.getElementById('top-bar-sidebar');
         const toggleBtn = document.getElementById('header-sidebar-toggle');
         const STORAGE_KEY = 'sidebarCollapsed';
 
-        if (!sidebar || !toggleBtn) return;
-
+        // Helper para verificar desktop
         const isDesktop = () => window.innerWidth >= 1024;
+
+        if (!sidebar || !toggleBtn) return;
 
         function applyInitialState() {
             if (isDesktop()) {
@@ -542,16 +554,109 @@
         });
 
         window.addEventListener('resize', applyInitialState);
-    });
 
-    // Lógica dos submenus (Accordion)
-    document.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
-        btn.addEventListener('click', function(e) {
-            if (document.body.classList.contains('sidebar-collapsed')) return;
-            e.preventDefault();
-            e.stopPropagation();
-            const group = this.closest('.menu-group');
-            if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
+        // =================================================================
+        // 2. LÓGICA DOS SUBMENUS (ACCORDION) - CORRIGIDA
+        // =================================================================
+        // Agora está DENTRO do DOMContentLoaded e com a verificação correta
+        document.querySelectorAll('[data-submenu-toggle]').forEach((btn) => {
+            btn.addEventListener('click', function(e) {
+                // SÓ bloqueia se for Desktop E estiver recolhido (para usar o popover)
+                // Se for Mobile, essa condição dá FALSE e o menu abre normal
+                if (isDesktop() && document.body.classList.contains('sidebar-collapsed')) {
+                    return; 
+                }
+
+                e.preventDefault();
+                e.stopPropagation();
+                const group = this.closest('.menu-group');
+                if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
+            });
         });
+
+        // =================================================================
+        // 3. SISTEMA DE POPOVER (MANUAL E TRAVADO NO MOBILE)
+        // =================================================================
+        // Adicionei este bloco do script anterior para garantir que o popover não abra no mobile
+
+        const triggers = document.querySelectorAll('[data-popover-target]');
+        let closeTimer = null;
+
+        function showPopover(trigger) {
+            // *** A MÁGICA: Se não for desktop, cancela tudo ***
+            if (!isDesktop()) return; 
+
+            const targetId = trigger.getAttribute('data-popover-target');
+            const el = document.getElementById(targetId);
+            if (!el) return;
+
+            // Esconde outros
+            document.querySelectorAll('.popover-flowbite').forEach(p => {
+                if (p.id !== targetId) p.style.display = 'none';
+            });
+
+            // Mostra o atual
+            el.style.display = 'block';
+            el.classList.remove('invisible', 'opacity-0');
+            el.classList.add('visible', 'opacity-100');
+
+            // Posiciona
+            const rect = trigger.getBoundingClientRect();
+            // Pega scroll atual
+            const scrollY = window.scrollY || window.pageYOffset;
+            
+            let top = rect.top + scrollY; 
+            let left = rect.right + 10;
+
+            // Ajuste de altura se bater no fundo
+            const pHeight = el.offsetHeight;
+            if (rect.top + pHeight > window.innerHeight) {
+                top = (rect.bottom + scrollY) - pHeight;
+            }
+
+            // Define posição
+            el.style.position = 'fixed'; // Ou absolute dependendo do seu layout
+            el.style.top = rect.top + 'px'; // Usando fixed, não precisa somar scrollY no top, mas depende do parent
+            el.style.left = left + 'px';
+            el.style.zIndex = '9999';
+        }
+
+        function hideAllPopovers() {
+            document.querySelectorAll('.popover-flowbite').forEach(el => {
+                el.classList.add('invisible', 'opacity-0');
+                el.classList.remove('visible', 'opacity-100');
+                setTimeout(() => {
+                    if (el.classList.contains('invisible')) el.style.display = 'none';
+                }, 300);
+            });
+        }
+
+        triggers.forEach(trigger => {
+            // Mouse Enter
+            trigger.addEventListener('mouseenter', () => {
+                if (!isDesktop()) return; // Sai se for mobile
+                if (closeTimer) clearTimeout(closeTimer);
+                showPopover(trigger);
+            });
+
+            // Mouse Leave
+            trigger.addEventListener('mouseleave', () => {
+                if (!isDesktop()) return; // Sai se for mobile
+                closeTimer = setTimeout(hideAllPopovers, 100);
+            });
+        });
+
+        // Mantém aberto se passar o mouse no popover (Só Desktop)
+        document.querySelectorAll('.popover-flowbite').forEach(popover => {
+            popover.addEventListener('mouseenter', () => {
+                if (!isDesktop()) return;
+                if (closeTimer) clearTimeout(closeTimer);
+            });
+            popover.addEventListener('mouseleave', () => {
+                if (!isDesktop()) return;
+                closeTimer = setTimeout(hideAllPopovers, 100);
+            });
+        });
+
     });
 </script>
