@@ -19,6 +19,8 @@ Route::put('/profile/update', [ProfileController::class, 'update'])->name('profi
 
 Route::middleware('auth')->group(function () {
 
+    require __DIR__ . '/modules/user.php';
+
     Route::get('/home', fn() => view('home'))->name('home');
     // rotas de usuario
     Route::get('/usuario/cadastro', fn() => view('usuario/cadastro'))->name('usuario/cadastro');

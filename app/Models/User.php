@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profile_photo_path', 
+        'profile_photo_url'
     ];
 
     /**
@@ -45,6 +45,16 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+        ];
+    }
+
+    protected static function rules(?int $id ): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'required|string|min:8|confirmed',
+            'profile_photo_url' => 'nullable|string|max:2048',
         ];
     }
 }

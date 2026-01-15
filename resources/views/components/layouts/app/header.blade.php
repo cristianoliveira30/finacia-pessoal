@@ -73,8 +73,8 @@
                 {{-- Filtro de Tempo (Dropdown) --}}
                 <div class="relative hidden md:block">
                     <button id="btn-tipotempo" data-dropdown-toggle="dropdown-tipotempo" type="button"
-                        class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium rounded-md border  bg-neutral-200 text-stone-950 border-slate-200  hover:bg-slate-200 hover:text-slate-900  focus:outline-none focus:ring-2 focus:ring-slate-300 
-                               dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600  dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40 
+                        class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium rounded-md border  bg-neutral-200 text-stone-950 border-slate-200  hover:bg-slate-200 hover:text-slate-900  focus:outline-none focus:ring-2 focus:ring-slate-300
+                               dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600  dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40
                                black:bg-zinc-900 black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800 black:hover:text-zinc-100">
                         <span id="tipotempo-label" class="whitespace-nowrap">Hoje</span>
                         <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -84,7 +84,7 @@
                     </button>
 
                     <div id="dropdown-tipotempo"
-                        class="z-20 hidden mt-2 rounded-lg shadow-lg w-44 border bg-white divide-y divide-slate-100 border-slate-100 
+                        class="z-20 hidden mt-2 rounded-lg shadow-lg w-44 border bg-white divide-y divide-slate-100 border-slate-100
                                dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
                                black:bg-zinc-900 black:border-zinc-700 black:divide-zinc-800">
                         <ul class="py-2 text-sm text-slate-700 dark:text-slate-200" aria-labelledby="btn-tipotempo">
@@ -120,7 +120,7 @@
                                 <a href="#"
                                     onclick="document.getElementById('modalPeriodo').classList.remove('hidden'); return false;"
                                     data-tempo="periodo"
-                                    class="block px-4 py-2 hover:bg-slate-50 
+                                    class="block px-4 py-2 hover:bg-slate-50
                                            dark:hover:bg-slate-700/70 dark:hover:text-white
                                           black:hover:bg-zinc-800 black:text-white">
                                     Período Personalizado
@@ -320,7 +320,7 @@
             {{-- Conteúdo (Scrollable) --}}
             <div class="p-6  overflow-y-auto">
 
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('user.update', auth()->user()->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -609,17 +609,17 @@
     class="hidden fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-slate-900/50 backdrop-blur-sm p-4 overflow-y-auto">
 
     <div
-        class="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl border border-slate-100 
-                dark:bg-slate-900 dark:border-slate-700 
+        class="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl border border-slate-100
+                dark:bg-slate-900 dark:border-slate-700
                 black:bg-zinc-950 black:border-zinc-800">
 
         <div
-            class="flex items-start justify-between p-5 border-b border-cyan-100 bg-cyan-50/60 rounded-t-xl 
-                    dark:bg-slate-800 dark:border-slate-700 
+            class="flex items-start justify-between p-5 border-b border-cyan-100 bg-cyan-50/60 rounded-t-xl
+                    dark:bg-slate-800 dark:border-slate-700
                     black:bg-zinc-900 black:border-zinc-800">
             <div class="flex gap-3">
                 <div
-                    class="p-2 bg-white rounded-lg border border-cyan-100 text-cyan-600 
+                    class="p-2 bg-white rounded-lg border border-cyan-100 text-cyan-600
                             dark:bg-slate-700 dark:border-slate-600 dark:text-cyan-400
                             black:bg-zinc-800 black:border-zinc-700">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -672,7 +672,7 @@
                         <label class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Selecione a data de início
                             *</label>
                         <input type="date" id="dataInicio"
-                            class="w-full border-gray-200 rounded text-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-700 
+                            class="w-full border-gray-200 rounded text-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-700
                                       dark:bg-slate-900 dark:border-slate-600 dark:text-white
                                       black:bg-zinc-950 black:border-zinc-800 black:text-zinc-200">
                         <p class="text-[10px] text-slate-400 mt-1">Data não pode ser no futuro</p>
@@ -966,7 +966,7 @@
                 // Carregar estado salvo da URL ou LocalStorage
                 const params = new URLSearchParams(window.location.search);
                 const tempoAtual = params.get('tempo');
-                
+
                 if (tempoAtual && labelTempo) {
                     if (tempoAtual === 'periodo') {
                         labelTempo.innerText = 'Período Personalizado';
@@ -988,14 +988,14 @@
                         }
 
                         e.preventDefault();
-                        
+
                         // Aplica filtros padrões (Hoje, Ontem, etc)
                         localStorage.setItem(STORAGE_KEY, tempo);
                         const url = new URL(window.location);
                         url.searchParams.set("tempo", tempo);
                         url.searchParams.delete("inicio"); // Limpa datas customizadas
                         url.searchParams.delete("fim");
-                        
+
                         window.location.href = url.toString();
                     });
                 });
