@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -44,30 +45,45 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'User updated successfully.');
     }
 
-    public function updatePhoto(Request $request)
+    public function updateProfile(Request $request)
     {
+        $user = auth()->user();
+
+        // 1. Validação Condicional
         $request->validate([
-            'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'name'  => ['required', 'string', 'max:255'],
+            // Garante que o email é único, mas ignora o email do próprio usuário atual
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'photo' => ['nullable', 'image', 'max:2048'],
+
+            // A senha só é validada SE o campo 'password' (nova senha) tiver algum valor
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $user = auth()->user(); // Pega o usuário logado
-
+        // 2. Upload da Foto
         if ($request->hasFile('photo')) {
-            // 1. Apaga a foto antiga se existir e for local
+            // Apaga a antiga se existir
             if ($user->profile_photo_url && str_contains($user->profile_photo_url, '/storage/')) {
-                $oldPath = str_replace('/storage/', '', $user->profile_photo_url);
-                Storage::disk('public')->delete($oldPath);
+                Storage::disk('public')->delete(str_replace('/storage/', '', $user->profile_photo_url));
             }
-
-            // 2. Salva a nova foto
+            // Salva a nova
             $path = $request->file('photo')->store('profile-photos', 'public');
-
-            // 3. Atualiza o banco
             $user->profile_photo_url = '/storage/' . $path;
-            $user->save();
         }
 
-        return back()->with('success', 'Foto de perfil atualizada!');
+        // 3. Atualiza Dados Básicos
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        // 4. Atualiza Senha (SÓ SE O USUÁRIO DIGITOU UMA NOVA)
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // 5. Salva no Banco
+        $user->save();
+
+        return back()->with('success', 'Perfil atualizado com sucesso!');
     }
 
     /**

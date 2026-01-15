@@ -1,37 +1,37 @@
-    @php
-        // --- MOCK DATA PARA NOTIFICAÇÕES (Simulando o Backend) ---
-        $notifications = $notifications ?? [
-            [
-                'id' => 1,
-                'title' => 'Relatório Financeiro',
-                'message' => 'O fechamento mensal foi concluído.',
-                'time' => '10 min atrás',
-                'unread' => true,
-                'flag_text' => 'Importante',
-                'flag_color' => 'rose',
-                'read_url' => '#',
-            ],
-            [
-                'id' => 2,
-                'title' => 'Novo Usuário',
-                'message' => 'Roberto Silva solicitou acesso ao sistema.',
-                'time' => '1h atrás',
-                'unread' => true,
-                'flag_text' => 'Cadastro',
-                'flag_color' => 'sky',
-                'read_url' => '#',
-            ],
-            [
-                'id' => 3,
-                'title' => 'Manutenção',
-                'message' => 'Servidor instável na região norte.',
-                'time' => 'Ontem',
-                'unread' => false,
-                'flag_text' => 'TI',
-                'flag_color' => 'amber',
-                'read_url' => '#',
-            ],
-        ];
+@php
+    // --- MOCK DATA PARA NOTIFICAÇÕES (Simulando o Backend) ---
+    $notifications = $notifications ?? [
+        [
+            'id' => 1,
+            'title' => 'Relatório Financeiro',
+            'message' => 'O fechamento mensal foi concluído.',
+            'time' => '10 min atrás',
+            'unread' => true,
+            'flag_text' => 'Importante',
+            'flag_color' => 'rose',
+            'read_url' => '#',
+        ],
+        [
+            'id' => 2,
+            'title' => 'Novo Usuário',
+            'message' => 'Roberto Silva solicitou acesso ao sistema.',
+            'time' => '1h atrás',
+            'unread' => true,
+            'flag_text' => 'Cadastro',
+            'flag_color' => 'sky',
+            'read_url' => '#',
+        ],
+        [
+            'id' => 3,
+            'title' => 'Manutenção',
+            'message' => 'Servidor instável na região norte.',
+            'time' => 'Ontem',
+            'unread' => false,
+            'flag_text' => 'TI',
+            'flag_color' => 'amber',
+            'read_url' => '#',
+        ],
+    ];
 
     // Mapa de cores para as Flags/Etiquetas
     $flagClass = [
@@ -74,8 +74,8 @@
                 <div class="relative hidden md:block">
                     <button id="btn-tipotempo" data-dropdown-toggle="dropdown-tipotempo" type="button"
                         class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium rounded-md border  bg-neutral-200 text-stone-950 border-slate-200  hover:bg-slate-200 hover:text-slate-900  focus:outline-none focus:ring-2 focus:ring-slate-300
-                               dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600  dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40
-                               black:bg-zinc-900 black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800 black:hover:text-zinc-100">
+                        dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600  dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40
+                        black:bg-zinc-900 black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800 black:hover:text-zinc-100">
                         <span id="tipotempo-label" class="whitespace-nowrap">Hoje</span>
                         <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -85,8 +85,8 @@
 
                     <div id="dropdown-tipotempo"
                         class="z-20 hidden mt-2 rounded-lg shadow-lg w-44 border bg-white divide-y divide-slate-100 border-slate-100
-                               dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
-                               black:bg-zinc-900 black:border-zinc-700 black:divide-zinc-800">
+                        dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
+                        black:bg-zinc-900 black:border-zinc-700 black:divide-zinc-800">
                         <ul class="py-2 text-sm text-slate-700 dark:text-slate-200" aria-labelledby="btn-tipotempo">
                             <li><a href="#" data-tempo="hoje"
                                     class="block px-4 py-2 hover:bg-slate-50  dark:hover:bg-slate-700/70 dark:hover:text-white black:hover:bg-zinc-800 black:text-white">Hoje
@@ -121,8 +121,8 @@
                                     onclick="document.getElementById('modalPeriodo').classList.remove('hidden'); return false;"
                                     data-tempo="periodo"
                                     class="block px-4 py-2 hover:bg-slate-50
-                                           dark:hover:bg-slate-700/70 dark:hover:text-white
-                                          black:hover:bg-zinc-800 black:text-white">
+                                    dark:hover:bg-slate-700/70 dark:hover:text-white
+                                    black:hover:bg-zinc-800 black:text-white">
                                     Período Personalizado
                                 </a>
                             </li>
@@ -142,7 +142,7 @@
                         <span class="sr-only">Menu Usuário</span>
                         <span class="relative inline-block leading-none">
                             <img class="w-8 h-8 rounded-full object-cover block"
-                                src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}"
+                                src="{{ Auth::user()->profile_photo_url ? asset(Auth::user()->profile_photo_url) . '?v=' . time() : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) }}"
                                 alt="user photo">
                             {{-- Badge Avatar --}}
                             <span id="notif-avatar-badge"
@@ -194,12 +194,13 @@
             </div>
         </div>
     </div>
+</nav>
 
-    {{-- ==========================================
-    MODAL DE CONFIGURAÇÕES (ATUALIZADO)
-    ========================================== --}}
-    <div id="settings-modal" tabindex="-1" aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[60] justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full backdrop-blur-sm bg-neutral-500/50">
+{{-- ==========================================
+MODAL DE NOTIFICAÇÕES
+========================================== --}}
+<div id="notifications-modal" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[60] justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full backdrop-blur-sm bg-slate-900/50">
 
     <div class="relative p-4 w-full max-w-3xl max-h-full">
         <div
@@ -210,7 +211,8 @@
                 class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-700 black:border-zinc-800">
                 <div class="flex items-center gap-2">
                     <x-bi-bell class="w-5 h-5 text-slate-700 dark:text-slate-200 black:text-zinc-200" />
-                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 black:text-zinc-100">Central de
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 black:text-zinc-100">
+                        Central de
                         Notificações</h3>
                 </div>
                 <button type="button"
@@ -282,8 +284,8 @@
 </div>
 
 {{-- ==========================================
-     MODAL DE CONFIGURAÇÕES (NOVO)
-     ========================================== --}}
+MODAL DE CONFIGURAÇÕES (NOVO)
+========================================== --}}
 <div id="settings-modal" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[60] justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full backdrop-blur-sm bg-slate-900/50">
 
@@ -304,11 +306,6 @@
                             Gerencie suas informações pessoais e segurança.
                         </p>
                     </div>
-                    <button type="button"
-                        class="text-slate-400 hover:text-slate-900 dark:hover:text-white black:hover:text-white rounded-lg text-sm w-9 h-9 inline-flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 black:hover:bg-zinc-800"
-                        data-modal-hide="settings-modal">
-                        <x-bi-x-lg class="w-4 h-4" />
-                    </button>
                 </div>
                 <button type="button"
                     class="text-slate-400 hover:text-slate-900 dark:hover:text-white black:hover:text-white rounded-lg text-sm w-9 h-9 inline-flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 black:hover:bg-zinc-800"
@@ -320,9 +317,9 @@
             {{-- Conteúdo (Scrollable) --}}
             <div class="p-6  overflow-y-auto">
 
-                    <form action="{{ route('user.photo.update') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+                <form action="{{ route('user.profile.update') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -340,7 +337,8 @@
                                     <div class="relative group">
                                         <div
                                             class="w-32 h-32 rounded-full p-1 border-2 border-slate-200 dark:border-slate-600 black:border-zinc-700 bg-white dark:bg-slate-700 black:bg-zinc-800">
-                                            <img src="{{ auth()->user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=E2E8F0&color=64748B' }}"
+                                            <img id="preview-avatar"
+                                                src="{{ auth()->user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=E2E8F0&color=64748B' }}"
                                                 alt="Profile" class="w-full h-full rounded-full object-cover">
                                         </div>
                                         <label for="photo"
@@ -351,22 +349,26 @@
                                             accept="image/*">
                                     </div>
 
-                                    <div class="relative z-10 flex flex-col items-center text-center">
-                                        {{-- Foto de Perfil --}}
-                                        <div class="relative group">
-                                            <div
-                                                class="w-32 h-32 rounded-full p-1 border-2 border-slate-200 dark:border-slate-600 black:border-zinc-700 bg-white dark:bg-slate-700 black:bg-zinc-800">
-                                                <img id="preview-avatar"
-                                                    src="{{ auth()->user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=E2E8F0&color=64748B' }}"
-                                                    alt="Profile" class="w-full h-full rounded-full object-cover">
-                                            </div>
-                                            <label for="photo"
-                                                class="absolute bottom-0 right-0 bg-sky-500 text-white p-2 rounded-full cursor-pointer hover:bg-sky-600 transition-colors shadow-lg border-2 border-slate-50 dark:border-slate-800 black:border-zinc-800">
-                                                <x-bi-camera class="w-4 h-4" />
-                                            </label>
-                                            <input type="file" id="photo" name="photo" class="hidden"
-                                                accept="image/*">
-                                        </div>
+                                    <div class="mt-4 space-y-1">
+                                        <h3
+                                            class="text-xl font-bold text-slate-800 dark:text-white black:text-zinc-100 tracking-tight">
+                                            {{ auth()->user()->name }}
+                                        </h3>
+                                    </div>
+                                    <div class="mt-4">
+                                        {{-- Botão Dropdown Tema --}}
+                                        <button id="themeDropdownButton" data-dropdown-toggle="themeDropdown"
+                                            class="text-slate-700 dark:text-slate-200 black:text-zinc-200 bg-white dark:bg-slate-700 black:bg-zinc-800 hover:bg-slate-50 dark:hover:bg-slate-600 black:hover:bg-zinc-700 focus:ring-2 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center shadow-sm border border-slate-200 dark:border-slate-600 black:border-zinc-700 transition-colors"
+                                            type="button">
+                                            <x-bi-palette class="w-4 h-4 mr-2" />
+                                            Tema: <span id="current-theme-label"
+                                                class="ml-1 font-bold">Selecionar</span>
+                                            <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                                            </svg>
+                                        </button>
 
                                         {{-- Menu Dropdown Tema --}}
                                         <div id="themeDropdown"
@@ -486,16 +488,9 @@
                                                         class="text-slate-500 dark:text-slate-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider">
                                                         Nova Senha
                                                     </label>
-                                                    <div class="relative">
-                                                        <input type="text" name="name" id="name"
-                                                            value="{{ old('name', auth()->user()->name) }}"
-                                                            class="w-full bg-white dark:bg-slate-900 black:bg-zinc-950 border border-slate-300 dark:border-slate-600 black:border-zinc-700 text-slate-700 dark:text-slate-200 black:text-zinc-100 text-sm rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent block p-2.5 transition-all shadow-sm placeholder-slate-400 black:placeholder-zinc-500"
-                                                            placeholder="Seu nome">
-                                                    </div>
-                                                    @error('name')
-                                                        <span
-                                                            class="text-red-500 text-xs font-medium">{{ $message }}</span>
-                                                    @enderror
+                                                    <input type="password" name="password" id="password"
+                                                        class="w-full bg-white dark:bg-slate-900 black:bg-zinc-950 border border-slate-300 dark:border-slate-600 black:border-zinc-700 text-slate-700 dark:text-slate-200 black:text-zinc-100 text-sm rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent block p-2.5 transition-all shadow-sm placeholder-slate-400 black:placeholder-zinc-500"
+                                                        placeholder="••••••••">
                                                 </div>
 
                                                 <div class="space-y-1">
@@ -510,75 +505,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {{-- Seção: Segurança --}}
-                                        <div>
-                                            <h3
-                                                class="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white black:text-zinc-100 mb-5 pb-2 border-b border-slate-200 dark:border-slate-700 black:border-zinc-800">
-                                                <x-bi-shield-lock class="w-5 h-5 text-sky-500" /> Segurança
-                                            </h3>
-
-                                            <div class="space-y-5">
-                                                <div class="space-y-1">
-                                                    <label for="current_password"
-                                                        class="text-slate-500 dark:text-slate-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider">
-                                                        Senha Atual
-                                                    </label>
-                                                    <input type="password" name="current_password"
-                                                        id="current_password"
-                                                        class="w-full bg-white dark:bg-slate-900 black:bg-zinc-950 border border-slate-300 dark:border-slate-600 black:border-zinc-700 text-slate-700 dark:text-slate-200 black:text-zinc-100 text-sm rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent block p-2.5 transition-all shadow-sm placeholder-slate-400 black:placeholder-zinc-500"
-                                                        placeholder="••••••••">
-                                                    @error('current_password')
-                                                        <span
-                                                            class="text-red-500 text-xs font-medium">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                                    <div class="space-y-1">
-                                                        <label for="password"
-                                                            class="text-slate-500 dark:text-slate-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider">
-                                                            Nova Senha
-                                                        </label>
-                                                        <input type="password" name="password" id="password"
-                                                            class="w-full bg-white dark:bg-slate-900 black:bg-zinc-950 border border-slate-300 dark:border-slate-600 black:border-zinc-700 text-slate-700 dark:text-slate-200 black:text-zinc-100 text-sm rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent block p-2.5 transition-all shadow-sm placeholder-slate-400 black:placeholder-zinc-500"
-                                                            placeholder="••••••••">
-                                                    </div>
-
-                                                    <div class="space-y-1">
-                                                        <label for="password_confirmation"
-                                                            class="text-slate-500 dark:text-slate-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider">
-                                                            Confirmar Senha
-                                                        </label>
-                                                        <input type="password" name="password_confirmation"
-                                                            id="password_confirmation"
-                                                            class="w-full bg-white dark:bg-slate-900 black:bg-zinc-950 border border-slate-300 dark:border-slate-600 black:border-zinc-700 text-slate-700 dark:text-slate-200 black:text-zinc-100 text-sm rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent block p-2.5 transition-all shadow-sm placeholder-slate-400 black:placeholder-zinc-500"
-                                                            placeholder="••••••••">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {{-- Ações --}}
-                                        <div class="flex justify-end pt-4">
-                                            <button type="submit" id="btn-profile-submit"
-                                                class="group relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all duration-200 bg-sky-600 rounded-lg hover:bg-sky-500">
-                                                <span id="btn-text">Salvar Alterações</span>
-                                                <svg id="btn-spinner"
-                                                    class="hidden animate-spin ml-2 h-4 w-4 text-white"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24">
-                                                    <circle class="opacity-25" cx="12" cy="12" r="10"
-                                                        stroke="currentColor" stroke-width="4"></circle>
-                                                    <path class="opacity-75" fill="currentColor"
-                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                                    </path>
-                                                </svg>
-                                                <x-bi-check-lg id="btn-icon"
-                                                    class="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" />
-                                            </button>
-                                        </div>
-
                                     </div>
 
                                     {{-- Ações --}}
@@ -593,31 +519,35 @@
 
                                 </div>
                             </div>
-
                         </div>
 
                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- ==========================================
-     MODAL DE PERÍODO PERSONALIZADO
-     ========================================== --}}
+MODAL DE PERÍODO PERSONALIZADO
+========================================== --}}
 <div id="modalPeriodo" tabindex="-1" aria-hidden="true"
     class="hidden fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-slate-900/50 backdrop-blur-sm p-4 overflow-y-auto">
 
     <div
         class="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl border border-slate-100
-                dark:bg-slate-900 dark:border-slate-700
-                black:bg-zinc-950 black:border-zinc-800">
+            dark:bg-slate-900 dark:border-slate-700
+            black:bg-zinc-950 black:border-zinc-800">
 
         <div
             class="flex items-start justify-between p-5 border-b border-cyan-100 bg-cyan-50/60 rounded-t-xl
-                    dark:bg-slate-800 dark:border-slate-700
-                    black:bg-zinc-900 black:border-zinc-800">
+                dark:bg-slate-800 dark:border-slate-700
+                black:bg-zinc-900 black:border-zinc-800">
             <div class="flex gap-3">
                 <div
                     class="p-2 bg-white rounded-lg border border-cyan-100 text-cyan-600
-                            dark:bg-slate-700 dark:border-slate-600 dark:text-cyan-400
-                            black:bg-zinc-800 black:border-zinc-700">
+                        dark:bg-slate-700 dark:border-slate-600 dark:text-cyan-400
+                        black:bg-zinc-800 black:border-zinc-700">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
@@ -635,8 +565,8 @@
             </div>
             <button type="button" onclick="document.getElementById('modalPeriodo').classList.add('hidden')"
                 class="text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg p-1.5 transition-colors
-                       dark:hover:bg-slate-700 dark:hover:text-white
-                       black:hover:bg-zinc-800 black:hover:text-white">
+                dark:hover:bg-slate-700 dark:hover:text-white
+                black:hover:bg-zinc-800 black:hover:text-white">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                     </path>
@@ -649,12 +579,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div
                     class="group border border-cyan-200 rounded-lg p-1 hover:border-cyan-400 transition-colors bg-gray-200
-                            dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-cyan-500
-                            black:border-zinc-700 black:bg-zinc-900/50 black:hover:border-zinc-600">
+                        dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-cyan-500
+                        black:border-zinc-700 black:bg-zinc-900/50 black:hover:border-zinc-600">
                     <div
                         class="bg-cyan-100/50 px-3 py-1.5 rounded-t-md border-b border-cyan-100 flex items-center gap-2
-                                dark:bg-slate-700 dark:border-slate-600
-                                black:bg-zinc-800 black:border-zinc-700">
+                            dark:bg-slate-700 dark:border-slate-600
+                            black:bg-zinc-800 black:border-zinc-700">
                         <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -665,13 +595,129 @@
                             Inicial</span>
                     </div>
                     <div class="p-3 bg-white rounded-b-md dark:bg-slate-800 black:bg-zinc-900">
-                        <label class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Selecione a data de início
+                        <label class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Selecione a data
+                            de
+                            início
                             *</label>
                         <input type="date" id="dataInicio"
                             class="w-full border-gray-200 rounded text-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-700
-                                      dark:bg-slate-900 dark:border-slate-600 dark:text-white
-                                      black:bg-zinc-950 black:border-zinc-800 black:text-zinc-200">
+                                dark:bg-slate-900 dark:border-slate-600 dark:text-white
+                                black:bg-zinc-950 black:border-zinc-800 black:text-zinc-200">
                         <p class="text-[10px] text-slate-400 mt-1">Data não pode ser no futuro</p>
+                    </div>
+                </div>
+
+                <div
+                    class="group border border-cyan-200 rounded-lg p-1 hover:border-cyan-400 transition-colors bg-gray-200
+                        dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-cyan-500
+                        black:border-zinc-700 black:bg-zinc-900/50 black:hover:border-zinc-600">
+                    <div
+                        class="bg-cyan-100/50 px-3 py-1.5 rounded-t-md border-b border-cyan-100 flex items-center gap-2
+                            dark:bg-slate-700 dark:border-slate-600
+                            black:bg-zinc-800 black:border-zinc-700">
+                        <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <span class="text-xs font-semibold text-cyan-800 dark:text-cyan-300 black:text-zinc-300">Data
+                            Final</span>
+                    </div>
+                    <div class="p-3 bg-white rounded-b-md dark:bg-slate-800 black:bg-zinc-900">
+                        <label class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Selecione a data
+                            de
+                            término *</label>
+                        <input type="date" id="dataFim"
+                            class="w-full border-gray-200 rounded text-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-700
+                                dark:bg-slate-900 dark:border-slate-600 dark:text-white
+                                black:bg-zinc-950 black:border-zinc-800 black:text-zinc-200">
+                        <p class="text-[10px] text-slate-400 mt-1">Deve ser posterior à data inicial</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border border-cyan-200 rounded-lg overflow-hidden dark:border-slate-600 black:border-zinc-700">
+                <div
+                    class="bg-cyan-100/50 px-4 py-2 border-b border-cyan-200 flex items-center gap-2
+                        dark:bg-slate-800 dark:border-slate-600
+                        black:bg-zinc-900 black:border-zinc-700">
+                    <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-xs font-semibold text-cyan-900 dark:text-cyan-100 black:text-zinc-300">Períodos
+                        Rápidos</span>
+                </div>
+                <div class="p-4 bg-white dark:bg-slate-800/50 black:bg-zinc-900/50">
+                    <p class="text-xs text-slate-500 mb-3 dark:text-slate-400">Selecione um período
+                        pré-definido ou
+                        configure manualmente</p>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button onclick="setPeriodo(7)"
+                            class="flex items-center justify-center gap-2 py-2 px-4 rounded border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-400 text-sm font-medium transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-1
+                                dark:border-slate-600 dark:text-blue-400 dark:hover:bg-slate-700
+                                black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            Últimos 7 dias
+                        </button>
+                        <button onclick="setPeriodo(30)"
+                            class="flex items-center justify-center gap-2 py-2 px-4 rounded border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-400 text-sm font-medium transition-all
+                                dark:border-slate-600 dark:text-blue-400 dark:hover:bg-slate-700
+                                black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            Últimos 30 dias
+                        </button>
+                        <button onclick="setPeriodo(60)"
+                            class="flex items-center justify-center gap-2 py-2 px-4 rounded border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-400 text-sm font-medium transition-all
+                                dark:border-slate-600 dark:text-blue-400 dark:hover:bg-slate-700
+                                black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            Últimos 60 dias
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-cyan-50 rounded-lg border border-cyan-200 overflow-hidden dark:bg-slate-800/80 dark:border-slate-600 black:bg-zinc-900/80 black:border-zinc-700">
+                <div
+                    class="bg-cyan-100/50 px-4 py-2 border-b border-cyan-200 flex items-center gap-2 dark:bg-slate-800 dark:border-slate-600 black:bg-zinc-800 black:border-zinc-700">
+                    <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-xs font-semibold text-cyan-900 dark:text-cyan-100 black:text-zinc-300">Resumo
+                        do
+                        Período</span>
+                </div>
+                <div class="p-4 flex items-center justify-center gap-8">
+                    <div class="text-center">
+                        <span id="diffDays"
+                            class="block text-2xl font-bold text-blue-600 dark:text-blue-400">0</span>
+                        <span class="text-xs text-slate-500 uppercase font-medium dark:text-slate-400">Dias</span>
+                    </div>
+                    <div class="h-10 w-px bg-cyan-200 dark:bg-slate-600 black:bg-zinc-700"></div>
+                    <div>
+                        <span class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Período
+                            selecionado:</span>
+                        <span id="periodoTexto"
+                            class="text-sm font-semibold text-blue-600 dark:text-blue-400">Selecione as
+                            datas</span>
                     </div>
                 </div>
 
@@ -813,15 +859,44 @@
                 </button>
             </div>
         </div>
-    </div>
 
-    @push('scripts')
-        {{-- Script Unificado: Notificações + Badges + Filtro de Tempo --}}
-        <script>
-            /* ==========================================================
-                                        FUNÇÕES GLOBAIS DO MODAL (Precisam estar fora do DOMContentLoaded)
-                                        para que os botões com onclick="" no HTML consigam acessá-las.
-                                        ========================================================== */
+        <div
+            class="flex items-center justify-between p-5 border-t border-slate-100 bg-slate-50 rounded-b-xl
+                dark:bg-slate-800 dark:border-slate-700
+                black:bg-zinc-900 black:border-zinc-800">
+            <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                </svg>
+                <span class="text-xs">Período máximo: 1 ano</span>
+            </div>
+            <div class="flex gap-3">
+                <button type="button" onclick="document.getElementById('modalPeriodo').classList.add('hidden')"
+                    class="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors shadow-sm">
+                    Cancelar
+                </button>
+                <button type="button" onclick="aplicarPeriodo()"
+                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                        </path>
+                    </svg>
+                    Aplicar Período
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+    {{-- Script Unificado: Notificações + Badges + Filtro de Tempo --}}
+    <script>
+        /* ==========================================================
+                                                                    FUNÇÕES GLOBAIS DO MODAL (Precisam estar fora do DOMContentLoaded)
+                                                                    para que os botões com onclick="" no HTML consigam acessá-las.
+                                                                    ========================================================== */
 
         // 1. Auxiliar: Formatar data (YYYY-MM-DD)
         function formatarDataISO(data) {
@@ -868,11 +943,16 @@
                 if (textoDiff) textoDiff.innerText = diffDays;
 
                 if (textoPeriodo) {
-                    const opcoes = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                    const opcoes = {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    };
                     // Correção para timezone ao exibir string
                     const dataVisual1 = new Date(inputInicio.value + 'T00:00');
                     const dataVisual2 = new Date(inputFim.value + 'T00:00');
-                    textoPeriodo.innerText = `${dataVisual1.toLocaleDateString('pt-BR', opcoes)} até ${dataVisual2.toLocaleDateString('pt-BR', opcoes)}`;
+                    textoPeriodo.innerText =
+                        `${dataVisual1.toLocaleDateString('pt-BR', opcoes)} até ${dataVisual2.toLocaleDateString('pt-BR', opcoes)}`;
                 }
             }
         }
@@ -890,7 +970,7 @@
             // Fecha modal e atualiza label (visual)
             document.getElementById('modalPeriodo').classList.add('hidden');
             const labelBtn = document.getElementById('tipotempo-label');
-            if(labelBtn) labelBtn.innerText = 'Período Personalizado';
+            if (labelBtn) labelBtn.innerText = 'Período Personalizado';
 
             // Redireciona via URL
             const url = new URL(window.location);
@@ -902,8 +982,8 @@
 
 
         /* ==========================================================
-           LÓGICA QUE DEPENDE DO CARREGAMENTO DA PÁGINA (Event Listeners)
-           ========================================================== */
+        LÓGICA QUE DEPENDE DO CARREGAMENTO DA PÁGINA (Event Listeners)
+        ========================================================== */
         document.addEventListener('DOMContentLoaded', () => {
 
             // === 1. LÓGICA DE NOTIFICAÇÕES E BADGES (Mantida Intacta) ===
@@ -938,108 +1018,29 @@
                         updateBadges();
                         // fetch logic aqui...
                     }
-                }
-            }
-
-            // 4. Botão "Aplicar Período"
-            function aplicarPeriodo() {
-                const inicio = document.getElementById('dataInicio').value;
-                const fim = document.getElementById('dataFim').value;
-
-                if (!inicio || !fim) {
-                    alert('Por favor, selecione as datas inicial e final.');
-                    return;
-                }
-
-                // Fecha modal e atualiza label (visual)
-                document.getElementById('modalPeriodo').classList.add('hidden');
-                const labelBtn = document.getElementById('tipotempo-label');
-                if (labelBtn) labelBtn.innerText = 'Período Personalizado';
-
-                // Redireciona via URL
-                const url = new URL(window.location);
-                url.searchParams.set("tempo", "periodo");
-                url.searchParams.set("inicio", inicio);
-                url.searchParams.set("fim", fim);
-                window.location.href = url.toString();
-            }
-
-
-            /* ==========================================================
-               LÓGICA QUE DEPENDE DO CARREGAMENTO DA PÁGINA (Event Listeners)
-               ========================================================== */
-            document.addEventListener('DOMContentLoaded', () => {
-
-                // === 1. LÓGICA DE NOTIFICAÇÕES E BADGES (Mantida Intacta) ===
-                const list = document.getElementById('notifications-list');
-                const avatarBadge = document.getElementById('notif-avatar-badge');
-                const menuBadge = document.getElementById('notif-menu-badge');
-
-                function updateBadges() {
-                    if (!list) return;
-                    const unreadCount = list.querySelectorAll('.notif-item[data-unread-default="1"]').length;
-
-                    if (avatarBadge) {
-                        avatarBadge.textContent = unreadCount > 0 ? (unreadCount > 9 ? '9+' : unreadCount) : '';
-                        avatarBadge.classList.toggle('hidden', unreadCount === 0);
-                    }
-                    if (menuBadge) {
-                        menuBadge.textContent = unreadCount > 0 ? unreadCount : '';
-                        menuBadge.classList.toggle('hidden', unreadCount === 0);
-                    }
-                }
-
-                if (list) {
-                    list.addEventListener('click', (e) => {
-                        const button = e.target.closest('.notif-item');
-                        if (!button) return;
-
-                        if (button.dataset.unreadDefault === '1') {
-                            button.dataset.unreadDefault = '0';
-                            button.classList.add('opacity-60');
-                            const dot = button.querySelector('[data-notif-dot]');
-                            if (dot) dot.classList.add('hidden');
-                            updateBadges();
-                            // fetch logic aqui...
-                        }
-                    });
-                }
-                updateBadges();
-
-                // logica para preview de perfil
-                const photoInput = document.getElementById('photo');
-                const previewImg = document.getElementById('preview-avatar');
-
-                if (photoInput && previewImg) {
-                    photoInput.addEventListener('change', function(event) {
-                        const file = event.target.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-
-                            reader.onload = function(e) {
-                                // Troca a imagem do modal imediatamente
-                                previewImg.src = e.target.result;
-                            }
-
-                            reader.readAsDataURL(file);
-                        }
-                    });
-                }
-
-                // === 2. LÓGICA DO FILTRO DE TEMPO (Listeners) ===
-                const STORAGE_KEY = "tipotempo";
-                const btnTempo = document.getElementById("btn-tipotempo");
-                const dropdownTempo = document.getElementById("dropdown-tipotempo");
-                const labelTempo = document.getElementById("tipotempo-label");
-
-                // Listeners para os Inputs de Data (Change manual)
-                const inputsData = document.querySelectorAll('#dataInicio, #dataFim');
-                inputsData.forEach(input => {
-                    input.addEventListener('change', atualizarResumo);
                 });
             }
             updateBadges();
 
+            // logica para preview de perfil
+            const photoInput = document.getElementById('photo');
+            const previewImg = document.getElementById('preview-avatar');
+
+            if (photoInput && previewImg) {
+                photoInput.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            // Troca a imagem do modal imediatamente
+                            previewImg.src = e.target.result;
+                        }
+
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
 
             // === 2. LÓGICA DO FILTRO DE TEMPO (Listeners) ===
             const STORAGE_KEY = "tipotempo";
@@ -1065,7 +1066,8 @@
                     if (tempoAtual === 'periodo') {
                         labelTempo.innerText = 'Período Personalizado';
                     } else {
-                        const itemAtivo = document.querySelector(`#dropdown-tipotempo a[data-tempo="${tempoAtual}"]`);
+                        const itemAtivo = document.querySelector(
+                            `#dropdown-tipotempo a[data-tempo="${tempoAtual}"]`);
                         if (itemAtivo) labelTempo.innerText = itemAtivo.innerText.trim();
                     }
                 }

@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/modules/user.php';
 
     //troca de perfil
-    Route::put('/user/photo/update', [UserController::class, 'updatePhoto'])->name('user.photo.update');
+    Route::put('/user/profile/update', [UserController::class, 'updateProfile'])->name('user.profile.update');
 
     Route::get('/home', fn() => view('home'))->name('home');
     // rotas de usuario
