@@ -20,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'profile_photo_url'
@@ -52,6 +53,7 @@ class User extends Authenticatable
     {
         return [
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $id,
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'password' => 'required|string|min:8|confirmed',
             'profile_photo_url' => 'nullable|string|max:2048',
