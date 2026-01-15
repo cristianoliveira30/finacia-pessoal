@@ -320,9 +320,9 @@
             {{-- Conteúdo (Scrollable) --}}
             <div class="p-6  overflow-y-auto">
 
-                <form action="{{ route('user.update', auth()->user()->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
+                    <form action="{{ route('user.photo.update') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -351,26 +351,22 @@
                                             accept="image/*">
                                     </div>
 
-                                    <div class="mt-4 space-y-1">
-                                        <h3
-                                            class="text-xl font-bold text-slate-800 dark:text-white black:text-zinc-100 tracking-tight">
-                                            {{ auth()->user()->name }}
-                                        </h3>
-                                    </div>
-                                    <div class="mt-4">
-                                        {{-- Botão Dropdown Tema --}}
-                                        <button id="themeDropdownButton" data-dropdown-toggle="themeDropdown"
-                                            class="text-slate-700 dark:text-slate-200 black:text-zinc-200 bg-white dark:bg-slate-700 black:bg-zinc-800 hover:bg-slate-50 dark:hover:bg-slate-600 black:hover:bg-zinc-700 focus:ring-2 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center shadow-sm border border-slate-200 dark:border-slate-600 black:border-zinc-700 transition-colors"
-                                            type="button">
-                                            <x-bi-palette class="w-4 h-4 mr-2" />
-                                            Tema: <span id="current-theme-label"
-                                                class="ml-1 font-bold">Selecionar</span>
-                                            <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                                            </svg>
-                                        </button>
+                                    <div class="relative z-10 flex flex-col items-center text-center">
+                                        {{-- Foto de Perfil --}}
+                                        <div class="relative group">
+                                            <div
+                                                class="w-32 h-32 rounded-full p-1 border-2 border-slate-200 dark:border-slate-600 black:border-zinc-700 bg-white dark:bg-slate-700 black:bg-zinc-800">
+                                                <img id="preview-avatar"
+                                                    src="{{ auth()->user()->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=E2E8F0&color=64748B' }}"
+                                                    alt="Profile" class="w-full h-full rounded-full object-cover">
+                                            </div>
+                                            <label for="photo"
+                                                class="absolute bottom-0 right-0 bg-sky-500 text-white p-2 rounded-full cursor-pointer hover:bg-sky-600 transition-colors shadow-lg border-2 border-slate-50 dark:border-slate-800 black:border-zinc-800">
+                                                <x-bi-camera class="w-4 h-4" />
+                                            </label>
+                                            <input type="file" id="photo" name="photo" class="hidden"
+                                                accept="image/*">
+                                        </div>
 
                                         {{-- Menu Dropdown Tema --}}
                                         <div id="themeDropdown"
@@ -819,13 +815,13 @@
         </div>
     </div>
 
-@push('scripts')
-    {{-- Script Unificado: Notificações + Badges + Filtro de Tempo --}}
-    <script>
-        /* ==========================================================
-           FUNÇÕES GLOBAIS DO MODAL (Precisam estar fora do DOMContentLoaded)
-           para que os botões com onclick="" no HTML consigam acessá-las.
-           ========================================================== */
+    @push('scripts')
+        {{-- Script Unificado: Notificações + Badges + Filtro de Tempo --}}
+        <script>
+            /* ==========================================================
+                                        FUNÇÕES GLOBAIS DO MODAL (Precisam estar fora do DOMContentLoaded)
+                                        para que os botões com onclick="" no HTML consigam acessá-las.
+                                        ========================================================== */
 
         // 1. Auxiliar: Formatar data (YYYY-MM-DD)
         function formatarDataISO(data) {
@@ -942,6 +938,104 @@
                         updateBadges();
                         // fetch logic aqui...
                     }
+                }
+            }
+
+            // 4. Botão "Aplicar Período"
+            function aplicarPeriodo() {
+                const inicio = document.getElementById('dataInicio').value;
+                const fim = document.getElementById('dataFim').value;
+
+                if (!inicio || !fim) {
+                    alert('Por favor, selecione as datas inicial e final.');
+                    return;
+                }
+
+                // Fecha modal e atualiza label (visual)
+                document.getElementById('modalPeriodo').classList.add('hidden');
+                const labelBtn = document.getElementById('tipotempo-label');
+                if (labelBtn) labelBtn.innerText = 'Período Personalizado';
+
+                // Redireciona via URL
+                const url = new URL(window.location);
+                url.searchParams.set("tempo", "periodo");
+                url.searchParams.set("inicio", inicio);
+                url.searchParams.set("fim", fim);
+                window.location.href = url.toString();
+            }
+
+
+            /* ==========================================================
+               LÓGICA QUE DEPENDE DO CARREGAMENTO DA PÁGINA (Event Listeners)
+               ========================================================== */
+            document.addEventListener('DOMContentLoaded', () => {
+
+                // === 1. LÓGICA DE NOTIFICAÇÕES E BADGES (Mantida Intacta) ===
+                const list = document.getElementById('notifications-list');
+                const avatarBadge = document.getElementById('notif-avatar-badge');
+                const menuBadge = document.getElementById('notif-menu-badge');
+
+                function updateBadges() {
+                    if (!list) return;
+                    const unreadCount = list.querySelectorAll('.notif-item[data-unread-default="1"]').length;
+
+                    if (avatarBadge) {
+                        avatarBadge.textContent = unreadCount > 0 ? (unreadCount > 9 ? '9+' : unreadCount) : '';
+                        avatarBadge.classList.toggle('hidden', unreadCount === 0);
+                    }
+                    if (menuBadge) {
+                        menuBadge.textContent = unreadCount > 0 ? unreadCount : '';
+                        menuBadge.classList.toggle('hidden', unreadCount === 0);
+                    }
+                }
+
+                if (list) {
+                    list.addEventListener('click', (e) => {
+                        const button = e.target.closest('.notif-item');
+                        if (!button) return;
+
+                        if (button.dataset.unreadDefault === '1') {
+                            button.dataset.unreadDefault = '0';
+                            button.classList.add('opacity-60');
+                            const dot = button.querySelector('[data-notif-dot]');
+                            if (dot) dot.classList.add('hidden');
+                            updateBadges();
+                            // fetch logic aqui...
+                        }
+                    });
+                }
+                updateBadges();
+
+                // logica para preview de perfil
+                const photoInput = document.getElementById('photo');
+                const previewImg = document.getElementById('preview-avatar');
+
+                if (photoInput && previewImg) {
+                    photoInput.addEventListener('change', function(event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+
+                            reader.onload = function(e) {
+                                // Troca a imagem do modal imediatamente
+                                previewImg.src = e.target.result;
+                            }
+
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
+
+                // === 2. LÓGICA DO FILTRO DE TEMPO (Listeners) ===
+                const STORAGE_KEY = "tipotempo";
+                const btnTempo = document.getElementById("btn-tipotempo");
+                const dropdownTempo = document.getElementById("dropdown-tipotempo");
+                const labelTempo = document.getElementById("tipotempo-label");
+
+                // Listeners para os Inputs de Data (Change manual)
+                const inputsData = document.querySelectorAll('#dataInicio, #dataFim');
+                inputsData.forEach(input => {
+                    input.addEventListener('change', atualizarResumo);
                 });
             }
             updateBadges();

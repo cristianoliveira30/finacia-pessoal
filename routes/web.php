@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnalisesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\NoStoreHtml;
 use Illuminate\Support\Facades\Route;
 
@@ -14,12 +15,12 @@ Route::middleware([NoStoreHtml::class])->group(function () {
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Rota da troca de perfil
-Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
 Route::middleware('auth')->group(function () {
 
     require __DIR__ . '/modules/user.php';
+
+    //troca de perfil
+    Route::put('/user/photo/update', [UserController::class, 'updatePhoto'])->name('user.photo.update');
 
     Route::get('/home', fn() => view('home'))->name('home');
     // rotas de usuario
