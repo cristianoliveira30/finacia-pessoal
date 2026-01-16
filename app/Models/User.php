@@ -49,13 +49,25 @@ class User extends Authenticatable
         ];
     }
 
-    protected static function rules(?int $id ): array
+    protected static function rules(): array
     {
         return [
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username,' . $id,
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'username' => 'required|string|max:255|unique:users,username',
+            'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
+            'profile_photo_url' => 'nullable|string|max:2048',
+        ];
+    }
+
+    public static function updateRules(int $id): array
+    {
+        return [
+            'current_password' => 'required|current_password', // Só atualiza usando a senha atual do usuário
+            'name' => 'sometimes|string|max:255',
+            'username' => 'sometimes|string|max:255|unique:users,username,' . $id,
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'sometimes|string|min:8|confirmed',
             'profile_photo_url' => 'nullable|string|max:2048',
         ];
     }

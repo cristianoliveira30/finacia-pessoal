@@ -39,51 +39,44 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $inputs = $request->validate(User::rules((int) $id));
-        $user = User::findOrFail($id);
-        $user->update($inputs);
-        return redirect()->back()->with('success', 'User updated successfully.');
-    }
+        $user = User::find($id);
 
-    public function updateProfile(Request $request)
-    {
-        $user = auth()->user();
+        if (!$user) {
+            return back()->with('error', 'User not found.');
+        }
 
-        // 1. Validação Condicional
-        $request->validate([
-            'name'  => ['required', 'string', 'max:255'],
-            // Garante que o email é único, mas ignora o email do próprio usuário atual
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'photo' => ['nullable', 'image', 'max:2048'],
+        // Validação dos dados
+        // Primeiro filtramos apenas os valores não nulos na requisição
+        $data = collect($request->all())
+            ->filter(fn($value) => !is_null($value))
+            ->all();
 
-            // A senha só é validada SE o campo 'password' (nova senha) tiver algum valor
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-        ]);
+        $inputs = validator($data, User::updateRules($id));
 
-        // 2. Upload da Foto
+        if ($inputs->fails()) {
+            return back()->withErrors($inputs)->withInput();
+        }
+
+        // Atualiza os dados do usuário
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+        $user->update($data);
+
+        // Depois de atualizar os dados vamos verificar se há atualização de foto
         if ($request->hasFile('photo')) {
-            // Apaga a antiga se existir
+            // Apaga a foto antiga se existir
             if ($user->profile_photo_url && str_contains($user->profile_photo_url, '/storage/')) {
                 Storage::disk('public')->delete(str_replace('/storage/', '', $user->profile_photo_url));
             }
-            // Salva a nova
+
+            // Salva a nova foto
             $path = $request->file('photo')->store('profile-photos', 'public');
-            $user->profile_photo_url = '/storage/' . $path;
+            $user->profile_photo_url = config('app.url') . '/storage/' . $path;
+            $user->save();
         }
 
-        // 3. Atualiza Dados Básicos
-        $user->name = $request->name;
-        $user->email = $request->email;
-
-        // 4. Atualiza Senha (SÓ SE O USUÁRIO DIGITOU UMA NOVA)
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
-
-        // 5. Salva no Banco
-        $user->save();
-
-        return back()->with('success', 'Perfil atualizado com sucesso!');
+        return back()->with('success', 'User updated successfully.');
     }
 
     /**
