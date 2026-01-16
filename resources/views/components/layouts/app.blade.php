@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? config('app.name') }}</title>
     <link rel="icon" href="{{ asset('assets/img/para.png') }}">
     @vite(['resources/js/app.js', 'resources/css/app.css'])
@@ -119,7 +120,7 @@
         // 1. Função principal de troca de tema
         function applyTheme(theme) {
             const html = document.documentElement;
-            
+
             // Remove classes anteriores para evitar conflitos
             html.classList.remove('dark', 'black');
 
@@ -129,12 +130,12 @@
             } else if (theme === 'black') {
                 html.classList.add('black'); // Tema Black
                 // Opcional: Se componentes do Flowbite quebrarem no black, descomente a linha abaixo:
-                // html.classList.add('dark'); 
+                // html.classList.add('dark');
             }
-            
+
             // Salva a preferência
             localStorage.setItem('color-theme', theme);
-            
+
             // Atualiza visualmente o texto do botão (opcional, para feedback imediato)
             updateDropdownLabel(theme);
         }
@@ -143,7 +144,11 @@
         function updateDropdownLabel(theme) {
             const label = document.getElementById('current-theme-label');
             if (label) {
-                const names = { 'light': 'Claro', 'dark': 'Neon', 'black': 'Escuro' };
+                const names = {
+                    'light': 'Claro',
+                    'dark': 'Neon',
+                    'black': 'Escuro'
+                };
                 label.textContent = names[theme] || 'Tema';
             }
         }

@@ -1,21 +1,23 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnalisesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\NoStoreHtml;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([NoStoreHtml::class])->group(function () {
     Route::view('/', 'welcome')->name('login');
-    Route::get('/login', fn () => redirect()->route('login'));
+    Route::get('/login', fn() => redirect()->route('login'));
 });
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
+
+    Route::post('/notifications/send', [NotificationController::class, 'send']);
 
     require __DIR__ . '/modules/user.php';
 
