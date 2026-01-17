@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     // rotas do setor financeiro
     Route::prefix('financeiro')->name('financeiro.')->group(function () {
 
+        Route::view('/financeiro', 'financeiro.placeholder')->name('placeholder');
+
         // Base
         Route::view('/home', 'financeiro.home-financeiro')->name('home');
         Route::view('/relatorios', 'financeiro.relatorios')->name('relatorios');
