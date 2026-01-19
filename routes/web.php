@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
     // rota de relatorio
     Route::get('/report', fn() => view('reports/default'))->name('report.default');
 
+    //rota de tela em construção
+    Route::view('/errors', 'errors.nodata')->name('errors.nodata');
+
     // rotas do setor financeiro
     Route::prefix('financeiro')->name('financeiro.')->group(function () {
 
