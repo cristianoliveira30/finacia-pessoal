@@ -49,6 +49,12 @@ class DatabaseSeeder extends Seeder
         // Create default users
         $users = [
             [
+                'name' => 'Administrador',
+                'username' => 'admin',
+                'email' => 'tudointeligencia@gmail.com',
+                'password' => '12345678'
+            ],
+            [
                 'name' => 'Marcus Calderaro',
                 'username' => 'marcus.calderaro',
                 'email' => 'marcuseduardo54@gmail.com',
