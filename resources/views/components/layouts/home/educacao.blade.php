@@ -14,10 +14,10 @@
                 ['label' => 'Dashboard Educação', 'route' => 'educacao.home', 'icon' => 'speedometer2'],
                 [
                     'label' => 'Indicadores (Resumo)',
-                    'route' => 'educacao.painel.indicadores',
+                    'route' => 'errors.nodata',
                     'icon' => 'clipboard-data',
                 ],
-                ['label' => 'Metas e Acompanhamento', 'route' => 'educacao.painel.metas', 'icon' => 'bullseye'],
+                ['label' => 'Metas e Acompanhamento', 'route' => 'errors.nodata', 'icon' => 'bullseye'],
             ],
         ],
 
@@ -52,7 +52,10 @@
                     'icon' => 'person-plus',
                 ],
                 [
-                    'label' => 'Turmas / Lotação', 'route' => 'educacao.relatorios.turmas', 'icon' => 'people'],
+                    'label' => 'Turmas / Lotação',
+                    'route' => 'educacao.relatorios.turmas',
+                    'icon' => 'people',
+                ],
                 [
                     'label' => 'Transferências',
                     'route' => 'educacao.relatorios.transferencias',
@@ -64,14 +67,20 @@
                     'icon' => 'building',
                 ],
                 [
-                    'label' => 'Merenda (Resumo)', 'route' => 'educacao.relatorios.merenda', 'icon' => 'cup-hot'
+                    'label' => 'Merenda (Resumo)',
+                    'route' => 'educacao.relatorios.merenda',
+                    'icon' => 'cup-hot',
                 ],
 
                 [
-                    'label' => 'Transporte (Resumo)', 'route' => 'educacao.relatorios.transporte', 'icon' => 'bus-front'
+                    'label' => 'Transporte (Resumo)',
+                    'route' => 'educacao.relatorios.transporte',
+                    'icon' => 'bus-front',
                 ],
                 [
-                    'label' => 'Inclusão / AEE', 'route' => 'educacao.relatorios.inclusao', 'icon' => 'universal-access'
+                    'label' => 'Inclusão / AEE',
+                    'route' => 'educacao.relatorios.inclusao',
+                    'icon' => 'universal-access',
                 ],
             ],
         ],
@@ -222,24 +231,37 @@
     }
 
     html.dark {
-        --sidebar-bg: #020617; /* bg-slate-950 */
-        --sidebar-border: #1e293b; /* border-slate-800 */
-        --sidebar-text: #e5e7eb; /* text-slate-200 */
-        --sidebar-hover-bg: #111827; /* bg-slate-900 */
-        --sidebar-submenu-bg: #374151; /* bg-slate-700 */
+        --sidebar-bg: #020617;
+        /* bg-slate-950 */
+        --sidebar-border: #1e293b;
+        /* border-slate-800 */
+        --sidebar-text: #e5e7eb;
+        /* text-slate-200 */
+        --sidebar-hover-bg: #111827;
+        /* bg-slate-900 */
+        --sidebar-submenu-bg: #374151;
+        /* bg-slate-700 */
         --sidebar-submenu-border: #4b5563;
-        --sidebar-tooltip-bg: #4b5563; /* bg-slate-600 */
+        --sidebar-tooltip-bg: #4b5563;
+        /* bg-slate-600 */
     }
 
     /* TEMA BLACK (ZINC) */
     html.black {
-        --sidebar-bg: #18181b; /* zinc-900 */
-        --sidebar-border: #27272a; /* zinc-800 */
-        --sidebar-text: #e4e4e7; /* zinc-200 */
-        --sidebar-hover-bg: #27272a; /* zinc-800 (Hover suave) */
-        --sidebar-submenu-bg: #18181b; /* zinc-900 */
-        --sidebar-submenu-border: #3f3f46; /* zinc-700 */
-        --sidebar-tooltip-bg: #27272a; /* zinc-800 */
+        --sidebar-bg: #18181b;
+        /* zinc-900 */
+        --sidebar-border: #27272a;
+        /* zinc-800 */
+        --sidebar-text: #e4e4e7;
+        /* zinc-200 */
+        --sidebar-hover-bg: #27272a;
+        /* zinc-800 (Hover suave) */
+        --sidebar-submenu-bg: #18181b;
+        /* zinc-900 */
+        --sidebar-submenu-border: #3f3f46;
+        /* zinc-700 */
+        --sidebar-tooltip-bg: #27272a;
+        /* zinc-800 */
     }
 
     /* =================== LAYOUT / ESTILOS =================== */
@@ -358,6 +380,7 @@
     body.sidebar-collapsed .sidebar-link[data-tooltip]:hover::after {
         opacity: 1;
     }
+
     @media (max-width: 1023px) {
         .popover-flowbite {
             display: none !important;
@@ -452,7 +475,8 @@
         <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
             class="popover-flowbite absolute z-50 invisible inline-block w-48 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0">
             <div class="p-3">
-                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
+                <div
+                    class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
                     <span class="h-4 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
                     <span class="font-semibold"
                         style="color: {{ $menu['hex_main'] }}">{{ $menu['popover_title'] }}</span>
@@ -539,13 +563,14 @@
                 // CORREÇÃO: Só impede o clique se for Desktop E a barra estiver fechada.
                 // No celular, 'isDesktop()' é false, então o menu abre normalmente.
                 if (isDesktop() && document.body.classList.contains('sidebar-collapsed')) {
-                    return; 
+                    return;
                 }
 
                 e.preventDefault();
                 e.stopPropagation();
                 const group = this.closest('.menu-group');
-                if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
+                if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' :
+                    'true';
             });
         });
 
@@ -576,8 +601,8 @@
             // Posicionamento
             const rect = trigger.getBoundingClientRect();
             const scrollY = window.scrollY || window.pageYOffset;
-            
-            let top = rect.top + scrollY; 
+
+            let top = rect.top + scrollY;
             let left = rect.right + 10;
 
             const pHeight = el.offsetHeight;

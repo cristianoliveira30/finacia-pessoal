@@ -78,7 +78,7 @@ Route::middleware('auth')->group(function () {
             Route::view('ppa', 'financeiro.orcamento.ppa')->name('ppa');
             Route::view('ldo', 'financeiro.orcamento.ldo')->name('ldo');
             Route::view('creditos-adicionais', 'financeiro.orcamento.creditos')->name('creditos');
-            Route::view('restos-a-pagar', 'financeiro.orcamento.resto-pagar')->name('resto-pagar');
+            Route::view('restos-pagar', 'financeiro.orcamento.restos-pagar')->name('restos-pagar');
         });
 
         // -----------------------------
@@ -190,7 +190,7 @@ Route::middleware('auth')->group(function () {
         // TRANSPORTE ESCOLAR
         // -----------------------------
         Route::view('/transporte/rotas', 'educacao.transporte.rotas')->name('transporte.rotas');
-        Route::view('/transporte/frota', 'educacao.transporte.frotas')->name('transporte.frota');
+        Route::view('/transporte/frota', 'educacao.transporte.frota')->name('transporte.frota');
         Route::view('/transporte/atrasos', 'educacao.transporte.atrasos')->name('transporte.atrasos');
 
         // -----------------------------
@@ -259,7 +259,7 @@ Route::middleware('auth')->group(function () {
         // URGÊNCIA / EMERGÊNCIA
         // -----------------------------
         Route::view('/urgencia/unidades', 'saude.urgencia.unidades-upa')->name('urgencia.unidades-upa');
-        Route::view('/urgencia/classificacao', 'saude.urgencia.clasificacao-risco')->name('urgencia.classificacao-risco');
+        Route::view('/urgencia/classificacao-risco', 'saude.urgencia.classificacao-risco')->name('urgencia.classificacao-risco');
         Route::view('/urgencia/porta-medico', 'saude.urgencia.porta-medico')->name('urgencia.porta-medico');
         Route::view('/urgencia/leitos', 'saude.urgencia.leitos')->name('urgencia.leitos');
 
@@ -267,7 +267,7 @@ Route::middleware('auth')->group(function () {
         // VIGILÂNCIA EM SAÚDE
         // -----------------------------
         Route::view('/vigilancia/notificacoes', 'saude.vigilancia.notificacoes')->name('vigilancia.notificacoes');
-        Route::view('/vigilancia/agravos', 'saude.vigilancia.caso-agravo')->name('vigilancia.cas0-agravo');
+        Route::view('/vigilancia/agravos', 'saude.vigilancia.casos-agravo')->name('vigilancia.casos-agravo');
         Route::view('/vigilancia/fiscalizacao', 'saude.vigilancia.fiscalizacao')->name('vigilancia.fiscalizacao');
         Route::view('/vigilancia/indicadores', 'saude.vigilancia.indicadores-epidermico')->name('vigilancia.indicadores-epidermico');
 

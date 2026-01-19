@@ -73,7 +73,7 @@
                 ],
                 [
                     'label' => 'Restos a Pagar (Processados/Não)',
-                    'route' => 'financeiro.orcamento.resto-pagar',
+                    'route' => 'financeiro.orcamento.restos-pagar',
                     'icon' => 'exclamation-triangle',
                 ],
             ],
@@ -247,24 +247,37 @@
     }
 
     html.dark {
-        --sidebar-bg: #020617; /* bg-slate-950 */
-        --sidebar-border: #1e293b; /* border-slate-800 */
-        --sidebar-text: #e5e7eb; /* text-slate-200 */
-        --sidebar-hover-bg: #111827; /* bg-slate-900 */
-        --sidebar-submenu-bg: #374151; /* bg-slate-700 */
+        --sidebar-bg: #020617;
+        /* bg-slate-950 */
+        --sidebar-border: #1e293b;
+        /* border-slate-800 */
+        --sidebar-text: #e5e7eb;
+        /* text-slate-200 */
+        --sidebar-hover-bg: #111827;
+        /* bg-slate-900 */
+        --sidebar-submenu-bg: #374151;
+        /* bg-slate-700 */
         --sidebar-submenu-border: #4b5563;
-        --sidebar-tooltip-bg: #4b5563; /* bg-slate-600 */
+        --sidebar-tooltip-bg: #4b5563;
+        /* bg-slate-600 */
     }
 
     /* TEMA BLACK (ZINC) */
     html.black {
-        --sidebar-bg: #18181b; /* zinc-900 */
-        --sidebar-border: #27272a; /* zinc-800 */
-        --sidebar-text: #e4e4e7; /* zinc-200 */
-        --sidebar-hover-bg: #27272a; /* zinc-800 (Hover suave) */
-        --sidebar-submenu-bg: #18181b; /* zinc-900 */
-        --sidebar-submenu-border: #3f3f46; /* zinc-700 */
-        --sidebar-tooltip-bg: #27272a; /* zinc-800 */
+        --sidebar-bg: #18181b;
+        /* zinc-900 */
+        --sidebar-border: #27272a;
+        /* zinc-800 */
+        --sidebar-text: #e4e4e7;
+        /* zinc-200 */
+        --sidebar-hover-bg: #27272a;
+        /* zinc-800 (Hover suave) */
+        --sidebar-submenu-bg: #18181b;
+        /* zinc-900 */
+        --sidebar-submenu-border: #3f3f46;
+        /* zinc-700 */
+        --sidebar-tooltip-bg: #27272a;
+        /* zinc-800 */
     }
 
     /* =================== LAYOUT / ESTILOS =================== */
@@ -383,6 +396,7 @@
     body.sidebar-collapsed .sidebar-link[data-tooltip]:hover::after {
         opacity: 1;
     }
+
     @media (max-width: 1023px) {
         .popover-flowbite {
             display: none !important;
@@ -477,7 +491,8 @@
         <div data-popover id="popover-{{ $menu['id'] }}" role="tooltip"
             class="popover-flowbite absolute z-50 invisible inline-block w-48 text-sm text-gray-900 dark:text-gray-200 black:text-zinc-200 transition-opacity duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 border border-gray-200 dark:border-gray-700 black:border-zinc-800 rounded-lg shadow-xl opacity-0">
             <div class="p-3">
-                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
+                <div
+                    class="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700 black:border-zinc-800">
                     <span class="h-4 w-1 rounded-full" style="background-color: {{ $menu['hex_main'] }}"></span>
                     <span class="font-semibold"
                         style="color: {{ $menu['hex_main'] }}">{{ $menu['popover_title'] }}</span>
@@ -564,13 +579,14 @@
                 // SÓ bloqueia se for Desktop E estiver recolhido (para usar o popover)
                 // Se for Mobile, essa condição dá FALSE e o menu abre normal
                 if (isDesktop() && document.body.classList.contains('sidebar-collapsed')) {
-                    return; 
+                    return;
                 }
 
                 e.preventDefault();
                 e.stopPropagation();
                 const group = this.closest('.menu-group');
-                if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' : 'true';
+                if (group) group.dataset.open = group.dataset.open === 'true' ? 'false' :
+                    'true';
             });
         });
 
@@ -584,7 +600,7 @@
 
         function showPopover(trigger) {
             // *** A MÁGICA: Se não for desktop, cancela tudo ***
-            if (!isDesktop()) return; 
+            if (!isDesktop()) return;
 
             const targetId = trigger.getAttribute('data-popover-target');
             const el = document.getElementById(targetId);
@@ -604,8 +620,8 @@
             const rect = trigger.getBoundingClientRect();
             // Pega scroll atual
             const scrollY = window.scrollY || window.pageYOffset;
-            
-            let top = rect.top + scrollY; 
+
+            let top = rect.top + scrollY;
             let left = rect.right + 10;
 
             // Ajuste de altura se bater no fundo
@@ -616,7 +632,8 @@
 
             // Define posição
             el.style.position = 'fixed'; // Ou absolute dependendo do seu layout
-            el.style.top = rect.top + 'px'; // Usando fixed, não precisa somar scrollY no top, mas depende do parent
+            el.style.top = rect.top +
+                'px'; // Usando fixed, não precisa somar scrollY no top, mas depende do parent
             el.style.left = left + 'px';
             el.style.zIndex = '9999';
         }
