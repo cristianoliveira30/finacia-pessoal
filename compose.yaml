@@ -21,6 +21,8 @@ services:
             IGNITION_LOCAL_SITES_PATH: '${PWD}'
         volumes:
             - '.:/var/www/html'
+            - 'sail-vendor:/var/www/html/vendor'
+            - 'sail-node-modules:/var/www/html/node_modules'
         networks:
             - sail
         depends_on:
@@ -83,4 +85,8 @@ volumes:
     sail-pgsql:
         driver: local
     sail-mysql:
+        driver: local
+    sail-vendor:
+        driver: local
+    sail-node-modules:
         driver: local
