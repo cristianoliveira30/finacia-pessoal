@@ -36,12 +36,27 @@
 1. Copie o arquivo de ambiente e ajuste variáveis conforme necessário:
 
 ```bash
+# faça o clone e instancia o docker
+mkdir ~/projects
+cd ~/projects
+git clone link
 cp .env.example .env
+
+# instala o sail
+docker run --rm \
+  -u "$(id -u):$(id -g)" \
+  -v "$PWD":/var/www/html -w /var/www/html \
+  laravelsail/php83-composer:latest \
+  composer install
 ```
 
 2. Suba os containers e execute instalação (usa o binário Sail):
 
 ```bash
+# se quiser usar um alias
+echo "alias sail='sh \$([ -f sail ] && echo sail || echo vendor/bin/sail)'" >> ~/.bashrc
+source ~/.bashrc
+
 # Inicia os containers em background
 ./vendor/bin/sail up -d
 
@@ -57,6 +72,9 @@ cp .env.example .env
 # Instale dependências JS e rode o dev server do Vite
 ./vendor/bin/sail npm install
 ./vendor/bin/sail npm run dev
+
+# Para encerrar
+sail down # use -v se quiser dropar os container
 ```
 
 3. Acesse a aplicação em `http://localhost` (ou na porta configurada pelo Sail).
