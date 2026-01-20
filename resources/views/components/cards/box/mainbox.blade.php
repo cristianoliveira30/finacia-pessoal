@@ -36,7 +36,7 @@
             'label' => 'Apontamentos TCE',
             'suffix' => 'uni',
             'text' => 'Irregularidades Graves',
-            'link' => route('errors.nodata'),
+            'link' => route('#'),
             'icon' => 'shield-exclamation',
             // Crítico: black:bg-red-900/20 e black:text-red-400
             'bg_class' =>
@@ -49,7 +49,7 @@
             'label' => 'Investimentos Totais',
             'suffix' => 'mi',
             'text' => 'Liquidados no Exercício',
-            'link' => route('errors.nodata'),
+            'link' => route('#'),
             'icon' => 'graph-up',
             // Neutro: black:bg-zinc-800 e black:text-zinc-300
             'bg_class' =>

@@ -76,8 +76,8 @@
             'icon_main' => 'house-heart',
             'items' => [
                 ['label' => 'UBS / Unidades', 'route' => 'saude.atencao.ubs-unidades', 'icon' => 'building'],
-                ['label' => 'Equipes ESF', 'route' => 'errors.nodata', 'icon' => 'people'],
-                ['label' => 'Visitas Domiciliares', 'route' => 'errors.nodata', 'icon' => 'geo-alt'],
+                ['label' => 'Equipes ESF', 'route' => '#', 'icon' => 'people'],
+                ['label' => 'Visitas Domiciliares', 'route' => '#', 'icon' => 'geo-alt'],
                 [
                     'label' => 'Acompanhamentos (Crônicos)',
                     'route' => 'saude.atencao.acompanhamentos',
@@ -102,10 +102,14 @@
                     'route' => 'saude.urgencia.classificacao-risco', // Alterado: Adicionado -risco conforme web.php
                     'icon' => 'exclamation-triangle',
                 ],
-                ['label' => 'Tempo Porta-Médico', 'route' => 'errors.nodata', 'icon' => 'stopwatch'], // Alterado: _ para -
+                [
+                    'label' => 'Tempo Porta-Médico',
+                    'route' => '#',
+                    'icon' => 'stopwatch',
+                ],
                 [
                     'label' => 'Leitos (Disponibilidade)',
-                    'route' => 'errors.nodata',
+                    'route' => '#',
                     'icon' => 'clipboard2-pulse',
                 ],
             ],
@@ -123,7 +127,7 @@
             'items' => [
                 [
                     'label' => 'Notificações (SINAN)',
-                    'route' => 'errors.nodata',
+                    'route' => '#',
                     'icon' => 'clipboard-data',
                 ],
                 ['label' => 'Casos por Agravo', 'route' => 'saude.vigilancia.casos-agravo', 'icon' => 'graph-up'], // ATENÇÃO: Mantido 'cas0' (com zero) pois está assim no web.php
@@ -148,7 +152,7 @@
             'items' => [
                 ['label' => 'Cobertura Vacinal', 'route' => 'saude.imunizacao.cobertura', 'icon' => 'bar-chart'], // Alterado: removido -vacinal para bater com web.php
                 ['label' => 'Campanhas', 'route' => 'saude.imunizacao.campanhas', 'icon' => 'megaphone'],
-                ['label' => 'Estoque de Vacinas', 'route' => 'errors.nodata', 'icon' => 'boxes'],
+                ['label' => 'Estoque de Vacinas', 'route' => '#', 'icon' => 'boxes'],
                 [
                     'label' => 'Perdas / Vencimentos',
                     'route' => 'saude.imunizacao.perdas',
@@ -191,7 +195,7 @@
                 ['label' => 'Fila de Consultas', 'route' => 'saude.regulacao.fila-consultas', 'icon' => 'list-ol'], // Alterado: _ para -
                 ['label' => 'Fila de Exames', 'route' => 'saude.regulacao.fila-exames', 'icon' => 'list-ol'], // Alterado: _ para - (embora a imagem mostrasse hifen, conferi com web.php)
                 ['label' => 'SLA da Regulação', 'route' => 'saude.regulacao.sla-regulacao', 'icon' => 'stopwatch'], // Alterado: de .sla para .sla-regulacao
-                ['label' => 'Oferta x Demanda', 'route' => 'errors.nodata', 'icon' => 'bar-chart'], // Alterado: _ para -
+                ['label' => 'Oferta x Demanda', 'route' => '#', 'icon' => 'bar-chart'], // Alterado: _ para -
             ],
         ],
 
