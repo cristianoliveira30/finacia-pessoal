@@ -1,10 +1,10 @@
 <x-layouts.app title="{{ $title ?? 'Sem dados' }}">
-    <div class="w-full min-h-[85vh] flex flex-col items-center justify-center
-                px-6 sm:px-4 lg:pl-16">
+    <div class="w-full h-screen flex flex-col items-center justify-center
+                px-6">
 
         {{-- CARD DE MENSAGEM --}}
         <div
-            class="w-full max-w-md p-8 text-center rounded-2xl border border-dashed transition-colors
+            class="w-full max-w-md p-8 text-center rounded-2xl border border-solid transition-colors
                     bg-white border-slate-300
                     dark:bg-slate-800/50 dark:border-slate-700
                     black:bg-zinc-900 black:border-zinc-800">
