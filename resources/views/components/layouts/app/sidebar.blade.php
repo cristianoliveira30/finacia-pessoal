@@ -415,7 +415,7 @@
 {{-- CONTAINER SIDEBAR: black:bg-zinc-900 | black:border-zinc-800 --}}
 <aside id="top-bar-sidebar"
     class="fixed top-16 bottom-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0
-         border-e transition-transform duration-300 bg-white dark:bg-gray-800 black:bg-zinc-900 black:border-zinc-800"
+         border-e transition-transform duration-300 bg-white  dark:bg-gray-800 black:bg-zinc-900 black:border-zinc-800"
     aria-label="Sidebar">
 
     <div
@@ -836,7 +836,7 @@
                     if (isVisible) {
                         hidePopoverImmediate(popoverEl);
                         scheduleClose(popoverEl.getAttribute(
-                        'data-parent-ref')); // tenta fechar pai depois
+                            'data-parent-ref')); // tenta fechar pai depois
                         return;
                     }
 

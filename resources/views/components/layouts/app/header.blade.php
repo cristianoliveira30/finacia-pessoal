@@ -58,7 +58,7 @@
 
                 {{-- Toggle Sidebar --}}
                 <button id="header-sidebar-toggle" type="button" aria-expanded="false"
-                    class="text-white box-border border border-transparent hover:bg-neutral-secondary-medium dark:focus:outline-2 dark:focus:outline-offset-2 black:hover:bg-zinc-700 dark:focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
+                    class="text-white box-border border border-transparent hover:bg-gray-200/10 dark:focus:outline-2 dark:focus:outline-offset-2 black:hover:bg-zinc-700 dark:focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm p-2 focus:outline-none mr-2">
                     <span class="sr-only">Alternar sidebar</span>
                     <x-bi-justify-left class="w-6 h-6" />
                 </button>
@@ -489,7 +489,8 @@ MODAL DE CONFIGURAÇÕES (NOVO)
                                                     class="text-slate-500 dark:text-slate-400 black:text-zinc-400 text-xs font-bold uppercase tracking-wider">
                                                     Senha Atual
                                                 </label>
-                                                <input type="password" name="current_password" id="current_password" required
+                                                <input type="password" name="current_password" id="current_password"
+                                                    required
                                                     class="w-full bg-white dark:bg-slate-900 black:bg-zinc-950 border border-slate-300 dark:border-slate-600 black:border-zinc-700 text-slate-700 dark:text-slate-200 black:text-zinc-100 text-sm rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent block p-2.5 transition-all shadow-sm placeholder-slate-400 black:placeholder-zinc-500"
                                                     placeholder="••••••••">
                                                 @error('current_password')
@@ -910,9 +911,9 @@ MODAL DE PERÍODO PERSONALIZADO
     {{-- Script Unificado: Notificações + Badges + Filtro de Tempo --}}
     <script>
         /* ==========================================================
-                                                                                    FUNÇÕES GLOBAIS DO MODAL (Precisam estar fora do DOMContentLoaded)
-                                                                                    para que os botões com onclick="" no HTML consigam acessá-las.
-                                                                                    ========================================================== */
+                                                                                            FUNÇÕES GLOBAIS DO MODAL (Precisam estar fora do DOMContentLoaded)
+                                                                                            para que os botões com onclick="" no HTML consigam acessá-las.
+                                                                                            ========================================================== */
 
         // 1. Auxiliar: Formatar data (YYYY-MM-DD)
         function formatarDataISO(data) {
