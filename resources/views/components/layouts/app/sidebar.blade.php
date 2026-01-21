@@ -420,7 +420,7 @@
 
     <div
         class="h-full flex flex-col pt-5 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
-        <nav class="flex-1 px-2 pb-4 text-sm font-medium">
+        <nav class="flex-1 px-2 pb-70 text-sm font-medium">
 
             {{-- MENUS PRINCIPAIS --}}
             @foreach ($menus as $menu)
@@ -766,18 +766,17 @@
                     // ✅ se clicou para EXPANDIR (collapsed=false), fecha popovers
                     if (!collapsed) closeAllPopovers();
                 } else {
+                    // MODO MOBILE
                     sidebar.classList.toggle('-translate-x-full');
-                    setAria(!sidebar.classList.contains('-translate-x-full'));
-                    closeAllPopovers(); // ✅ abriu/fechou mobile -> fecha popovers
-                }
-            });
 
-            document.addEventListener('click', (e) => {
-                if (isDesktop()) return;
-                if (sidebar.contains(e.target) || toggleBtn.contains(e.target)) return;
-                if (!sidebar.classList.contains('-translate-x-full')) {
-                    sidebar.classList.add('-translate-x-full');
-                    setAria(false);
+                    // Verifica se abriu ou fechou
+                    const isOpen = !sidebar.classList.contains('-translate-x-full');
+                    setAria(isOpen);
+
+                    // --- AQUI ESTÁ A MÁGICA ---
+                    // Se abriu, trava a tela (hidden). Se fechou, destrava ('').
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+
                     closeAllPopovers();
                 }
             });
