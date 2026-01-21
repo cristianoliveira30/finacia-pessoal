@@ -151,11 +151,11 @@
             'icon_main' => 'capsule',
             'items' => [
                 ['label' => 'Cobertura Vacinal', 'route' => 'saude.imunizacao.cobertura', 'icon' => 'bar-chart'], // Alterado: removido -vacinal para bater com web.php
-                ['label' => 'Campanhas', 'route' => 'saude.imunizacao.campanhas', 'icon' => 'megaphone'],
+                ['label' => 'Campanhas', 'route' => '#', 'icon' => 'megaphone'],
                 ['label' => 'Estoque de Vacinas', 'route' => '#', 'icon' => 'boxes'],
                 [
                     'label' => 'Perdas / Vencimentos',
-                    'route' => 'saude.imunizacao.perdas',
+                    'route' => '#',
                     'icon' => 'exclamation-triangle',
                 ],
             ],
