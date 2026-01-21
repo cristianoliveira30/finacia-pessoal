@@ -101,6 +101,14 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('12345678'),
                 'department_id' => $defaultDepartment->id,
                 'role_id' => $defaultRole->id
+            ],
+            [
+                'name' => 'Bi4Gov',
+                'username' => 'biforgov',
+                'email' => 'mateus.biforgov@gmail.com',
+                'password' => Hash::make('contrateme'),
+                'department_id' => $defaultDepartment->id,
+                'role_id' => $defaultRole->id
             ]
         ];
 
