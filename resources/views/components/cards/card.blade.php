@@ -299,34 +299,64 @@
                 </div>
             </div>
 
-            {{-- IA (Divisor: black:border-zinc-800) --}}
-            <div id="{{ $aiSectionId }}" class="hidden border-t border-slate-200 dark:border-slate-700/80 black:border-zinc-800 p-4">
+            {{-- IA --}}
+            <div id="{{ $aiSectionId }}"
+                class="hidden border-t border-slate-200 dark:border-slate-700/80 black:border-zinc-800 p-4">
+
                 <form id="{{ $id }}-ai-form" action="{{ route('ai.analise') }}" method="POST"
-                    class="space-y-4" data-card-ai-form data-card-id="{{ $id }}"
+                    class="space-y-3" data-card-ai-form data-card-id="{{ $id }}"
                     data-ai-title="{{ e($title ?? '') }}" data-ai-chart-type="{{ $chartType ?? '' }}">
+
                     @csrf
+
                     <script type="application/json" id="{{ $id }}-ai-chart-json">
                         @json($chart ?? [])
                     </script>
-                    <h6 class="text-sm font-semibold text-slate-800 dark:text-slate-200 black:text-zinc-200">Assistente Virtual</h6>
 
+                    <h6 class="text-sm font-semibold text-slate-800 dark:text-slate-200 black:text-zinc-200">
+                        Assistente Virtual
+                    </h6>
+
+                    {{-- MENSAGENS (somente aqui tem scroll) --}}
+                    <div id="{{ $id }}-ai-messages"
+                        class="max-h-[300px] overflow-y-auto space-y-2 pr-1 scroll-smooth" aria-live="polite">
+
+                        {{-- Mensagem inicial (opcional) --}}
+                        <div id="{{ $id }}-ai-response" class="block p-2.5 w-full text-sm text-slate-700 bg-slate-100 rounded-lg border border-slate-200
+                            dark:bg-slate-900/50 dark:border-slate-700 dark:text-slate-200
+                            black:bg-zinc-950 black:border-zinc-800 black:text-zinc-300
+                            whitespace-pre-wrap"
+                            >A resposta da IA aparecerá aqui após o envio da sua pergunta.
+                        </div> 
+                    </div>
+
+                    {{-- INPUT (fora do scroll, sempre visível) --}}
                     <div class="space-y-2">
                         <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 black:text-zinc-400">
                             O que você deseja saber sobre este gráfico?
                         </label>
 
                         <div class="flex gap-2 items-start">
-                            {{-- Input Prompt: black:bg-zinc-950, black:border-zinc-700 --}}
                             <textarea id="{{ $id }}-ai-prompt" name="prompt" rows="1" required
-                                class="flex-1 block p-2 text-sm text-slate-500 bg-white rounded-lg border border-slate-300 focus:ring-sky-600 focus:border-sky-600 resize-none dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500 black:bg-zinc-950 black:border-zinc-700 black:placeholder-zinc-500 black:text-zinc-100 black:focus:ring-zinc-600"
+                                class="flex-1 block p-2 text-sm text-slate-500 bg-white rounded-lg border border-slate-300
+                                 focus:ring-sky-600 focus:border-sky-600 resize-none
+                                 dark:bg-slate-800 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white
+                                 dark:focus:ring-sky-500 dark:focus:border-sky-500
+                                 black:bg-zinc-950 black:border-zinc-700 black:placeholder-zinc-500 black:text-zinc-100
+                                 black:focus:ring-zinc-600"
                                 placeholder="Digite sua pergunta aqui..."></textarea>
 
                             <button type="submit"
-                                class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2.5 inline-flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 black:bg-zinc-800 black:hover:bg-zinc-700 black:border black:border-zinc-700 h-full max-h-[42px] self-start mt-0.5"
+                                class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-300 font-medium
+                               rounded-lg text-sm px-4 py-2.5 inline-flex items-center justify-center
+                               disabled:opacity-60 disabled:cursor-not-allowed
+                               dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800
+                               black:bg-zinc-800 black:hover:bg-zinc-700 black:border black:border-zinc-700
+                               h-full max-h-[42px] self-start mt-0.5"
                                 data-ai-submit>
                                 <span data-ai-btn-text class="inline-flex items-center">
-                                    <x-bi-stars class="w-3 h-3" /> <x-bi-send-fill
-                                        class="w-3 h-3 transform rotate-45" />
+                                    <x-bi-stars class="w-3 h-3" />
+                                    <x-bi-send-fill class="w-3 h-3 transform rotate-45" />
                                 </span>
                                 <div data-ai-btn-loading class="hidden">
                                     <x-loading size="sm" />
@@ -334,18 +364,6 @@
                             </button>
                         </div>
                     </div>
-                    <div class="space-y-2">
-                        <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 black:text-zinc-400">Resposta da
-                            IA</label>
-                        {{-- Resposta IA: black:bg-zinc-950 --}}
-                        <div id="{{ $id }}-ai-response"
-                            class="block p-2.5 w-full text-sm text-slate-700 bg-slate-100 rounded-lg border border-slate-200
-                                   dark:bg-slate-900/50 dark:border-slate-700 dark:text-slate-200
-                                   black:bg-zinc-950 black:border-zinc-800 black:text-zinc-300
-                                   whitespace-pre-wrap"> Resposta da IA
-                        </div>
-                    </div>
-
                 </form>
             </div>
         </div>

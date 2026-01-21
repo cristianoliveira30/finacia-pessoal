@@ -17,6 +17,34 @@ class AnalisesController extends Controller
         'Controle Interno (Conformidade %)' => "Tarefa: analisar pendencias abertas e venciadas por setor no período informado.",
         'Execução Orçamentária (R$ mi)' => "Tarefa: analisar as previsões e realizações por setor no período informado.",
         'Performance Setorial (0-100)' => "Tarefa: analisar o score de cada setor no período informado.",
+
+        # Finanças
+        'Receitas x Despesas (R$ mi)' => "Tarefa: comparar receitas e despesas por setor no período informado.",
+        'Composição de Receita (%)' => "Tarefa: analisar a distribuição percentual das fontes de receita no período informado.",
+        'Empenhos / Liquidações / Pagamentos (Comparativo)' => "Tarefa: comparar o fluxo de empenhos, liquidações e pagamentos no período informado.",
+        'Execução por Função (Previsto x Realizado)' => "Tarefa: analisar o desempenho de execução orçamentária por função comparando previsto versus realizado.",
+        'Compliance (Uso do limite %)' => "Tarefa: analisar o uso percentual dos limites de compliance por setor no período informado.",
+
+        # Educação
+        'Frequência Média por Distrito (%)' => "Tarefa: analisar a frequência escolar média por distrito no período informado.",
+        'Fluxo de Matrículas (Entradas x Saídas)' => "Tarefa: analisar o fluxo de matrículas com comparação entre entradas e saídas.",
+        'Aprendizagem por Etapa (0-10)' => "Tarefa: analisar o desempenho de aprendizagem por etapa educacional no período informado.",
+        'Motivos de Evasão (%)' => "Tarefa: analisar os principais motivos e percentuais de evasão escolar.",
+        'Fila de Creche (Top 8 Bairros)' => "Tarefa: analisar as filas de creche nos 8 principais bairros com maior demanda.",
+        'Merenda: Itens em Nível Crítico (%)' => "Tarefa: analisar o percentual de itens de merenda em nível crítico de estoque.",
+        'Transporte: Rotas com Atraso (%)' => "Tarefa: analisar o percentual de rotas de transporte escolar com atraso.",
+        'FUNDEB (Resumo Simulado)' => "Tarefa: analisar o resumo simulado de FUNDEB e sua distribuição no período informado.",
+        'Metas do Mês (Atingimento %)' => "Tarefa: analisar o percentual de atingimento das metas mensais de educação.",
+        
+        # Saúde
+        'Atendimentos por Dia (APS x Urgência)' => "Tarefa: analisar o volume diário de atendimentos comparando APS e urgência.",
+        'Tempo Médio de Espera por Unidade (min)' => "Tarefa: analisar o tempo médio de espera em minutos por unidade de saúde.",
+        'Classificação de Risco (Urgência)' => "Tarefa: analisar a distribuição de casos por classificação de risco em urgência.",
+        'Fila da Regulação (Consultas x Exames)' => "Tarefa: analisar a fila da regulação comparando consultas e exames pendentes.",
+        'Cobertura Vacinal por Campanha (%)' => "Tarefa: analisar o percentual de cobertura vacinal por campanha de vacinação.",
+        'Disponibilidade por Categoria de Medicamentos (%)' => "Tarefa: analisar o percentual de disponibilidade de medicamentos por categoria.",
+        'No-show (Faltas em Consultas) (%)' => "Tarefa: analisar o percentual de no-shows (faltas em consultas) no período.",
+        'Metas do Mês (Atingimento %)' => "Tarefa: analisar o percentual de atingimento das metas mensais de saúde.",
     ];
 
     public function analise(Request $request)
