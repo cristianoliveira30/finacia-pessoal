@@ -2,14 +2,16 @@
 <x-layouts.app :title="__('Dashboard Financeiro')">
     <div class="w-full min-h-screen pt-4 px-8 sm:px-4 lg:pl-16 space-y-6">
 
+
         {{-- 1) Componente Unificado (KPIs + Módulos) --}}
         <x-cards.box.diretorias id="financeiro" />
+
 
         @php
             // -----------------------------
             // GRÁFICOS (dados fakes coerentes)
             // -----------------------------
-            $months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+            $months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
             // (A) Área/Linha: Receita x Despesa (R$ mi)
             $chartReceitaDespesa = [
@@ -25,9 +27,7 @@
             $chartComposicaoReceita = [
                 'x_label' => 'Fonte',
                 'categories' => ['Própria', 'Transferências', 'Convênios', 'Outras'],
-                'series' => [
-                    ['name' => 'Participação (%)', 'data' => [32, 55, 9, 4]],
-                ],
+                'series' => [['name' => 'Participação (%)', 'data' => [32, 55, 9, 4]]],
             ];
 
             // (C) Colunas: Execução por Função (Previsto x Realizado) em R$ mi
@@ -35,7 +35,7 @@
                 'x_label' => 'Função',
                 'categories' => ['Saúde', 'Educação', 'Infraestrutura', 'Administração', 'Assistência', 'Segurança'],
                 'series' => [
-                    ['name' => 'Previsto (R$ mi)',  'data' => [180, 210, 140, 120, 80, 60]],
+                    ['name' => 'Previsto (R$ mi)', 'data' => [180, 210, 140, 120, 80, 60]],
                     ['name' => 'Realizado (R$ mi)', 'data' => [156, 188, 92, 101, 63, 49]],
                 ],
             ];
@@ -52,19 +52,34 @@
             // (E) Radial: Compliance (quanto % do limite já usado)
             $chartCompliance = [
                 'categories' => ['Pessoal/RCL', 'Mín. Saúde', 'Mín. Educação', 'Dívida/RCL'],
-                'series' => [
-                    ['name' => 'Uso do limite (%)', 'data' => [49.2, 15.8, 26.4, 7.1]],
-                ],
+                'series' => [['name' => 'Uso do limite (%)', 'data' => [49.2, 15.8, 26.4, 7.1]]],
             ];
         @endphp
+
 
         {{-- 2) Gráficos --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <x-cards.card id="fin-rx-d" title="Receitas x Despesas (R$ mi)" :chart="$chartReceitaDespesa" chart-type="area" />
             <x-cards.card id="fin-rec-fontes" title="Composição de Receita (%)" :chart="$chartComposicaoReceita" chart-type="pie" />
-            <x-cards.card id="fin-exec-funcao" title="Empenhos / Liquidações / Pagamentos (Comparativo)" :chart="$chartELP" chart-type="column" />
-            <x-cards.card id="fin-elp" title="Execução por Função (Previsto x Realizado)" :chart="$chartExecucaoFuncao" chart-type="bar" />
-            <x-cards.card id="fin-compliance" title="Compliance (Uso do limite %)" :chart="$chartCompliance" chart-type="radial" />
+            <x-cards.card id="fin-exec-funcao" title="Empenhos / Liquidações / Pagamentos (Comparativo)"
+                :chart="$chartELP" chart-type="column" />
+            <x-cards.card id="fin-elp" title="Execução por Função (Previsto x Realizado)" :chart="$chartExecucaoFuncao"
+                chart-type="bar" />
+            <x-cards.card id="fin-compliance" title="Compliance (Uso do limite %)" :chart="$chartCompliance"
+                chart-type="radial" />
         </div>
     </div>
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Inicializa a lógica da IA e dos Toggles de Overlay
+                if (window.CardAI && typeof window.CardAI.init === 'function') {
+                    window.CardAI.init();
+                }
+                if (window.Card && typeof window.Card.bindAllOverlayToggles === 'function') {
+                    window.Card.bindAllOverlayToggles();
+                }
+            });
+        </script>
+    @endpush
 </x-layouts.app>
