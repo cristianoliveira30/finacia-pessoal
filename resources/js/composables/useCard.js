@@ -18,11 +18,7 @@ function safeParseJsonScript(scriptId) {
     if (!el) return null;
     const txt = (el.textContent || "").trim();
     if (!txt) return null;
-    try {
-        return JSON.parse(txt);
-    } catch {
-        return null;
-    }
+    try { return JSON.parse(txt); } catch { return null; }
 }
 
 /**
@@ -71,6 +67,76 @@ function normalizeChartPayload(chart, type, title) {
     };
 }
 
+function scrollToBottom(el) {
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+}
+
+function createBubble(side /* 'user' | 'ai' */, { label = null } = {}) {
+    const bubble = document.createElement("div");
+
+    const base =
+        "p-2.5 text-sm rounded-lg border break-words max-w-[85%] " +
+        "border-slate-200 dark:border-slate-700 black:border-zinc-800";
+
+    const ai =
+        "mr-auto text-slate-700 bg-slate-100 " +
+        "dark:bg-slate-900/50 dark:text-slate-200 " +
+        "black:bg-zinc-950 black:text-zinc-300";
+
+    const user =
+        "ml-auto text-slate-700 bg-white " +
+        "dark:bg-slate-800 dark:text-slate-100 " +
+        "black:bg-zinc-900 black:text-zinc-100";
+
+    bubble.className = `${base} ${side === "user" ? user : ai}`;
+
+    if (label) {
+        const head = document.createElement("div");
+        head.className =
+            "mb-1 flex items-center gap-1 text-[11px] " +
+            "text-slate-500 dark:text-slate-400 black:text-zinc-500 select-none";
+        head.innerHTML = label;
+        bubble.appendChild(head);
+    }
+
+    const content = document.createElement("div");
+    content.dataset.aiContent = "1";
+    // deixa o texto quebrar e manter quebras
+    content.className = "whitespace-pre-wrap";
+    bubble.appendChild(content);
+
+    return { bubble, content };
+}
+
+function getLoaderFragment(id) {
+    const tpl = document.getElementById(`${id}-ai-loader-template`);
+    if (!tpl || !("content" in tpl)) return null;
+    return tpl.content.cloneNode(true);
+}
+
+async function typeWriter(targetEl, text, { speed = 12 } = {}) {
+    if (!targetEl) return;
+
+    // respeita prefer-reduced-motion
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+        targetEl.textContent = text;
+        return;
+    }
+
+    targetEl.textContent = "";
+    for (let i = 0; i < text.length; i++) {
+        targetEl.textContent += text[i];
+        // leve “humanização” sem custar caro
+        const delay = text[i] === "\n" ? speed * 2 : speed;
+        await new Promise((r) => setTimeout(r, delay));
+    }
+}
+
+/* =========================
+   Bind IA por card
+   ========================= */
+
 export const bindCardAI = (id) => {
     const form =
         document.getElementById(`${id}-ai-form`) ||
@@ -81,27 +147,21 @@ export const bindCardAI = (id) => {
     form.dataset.aiBound = "1";
 
     const promptEl = document.getElementById(`${id}-ai-prompt`);
-    const responseEl = document.getElementById(`${id}-ai-response`);
+
+    // NOVO: container de mensagens (scroll)
+    const messagesEl = document.getElementById(`${id}-ai-messages`);
+
+    // mantém compatibilidade com seu Blade atual (placeholder tem id ai-response)
+    const placeholderEl = document.getElementById(`${id}-ai-response`);
     const statusEl = document.getElementById(`${id}-ai-status`);
 
     const submitBtn = form.querySelector("[data-ai-submit]");
     const btnText = form.querySelector("[data-ai-btn-text]");
     const btnLoading = form.querySelector("[data-ai-btn-loading]");
 
-    const initialResponseHeight = responseEl ? responseEl.offsetHeight : 0;
-
-    const resetTextareaHeight = (el) => {
-        if (!el) return;
-        el.style.height = initialResponseHeight ? `${initialResponseHeight}px` : "";
-        el.style.overflowY = "hidden";
-    };
-
     const setLoading = (loading) => {
-        if (submitBtn) {
-            submitBtn.toggleAttribute("disabled", !!loading);
-        }
+        if (submitBtn) submitBtn.toggleAttribute("disabled", !!loading);
 
-        // usa hidden attribute (garante) + classe hidden (tailwind)
         if (btnText) {
             btnText.toggleAttribute("hidden", !!loading);
             btnText.classList.toggle("hidden", !!loading);
@@ -112,6 +172,7 @@ export const bindCardAI = (id) => {
             btnLoading.classList.toggle("hidden", !loading);
         }
     };
+
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -152,25 +213,64 @@ export const bindCardAI = (id) => {
         }
 
         if (statusEl) statusEl.textContent = "";
-        if (responseEl) {
-            responseEl.value = "";
-            resetTextareaHeight(responseEl);
-        }
+
+        // remove placeholder inicial
+        if (placeholderEl) placeholderEl.remove();
 
         setLoading(true);
+
+        // 1) balão do usuário
+        if (messagesEl) {
+            const userMsg = createBubble("user", { label: `<span>Você</span>` });
+            userMsg.content.textContent = comando;
+            messagesEl.appendChild(userMsg.bubble);
+            scrollToBottom(messagesEl);
+        }
+
+        // 2) balão da IA com loader
+        let aiBubble = null;
+        let aiContent = null;
+
+        if (messagesEl) {
+            const aiMsg = createBubble("ai", { label: `<span>Assistente</span>` });
+            const loaderFrag = getLoaderFragment(id);
+
+            if (loaderFrag) {
+                aiMsg.content.appendChild(loaderFrag);
+            } else {
+                aiMsg.content.textContent = "Gerando resposta...";
+            }
+
+            messagesEl.appendChild(aiMsg.bubble);
+            scrollToBottom(messagesEl);
+
+            aiBubble = aiMsg.bubble;
+            aiContent = aiMsg.content;
+        }
 
         try {
             const res = await Api.post(endpoint, { nome: title, comando, payload });
 
             const data = res?.data ?? {};
-            const answer = data.answer ?? data.message ?? data.response ?? "";
+            const answer = String(data.answer ?? data.message ?? data.response ?? "Sem resposta do servidor.");
 
-            if (responseEl) {
-                responseEl.innerHTML = marked.parse(String(answer || "Sem resposta do servidor."));
+            // 3) troca loader por “digitando”
+            if (aiContent) {
+                aiContent.innerHTML = `<span data-ai-typed></span><span class="ai-cursor">▍</span>`;
+                const typedEl = aiContent.querySelector("[data-ai-typed]");
+
+                await typeWriter(typedEl, answer, { speed: 12 });
+
+                // render final em markdown (cara de produto)
+                aiContent.innerHTML = marked.parse(answer);
+
+                // garante scroll no final após render
+                scrollToBottom(messagesEl);
             }
 
             Alerts?.close?.();
             Alerts?.showSuccess?.("Análise gerada com sucesso");
+            if (promptEl) promptEl.value = "";
         } catch (err) {
             const msg =
                 err?.response?.data?.message ||
@@ -178,6 +278,15 @@ export const bindCardAI = (id) => {
                 "Falha ao consultar a IA.";
 
             if (statusEl) statusEl.textContent = msg;
+
+            // se existe bolha de IA, reaproveita ela como erro
+            if (aiContent) {
+                aiContent.textContent = msg;
+                // opcional: “pinta” a bolha como erro
+                aiBubble?.classList?.add("border-red-300", "bg-red-50");
+                aiBubble?.classList?.add("dark:border-red-900/40", "dark:bg-red-950/30");
+                aiBubble?.classList?.add("black:border-red-900/40", "black:bg-zinc-950");
+            }
 
             Alerts?.close?.();
             Alerts?.showError?.({ msg });

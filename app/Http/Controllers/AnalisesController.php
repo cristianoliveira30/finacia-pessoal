@@ -66,7 +66,7 @@ class AnalisesController extends Controller
 
         return $this->handleGenericAnalysis(
             payload: $data['payload'],
-            comando: $data['comando'] ?? 'Analise os dados e gere insights.',
+            comando: $data['comando'] ?? 'Analise os dados e gere insights. Tente não demorar muito, mas se precisar, leve o tempo necessário para uma boa análise.',
             taskLine: self::TASKS[$nome],
         );
     }

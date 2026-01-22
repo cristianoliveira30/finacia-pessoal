@@ -310,17 +310,14 @@
                         Assistente Virtual
                     </h6>
 
+                    <template id="{{ $id }}-ai-loader-template">
+                        @include('components.loading-prompt')
+                    </template>
+
                     {{-- MENSAGENS (somente aqui tem scroll) --}}
                     <div id="{{ $id }}-ai-messages"
-                        class="max-h-[300px] overflow-y-auto space-y-2 pr-1 scroll-smooth" aria-live="polite">
-                        {{-- Mensagem inicial (opcional) --}}
-                        <div id="{{ $id }}-ai-response"
-                            class="block p-2.5 w-full text-sm text-slate-700 bg-slate-100 rounded-lg border border-slate-200
-                           dark:bg-slate-900/50 dark:border-slate-700 dark:text-slate-200
-                           black:bg-zinc-950 black:border-zinc-800 black:text-zinc-300
-                           whitespace-pre-wrap"
-                           >A resposta da IA aparecerá aqui após o envio da sua pergunta.
-                        </div>
+                        class="max-h-[300px] overflow-y-auto space-y-2 pr-1 scroll-smooth"
+                        aria-live="polite">
                     </div>
 
 
