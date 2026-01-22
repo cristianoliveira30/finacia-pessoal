@@ -762,18 +762,11 @@
                     const collapsed = document.body.classList.toggle('sidebar-collapsed');
                     localStorage.setItem(KEY, collapsed);
                     setAria(!collapsed);
-
-                    // ✅ se clicou para EXPANDIR (collapsed=false), fecha popovers
                     if (!collapsed) closeAllPopovers();
                 } else {
-                    // MODO MOBILE
                     sidebar.classList.toggle('-translate-x-full');
-
-                    // Verifica se abriu ou fechou
                     const isOpen = !sidebar.classList.contains('-translate-x-full');
                     setAria(isOpen);
-
-                    // --- AQUI ESTÁ A MÁGICA ---
                     // Se abriu, trava a tela (hidden). Se fechou, destrava ('').
                     document.body.style.overflow = isOpen ? 'hidden' : '';
 

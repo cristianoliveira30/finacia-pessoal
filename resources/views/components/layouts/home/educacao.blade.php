@@ -534,13 +534,21 @@
             e.preventDefault();
             e.stopPropagation();
             if (isDesktop()) {
+                // Lógica Desktop (Mantém igual)
                 const collapsed = document.body.classList.toggle('sidebar-collapsed');
                 localStorage.setItem(STORAGE_KEY, collapsed);
                 toggleBtn.setAttribute('aria-expanded', String(!collapsed));
             } else {
-                const isHidden = sidebar.classList.contains('-translate-x-full');
+                // --- LÓGICA MOBILE COM TRAVA DE SCROLL ---
                 sidebar.classList.toggle('-translate-x-full');
-                toggleBtn.setAttribute('aria-expanded', String(isHidden));
+
+                // Verifica se ficou aberto ou fechado
+                const isOpen = !sidebar.classList.contains('-translate-x-full');
+                toggleBtn.setAttribute('aria-expanded', String(isOpen));
+
+                // SE ABRIU: Trava a tela (hidden)
+                // SE FECHOU: Destrava (vazio)
+                document.body.style.overflow = isOpen ? 'hidden' : '';
             }
         });
 

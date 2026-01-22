@@ -226,24 +226,24 @@
                         </div>
 
                         <div class="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                            <div class="p-3 rounded bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-500">
-                                <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-zinc-900">
+                            <div class="p-3 rounded bg-amber-50 dark:bg-amber-900/20 black:bg-zinc-800/50  border-l-6 border-amber-500">
+                                <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-white">
                                     Limite Prudencial</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-300 black:text-zinc-900 mt-1">Folha
+                                <p class="text-xs text-slate-500 dark:text-slate-300 black:text-zinc-400 mt-1">Folha
                                     atingiu 51% da RCL.</p>
                             </div>
 
-                            <div class="p-3 rounded bg-rose-50 dark:bg-rose-900/20 border-l-4 border-rose-500">
-                                <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-zinc-900">
+                            <div class="p-3 rounded bg-rose-50 dark:bg-rose-900/20 black:bg-zinc-800/50 border-l-6 border-rose-500">
+                                <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-white">
                                     Ambulâncias Paradas</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-300 black:text-zinc-900 mt-1">2
+                                <p class="text-xs text-slate-500 dark:text-slate-300 black:text-zinc-400 mt-1">2
                                     veículos em manutenção.</p>
                             </div>
 
-                            <div class="p-3 rounded bg-red-50 dark:bg-red-900/20 border-l-4 border-red-600">
-                                <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-zinc-900">
+                            <div class="p-3 rounded bg-red-50 dark:bg-red-900/20 black:bg-zinc-800/50 border-l-6 border-red-600">
+                                <p class="text-sm font-medium text-slate-800 dark:text-slate-200 black:text-white">
                                     Licitações Atrasadas</p>
-                                <p class="text-xs text-slate-500 dark:text-slate-300 black:text-zinc-900 mt-1">Pregão
+                                <p class="text-xs text-slate-500 dark:text-slate-300 black:text-zinc-400 mt-1">Pregão
                                     042/2025 necessita homologação.</p>
                             </div>
                         </div>
