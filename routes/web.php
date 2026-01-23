@@ -17,6 +17,11 @@ Route::middleware([NoStoreHtml::class])->group(function () {
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/_debug/419', function () {
+    abort(419);
+});
+
+
 Route::middleware('auth')->group(function () {
 
     Route::post('/notifications/send', [NotificationController::class, 'send']);
