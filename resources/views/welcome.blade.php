@@ -164,7 +164,6 @@
             }
 
             async function refreshCsrf() {
-                debugger;
                 const r = await fetch("{{ route('csrf.refresh') }}", {
                     method: 'GET',
                     credentials: 'same-origin',
@@ -184,7 +183,6 @@
             async function ensureCsrfOk() {
                 // Se o usuário apagou cookies, ou a sessão expirou, isso pode ficar incoerente.
                 // Checamos o que dá pra checar no front e, se faltar algo, refazemos o token.
-                debugger;
                 const hasXsrf = hasCookie('XSRF-TOKEN'); // não é o mais importante pro form, mas é um bom sinal de “sessão viva”
                 const hasHidden = !!(tokenInput && tokenInput.value);
                 const hasMeta = !!(meta && meta.getAttribute('content'));
