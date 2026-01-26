@@ -63,11 +63,9 @@
                         bg-white text-gray-900 placeholder:text-gray-400
                         dark:bg-neutral-800 dark:text-white dark:placeholder:text-gray-500
 
-                        @if($errors->has('username') || $errors->has('login'))
-                            border-red-500 focus:ring-red-500 dark:border-red-500
+                        @if ($errors->has('username') || $errors->has('login')) border-red-500 focus:ring-red-500 dark:border-red-500
                         @else
-                            border-gray-300 focus:ring-indigo-500 dark:border-neutral-700
-                        @endif" />
+                            border-gray-300 focus:ring-indigo-500 dark:border-neutral-700 @endif" />
 
                     @error('username')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
@@ -77,44 +75,42 @@
 
                 <div>
                     <label for="password"
-                    class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Senha</label>
+                        class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Senha</label>
                     <div class="relative">
                         <input id="password" name="password" type="password" placeholder="Senha" required
                             class="w-full px-4 py-3 rounded-lg border text-sm focus:outline-none focus:ring-2 transition-all
                             bg-white text-gray-900 placeholder:text-gray-400
                             dark:bg-neutral-800 dark:text-white dark:placeholder:text-gray-500
 
-                            @if($errors->has('password') || $errors->has('login'))
-                                border-red-500 focus:ring-red-500 dark:border-red-500
+                            @if ($errors->has('password') || $errors->has('login')) border-red-500 focus:ring-red-500 dark:border-red-500
                                 @else
-                                border-gray-300 focus:ring-indigo-500 dark:border-neutral-700
-                                @endif" />
+                                border-gray-300 focus:ring-indigo-500 dark:border-neutral-700 @endif" />
 
-                                <button type="button" id="toggle-pass"
-                                class="absolute right-3 top-1/2 -translate-y-1/2 transition-colors
+                        <button type="button" id="toggle-pass"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 transition-colors
                                 text-gray-500 hover:text-gray-700
                                 dark:text-gray-400 dark:hover:text-gray-200"
-                                aria-label="Mostrar senha">
+                            aria-label="Mostrar senha">
                             <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5">
                                 <path fill="currentColor"
-                                d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 12a5 5 0 110-10 5 5 0 010 10z" />
+                                    d="M12 5C7 5 2.73 8.11 1 12c1.73 3.89 6 7 11 7s9.27-3.11 11-7c-1.73-3.89-6-7-11-7zm0 12a5 5 0 110-10 5 5 0 010 10z" />
                                 <path fill="currentColor" d="M12 9a3 3 0 100 6 3 3 0 000-6z" />
                             </svg>
                         </button>
                     </div>
 
                     @error('password')
-                    <p class="mt-1 text-sm text-red-600 dark:text-red-500">
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-500">
                             {{ $message }}
                         </p>
-                        @enderror
-                        @error('login')
-                            <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    @enderror
+                    @error('login')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
 
-                    <div class="flex items-center justify-start">
-                        <a href="#"
+                <div class="flex items-center justify-start">
+                    <a href="#"
                         class="text-sm font-medium hover:underline transition-colors
                         text-sky-600 hover:text-sky-700
                         dark:text-sky-400 dark:hover:text-sky-300">
@@ -140,8 +136,15 @@
 
             const btn = document.getElementById('toggle-pass');
             const input = document.getElementById('password');
+            const form = document.querySelector('form[action="{{ route('login.post') }}"]');
+            
+            if (!form) return;
             if (!btn || !input) return;
+            
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            const tokenInput = form.querySelector('input[name="_token"]');
             let shown = false;
+
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 shown = !shown;
@@ -155,7 +158,62 @@
                     btn.classList.add('text-gray-500', 'dark:text-gray-400');
                 }
             });
+
+            function hasCookie(name) {
+                return document.cookie.split('; ').some(c => c.startsWith(name + '='));
+            }
+
+            async function refreshCsrf() {
+                debugger;
+                const r = await fetch("{{ route('csrf.refresh') }}", {
+                    method: 'GET',
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                });
+                if (!r.ok) throw new Error('csrf refresh failed');
+                const {
+                    token
+                } = await r.json();
+
+                if (meta) meta.setAttribute('content', token);
+                if (tokenInput) tokenInput.value = token;
+            }
+
+            async function ensureCsrfOk() {
+                // Se o usuário apagou cookies, ou a sessão expirou, isso pode ficar incoerente.
+                // Checamos o que dá pra checar no front e, se faltar algo, refazemos o token.
+                debugger;
+                const hasXsrf = hasCookie('XSRF-TOKEN'); // não é o mais importante pro form, mas é um bom sinal de “sessão viva”
+                const hasHidden = !!(tokenInput && tokenInput.value);
+                const hasMeta = !!(meta && meta.getAttribute('content'));
+
+                if (!hasHidden || !hasMeta || !hasXsrf) {
+                    await refreshCsrf();
+                }
+            }
+
+            let submitting = false;
+
+            form.addEventListener('submit', async (e) => {
+                if (submitting) return; // evita loop
+                e.preventDefault();
+
+                try {
+                    submitting = true;
+                    await ensureCsrfOk();
+                    form.submit();
+                } catch (err) {
+                    // Se nem assim resolver, geralmente é cookie bloqueado / sessão não persistindo.
+                    alert('Sessão expirada ou cookies bloqueados. Recarregue a página e tente novamente.');
+                    window.location.reload();
+                } finally {
+                    submitting = false;
+                }
+            });
         })();
     </script>
 </body>
+
 </html>

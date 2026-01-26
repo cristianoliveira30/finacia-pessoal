@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 use Illuminate\Http\Request;
 
-Route::middleware([NoStoreHtml::class])->group(function () {
-    Route::view('/', 'welcome')->name('login');
-    Route::get('/login', fn() => redirect()->route('login'));
+Route::middleware([NoStoreHtml::class, 'guest'])->group(function () {
+    Route::view('/login', 'welcome')->name('login');
+    Route::redirect('/', '/login');
 });
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -379,3 +379,9 @@ Route::fallback(function (Request $request) {
         'error_msg'  => 'A funcionalidade solicitada ainda não está mapeada no sistema.'
     ], 404);
 });
+
+// HELPERS
+Route::get('/csrf/refresh', function () {
+    request()->session()->regenerateToken();
+    return response()->json(['token' => csrf_token()]);
+})->name('csrf.refresh');
