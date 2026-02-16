@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnalisesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\NoStoreHtml;
@@ -26,7 +27,7 @@ Route::middleware('auth')->group(function () {
     //troca de perfil
     Route::put('/user/profile/update', [UserController::class, 'updateProfile'])->name('user.profile.update');
 
-    Route::get('/home', fn() => view('home'))->name('home');
+    Route::get('/home', [DashboardController::class, 'index'])->name('home');
     // rotas de usuario
     Route::get('/usuario/cadastro', fn() => view('usuario/cadastro'))->name('usuario/cadastro');
     Route::get('/usuario/buscar', fn() => view('usuario/buscar'))->name('usuario/buscar');
@@ -263,12 +264,10 @@ Route::middleware('auth')->group(function () {
         Route::view('/urgencia/unidades', 'saude.urgencia.unidades-upa')->name('urgencia.unidades-upa');
         Route::view('/urgencia/classificacao-risco', 'saude.urgencia.classificacao-risco')->name('urgencia.classificacao-risco');
         Route::view('/urgencia/porta-medico', 'saude.urgencia.porta-medico')->name('urgencia.porta-medico');
-        Route::view('/urgencia/leitos', 'saude.urgencia.leitos')->name('urgencia.leitos');
 
         // -----------------------------
         // VIGILÂNCIA EM SAÚDE
         // -----------------------------
-        Route::view('/vigilancia/notificacoes', 'saude.vigilancia.notificacoes')->name('vigilancia.notificacoes');
         Route::view('/vigilancia/agravos', 'saude.vigilancia.casos-agravo')->name('vigilancia.casos-agravo');
         Route::view('/vigilancia/fiscalizacao', 'saude.vigilancia.fiscalizacao')->name('vigilancia.fiscalizacao');
         Route::view('/vigilancia/indicadores', 'saude.vigilancia.indicadores-epidermico')->name('vigilancia.indicadores-epidermico');

@@ -5,62 +5,74 @@
 
 @php
     $definitions = [
-        // 1. DTP (Definido como INSTÁVEL para exemplo)
+        // 1️⃣ SALDO
         'gestao' => [
-            'label' => 'Despesa com Pessoal (DTP)',
-            'suffix' => '%',
-            'text' => '% da Receita Corrente Líquida',
-            'link' => route('financeiro.compliance.pessoal'),
-            'icon' => 'people',
-            // Adicionado black:bg-amber-900/20 e black:text-amber-400
+            'label' => 'Saldo do Período',
+            'suffix' => '',
+            'text' => 'Receitas menos despesas',
+            'link' => '#',
+            'icon' => 'wallet2',
+
             'bg_class' =>
-                'bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 black:bg-amber-900/20 black:text-amber-400',
-            'status' => 'unstable', // Nível 1: Instável
-            'tooltip_html' => 'Limite Prudencial excedido (51,3%).',
+                'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 black:bg-emerald-900/20 black:text-emerald-400',
+
+            'status' => 'dynamic',
+
+            'tooltip_html' => 'Resultado financeiro do período selecionado.',
         ],
-        // 2. Resultado (Definido como OK - Sem cor de destaque, dados em Bilhões)
+
+        // 2️⃣ RECEITAS
         'financas' => [
-            'label' => 'Receita Corrente Líquida',
-            'suffix' => 'bi',
-            'text' => 'Acumulado (12 meses)',
-            'link' => route('financeiro.relatorios.rx_d'),
-            'icon' => 'bank',
-            // Neutro: black:bg-zinc-800 (Surface Highlight) e black:text-zinc-300
+            'label' => 'Receitas',
+            'suffix' => '',
+            'text' => 'Total de entradas',
+            'link' => '#',
+            'icon' => 'arrow-up-circle',
+
             'bg_class' =>
-                'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 black:bg-zinc-800 black:text-zinc-300',
-            'status' => 'ok', // Sem cor de status
-            'tooltip_html' => 'Receita orçamentária efetivamente arrecadada.',
+                'bg-sky-100 dark:bg-sky-900/20 text-sky-700 dark:text-sky-400 black:bg-sky-900/20 black:text-sky-400',
+
+            'status' => 'ok',
+
+            'tooltip_html' => 'Somatório de todas as receitas.',
         ],
-        // 3. Controle Interno (Definido como CRÍTICO)
+
+        // 3️⃣ DESPESAS
         'pendencias' => [
-            'label' => 'Apontamentos TCE',
-            'suffix' => 'uni',
-            'text' => 'Irregularidades Graves',
-            'link' => route('#'),
-            'icon' => 'shield-exclamation',
-            // Crítico: black:bg-red-900/20 e black:text-red-400
+            'label' => 'Despesas',
+            'suffix' => '',
+            'text' => 'Total de saídas',
+            'link' => '#',
+            'icon' => 'arrow-down-circle',
+
             'bg_class' =>
                 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 black:bg-red-900/20 black:text-red-400',
-            'status' => 'critical', // Nível 2: Crítico
-            'tooltip_html' => 'Apontamentos que impedem a certidão negativa.',
+
+            'status' => 'critical',
+
+            'tooltip_html' => 'Somatório de todas as despesas.',
         ],
-        // 4. NPS (Definido como OK - Sem cor branca, sem destaque)
+
+        // 4️⃣ % GASTOS
         'nps' => [
-            'label' => 'Investimentos Totais',
-            'suffix' => 'mi',
-            'text' => 'Liquidados no Exercício',
-            'link' => route('#'),
-            'icon' => 'graph-up',
-            // Neutro: black:bg-zinc-800 e black:text-zinc-300
+            'label' => 'Comprometimento da Renda',
+            'suffix' => '%',
+            'text' => '% da renda já utilizada',
+            'link' => '#',
+            'icon' => 'pie-chart',
+
             'bg_class' =>
-                'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 black:bg-zinc-800 black:text-zinc-300',
-            'status' => 'ok', // Sem cor de status
-            'tooltip_html' => 'Total investido em obras e equipamentos.',
+                'bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 black:bg-amber-900/20 black:text-amber-400',
+
+            'status' => 'unstable',
+
+            'tooltip_html' => 'Percentual da renda comprometido com despesas.',
         ],
     ];
 
     $card = $definitions[$id] ?? null;
-    $status = $card['status'] ?? 'ok';
+    $status = $summaryMap[$id]['status'] ?? 'ok';
+    $value = $summaryMap[$id]['value'] ?? 0;
 
     // Definição dos Estilos conforme pedido: Apenas Critical e Unstable possuem cor. O resto é neutro.
     $styles = [
