@@ -203,6 +203,7 @@
                     await ensureCsrfOk();
                     form.submit();
                 } catch (err) {
+                    console.log('Erro ao garantir CSRF:', err);
                     // Se nem assim resolver, geralmente é cookie bloqueado / sessão não persistindo.
                     alert('Sessão expirada ou cookies bloqueados. Recarregue a página e tente novamente.');
                     window.location.reload();

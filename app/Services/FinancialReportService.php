@@ -10,16 +10,34 @@ class FinancialReportService
         protected TransactionRepository $transactionRepository
     ) {}
 
-    public function generate(int $userId, $start, $end): array
+    public function generate(int $userId, string $start, string $end): array
     {
+        /*
+        |--------------------------------------------------------------------------
+        | BASE VALUES
+        |--------------------------------------------------------------------------
+        */
+
         $income = $this->transactionRepository
             ->sumByTypeAndPeriod($userId, 'income', $start, $end);
 
         $expense = $this->transactionRepository
             ->sumByTypeAndPeriod($userId, 'expense', $start, $end);
 
+        $food = $this->transactionRepository
+            ->sumByCategorySlug($userId, 'food', $start, $end);
+
+        $transport = $this->transactionRepository
+            ->sumByCategorySlug($userId, 'transport', $start, $end);
+
         $expensesByCategory = $this->transactionRepository
             ->getExpensesGroupedByCategory($userId, $start, $end);
+
+        /*
+        |--------------------------------------------------------------------------
+        | CALCULATIONS
+        |--------------------------------------------------------------------------
+        */
 
         $balance = $income - $expense;
 
@@ -27,66 +45,103 @@ class FinancialReportService
             ? round(($expense / $income) * 100, 2)
             : 0;
 
+        /*
+        |--------------------------------------------------------------------------
+        | RESPONSE
+        |--------------------------------------------------------------------------
+        */
+
         return [
             'summary' => $this->buildSummary(
                 $income,
                 $expense,
                 $balance,
                 $expensePercentage,
+                $food,
+                $transport
             ),
 
             'charts' => $this->buildCharts(
                 $income,
                 $expense,
                 $expensesByCategory
-            )
+            ),
         ];
     }
 
-
-    // =========================
-    // KPI SUMMARY
-    // =========================
+    /*
+    |--------------------------------------------------------------------------
+    | SUMMARY
+    |--------------------------------------------------------------------------
+    */
 
     private function buildSummary(
         float $income,
         float $expense,
         float $balance,
         float $expensePercentage,
+        float $food,
+        float $transport
     ): array {
+
         return [
+
             'balance' => [
-                'value' => $balance,
+                'value' => number_format($balance, 2, ',', '.'),
+                'raw' => $balance,
                 'status' => $this->resolveBalanceStatus($balance),
+                'prefix' => 'R$ ',
             ],
 
             'income' => [
-                'value' => $income,
+                'value' => number_format($income, 2, ',', '.'),
+                'raw' => $income,
                 'status' => 'ok',
+                'prefix' => 'R$ ',
             ],
 
             'expense' => [
-                'value' => $expense,
+                'value' => number_format($expense, 2, ',', '.'),
+                'raw' => $expense,
                 'status' => $this->resolveExpenseStatus($expensePercentage),
+                'prefix' => 'R$ ',
             ],
 
             'expense_percentage' => [
-                'value' => round($expensePercentage, 1),
+                'value' => number_format($expensePercentage, 2, ',', '.'),
+                'raw' => $expensePercentage,
+                'suffix' => '%',
                 'status' => $this->resolveExpenseStatus($expensePercentage),
+            ],
+
+            'food' => [
+                'value' => number_format($food, 2, ',', '.'),
+                'raw' => $food,
+                'prefix' => 'R$ ',
+            ],
+
+            'transport' => [
+                'value' => number_format($transport, 2, ',', '.'),
+                'raw' => $transport,
+                'prefix' => 'R$ ',
             ],
         ];
     }
 
-    // =========================
-    // CHARTS
-    // =========================
+    /*
+    |--------------------------------------------------------------------------
+    | CHARTS
+    |--------------------------------------------------------------------------
+    */
 
     private function buildCharts(
         float $income,
         float $expense,
         $expensesByCategory
     ): array {
+
         return [
+
             'income_vs_expense' => [
                 'labels' => ['Receitas', 'Despesas'],
                 'series' => [$income, $expense],
@@ -99,9 +154,11 @@ class FinancialReportService
         ];
     }
 
-    // =========================
-    // STATUS RESOLVERS
-    // =========================
+    /*
+    |--------------------------------------------------------------------------
+    | STATUS RESOLVERS
+    |--------------------------------------------------------------------------
+    */
 
     private function resolveBalanceStatus(float $balance): string
     {

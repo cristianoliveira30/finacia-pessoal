@@ -2,44 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\DashboardMiniBoxService;
+use App\Services\BudgetMiniBoxService;
 use App\Services\DateRangeResolver;
 use App\Services\FinancialReportService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    protected FinancialReportService $service;
-    protected DashboardMiniBoxService $miniBoxService;
+    protected FinancialReportService $financialReportService;
+    protected BudgetMiniBoxService $budgetMiniBoxService;
     protected DateRangeResolver $dateResolver;
 
     public function __construct(
-        FinancialReportService $service,
-        DashboardMiniBoxService $miniBoxService,
+        FinancialReportService $financialReportService,
+        BudgetMiniBoxService $budgetMiniBoxService,
         DateRangeResolver $dateResolver
     ) {
-        $this->service = $service;
-        $this->miniBoxService = $miniBoxService;
+        $this->financialReportService = $financialReportService;
+        $this->budgetMiniBoxService = $budgetMiniBoxService;
         $this->dateResolver = $dateResolver;
     }
 
     public function index(Request $request)
     {
-        [$start, $end] = $this->dateResolver->resolve('current_month');
+        $userId = Auth::id();
 
-        $report = $this->service->generate(
-            $request->user()->id,
-            $start,
-            $end
+        [$start, $end] = $this->dateResolver->resolve(
+            $request->input('tempo'),
+            $request->input('inicio'),
+            $request->input('fim')
         );
 
-        $report = $this->service->generate($request->user()->id, $start, $end);
-        $miniBoxes = $this->miniBoxService->generate($request->user()->id, $start, $end);
+        $report = $this->financialReportService
+            ->generate($userId, $start, $end);
+
+        $budgetMini = $this->budgetMiniBoxService
+            ->generate($userId, $start);
 
         return view('home', [
-            'summary' => $report['summary'],      // MAIN BOXES
-            'charts' => $report['charts'],
-            'miniboxes' => $miniBoxes['summary'], // MINI BOXES
+            'summary'   => $report['summary'],
+            'charts'    => $report['charts'],
+            'miniboxes' => $budgetMini,
         ]);
     }
 }

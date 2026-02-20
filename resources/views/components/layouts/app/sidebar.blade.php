@@ -3,9 +3,9 @@
     $menus = [
         // --- PREFEITURA  ---
         [
-            'id' => 'prefeitura',
-            'label' => 'Prefeitura',
-            'popover_title' => 'Prefeitura',
+            'id' => 'home',
+            'label' => 'Home',
+            'popover_title' => 'Home',
             'hex_main' => '#8b5cf6', // Violet-500
             'hex_hover_bg' => 'rgba(124, 58, 237, 0.4)', // Baseado no Violet-600
             'hex_light' => '#a78bfa', // Violet-400
@@ -13,12 +13,7 @@
             'items' => [
                 ['label' => 'Dashboard', 'route' => 'home', 'icon' => 'speedometer2'],
                 ['label' => 'Modo TV', 'route' => 'tv.index', 'icon' => 'tv'],
-                ['label' => 'Gabinete do Prefeito', 'route' => 'prefeito.gabinete', 'icon' => 'pie-chart-fill'],
-                [
-                    'label' => 'Agenda Oficial',
-                    'route' => 'calendario/calendario-pessoal',
-                    'icon' => 'calendar-event-fill',
-                ],
+                ['label' => 'Gabinete', 'route' => 'prefeito.gabinete', 'icon' => 'pie-chart-fill'],
             ],
         ],
 
@@ -32,191 +27,27 @@
             'hex_light' => '#34d399', // Emerald-400
             'icon_main' => 'cash-coin',
             'items' => [
-                ['label' => 'Dashboard', 'route' => 'financeiro.home', 'icon' => 'list'],
+                ['label' => 'Dashboard', 'route' => '#', 'icon' => 'list'],
 
                 // GRUPO: RELATÓRIOS
                 [
-                    'label' => 'Relatórios',
+                    'label' => 'Opções',
                     'icon' => 'file-text',
                     'id_submenu' => 'fin-relatorios',
                     'submenu' => [
                         [
-                            'label' => 'Receitas x Despesas (Séries)',
-                            'route' => 'financeiro.relatorios.rx_d',
-                            'icon' => 'file-earmark-text-fill',
+                            'label' => 'Adicionar Receitas',
+                            'route' => 'incomes.create',
+                            'icon' => 'arrow-up-circle',
                         ],
                         [
-                            'label' => 'Execução Orçamentária (Mês/Ano)',
-                            'route' => 'financeiro.relatorios.execucao',
-                            'icon' => 'file-earmark-text-fill',
+                            'label' => 'Adicionar Despesas',
+                            'route' => 'budgets.create',
+                            'icon' => 'arrow-down-circle',
                         ],
-                        [
-                            'label' => 'Despesas por Função/Subfunção',
-                            'route' => 'financeiro.relatorios.despesas_funcao',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Fornecedores (Top / Concentração)',
-                            'route' => 'financeiro.relatorios.fornecedores',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Empenhos / Liq. / Pagamentos',
-                            'route' => 'financeiro.relatorios.elp',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        ['label' => 'Lançamentos', 'route' => 'financeiro.lancamentos', 'icon' => 'rocket-takeoff'],
-                        ['label' => 'Contas', 'route' => 'financeiro.contas', 'icon' => 'coin'],
                     ],
                 ],
             ],
-        ],
-
-        // --- EDUCAÇÃO ---
-        [
-            'id' => 'educacao',
-            'label' => 'Educação',
-            'popover_title' => 'Educação',
-            'hex_main' => '#3b82f6', // Blue-500
-            'hex_hover_bg' => 'rgba(37, 99, 235, 0.4)', // Baseado no Blue-600
-            'hex_light' => '#60a5fa', // Blue-400
-            'icon_main' => 'journal-bookmark',
-            'items' => [
-                ['label' => 'Dashboard', 'route' => 'educacao.home', 'icon' => 'list'],
-
-                // GRUPO: RELATÓRIOS
-                [
-                    'label' => 'Relatórios',
-                    'icon' => 'file-text',
-                    'id_submenu' => 'edu-relatorios',
-                    'submenu' => [
-                        [
-                            'label' => 'Frequência Escolar',
-                            'route' => 'educacao.relatorios.frequencia',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Evasão / Abandono',
-                            'route' => 'educacao.relatorios.evasao',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Aprendizagem (Indicadores)',
-                            'route' => 'educacao.relatorios.aprendizagem',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Matrículas (Evolução)',
-                            'route' => 'educacao.relatorios.matriculas',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Turmas / Lotação',
-                            'route' => 'educacao.relatorios.turmas',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Transferências',
-                            'route' => 'educacao.relatorios.transferencias',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Infraestrutura (Escolas)',
-                            'route' => 'educacao.relatorios.infraestrutura',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Merenda (Resumo',
-                            'route' => 'educacao.relatorios.merenda',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Transporte (Resumo)',
-                            'route' => 'educacao.relatorios.transporte',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Inclusão / AEE',
-                            'route' => 'educacao.relatorios.inclusao',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        ['label' => 'Lançamentos', 'route' => 'educacao.lancamentos', 'icon' => 'rocket-takeoff'],
-                        ['label' => 'Contas', 'route' => 'educacao.contas', 'icon' => 'coin'],
-                    ],
-                ],
-            ],
-        ],
-
-        // --- SAÚDE ---
-        [
-            'id' => 'saude',
-            'label' => 'Saúde',
-            'popover_title' => 'Saúde',
-            'hex_main' => '#f43f5e', // Rose-500
-            'hex_hover_bg' => 'rgba(225, 29, 72, 0.4)', // Baseado no Rose-600
-            'hex_light' => '#fb7185', // Rose-400
-            'icon_main' => 'heart-pulse',
-            'items' => [
-                ['label' => 'Dashboard', 'route' => 'saude.home', 'icon' => 'list'],
-
-                // GRUPO: RELATÓRIOS
-                [
-                    'label' => 'Relatórios',
-                    'icon' => 'file-text',
-                    'id_submenu' => 'saude-relatorios',
-                    'submenu' => [
-                        [
-                            'label' => 'Atendimentos (Volume)',
-                            'route' => 'saude.relatorios.atendimentos',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Tempo de Espera (UBS/UPA)',
-                            'route' => 'saude.relatorios.espera',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Produção por Unidade',
-                            'route' => 'saude.relatorios.producao_unidade',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Produção por Profissional',
-                            'route' => 'saude.relatorios.producao_profissional',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Absenteísmo (No-show)',
-                            'route' => 'saude.relatorios.no_show',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Encaminhamentos / Regulação',
-                            'route' => 'saude.relatorios.regulacao',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        [
-                            'label' => 'Indicadores SUS (Resumo)',
-                            'route' => 'saude.relatorios.indicadores_sus',
-                            'icon' => 'file-earmark-text-fill',
-                        ],
-                        ['label' => 'Lançamentos', 'route' => 'saude.lancamentos', 'icon' => 'rocket-takeoff'],
-                        ['label' => 'Contas', 'route' => 'saude.contas', 'icon' => 'coin'],
-                    ],
-                ],
-            ],
-        ],
-
-        // --- MENSAGENS / NOTIFICAÇÕES ---
-        [
-            'id' => 'mensagens',
-            'label' => 'Notificações',
-            'popover_title' => 'Notificações',
-            'hex_main' => '#f97316', // Orange-500
-            'hex_hover_bg' => 'rgba(234, 88, 12, 0.4)', // Baseado no Orange-600
-            'hex_light' => '#fb923c', // Orange-400
-            'icon_main' => 'send',
-            'items' => [['label' => 'Enviar Notificações', 'route' => 'mensagens.envio', 'icon' => 'plus-circle']],
         ],
     ];
 

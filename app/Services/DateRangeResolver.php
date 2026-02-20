@@ -14,46 +14,40 @@ class DateRangeResolver
         //
     }
 
-    public function resolve(string $type, ?string $start = null, ?string $end = null): array
-    {
+    public function resolve(
+        ?string $type = 'mes-atual',
+        ?string $start = null,
+        ?string $end = null
+    ): array {
+
+        $type ??= 'mes-atual';
+
         return match ($type) {
 
-            'today' => [
-                Carbon::today()->startOfDay(),
-                Carbon::today()->endOfDay()
+            'mes-atual' => [
+                now()->startOfMonth()->startOfDay(),
+                now()->endOfMonth()->endOfDay()
             ],
 
-            'yesterday' => [
-                Carbon::yesterday()->startOfDay(),
-                Carbon::yesterday()->endOfDay()
+            'mes-passado' => [
+                now()->subMonth()->startOfMonth()->startOfDay(),
+                now()->subMonth()->endOfMonth()->endOfDay()
             ],
 
-            'current_week' => [
-                Carbon::now()->startOfWeek()->startOfDay(),
-                Carbon::now()->endOfWeek()->endOfDay()
+            'periodo' => [
+                $start
+                    ? Carbon::createFromFormat('Y-m', $start)->startOfMonth()->startOfDay()
+                    : now()->startOfMonth(),
+
+                $start
+                    ? Carbon::createFromFormat('Y-m', $start)->endOfMonth()->endOfDay()
+                    : now()->endOfMonth(),
             ],
 
-            'last_week' => [
-                Carbon::now()->subWeek()->startOfWeek()->startOfDay(),
-                Carbon::now()->subWeek()->endOfWeek()->endOfDay()
+            default => [
+                now()->startOfMonth(),
+                now()->endOfMonth(),
             ],
-
-            'current_month' => [
-                Carbon::now()->startOfMonth()->startOfDay(),
-                Carbon::now()->endOfMonth()->endOfDay()
-            ],
-
-            'last_month' => [
-                Carbon::now()->subMonth()->startOfMonth()->startOfDay(),
-                Carbon::now()->subMonth()->endOfMonth()->endOfDay()
-            ],
-
-            'period' => [
-                Carbon::parse($start)->startOfDay(),
-                Carbon::parse($end)->endOfDay()
-            ],
-
-            default => throw new \InvalidArgumentException('Invalid time type'),
         };
     }
 }

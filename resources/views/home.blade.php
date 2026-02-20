@@ -9,12 +9,6 @@
                 'pendencias' => $summary['expense'],
                 'nps' => $summary['expense_percentage'],
             ];
-
-            $dtpValor = number_format($summary['expense_percentage']['value'] ?? 0, 2, ',', '.');
-            $resultadoFinanceiro = number_format($summary['income']['value'] ?? 0, 2, ',', '.');
-            $indiceControleInterno = number_format($summary['expense']['value'] ?? 0, 2, ',', '.');
-            $nps = number_format($summary['balance']['value'] ?? 0, 2, ',', '.');
-
         @endphp
 
         <div class="pt-01">
@@ -22,31 +16,28 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-2 m-3 ">
 
                 <div class="md:col-span-1" id="wrapper-card-gestao">
-                    <x-cards.box.mainbox id="gestao" :value="$summaryMap['gestao']['value']" :status="$summaryMap['gestao']['status']" />
+                    <x-cards.box.mainbox id="gestao" :value="$summary['balance']['value']" :status="$summary['balance']['status']" />
                 </div>
 
                 <div class="md:col-span-1" id="wrapper-card-financas">
-                    <x-cards.box.mainbox id="financas" :value="$summaryMap['financas']['value']" :status="$summaryMap['financas']['status']" />
+                    <x-cards.box.mainbox id="financas" :value="$summary['income']['value']" :status="$summary['income']['status']" />
                 </div>
 
                 <div class="md:col-span-1" id="wrapper-card-pendencias">
-                    <x-cards.box.mainbox id="pendencias" :value="$summaryMap['pendencias']['value']" :status="$summaryMap['pendencias']['status']" />
+                    <x-cards.box.mainbox id="pendencias" :value="$summary['expense']['value']" :status="$summary['expense']['status']" />
                 </div>
 
                 {{-- NPS agora irá renderizar corretamente --}}
                 <div class="md:col-span-1" id="wrapper-card-nps">
-                    <x-cards.box.mainbox id="nps" :value="$summaryMap['nps']['value']" :status="$summaryMap['nps']['status']" />
+                    <x-cards.box.mainbox id="nps" :value="$summary['expense_percentage']['value']" :status="$summary['expense_percentage']['status']" />
                 </div>
             </div>
 
             {{-- 2) KPIs por Setor --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 m-3 ">
-                <x-cards.box.minibox id="fin_exec" :data="$miniboxes" />
-                <x-cards.box.minibox id="fin_arr" :data="$miniboxes" />
-                <x-cards.box.minibox id="biggest_category" :data="$miniboxes" />
-                <x-cards.box.minibox id="transactions_count" :data="$miniboxes" />
-                <x-cards.box.minibox id="food_expense" :data="$miniboxes" />
-                <x-cards.box.minibox id="transport_expense" :data="$miniboxes" />
+                @foreach ($miniboxes as $box)
+                    <x-cards.box.minibox :box="$box" />
+                @endforeach
             </div>
 
             {{-- 3) Gráficos Implementados --}}
@@ -54,18 +45,14 @@
                 @php
                     // Gráfico 1: Evolução da Receita x Despesa (Área)
                     $chartGestaoFiscal = [
-                        'categories' => ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-                        'series' => [
-                            ['name' => 'Receita', 'data' => [18.2, 19.5, 20.1, 21.0, 22.5, 22.8]],
-                            ['name' => 'Despesa', 'data' => [14.0, 15.2, 16.5, 15.8, 14.9, 14.2]],
-                        ],
-                        'colors' => ['#10b981', '#ef4444'], // Verde e Vermelho
+                        'categories' => $charts['income_vs_expense']['labels'],
+                        'series' => $charts['income_vs_expense']['series'],
                     ];
 
                     // Gráfico 2: Demandas por Secretaria (Pizza)
                     $chartDemandas = [
-                        'categories' => ['Saúde', 'Educação', 'Obras', 'Social', 'ADM'],
-                        'series' => [['name' => 'Chamados', 'data' => [450, 320, 210, 150, 80]]],
+                        'categories' => $charts['expenses_by_category']['labels'],
+                        'series' => $charts['expenses_by_category']['series'],
                     ];
 
                     // Gráfico 3: Controle Interno - Prazos (Barra)

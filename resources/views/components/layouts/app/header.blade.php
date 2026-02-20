@@ -76,7 +76,7 @@
                         class="inline-flex items-center gap-1.5 px-3 py-2 text-xs md:text-sm font-medium rounded-md border  bg-neutral-200 text-stone-950 border-slate-200  hover:bg-slate-200 hover:text-slate-900  focus:outline-none focus:ring-2 focus:ring-slate-300
                         dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-600  dark:hover:bg-slate-700 dark:hover:text-slate-50 dark:focus:ring-sky-500/40
                         black:bg-zinc-900 black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800 black:hover:text-zinc-100">
-                        <span id="tipotempo-label" class="whitespace-nowrap">Hoje</span>
+                        <span id="tipotempo-label" class="whitespace-nowrap">Mês Atual</span>
                         <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 1 4 4 4-4" />
@@ -88,24 +88,6 @@
                         dark:bg-slate-900 dark:border-slate-700 dark:hover:bg-slate-800
                         black:bg-zinc-900 black:border-zinc-700 black:divide-zinc-800">
                         <ul class="py-2 text-sm text-slate-700 dark:text-slate-200" aria-labelledby="btn-tipotempo">
-                            <li><a href="#" data-tempo="hoje"
-                                    class="block px-4 py-2 hover:bg-slate-50  dark:hover:bg-slate-700/70 dark:hover:text-white black:hover:bg-zinc-800 black:text-white">Hoje
-                                </a>
-                            </li>
-                            <li><a href="#" data-tempo="ontem"
-                                    class="block px-4 py-2 hover:bg-slate-50  dark:hover:bg-slate-700/70 dark:hover:text-white black:hover:bg-zinc-800 black:text-white">Ontem
-                                </a>
-                            </li>
-                            <li><a href="#" data-tempo="semana-atual"
-                                    class="block px-4 py-2 hover:bg-slate-50  dark:hover:bg-slate-700/70 dark:hover:text-white black:hover:bg-zinc-800 black:text-white">Semana
-                                    Atual
-                                </a>
-                            </li>
-                            <li><a href="#" data-tempo="semana-passada"
-                                    class="block px-4 py-2 hover:bg-slate-50  dark:hover:bg-slate-700/70 dark:text-white black:hover:bg-zinc-800 black:text-white">Semana
-                                    Passada
-                                </a>
-                            </li>
                             <li><a href="#" data-tempo="mes-atual"
                                     class="block px-4 py-2 hover:bg-slate-50  dark:hover:bg-slate-700/70 dark:text-white black:hover:bg-zinc-800 black:text-white">Mês
                                     Atual
@@ -593,11 +575,8 @@ MODAL DE PERÍODO PERSONALIZADO
 
         <div class="p-6 space-y-6">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div
-                    class="group border border-cyan-200 rounded-lg p-1 hover:border-cyan-400 transition-colors bg-gray-200
-                        dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-cyan-500
-                        black:border-zinc-700 black:bg-zinc-900/50 black:hover:border-zinc-600">
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                <div>
                     <div
                         class="bg-cyan-100/50 px-3 py-1.5 rounded-t-md border-b border-cyan-100 flex items-center gap-2
                             dark:bg-slate-700 dark:border-slate-600
@@ -608,242 +587,18 @@ MODAL DE PERÍODO PERSONALIZADO
                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                             </path>
                         </svg>
-                        <span class="text-xs font-semibold text-cyan-800 dark:text-cyan-300 black:text-zinc-300">Data
-                            Inicial</span>
+                        <span
+                            class="text-xs font-semibold text-cyan-800 dark:text-cyan-300 black:text-zinc-300">Selecione
+                            um Mês</span>
                     </div>
                     <div class="p-3 bg-white rounded-b-md dark:bg-slate-800 black:bg-zinc-900">
                         <label class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Selecione a data
-                            de
-                            início
                             *</label>
-                        <input type="date" id="dataInicio"
+                        <input type="month" id="dataInicial"
                             class="w-full border-gray-200 rounded text-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-700
                                 dark:bg-slate-900 dark:border-slate-600 dark:text-white
                                 black:bg-zinc-950 black:border-zinc-800 black:text-zinc-200">
                         <p class="text-[10px] text-slate-400 mt-1">Data não pode ser no futuro</p>
-                    </div>
-                </div>
-
-                <div
-                    class="group border border-cyan-200 rounded-lg p-1 hover:border-cyan-400 transition-colors bg-gray-200
-                        dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-cyan-500
-                        black:border-zinc-700 black:bg-zinc-900/50 black:hover:border-zinc-600">
-                    <div
-                        class="bg-cyan-100/50 px-3 py-1.5 rounded-t-md border-b border-cyan-100 flex items-center gap-2
-                            dark:bg-slate-700 dark:border-slate-600
-                            black:bg-zinc-800 black:border-zinc-700">
-                        <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                        <span class="text-xs font-semibold text-cyan-800 dark:text-cyan-300 black:text-zinc-300">Data
-                            Final</span>
-                    </div>
-                    <div class="p-3 bg-white rounded-b-md dark:bg-slate-800 black:bg-zinc-900">
-                        <label class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Selecione a data
-                            de
-                            término *</label>
-                        <input type="date" id="dataFim"
-                            class="w-full border-gray-200 rounded text-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-700
-                                dark:bg-slate-900 dark:border-slate-600 dark:text-white
-                                black:bg-zinc-950 black:border-zinc-800 black:text-zinc-200">
-                        <p class="text-[10px] text-slate-400 mt-1">Deve ser posterior à data inicial</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border border-cyan-200 rounded-lg overflow-hidden dark:border-slate-600 black:border-zinc-700">
-                <div
-                    class="bg-cyan-100/50 px-4 py-2 border-b border-cyan-200 flex items-center gap-2
-                        dark:bg-slate-800 dark:border-slate-600
-                        black:bg-zinc-900 black:border-zinc-700">
-                    <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-xs font-semibold text-cyan-900 dark:text-cyan-100 black:text-zinc-300">Períodos
-                        Rápidos</span>
-                </div>
-                <div class="p-4 bg-white dark:bg-slate-800/50 black:bg-zinc-900/50">
-                    <p class="text-xs text-slate-500 mb-3 dark:text-slate-400">Selecione um período
-                        pré-definido ou
-                        configure manualmente</p>
-                    <div class="grid grid-cols-3 gap-3">
-                        <button onclick="setPeriodo(7)"
-                            class="flex items-center justify-center gap-2 py-2 px-4 rounded border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-400 text-sm font-medium transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-1
-                                dark:border-slate-600 dark:text-blue-400 dark:hover:bg-slate-700
-                                black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            Últimos 7 dias
-                        </button>
-                        <button onclick="setPeriodo(30)"
-                            class="flex items-center justify-center gap-2 py-2 px-4 rounded border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-400 text-sm font-medium transition-all
-                                dark:border-slate-600 dark:text-blue-400 dark:hover:bg-slate-700
-                                black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            Últimos 30 dias
-                        </button>
-                        <button onclick="setPeriodo(60)"
-                            class="flex items-center justify-center gap-2 py-2 px-4 rounded border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-400 text-sm font-medium transition-all
-                                dark:border-slate-600 dark:text-blue-400 dark:hover:bg-slate-700
-                                black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            Últimos 60 dias
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="bg-cyan-50 rounded-lg border border-cyan-200 overflow-hidden dark:bg-slate-800/80 dark:border-slate-600 black:bg-zinc-900/80 black:border-zinc-700">
-                <div
-                    class="bg-cyan-100/50 px-4 py-2 border-b border-cyan-200 flex items-center gap-2 dark:bg-slate-800 dark:border-slate-600 black:bg-zinc-800 black:border-zinc-700">
-                    <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-xs font-semibold text-cyan-900 dark:text-cyan-100 black:text-zinc-300">Resumo
-                        do
-                        Período</span>
-                </div>
-                <div class="p-4 flex items-center justify-center gap-8">
-                    <div class="text-center">
-                        <span id="diffDays"
-                            class="block text-2xl font-bold text-blue-600 dark:text-blue-400">0</span>
-                        <span class="text-xs text-slate-500 uppercase font-medium dark:text-slate-400">Dias</span>
-                    </div>
-                    <div class="h-10 w-px bg-cyan-200 dark:bg-slate-600 black:bg-zinc-700"></div>
-                    <div>
-                        <span class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Período
-                            selecionado:</span>
-                        <span id="periodoTexto"
-                            class="text-sm font-semibold text-blue-600 dark:text-blue-400">Selecione as
-                            datas</span>
-                    </div>
-                </div>
-
-                <div
-                    class="group border border-cyan-200 rounded-lg p-1 hover:border-cyan-400 transition-colors bg-gray-200
-                            dark:border-slate-600 dark:bg-slate-800/50 dark:hover:border-cyan-500
-                            black:border-zinc-700 black:bg-zinc-900/50 black:hover:border-zinc-600">
-                    <div
-                        class="bg-cyan-100/50 px-3 py-1.5 rounded-t-md border-b border-cyan-100 flex items-center gap-2
-                                dark:bg-slate-700 dark:border-slate-600
-                                black:bg-zinc-800 black:border-zinc-700">
-                        <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                        <span class="text-xs font-semibold text-cyan-800 dark:text-cyan-300 black:text-zinc-300">Data
-                            Final</span>
-                    </div>
-                    <div class="p-3 bg-white rounded-b-md dark:bg-slate-800 black:bg-zinc-900">
-                        <label class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Selecione a data de
-                            término *</label>
-                        <input type="date" id="dataFim"
-                            class="w-full border-gray-200 rounded text-sm focus:ring-cyan-500 focus:border-cyan-500 text-slate-700
-                                      dark:bg-slate-900 dark:border-slate-600 dark:text-white
-                                      black:bg-zinc-950 black:border-zinc-800 black:text-zinc-200">
-                        <p class="text-[10px] text-slate-400 mt-1">Deve ser posterior à data inicial</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border border-cyan-200 rounded-lg overflow-hidden dark:border-slate-600 black:border-zinc-700">
-                <div
-                    class="bg-cyan-100/50 px-4 py-2 border-b border-cyan-200 flex items-center gap-2
-                            dark:bg-slate-800 dark:border-slate-600
-                            black:bg-zinc-900 black:border-zinc-700">
-                    <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-xs font-semibold text-cyan-900 dark:text-cyan-100 black:text-zinc-300">Períodos
-                        Rápidos</span>
-                </div>
-                <div class="p-4 bg-white dark:bg-slate-800/50 black:bg-zinc-900/50">
-                    <p class="text-xs text-slate-500 mb-3 dark:text-slate-400">Selecione um período pré-definido ou
-                        configure manualmente</p>
-                    <div class="grid grid-cols-3 gap-3">
-                        <button onclick="setPeriodo(7)"
-                            class="flex items-center justify-center gap-2 py-2 px-4 rounded border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-400 text-sm font-medium transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-1
-                                       dark:border-slate-600 dark:text-blue-400 dark:hover:bg-slate-700
-                                       black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            Últimos 7 dias
-                        </button>
-                        <button onclick="setPeriodo(30)"
-                            class="flex items-center justify-center gap-2 py-2 px-4 rounded border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-400 text-sm font-medium transition-all
-                                       dark:border-slate-600 dark:text-blue-400 dark:hover:bg-slate-700
-                                       black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            Últimos 30 dias
-                        </button>
-                        <button onclick="setPeriodo(60)"
-                            class="flex items-center justify-center gap-2 py-2 px-4 rounded border border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-400 text-sm font-medium transition-all
-                                       dark:border-slate-600 dark:text-blue-400 dark:hover:bg-slate-700
-                                       black:border-zinc-700 black:text-zinc-300 black:hover:bg-zinc-800">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                            Últimos 60 dias
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="bg-cyan-50 rounded-lg border border-cyan-200 overflow-hidden dark:bg-slate-800/80 dark:border-slate-600 black:bg-zinc-900/80 black:border-zinc-700">
-                <div
-                    class="bg-cyan-100/50 px-4 py-2 border-b border-cyan-200 flex items-center gap-2 dark:bg-slate-800 dark:border-slate-600 black:bg-zinc-800 black:border-zinc-700">
-                    <svg class="w-4 h-4 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-xs font-semibold text-cyan-900 dark:text-cyan-100 black:text-zinc-300">Resumo do
-                        Período</span>
-                </div>
-                <div class="p-4 flex items-center justify-center gap-8">
-                    <div class="text-center">
-                        <span id="diffDays"
-                            class="block text-2xl font-bold text-blue-600 dark:text-blue-400">0</span>
-                        <span class="text-xs text-slate-500 uppercase font-medium dark:text-slate-400">Dias</span>
-                    </div>
-                    <div class="h-10 w-px bg-cyan-200 dark:bg-slate-600 black:bg-zinc-700"></div>
-                    <div>
-                        <span class="block text-xs text-slate-500 mb-1 dark:text-slate-400">Período selecionado:</span>
-                        <span id="periodoTexto"
-                            class="text-sm font-semibold text-blue-600 dark:text-blue-400">Selecione as datas</span>
                     </div>
                 </div>
             </div>
@@ -859,7 +614,6 @@ MODAL DE PERÍODO PERSONALIZADO
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                     </path>
                 </svg>
-                <span class="text-xs">Período máximo: 1 ano</span>
             </div>
             <div class="flex gap-3">
                 <button type="button" onclick="document.getElementById('modalPeriodo').classList.add('hidden')"
@@ -867,35 +621,7 @@ MODAL DE PERÍODO PERSONALIZADO
                     Cancelar
                 </button>
                 <button type="button" onclick="aplicarPeriodo()"
-                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
-                        </path>
-                    </svg>
-                    Aplicar Período
-                </button>
-            </div>
-        </div>
-
-        <div
-            class="flex items-center justify-between p-5 border-t border-slate-100 bg-slate-50 rounded-b-xl
-                dark:bg-slate-800 dark:border-slate-700
-                black:bg-zinc-900 black:border-zinc-800">
-            <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                    </path>
-                </svg>
-                <span class="text-xs">Período máximo: 1 ano</span>
-            </div>
-            <div class="flex gap-3">
-                <button type="button" onclick="document.getElementById('modalPeriodo').classList.add('hidden')"
-                    class="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors shadow-sm">
-                    Cancelar
-                </button>
-                <button type="button" onclick="aplicarPeriodo()"
-                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm flex items-center gap-2">
+                    class="px-4 py-2 text-sm cursor-pointer font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
                         </path>
@@ -910,12 +636,6 @@ MODAL DE PERÍODO PERSONALIZADO
 @push('scripts')
     {{-- Script Unificado: Notificações + Badges + Filtro de Tempo --}}
     <script>
-        /* ==========================================================
-                                                                                            FUNÇÕES GLOBAIS DO MODAL (Precisam estar fora do DOMContentLoaded)
-                                                                                            para que os botões com onclick="" no HTML consigam acessá-las.
-                                                                                            ========================================================== */
-
-        // 1. Auxiliar: Formatar data (YYYY-MM-DD)
         function formatarDataISO(data) {
             const ano = data.getFullYear();
             const mes = String(data.getMonth() + 1).padStart(2, '0');
@@ -923,80 +643,38 @@ MODAL DE PERÍODO PERSONALIZADO
             return `${ano}-${mes}-${dia}`;
         }
 
-        // 2. Ação dos Botões Rápidos (7, 30, 60 dias)
-        function setPeriodo(dias) {
-            const dataFim = new Date();
-            const dataInicio = new Date();
-
-            // Subtrai os dias da data de hoje
-            dataInicio.setDate(dataFim.getDate() - dias);
-
-            // Preenche os inputs
-            const inputInicio = document.getElementById('dataInicio');
-            const inputFim = document.getElementById('dataFim');
-
-            if (inputInicio && inputFim) {
-                inputInicio.value = formatarDataISO(dataInicio);
-                inputFim.value = formatarDataISO(dataFim);
-                atualizarResumo(); // Atualiza o texto na tela
-            }
-        }
-
-        // 3. Atualiza o resumo visual (Dias e Datas)
-        function atualizarResumo() {
-            const inputInicio = document.getElementById('dataInicio');
-            const inputFim = document.getElementById('dataFim');
-            const textoDiff = document.getElementById('diffDays');
-            const textoPeriodo = document.getElementById('periodoTexto');
-
-            if (inputInicio && inputFim && inputInicio.value && inputFim.value) {
-                const d1 = new Date(inputInicio.value);
-                const d2 = new Date(inputFim.value);
-
-                // Calcula diferença em dias (zerando horas para evitar erros de fuso)
-                const diffTime = Math.abs(d2.setHours(0, 0, 0, 0) - d1.setHours(0, 0, 0, 0));
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-
-                if (textoDiff) textoDiff.innerText = diffDays;
-
-                if (textoPeriodo) {
-                    const opcoes = {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    };
-                    // Correção para timezone ao exibir string
-                    const dataVisual1 = new Date(inputInicio.value + 'T00:00');
-                    const dataVisual2 = new Date(inputFim.value + 'T00:00');
-                    textoPeriodo.innerText =
-                        `${dataVisual1.toLocaleDateString('pt-BR', opcoes)} até ${dataVisual2.toLocaleDateString('pt-BR', opcoes)}`;
-                }
-            }
-        }
-
-        // 4. Botão "Aplicar Período"
         function aplicarPeriodo() {
-            const inicio = document.getElementById('dataInicio').value;
-            const fim = document.getElementById('dataFim').value;
+            const mes = document.getElementById('dataInicial').value;
 
-            if (!inicio || !fim) {
-                alert('Por favor, selecione as datas inicial e final.');
+            if (!mes) {
+                alert('Selecione um mês.');
                 return;
             }
 
-            // Fecha modal e atualiza label (visual)
-            document.getElementById('modalPeriodo').classList.add('hidden');
-            const labelBtn = document.getElementById('tipotempo-label');
-            if (labelBtn) labelBtn.innerText = 'Período Personalizado';
-
-            // Redireciona via URL
             const url = new URL(window.location);
             url.searchParams.set("tempo", "periodo");
-            url.searchParams.set("inicio", inicio);
-            url.searchParams.set("fim", fim);
+            url.searchParams.set("inicio", mes);
+
             window.location.href = url.toString();
         }
 
+        document.querySelectorAll('[data-tempo]').forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const tempo = this.dataset.tempo;
+
+                if (tempo === 'periodo') return; // esse já tem lógica própria
+
+                const url = new URL(window.location);
+                url.searchParams.set("tempo", tempo);
+
+                // remove datas antigas se existirem
+                url.searchParams.delete("inicio");
+
+                window.location.href = url.toString();
+            });
+        });
 
         /* ==========================================================
         LÓGICA QUE DEPENDE DO CARREGAMENTO DA PÁGINA (Event Listeners)
@@ -1007,6 +685,21 @@ MODAL DE PERÍODO PERSONALIZADO
             const list = document.getElementById('notifications-list');
             const avatarBadge = document.getElementById('notif-avatar-badge');
             const menuBadge = document.getElementById('notif-menu-badge');
+            const params = new URLSearchParams(window.location.search);
+            const tempo = params.get('tempo');
+            const label = document.getElementById('tipotempo-label');
+
+            if (!label) return;
+
+            const map = {
+                'mes-atual': 'Mês Atual',
+                'mes-passado': 'Mês Passado',
+                'periodo': 'Período Personalizado'
+            };
+
+            if (tempo && map[tempo]) {
+                label.innerText = map[tempo];
+            }
 
             function updateBadges() {
                 if (!list) return;
@@ -1064,11 +757,13 @@ MODAL DE PERÍODO PERSONALIZADO
             const btnTempo = document.getElementById("btn-tipotempo");
             const dropdownTempo = document.getElementById("dropdown-tipotempo");
             const labelTempo = document.getElementById("tipotempo-label");
+            const inputsData = document.querySelectorAll('#dataInicial');
 
-            // Listeners para os Inputs de Data (Change manual)
-            const inputsData = document.querySelectorAll('#dataInicio, #dataFim');
             inputsData.forEach(input => {
-                input.addEventListener('change', atualizarResumo);
+                input.addEventListener('change', () => {
+                    console.log("Data alterada:", input.value);
+                    // chamar função aqui se precisar
+                });
             });
 
             // Lógica do Dropdown Principal
@@ -1106,14 +801,13 @@ MODAL DE PERÍODO PERSONALIZADO
                         localStorage.setItem(STORAGE_KEY, tempo);
                         const url = new URL(window.location);
                         url.searchParams.set("tempo", tempo);
-                        url.searchParams.delete("inicio"); // Limpa datas customizadas
-                        url.searchParams.delete("fim");
+                        url.searchParams.delete("inicio");
 
                         window.location.href = url.toString();
                     });
                 });
             }
+
         });
     </script>
 @endpush
- 

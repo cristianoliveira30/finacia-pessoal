@@ -1,9 +1,16 @@
 @props([
     'id' => null,
     'data' => [],
+    'box' => null, // 🆕 Novo modo totalmente dinâmico
 ])
 
 @php
+    /*
+    |--------------------------------------------------------------------------
+    | 1️⃣ DEFINIÇÕES FIXAS (modo antigo)
+    |--------------------------------------------------------------------------
+    */
+
     $definitions = [
         'fin_exec' => [
             'label' => 'Gastos do mês',
@@ -36,47 +43,52 @@
             'icon_name' => 'bi-receipt',
             'hint' => 'Total no período',
         ],
-        'food_expense' => [
-            'label' => 'Alimentação',
-            'prefix' => 'R$ ',
-            'suffix' => '',
-            'icon_name' => 'bi-egg-fried',
-            'hint' => 'Gastos com comida no período',
-        ],
-
-        'transport_expense' => [
-            'label' => 'Transporte',
-            'prefix' => 'R$ ',
-            'suffix' => '',
-            'icon_name' => 'bi-car-front',
-            'hint' => 'Gastos com locomoção',
-        ],
     ];
 
-    $definition = $definitions[$id] ?? null;
-    $boxData = $data[$id] ?? [];
+    /*
+    |--------------------------------------------------------------------------
+    | 2️⃣ RESOLUÇÃO DOS DADOS
+    |--------------------------------------------------------------------------
+    */
 
-    $dados = $definition ? array_merge($definition, $boxData) : null;
+    if ($box) {
+        // 🆕 Novo modo 100% backend
+        $dados = $box;
+    } else {
+        $definition = $definitions[$id] ?? null;
+        $boxData = $data[$id] ?? [];
+        $dados = $definition ? array_merge($definition, $boxData) : null;
+    }
 
-    // 🔐 FALLBACKS SEGUROS
+    /*
+    |--------------------------------------------------------------------------
+    | 3️⃣ FALLBACKS SEGUROS
+    |--------------------------------------------------------------------------
+    */
+
     $status = $dados['status'] ?? 'ok';
     $value = $dados['value'] ?? '-';
     $link = $dados['link'] ?? '#';
     $color = $dados['color'] ?? '';
-    $tooltip = $dados['tooltip_html'] ?? '';
+    $tooltip = $dados['tooltip_html'] ?? null;
+
+    /*
+    |--------------------------------------------------------------------------
+    | 4️⃣ STATUS VISUAL
+    |--------------------------------------------------------------------------
+    */
 
     $styles = [
         'critical' => [
-            'wrapper' => 'border-red-500 shadow-lg shadow-red-500/20 dark:border-red-500/50 black:border-red-500/40',
+            'wrapper' => 'border-red-500 shadow-lg shadow-red-500/20',
             'blur' => 'bg-red-500/10',
         ],
         'unstable' => [
-            'wrapper' =>
-                'border-amber-400 shadow-lg shadow-amber-500/20 dark:border-amber-500/50 black:border-amber-500/40',
+            'wrapper' => 'border-amber-400 shadow-lg shadow-amber-500/20',
             'blur' => 'bg-amber-500/10',
         ],
         'ok' => [
-            'wrapper' => 'border-slate-300 dark:border-slate-700 black:border-zinc-800 shadow-sm',
+            'wrapper' => 'border-slate-300 dark:border-slate-700 shadow-sm',
             'blur' => 'hidden',
         ],
     ];
@@ -114,12 +126,26 @@
                         {{ $value }}
 
                         <span class="text-xs text-slate-400 black:text-zinc-500 ml-px font-normal align-baseline">
-                            {{ $dados['suffix'] }}
+                            {{ !empty($dados['suffix']) ? $dados['suffix'] : '' }}
                         </span>
                     </h3>
 
+                    @if (isset($dados['planned']))
+                        <div class="text-[11px] text-slate-400 mt-1">
+                            Previsto: R$ {{ number_format($dados['planned'], 2, ',', '.') }}
+                        </div>
+                    @endif
+
+                    @if (isset($dados['percentage']))
+                        <div class="mt-2 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-sky-500 transition-all duration-500"
+                                style="width: {{ min($dados['percentage'], 100) }}%">
+                            </div>
+                        </div>
+                    @endif
+
                     <span class="text-xs text-slate-500 black:text-zinc-500 font-medium truncate">
-                        {{ $dados['hint'] }}
+                        {{ !empty($dados['hint']) ? $dados['hint'] : '' }}
                     </span>
                 </div>
 
